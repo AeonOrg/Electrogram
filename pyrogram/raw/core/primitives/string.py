@@ -12,7 +12,7 @@ class String(Bytes):
     @classmethod
     def read(cls, data: BytesIO, *args) -> str:  # noqa: ARG003
         return cast("bytes", super(String, String).read(data)).decode(
-            errors="replace"
+            errors="replace",
         )
 
     def __new__(cls, value: str) -> bytes:
