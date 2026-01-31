@@ -1,4 +1,6 @@
 id	message
+ALLOW_PAYMENT_REQUIRED	This peer only accepts [paid messages »](https://core.telegram.org/api/paid-messages): this error is only emitted for older layers without paid messages support, so the client must be updated in order to use paid messages.  .
+API_GIFT_RESTRICTED_UPDATE_APP	Please update the app to access the gift API.
 AUTH_KEY_DUPLICATED	The same authorization key (session file) was used in more than one place simultaneously. You must delete your session file and log in again with your phone number or bot token
 BANNED_RIGHTS_INVALID	You provided some invalid flags in the banned rights.
 BUSINESS_ADDRESS_ACTIVE	The user is currently advertising a [Business Location](https://core.telegram.org/api/business#location), the location may only be changed (or removed) using [account.updateBusinessLocation »](https://core.telegram.org/method/account.updateBusinessLocation).  .
@@ -13,16 +15,21 @@ FRESH_RESET_AUTHORISATION_FORBIDDEN	You can't terminate other authorized session
 GIFTCODE_NOT_ALLOWED	Giftcode not allowed
 INVITE_HASH_EXPIRED	The chat the user tried to join has expired and is not valid anymore
 PAYMENT_UNSUPPORTED	A detailed description of the error will be received separately as described [here »](https://core.telegram.org/api/errors#406-not-acceptable).
+PEER_ID_INVALID	The provided peer id is invalid.
 PHONE_NUMBER_INVALID	The phone number is invalid
 PHONE_PASSWORD_FLOOD	You have tried to log-in too many times
+PRECHECKOUT_FAILED	Precheckout failed, a detailed and localized description for the error will be emitted via an [updateServiceNotification as specified here »](https://core.telegram.org/api/errors#406-not-acceptable).
 PREMIUM_CURRENTLY_UNAVAILABLE	Premium currently unavailable
 PREVIOUS_CHAT_IMPORT_ACTIVE_WAIT_XMIN	Similar to a flood wait, must wait {value} minutes
 PRIVACY_PREMIUM_REQUIRED	You need a [Telegram Premium subscription](https://core.telegram.org/api/premium) to send a message to this user.
 SEND_CODE_UNAVAILABLE	Returned when all available options for this type of number were already used (e.g. flash-call, then SMS, then this error might be returned to trigger a second resend)
+STARGIFT_EXPORT_IN_PROGRESS	A gift export is in progress, a detailed and localized description for the error will be emitted via an [updateServiceNotification as specified here »](https://core.telegram.org/api/errors#406-not-acceptable).
+STARS_FORM_AMOUNT_MISMATCH	The form amount has changed, please fetch the new form using [payments.getPaymentForm](https://core.telegram.org/method/payments.getPaymentForm) and restart the process.
 STICKERSET_INVALID	The sticker set is invalid
 STICKERSET_OWNER_ANONYMOUS	This sticker set can't be used as the group's sticker set because it was created by one of its anonymous admins
 TOPIC_CLOSED	This topic was closed, you can't send messages to it anymore.
 TOPIC_DELETED	The specified topic was deleted.
+TRANSLATIONS_DISABLED	Translations are unavailable, a detailed and localized description for the error will be emitted via an [updateServiceNotification as specified here »](https://core.telegram.org/api/errors#406-not-acceptable).
 UPDATE_APP_TO_LOGIN	Update app to login
 USERPIC_PRIVACY_REQUIRED	You need to disable privacy settings for your profile picture in order to make your geolocation public
 USERPIC_UPLOAD_REQUIRED	You must have a profile picture to publish your geolocation
