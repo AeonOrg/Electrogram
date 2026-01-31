@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import contextlib
 import json
+import keyword
 import re
 import shutil
 from functools import partial
@@ -81,7 +82,8 @@ def snake(s: str):
 
 
 def camel(s: str):
-    return "".join(i[0].upper() + i[1:] for i in s.split("_"))
+    res = "".join(i[0].upper() + i[1:] for i in s.split("_"))
+    return res + "T" if keyword.iskeyword(res) else res
 
 
 def get_type_hint(type: str) -> str:
@@ -235,12 +237,16 @@ def start() -> None:  # noqa: C901
 
             args = ARGS_RE.findall(line)
 
-            # Fix arg name being "self" or "from" (reserved python keywords)
-            for i, item in enumerate(args):
-                if item[0] == "self":
-                    args[i] = ("is_self", item[1])
-                if item[0] == "from":
-                    args[i] = ("from_peer", item[1])
+            # Fix arg name being a reserved python keyword
+            for i, (arg_name, arg_type) in enumerate(args):
+                if keyword.iskeyword(arg_name) or arg_name == "self":
+                    if arg_name == "self":
+                        new_name = "is_self"
+                    elif arg_name == "from":
+                        new_name = "from_peer"
+                    else:
+                        new_name = f"{arg_name}_arg"
+                    args[i] = (new_name, arg_type)
 
             combinator = Combinator(
                 section=section,
