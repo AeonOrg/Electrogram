@@ -59,7 +59,7 @@ class MemoryStorage(SQLiteStorage):
                 # Telethon format
                 string = self.session_string[1:]
                 ip_len = 4 if len(string) == 352 else 16
-                dc_id, ip, port, auth_key = struct.unpack(
+                dc_id, _ip, _port, auth_key = struct.unpack(
                     f">B{ip_len}sH256s",
                     base64.urlsafe_b64decode(string),
                 )

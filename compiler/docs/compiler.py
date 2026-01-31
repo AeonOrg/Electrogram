@@ -852,7 +852,7 @@ def pyrogram_api() -> None:
         fmt_keys = {}
 
         for k, v in categories.items():
-            name, *bound_methods = get_title_list(v)
+            _name, *bound_methods = get_title_list(v)
 
             fmt_keys.update(
                 {

@@ -47,7 +47,7 @@ class GetForumTopicsByID:
         Raises:
             ValueError: In case of invalid arguments.
         """
-        ids, ids_type = (topic_ids, int) if topic_ids else (None, None)
+        ids, _ids_type = (topic_ids, int) if topic_ids else (None, None)
 
         if ids is None:
             raise ValueError("No argument supplied. Either pass topic_ids")
