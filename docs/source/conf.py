@@ -35,7 +35,7 @@ source_suffix = ".rst"
 autodoc_member_order = "bysource"
 
 # Paths for templates and static files
-templates_path = ["../resources/templates"]
+templates_path = []
 
 # HTML options
 html_copy_source = False
@@ -45,7 +45,7 @@ html_show_sourcelink = True
 html_permalinks = False
 html_show_copyright = False
 html_show_sphinx = False
-html_static_path = ["../resources/static", "_static"]
+html_static_path = ["_static"]
 
 # Napoleon settings
 napoleon_use_rtype = False
@@ -110,7 +110,6 @@ html_favicon = "_static/fav.svg"
 
 # LaTeX configuration
 latex_engine = "xelatex"
-latex_logo = "../resources/static/img/pyrogram.png"
 latex_elements = {
     "pointsize": "12pt",
     "fontpkg": r"""

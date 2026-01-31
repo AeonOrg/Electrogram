@@ -10,6 +10,7 @@ if TYPE_CHECKING:
 
 class PaidMediaPreview(Object):
     """The paid media isn't available before the payment.
+
     Parameters:
         width (``int``, *optional*):
             Media width as defined by the sender.

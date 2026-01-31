@@ -7,6 +7,7 @@ from pyrogram.types.object import Object
 
 class MessageReactor(Object):
     """Contains information about a message reactor.
+
     Parameters:
         amount (``int``):
             Stars amount.

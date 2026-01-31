@@ -7,6 +7,7 @@ from pyrogram.types.object import Object
 
 class FoundContacts(Object):
     """Chats found by name substring and auxiliary data.
+
     Parameters:
         my_results (List of :obj:`~pyrogram.types.Chat`, *optional*):
             Personalized results.
