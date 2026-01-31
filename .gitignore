@@ -4,3 +4,8 @@ pyrogram/raw/functions/
 pyrogram/raw/types/
 pyrogram/raw/base/
 pyrogram/raw/all.py
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
