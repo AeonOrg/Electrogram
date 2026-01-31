@@ -120,7 +120,10 @@ def start() -> None:
 
 
 if __name__ == "__main__":
-    HOME = "."
-    DEST = "../../pyrogram/errors/exceptions"
+    _HOME = Path(__file__).parent.resolve()
+    _REPO_ROOT = _HOME.parent.parent
+
+    HOME = str(_HOME)
+    DEST = str(_REPO_ROOT / "pyrogram/errors/exceptions")
 
     start()

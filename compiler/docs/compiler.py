@@ -899,11 +899,14 @@ def start() -> None:
 
 
 if __name__ == "__main__":
-    FUNCTIONS_PATH = "../../pyrogram/raw/functions"
-    TYPES_PATH = "../../pyrogram/raw/types"
-    BASE_PATH = "../../pyrogram/raw/base"
-    HOME = "."
-    DESTINATION = "../../docs/source/telegram"
-    PYROGRAM_API_DEST = "../../docs/source/api"
+    _HOME = Path(__file__).parent.resolve()
+    _REPO_ROOT = _HOME.parent.parent
+
+    FUNCTIONS_PATH = str(_REPO_ROOT / "pyrogram/raw/functions")
+    TYPES_PATH = str(_REPO_ROOT / "pyrogram/raw/types")
+    BASE_PATH = str(_REPO_ROOT / "pyrogram/raw/base")
+    HOME = str(_HOME)
+    DESTINATION = str(_REPO_ROOT / "docs/source/telegram")
+    PYROGRAM_API_DEST = str(_REPO_ROOT / "docs/source/api")
 
     start()

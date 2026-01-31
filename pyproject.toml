@@ -42,11 +42,12 @@ dev = [
     "pytest",
     "pytest-asyncio",
     "pytest-cov",
-    "twine"
+    "twine",
+    "ruff"
 ]
 
 docs = [
-    "sphinx",
+    "sphinx < 8.0.0",
     "sphinx-immaterial",
     "sphinx_copybutton",
     "sphinx-autobuild",

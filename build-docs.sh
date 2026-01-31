@@ -3,20 +3,13 @@
 set -e
 
 export GITHUB_TOKEN
-VENV="$(pwd)/venv"
-export VENV
 
-make clean
-make clean-docs
-make venv
-make api
-"$VENV/bin/pip" install -e '.[docs]'
+uv sync --extra docs
+uv run python compiler/api/compiler.py
+uv run python compiler/errors/compiler.py
+uv run python compiler/docs/compiler.py
 
-cd compiler/docs
-"$VENV/bin/python" compiler.py
-cd ../..
-
-"$VENV/bin/sphinx-build" -b html "docs/source" "docs/build/html" -j auto
+uv run sphinx-build -b html "docs/source" "docs/build/html" -j auto
 
 REPO_URL="https://5hojib:$GITHUB_TOKEN@github.com/5hojib/Electrogram-docs.git"
 CLONE_DIR="Electrogram-docs"

@@ -1,0 +1,2868 @@
+Running Sphinx v9.1.0
+loading translations [en]... done
+making output directory... done
+WARNING: html_static_path entry '../resources/static' does not exist
+Converting `source_suffix = '.rst'` to `source_suffix = {'.rst': 'restructuredtext'}`.
+[autosummary] generating autosummary for: _includes/usable-by/bots.rst, _includes/usable-by/users-bots.rst, _includes/usable-by/users.rst, api/client.rst, api/decorators.rst, api/enums/AccentColor.rst, api/enums/BusinessSchedule.rst, api/enums/ChatAction.rst, api/enums/ChatEventAction.rst, api/enums/ChatJoinType.rst, ..., topics/proxy.rst, topics/scheduling.rst, topics/serializing.rst, topics/smart-plugins.rst, topics/storage-engines.rst, topics/synchronous.rst, topics/test-servers.rst, topics/text-formatting.rst, topics/use-filters.rst, topics/voice-calls.rst
+WARNING: Failed to import pyrogram.filters.
+Possible hints:
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+loading intersphinx inventory 'python' from https://docs.python.org/3/objects.inv ...
+building [mo]: targets for 0 po files that are out of date
+writing output...
+building [html]: targets for 97 source files that are out of date
+updating environment: [new config] 97 added, 0 changed, 0 removed
+reading sources... [ 14%] _includes/usable-by/bots .. api/enums/FolderColor
+reading sources... [ 29%] api/enums/ListenerTypes .. api/enums/StoryPrivacy
+reading sources... [ 43%] api/enums/UserStatus .. faq/how-to-avoid-flood-waits
+reading sources... [ 57%] faq/how-to-use-webhooks .. faq/why-is-the-client-reacting-slowly-in-supergroups-channels
+reading sources... [ 71%] index .. start/examples/raw_updates
+reading sources... [ 86%] start/examples/use_inline_bots .. topics/serializing
+reading sources... [100%] topics/smart-plugins .. topics/voice-calls
+
+WARNING: autodoc: failed to import 'Client' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'Client.on_bot_business_connect' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'Client.on_message' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'Client.on_bot_business_message' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'Client.on_edited_message' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'Client.on_edited_bot_business_message' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'Client.on_callback_query' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'Client.on_shipping_query' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'Client.on_pre_checkout_query' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'Client.on_message_reaction_updated' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'Client.on_message_reaction_count_updated' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'Client.on_inline_query' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'Client.on_chosen_inline_result' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'Client.on_chat_member_updated' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'Client.on_chat_join_request' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'Client.on_deleted_messages' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'Client.on_edited_bot_business_message' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'Client.on_user_status' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'Client.on_story' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'Client.on_poll' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'Client.on_disconnect' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'Client.on_raw_update' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.AccentColor' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.BusinessSchedule' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.ChatAction' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.ChatEventAction' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.ChatJoinType' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.ChatMemberStatus' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.ChatMembersFilter' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.ChatType' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.ClientPlatform' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.FolderColor' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.ListenerTypes' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.MessageEntityType' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.MessageMediaType' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.MessageServiceType' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.MessagesFilter' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.NextCodeType' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.ParseMode' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.PollType' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.PrivacyKey' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.ProfileColor' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.ReactionType' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.ReplyColor' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.SentCodeType' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.StoriesPrivacyRules' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'enums.StoryPrivacy' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+/app/docs/source/support.rst:43: WARNING: Document may not end with a transition. [docutils]
+/app/docs/source/index.rst:96: WARNING: toctree contains reference to nonexisting document 'api/methods/index' [toc.not_readable]
+/app/docs/source/index.rst:96: WARNING: toctree contains reference to nonexisting document 'api/types/index' [toc.not_readable]
+/app/docs/source/index.rst:96: WARNING: toctree contains reference to nonexisting document 'api/bound-methods/index' [toc.not_readable]
+/app/docs/source/index.rst:138: WARNING: toctree contains reference to nonexisting document 'telegram/functions/index' [toc.not_readable]
+/app/docs/source/index.rst:138: WARNING: toctree contains reference to nonexisting document 'telegram/types/index' [toc.not_readable]
+/app/docs/source/index.rst:138: WARNING: toctree contains reference to nonexisting document 'telegram/base/index' [toc.not_readable]
+WARNING: autodoc: failed to import 'enums.UserStatus' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import AccentColor.
+Possible hints:
+* ModuleNotFoundError: No module named 'AccentColor'
+* KeyError: 'pyrogram'
+* KeyError: 'AccentColor'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* ValueError: not enough values to unpack (expected 2, got 1)
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import BusinessSchedule.
+Possible hints:
+* KeyError: 'pyrogram'
+* KeyError: 'BusinessSchedule'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* ValueError: not enough values to unpack (expected 2, got 1)
+* ModuleNotFoundError: No module named 'BusinessSchedule'
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import ChatAction.
+Possible hints:
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* KeyError: 'ChatAction'
+* ValueError: not enough values to unpack (expected 2, got 1)
+* ModuleNotFoundError: No module named 'ChatAction'
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import ChatEventAction.
+Possible hints:
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'ChatEventAction'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* ValueError: not enough values to unpack (expected 2, got 1)
+* KeyError: 'ChatEventAction'
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import ChatJoinType.
+Possible hints:
+* KeyError: 'ChatJoinType'
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'ChatJoinType'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* ValueError: not enough values to unpack (expected 2, got 1)
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import ChatMemberStatus.
+Possible hints:
+* KeyError: 'ChatMemberStatus'
+* ModuleNotFoundError: No module named 'ChatMemberStatus'
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* ValueError: not enough values to unpack (expected 2, got 1)
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import ChatMembersFilter.
+Possible hints:
+* KeyError: 'ChatMembersFilter'
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'ChatMembersFilter'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* ValueError: not enough values to unpack (expected 2, got 1)
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import ChatType.
+Possible hints:
+* ModuleNotFoundError: No module named 'ChatType'
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* ValueError: not enough values to unpack (expected 2, got 1)
+* KeyError: 'ChatType'
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import ClientPlatform.
+Possible hints:
+* ModuleNotFoundError: No module named 'ClientPlatform'
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* ValueError: not enough values to unpack (expected 2, got 1)
+* KeyError: 'ClientPlatform'
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import FolderColor.
+Possible hints:
+* KeyError: 'pyrogram'
+* KeyError: 'FolderColor'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* ValueError: not enough values to unpack (expected 2, got 1)
+* ModuleNotFoundError: No module named 'FolderColor'
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import ListenerTypes.
+Possible hints:
+* KeyError: 'ListenerTypes'
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'ListenerTypes'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* ValueError: not enough values to unpack (expected 2, got 1)
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import MessageEntityType.
+Possible hints:
+* ModuleNotFoundError: No module named 'MessageEntityType'
+* KeyError: 'MessageEntityType'
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* ValueError: not enough values to unpack (expected 2, got 1)
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import MessageMediaType.
+Possible hints:
+* ModuleNotFoundError: No module named 'MessageMediaType'
+* KeyError: 'MessageMediaType'
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* ValueError: not enough values to unpack (expected 2, got 1)
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import MessageServiceType.
+Possible hints:
+* ModuleNotFoundError: No module named 'MessageServiceType'
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* KeyError: 'MessageServiceType'
+* ValueError: not enough values to unpack (expected 2, got 1)
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import MessagesFilter.
+Possible hints:
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'MessagesFilter'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* ValueError: not enough values to unpack (expected 2, got 1)
+* KeyError: 'MessagesFilter'
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import NextCodeType.
+Possible hints:
+* ModuleNotFoundError: No module named 'NextCodeType'
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* ValueError: not enough values to unpack (expected 2, got 1)
+* KeyError: 'NextCodeType'
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import ParseMode.
+Possible hints:
+* KeyError: 'ParseMode'
+* ModuleNotFoundError: No module named 'ParseMode'
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* ValueError: not enough values to unpack (expected 2, got 1)
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import PollType.
+Possible hints:
+* KeyError: 'PollType'
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'PollType'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* ValueError: not enough values to unpack (expected 2, got 1)
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import PrivacyKey.
+Possible hints:
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'PrivacyKey'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* KeyError: 'PrivacyKey'
+* ValueError: not enough values to unpack (expected 2, got 1)
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import ProfileColor.
+Possible hints:
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* KeyError: 'ProfileColor'
+* ValueError: not enough values to unpack (expected 2, got 1)
+* ModuleNotFoundError: No module named 'ProfileColor'
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import ReactionType.
+Possible hints:
+* KeyError: 'pyrogram'
+* KeyError: 'ReactionType'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* ValueError: not enough values to unpack (expected 2, got 1)
+* ModuleNotFoundError: No module named 'ReactionType'
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import ReplyColor.
+Possible hints:
+* ModuleNotFoundError: No module named 'ReplyColor'
+* KeyError: 'ReplyColor'
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* ValueError: not enough values to unpack (expected 2, got 1)
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import SentCodeType.
+Possible hints:
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'SentCodeType'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* KeyError: 'SentCodeType'
+* ValueError: not enough values to unpack (expected 2, got 1)
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import StoriesPrivacyRules.
+Possible hints:
+* KeyError: 'StoriesPrivacyRules'
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* ValueError: not enough values to unpack (expected 2, got 1)
+* ModuleNotFoundError: No module named 'StoriesPrivacyRules'
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import StoryPrivacy.
+Possible hints:
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'StoryPrivacy'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* ValueError: not enough values to unpack (expected 2, got 1)
+* KeyError: 'StoryPrivacy'
+/app/docs/source/api/enums/index.rst:13: WARNING: autosummary: failed to import UserStatus.
+Possible hints:
+* KeyError: 'pyrogram'
+* ModuleNotFoundError: No module named 'pyrogram.raw.all'
+* KeyError: 'UserStatus'
+* ValueError: not enough values to unpack (expected 2, got 1)
+* ModuleNotFoundError: No module named 'UserStatus'
+WARNING: autodoc: failed to import 'filters' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'handlers.BotBusinessConnectHandler' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'handlers.MessageHandler' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'handlers.BotBusinessMessageHandler' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'handlers.EditedMessageHandler' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'handlers.EditedBotBusinessMessageHandler' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'handlers.DeletedMessagesHandler' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'handlers.DeletedBotBusinessMessagesHandler' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'handlers.CallbackQueryHandler' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'handlers.ShippingQueryHandler' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'handlers.PreCheckoutQueryHandler' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'handlers.MessageReactionUpdatedHandler' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'handlers.MessageReactionCountUpdatedHandler' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'handlers.InlineQueryHandler' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'handlers.ChosenInlineResultHandler' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'handlers.ChatMemberUpdatedHandler' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'handlers.UserStatusHandler' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'handlers.StoryHandler' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'handlers.PollHandler' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'handlers.DisconnectHandler' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+WARNING: autodoc: failed to import 'handlers.RawUpdateHandler' from module 'pyrogram'; the following exception was raised:
+Traceback (most recent call last):
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 131, in _import_from_module_and_path
+    module = _import_module(module_name, try_reload=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/.venv/lib/python3.12/site-packages/sphinx/ext/autodoc/_dynamic/_importer.py", line 221, in _import_module
+    module = importlib.import_module(modname)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/jules/.pyenv/versions/3.12.12/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/app/pyrogram/__init__.py", line 24, in <module>
+    from . import enums, errors, filters, handlers, raw, types
+  File "/app/pyrogram/enums/__init__.py", line 4, in <module>
+    from .business_schedule import BusinessSchedule
+  File "/app/pyrogram/enums/business_schedule.py", line 3, in <module>
+    from pyrogram import raw
+  File "/app/pyrogram/raw/__init__.py", line 5, in <module>
+    from . import base, core, functions, types
+  File "/app/pyrogram/raw/core/__init__.py", line 3, in <module>
+    from .future_salt import FutureSalt
+  File "/app/pyrogram/raw/core/future_salt.py", line 6, in <module>
+    from .primitives.int import Int, Long
+  File "/app/pyrogram/raw/core/primitives/__init__.py", line 3, in <module>
+    from .bool import Bool, BoolFalse, BoolTrue
+  File "/app/pyrogram/raw/core/primitives/bool.py", line 5, in <module>
+    from pyrogram.raw.core.tl_object import TLObject
+  File "/app/pyrogram/raw/core/tl_object.py", line 6, in <module>
+    from pyrogram.raw.all import objects
+ModuleNotFoundError: No module named 'pyrogram.raw.all'
+ [autodoc.import_object]
+looking for now-outdated files... none found
+pickling environment... done
+checking consistency... /app/docs/source/_includes/usable-by/bots.rst: WARNING: document isn't included in any toctree [toc.not_included]
+/app/docs/source/_includes/usable-by/users.rst: WARNING: document isn't included in any toctree [toc.not_included]
+/app/docs/source/_includes/usable-by/users-bots.rst: WARNING: document isn't included in any toctree [toc.not_included]
+done
+preparing documents... done
+copying assets...
+copying static files...
+Writing evaluated template result to /app/docs/build/html/_static/documentation_options.js
+Writing evaluated template result to /app/docs/build/html/_static/basic.css
+Writing evaluated template result to /app/docs/build/html/_static/language_data.js
+Writing evaluated template result to /app/docs/build/html/_static/copybutton.js
+copying static files: done
+copying extra files...
+copying extra files: done
+copying assets: done
+
+
+Versions
+========
+
+* Platform:         linux; (Linux-6.8.0-x86_64-with-glibc2.39)
+* Python version:   3.12.12 (CPython)
+* Sphinx version:   9.1.0
+* Docutils version: 0.22.4
+* Jinja2 version:   3.1.6
+* Pygments version: 2.19.2
+
+Last Messages
+=============
+
+    copying assets...
+    copying static files...
+    Writing evaluated template result to /app/docs/build/html/_static/documentation_options.js
+    Writing evaluated template result to /app/docs/build/html/_static/basic.css
+    Writing evaluated template result to /app/docs/build/html/_static/language_data.js
+    Writing evaluated template result to /app/docs/build/html/_static/copybutton.js
+    copying static files: done
+    copying extra files...
+    copying extra files: done
+    copying assets: done
+
+Loaded Extensions
+=================
+
+* sphinx.ext.mathjax (9.1.0)
+* alabaster (1.0.0)
+* sphinxcontrib.applehelp (2.0.0)
+* sphinxcontrib.devhelp (2.0.0)
+* sphinxcontrib.htmlhelp (2.1.0)
+* sphinxcontrib.serializinghtml (2.0.0)
+* sphinxcontrib.qthelp (2.0.0)
+* sphinx.ext.autodoc (9.1.0)
+* sphinx.ext.napoleon (9.1.0)
+* sphinx.ext.autosummary (9.1.0)
+* sphinx.ext.intersphinx (9.1.0)
+* sphinx_copybutton (0.5.2)
+* sphinx_immaterial.css_and_javascript_bundles (unknown version)
+* sphinx_immaterial.external_resource_cache (unknown version)
+* sphinx_immaterial.google_fonts (unknown version)
+* sphinx_immaterial.local_mathjax (unknown version)
+* sphinx_immaterial.apidoc.apidoc_formatting (unknown version)
+* sphinx_immaterial.apidoc.python.parameter_objects (unknown version)
+* sphinx_immaterial.apidoc.python.strip_property_prefix (unknown version)
+* sphinx_immaterial.apidoc.python.type_annotation_transforms (unknown version)
+* sphinx_immaterial.apidoc.python.strip_self_and_return_type_annotations (unknown version)
+* sphinx_immaterial.apidoc.python.default (unknown version)
+* sphinx_immaterial.apidoc.cpp.signodes (unknown version)
+* sphinx_immaterial.apidoc.cpp.strip_namespaces_from_signatures (unknown version)
+* sphinx_immaterial.apidoc.cpp.cpp_resolve_c_xrefs (unknown version)
+* sphinx_immaterial.apidoc.cpp.default (unknown version)
+* sphinx_immaterial.nav_adapt (unknown version)
+* sphinx_immaterial.postprocess_html (unknown version)
+* sphinx_immaterial.apidoc.object_description_options (unknown version)
+* sphinx_immaterial.apidoc.object_toc (unknown version)
+* sphinx_immaterial.search_adapt (unknown version)
+* sphinx_immaterial.apidoc.wrap_signatures (unknown version)
+* sphinx_immaterial.apidoc.generic_synopses (unknown version)
+* sphinx_immaterial.content_tabs (unknown version)
+* sphinx_immaterial.mermaid_diagrams (unknown version)
+* sphinx_immaterial.task_lists (unknown version)
+* sphinx_immaterial.code_annotations (unknown version)
+* sphinx_immaterial.default_literal_role (unknown version)
+* sphinx_immaterial.highlight_push_pop (unknown version)
+* sphinx_immaterial.inline_icons (unknown version)
+* sphinx_immaterial.custom_admonitions (unknown version)
+* sphinx_immaterial (unknown version)
+
+Traceback
+=========
+
+      File "/app/.venv/lib/python3.12/site-packages/sphinx/transforms/post_transforms/__init__.py", line 352, in run
+        if issubclass(translator, SphinxTranslator):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    TypeError: issubclass() arg 1 must be a class
+
+
+The full traceback has been saved in:
+/tmp/sphinx-err-5mgy3ire.log
+
+To report this error to the developers, please open an issue at <https://github.com/sphinx-doc/sphinx/issues/>. Thanks!
+Please also report this if it was a user error, so that a better error message can be provided next time.
