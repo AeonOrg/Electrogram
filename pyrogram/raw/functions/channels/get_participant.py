@@ -1,0 +1,63 @@
+from io import BytesIO
+
+from pyrogram.raw.core.primitives import Int, Long, Int128, Int256, Bool, Bytes, String, Double, Vector
+from pyrogram.raw.core import TLObject
+from pyrogram import raw
+from typing import List, Optional, Any
+
+# # # # # # # # # # # # # # # # # # # # # # # #
+#               !!! WARNING !!!               #
+#          This is a generated file!          #
+# All changes made in this file will be lost! #
+# # # # # # # # # # # # # # # # # # # # # # # #
+
+
+class GetParticipant(TLObject):  # type: ignore
+    """Get info about a channel/supergroup participant
+
+
+    Details:
+        - Layer: ``224``
+        - ID: ``A0AB6CC6``
+
+    Parameters:
+        channel (:obj:`InputChannel <pyrogram.raw.base.InputChannel>`):
+            Channel/supergroup
+
+        participant (:obj:`InputPeer <pyrogram.raw.base.InputPeer>`):
+            Participant to get info about
+
+    Returns:
+        :obj:`channels.ChannelParticipant <pyrogram.raw.base.channels.ChannelParticipant>`
+    """
+
+    __slots__: List[str] = ["channel", "participant"]
+
+    ID = 0xa0ab6cc6
+    QUALNAME = "functions.channels.GetParticipant"
+
+    def __init__(self, *, channel: "raw.base.InputChannel", participant: "raw.base.InputPeer") -> None:
+        self.channel = channel  # InputChannel
+        self.participant = participant  # InputPeer
+
+    @staticmethod
+    def read(b: BytesIO, *args: Any) -> "GetParticipant":
+        # No flags
+
+        channel = TLObject.read(b)
+
+        participant = TLObject.read(b)
+
+        return GetParticipant(channel=channel, participant=participant)
+
+    def write(self, *args) -> bytes:
+        b = BytesIO()
+        b.write(Int(self.ID, False))
+
+        # No flags
+
+        b.write(self.channel.write())
+
+        b.write(self.participant.write())
+
+        return b.getvalue()
