@@ -4,7 +4,7 @@ Scheduling Tasks
 Scheduling tasks means executing one or more functions periodically at pre-defined intervals or after a delay. This is
 useful, for example, to send recurring messages to specific chats or users.
 
-This page will show examples on how to integrate Electrogram with ``apscheduler``.
+This page will show examples of how to integrate Electrogram with ``apscheduler``.
 For more detailed information, you can visit and learn from the library documentation.
 
 .. contents:: Contents
