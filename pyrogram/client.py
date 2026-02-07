@@ -348,13 +348,6 @@ class Client(Methods):
         }
         self.loop = asyncio.get_event_loop()
 
-    def __enter__(self):
-        return self.start()
-
-    def __exit__(self, *args):
-        with contextlib.suppress(ConnectionError):
-            self.stop()
-
     async def __aenter__(self):
         return await self.start()
 

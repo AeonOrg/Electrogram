@@ -9,7 +9,7 @@ import struct
 from concurrent.futures.thread import ThreadPoolExecutor
 from datetime import datetime, timezone
 from getpass import getpass
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import TYPE_CHECKING
 
 import pyrogram
 from pyrogram import enums, raw, types
@@ -393,15 +393,6 @@ def timestamp_to_datetime(ts: int | None) -> datetime | None:
 
 def datetime_to_timestamp(dt: datetime | None) -> int | None:
     return int(dt.timestamp()) if dt else None
-
-
-async def run_sync(
-    func: Callable[..., TypeVar("Result")],
-    *args: Any,
-    **kwargs: Any,
-) -> TypeVar("Result"):
-    loop = asyncio.get_event_loop()
-    return await loop.run_in_executor(None, functools.partial(func, *args, **kwargs))
 
 
 async def get_reply_to(
