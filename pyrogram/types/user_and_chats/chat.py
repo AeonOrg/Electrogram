@@ -567,7 +567,7 @@ class Chat(Object):
                     full_chat.paid_reactions_available
                 )
 
-                linked_chat_raw = chats.get(full_chat.linked_chat_id, None)
+                linked_chat_raw = chats.get(full_chat.linked_chat_id)
 
                 if linked_chat_raw:
                     parsed_chat.linked_chat = Chat._parse_channel_chat(

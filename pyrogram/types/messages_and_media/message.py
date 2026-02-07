@@ -1181,18 +1181,14 @@ class Message(Object, Update):
                         attributes = {type(i): i for i in doc.attributes}
 
                         file_name = getattr(
-                            attributes.get(
-                                raw.types.DocumentAttributeFilename,
-                                None,
-                            ),
+                            attributes.get(raw.types.DocumentAttributeFilename),
                             "file_name",
                             None,
                         )
 
                         if raw.types.DocumentAttributeAnimated in attributes:
                             video_attributes = attributes.get(
-                                raw.types.DocumentAttributeVideo,
-                                None,
+                                raw.types.DocumentAttributeVideo
                             )
                             animation = types.Animation._parse(
                                 client,
@@ -1239,16 +1235,14 @@ class Message(Object, Update):
                                         }
                                         altdoc_file_name = getattr(
                                             altdoc_attributes.get(
-                                                raw.types.DocumentAttributeFilename,
-                                                None,
+                                                raw.types.DocumentAttributeFilename
                                             ),
                                             "file_name",
                                             None,
                                         )
                                         altdoc_video_attribute = (
                                             altdoc_attributes.get(
-                                                raw.types.DocumentAttributeVideo,
-                                                None,
+                                                raw.types.DocumentAttributeVideo
                                             )
                                         )
                                         if altdoc_video_attribute:
@@ -1418,7 +1412,7 @@ class Message(Object, Update):
                 forwards=message.forwards,
                 via_bot=types.User._parse(
                     client,
-                    users.get(message.via_bot_id, None),
+                    users.get(message.via_bot_id),
                 ),
                 outgoing=message.out,
                 reply_markup=reply_markup,

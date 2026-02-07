@@ -9,7 +9,6 @@ import struct
 from concurrent.futures.thread import ThreadPoolExecutor
 from datetime import datetime, timezone
 from getpass import getpass
-from typing import TYPE_CHECKING
 
 import pyrogram
 from pyrogram import enums, raw, types
@@ -19,9 +18,6 @@ from pyrogram.file_id import (
     FileId,
     FileType,
 )
-
-if TYPE_CHECKING:
-    from collections.abc import Callable
 
 
 async def ainput(prompt: str = "", *, hide: bool = False):

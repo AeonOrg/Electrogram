@@ -34,7 +34,7 @@ class GetAvailableEffects:
                 await types.AvailableEffect._parse(
                     self,
                     effect,
-                    documents.get(effect.effect_sticker_id, None),
+                    documents.get(effect.effect_sticker_id),
                 )
                 for effect in r.effects
             ],
