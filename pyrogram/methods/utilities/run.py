@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import asyncio
-import inspect
 from typing import TYPE_CHECKING
 
 from pyrogram.methods.utilities.idle import idle
@@ -59,11 +58,7 @@ class Run:
 
         if coroutine is not None:
             run(coroutine)
-        elif inspect.iscoroutinefunction(self.start):
+        else:
             run(self.start())
             run(idle())
             run(self.stop())
-        else:
-            self.start()
-            run(idle())
-            self.stop()
