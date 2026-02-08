@@ -159,7 +159,7 @@ class Sticker(Object):
         )
 
         image_size_attributes = document_attributes.get(
-            raw.types.DocumentAttributeImageSize
+            raw.types.DocumentAttributeImageSize,
         )
         file_name = getattr(
             document_attributes.get(raw.types.DocumentAttributeFilename),

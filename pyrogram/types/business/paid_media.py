@@ -48,7 +48,7 @@ class PaidMedia(Object):
                 )
                 if raw.types.DocumentAttributeAnimated in attributes:
                     video_attributes = attributes.get(
-                        raw.types.DocumentAttributeVideo
+                        raw.types.DocumentAttributeVideo,
                     )
                     extended_media.append(
                         types.Animation._parse(

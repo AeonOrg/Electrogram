@@ -202,7 +202,7 @@ class Story(Object, Update):
 
                     if raw.types.DocumentAttributeAnimated in attributes:
                         video_attributes = attributes.get(
-                            raw.types.DocumentAttributeVideo
+                            raw.types.DocumentAttributeVideo,
                         )
                         animation = types.Animation._parse(
                             client,
@@ -213,7 +213,7 @@ class Story(Object, Update):
                         media_type = enums.MessageMediaType.ANIMATION
                     elif raw.types.DocumentAttributeVideo in attributes:
                         video_attributes = attributes.get(
-                            raw.types.DocumentAttributeVideo
+                            raw.types.DocumentAttributeVideo,
                         )
                         video = types.Video._parse(
                             client,

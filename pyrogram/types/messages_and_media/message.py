@@ -1188,7 +1188,7 @@ class Message(Object, Update):
 
                         if raw.types.DocumentAttributeAnimated in attributes:
                             video_attributes = attributes.get(
-                                raw.types.DocumentAttributeVideo
+                                raw.types.DocumentAttributeVideo,
                             )
                             animation = types.Animation._parse(
                                 client,
@@ -1235,14 +1235,14 @@ class Message(Object, Update):
                                         }
                                         altdoc_file_name = getattr(
                                             altdoc_attributes.get(
-                                                raw.types.DocumentAttributeFilename
+                                                raw.types.DocumentAttributeFilename,
                                             ),
                                             "file_name",
                                             None,
                                         )
                                         altdoc_video_attribute = (
                                             altdoc_attributes.get(
-                                                raw.types.DocumentAttributeVideo
+                                                raw.types.DocumentAttributeVideo,
                                             )
                                         )
                                         if altdoc_video_attribute:
