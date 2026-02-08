@@ -135,7 +135,7 @@ class DraftMessage(Object):
                     attributes = {type(i): i for i in doc.attributes}
 
                     file_name = getattr(
-                        attributes.get(raw.types.DocumentAttributeFilename, None),
+                        attributes.get(raw.types.DocumentAttributeFilename),
                         "file_name",
                         None,
                     )

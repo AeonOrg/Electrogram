@@ -11,6 +11,7 @@ if TYPE_CHECKING:
 
 class CollectibleItemInfo(Object):
     """Contains information about a collectible item and its last purchase.
+
     Parameters:
         purchase_date (``datetime``):
             Point in time (Unix timestamp) when the item was purchased

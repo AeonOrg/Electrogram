@@ -9,3 +9,18 @@ pyrogram/raw/all.py
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Virtual Environment
+venv/
+.venv/
+
+# Docs build
+docs/build/
+docs/source/api/bound-methods/
+docs/source/api/methods/
+docs/source/api/types/
+docs/source/telegram/
+Electrogram-docs/
+
+# Ruff
+.ruff_cache/

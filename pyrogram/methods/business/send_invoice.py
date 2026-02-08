@@ -186,7 +186,7 @@ class SendInvoice:
                     payload=encoded_payload,
                     provider=provider,
                     provider_data=raw.types.DataJSON(
-                        data=provider_data if provider_data else "{}",
+                        data=provider_data or "{}",
                     ),
                     photo=raw.types.InputWebDocument(
                         url=photo_url,

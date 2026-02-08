@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-__version__ = "v0.2.224"
+__version__ = "v0.2.224.1"
 __license__ = "MIT License"
 
 from concurrent.futures.thread import ThreadPoolExecutor
@@ -23,7 +23,8 @@ crypto_executor = ThreadPoolExecutor(1, thread_name_prefix="CryptoWorker")
 # ruff: noqa: E402
 from . import enums, errors, filters, handlers, raw, types
 from .client import Client
-from .sync import compose, idle
+from .methods.utilities.compose import compose
+from .methods.utilities.idle import idle
 
 __all__ = [
     "Client",

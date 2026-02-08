@@ -160,17 +160,13 @@ class Sticker(Object):
 
         image_size_attributes = document_attributes.get(
             raw.types.DocumentAttributeImageSize,
-            None,
         )
         file_name = getattr(
-            document_attributes.get(raw.types.DocumentAttributeFilename, None),
+            document_attributes.get(raw.types.DocumentAttributeFilename),
             "file_name",
             None,
         )
-        video_attributes = document_attributes.get(
-            raw.types.DocumentAttributeVideo,
-            None,
-        )
+        video_attributes = document_attributes.get(raw.types.DocumentAttributeVideo)
 
         sticker_set = sticker_attributes.stickerset
 

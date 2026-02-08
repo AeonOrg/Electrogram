@@ -52,7 +52,7 @@ class BotApp(Object):
         if isinstance(bot_app.document, raw.types.Document):
             attributes = {type(i): i for i in bot_app.document.attributes}
             file_name = getattr(
-                attributes.get(raw.types.DocumentAttributeFilename, None),
+                attributes.get(raw.types.DocumentAttributeFilename),
                 "file_name",
                 None,
             )

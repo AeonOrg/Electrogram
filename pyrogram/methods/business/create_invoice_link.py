@@ -140,7 +140,7 @@ class CreateInvoiceLink:
                 payload=payload.encode() if isinstance(payload, str) else payload,
                 provider=provider_token,
                 provider_data=raw.types.DataJSON(
-                    data=provider_data if provider_data else "{}",
+                    data=provider_data or "{}",
                 ),
                 start_param=start_parameter,
             ),

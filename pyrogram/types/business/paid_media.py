@@ -42,14 +42,13 @@ class PaidMedia(Object):
             elif isinstance(m.media, raw.types.MessageMediaDocument):
                 attributes = {type(i): i for i in m.media.document.attributes}
                 file_name = getattr(
-                    attributes.get(raw.types.DocumentAttributeFilename, None),
+                    attributes.get(raw.types.DocumentAttributeFilename),
                     "file_name",
                     None,
                 )
                 if raw.types.DocumentAttributeAnimated in attributes:
                     video_attributes = attributes.get(
                         raw.types.DocumentAttributeVideo,
-                        None,
                     )
                     extended_media.append(
                         types.Animation._parse(

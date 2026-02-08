@@ -116,7 +116,6 @@ Meta
     topics/more-on-updates
     topics/client-settings
     topics/text-formatting
-    topics/synchronous
     topics/smart-plugins
     topics/storage-engines
     topics/serializing
