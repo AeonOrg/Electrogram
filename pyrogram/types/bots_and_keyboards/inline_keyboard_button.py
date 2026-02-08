@@ -131,22 +131,30 @@ class InlineKeyboardButton(Object):
                     style=style,
                 )
             return InlineKeyboardButton(
-                text=b.text, switch_inline_query=b.query, style=style
+                text=b.text,
+                switch_inline_query=b.query,
+                style=style,
             )
 
         if isinstance(b, raw.types.KeyboardButtonGame):
             return InlineKeyboardButton(
-                text=b.text, callback_game=types.CallbackGame(), style=style
+                text=b.text,
+                callback_game=types.CallbackGame(),
+                style=style,
             )
 
         if isinstance(b, raw.types.KeyboardButtonWebView):
             return InlineKeyboardButton(
-                text=b.text, web_app=types.WebAppInfo(url=b.url), style=style
+                text=b.text,
+                web_app=types.WebAppInfo(url=b.url),
+                style=style,
             )
 
         if isinstance(b, raw.types.KeyboardButtonCopy):
             return types.InlineKeyboardButton(
-                text=b.text, copy_text=b.copy_text, style=style
+                text=b.text,
+                copy_text=b.copy_text,
+                style=style,
             )
 
         if isinstance(b, raw.types.KeyboardButtonBuy):
@@ -173,7 +181,9 @@ class InlineKeyboardButton(Object):
 
         if self.url is not None:
             return raw.types.KeyboardButtonUrl(
-                text=self.text, url=self.url, style=style
+                text=self.text,
+                url=self.url,
+                style=style,
             )
 
         if self.login_url is not None:
@@ -210,10 +220,14 @@ class InlineKeyboardButton(Object):
 
         if self.web_app is not None:
             return raw.types.KeyboardButtonWebView(
-                text=self.text, url=self.web_app.url, style=style
+                text=self.text,
+                url=self.web_app.url,
+                style=style,
             )
         if self.copy_text is not None:
             return raw.types.KeyboardButtonCopy(
-                text=self.text, copy_text=self.copy_text, style=style
+                text=self.text,
+                copy_text=self.copy_text,
+                style=style,
             )
         return None

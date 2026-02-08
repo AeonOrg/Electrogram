@@ -75,7 +75,9 @@ class KeyboardButton(Object):
 
         if isinstance(b, raw.types.KeyboardButtonSimpleWebView):
             return KeyboardButton(
-                text=b.text, web_app=types.WebAppInfo(url=b.url), style=style
+                text=b.text,
+                web_app=types.WebAppInfo(url=b.url),
+                style=style,
             )
 
         if isinstance(b, raw.types.KeyboardButtonRequestPeer):
@@ -121,7 +123,9 @@ class KeyboardButton(Object):
         if self.request_contact:
             return raw.types.KeyboardButtonRequestPhone(text=self.text, style=style)
         if self.request_location:
-            return raw.types.KeyboardButtonRequestGeoLocation(text=self.text, style=style)
+            return raw.types.KeyboardButtonRequestGeoLocation(
+                text=self.text, style=style
+            )
         if self.request_chat:
             if isinstance(self.request_chat, types.RequestPeerTypeChannel):
                 # Note: InputKeyboardButtonRequestPeer doesn't have style in schema

@@ -18,7 +18,9 @@ class InlineKeyboardButtonBuy(Object):
             Button style.
     """
 
-    def __init__(self, text: str, style: types.KeyboardButtonStyle | None = None) -> None:
+    def __init__(
+        self, text: str, style: types.KeyboardButtonStyle | None = None
+    ) -> None:
         super().__init__()
 
         self.text = str(text)
@@ -27,10 +29,12 @@ class InlineKeyboardButtonBuy(Object):
     @staticmethod
     def read(b):
         return InlineKeyboardButtonBuy(
-            text=b.text, style=types.KeyboardButtonStyle.read(getattr(b, "style", None))
+            text=b.text,
+            style=types.KeyboardButtonStyle.read(getattr(b, "style", None)),
         )
 
     async def write(self, _: pyrogram.Client):
         return raw.types.KeyboardButtonBuy(
-            text=self.text, style=self.style.write() if self.style else None
+            text=self.text,
+            style=self.style.write() if self.style else None,
         )

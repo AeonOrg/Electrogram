@@ -1,10 +1,14 @@
 from __future__ import annotations
 
 import pytest
-from pyrogram import types, raw
+
+from pyrogram import raw, types
+
 
 def test_keyboard_button_style():
-    style = types.KeyboardButtonStyle(bg_primary=True, bg_danger=False, bg_success=True, icon=123)
+    style = types.KeyboardButtonStyle(
+        bg_primary=True, bg_danger=False, bg_success=True, icon=123
+    )
     assert style.bg_primary is True
     assert style.bg_danger is False
     assert style.bg_success is True
@@ -23,16 +27,22 @@ def test_keyboard_button_style():
     assert style2.bg_success is True
     assert style2.icon == 123
 
+
 def test_inline_keyboard_button_with_style():
     style = types.KeyboardButtonStyle(bg_primary=True)
-    button = types.InlineKeyboardButton("Test", url="https://example.com", style=style)
+    button = types.InlineKeyboardButton(
+        "Test", url="https://example.com", style=style
+    )
     assert button.style == style
 
-    raw_button = raw.types.KeyboardButtonUrl(text="Test", url="https://example.com", style=style.write())
+    raw_button = raw.types.KeyboardButtonUrl(
+        text="Test", url="https://example.com", style=style.write()
+    )
     button2 = types.InlineKeyboardButton.read(raw_button)
     assert button2.text == "Test"
     assert button2.url == "https://example.com"
     assert button2.style.bg_primary is True
+
 
 def test_keyboard_button_with_style():
     style = types.KeyboardButtonStyle(bg_success=True)
@@ -45,11 +55,13 @@ def test_keyboard_button_with_style():
     assert button2.text == "Test"
     assert button2.style.bg_success is True
 
+
 def test_keyboard_button_backward_compatibility():
     raw_button = raw.types.KeyboardButton(text="Test")
     button = types.KeyboardButton.read(raw_button)
     assert button == "Test"
     assert isinstance(button, str)
+
 
 @pytest.mark.asyncio
 async def test_inline_keyboard_button_write():
@@ -66,6 +78,7 @@ async def test_inline_keyboard_button_write():
     assert isinstance(raw_button, raw.types.KeyboardButtonCallback)
     assert raw_button.style.bg_danger is True
     assert raw_button.data == b"data"
+
 
 @pytest.mark.asyncio
 async def test_login_url_write_with_style():
