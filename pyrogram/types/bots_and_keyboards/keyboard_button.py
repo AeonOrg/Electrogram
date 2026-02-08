@@ -35,6 +35,8 @@ class KeyboardButton(Object):
             button is pressed. The Web App will be able to send a “web_app_data” service message. Available in private
             chats only.
 
+        style (:obj:`~pyrogram.types.KeyboardButtonStyle`, *optional*):
+            Button style.
     """
 
     def __init__(
@@ -46,6 +48,7 @@ class KeyboardButton(Object):
         | types.RequestPeerTypeChannel = None,
         request_user: types.RequestPeerTypeUser = None,
         web_app: types.WebAppInfo = None,
+        style: types.KeyboardButtonStyle = None,
     ) -> None:
         super().__init__()
 
@@ -55,20 +58,25 @@ class KeyboardButton(Object):
         self.request_chat = request_chat
         self.request_user = request_user
         self.web_app = web_app
+        self.style = style
 
     @staticmethod
     def read(b):
+        style = types.KeyboardButtonStyle.read(getattr(b, "style", None))
+
         if isinstance(b, raw.types.KeyboardButton):
-            return b.text
+            return KeyboardButton(text=b.text, style=style) if style else b.text
 
         if isinstance(b, raw.types.KeyboardButtonRequestPhone):
-            return KeyboardButton(text=b.text, request_contact=True)
+            return KeyboardButton(text=b.text, request_contact=True, style=style)
 
         if isinstance(b, raw.types.KeyboardButtonRequestGeoLocation):
-            return KeyboardButton(text=b.text, request_location=True)
+            return KeyboardButton(text=b.text, request_location=True, style=style)
 
         if isinstance(b, raw.types.KeyboardButtonSimpleWebView):
-            return KeyboardButton(text=b.text, web_app=types.WebAppInfo(url=b.url))
+            return KeyboardButton(
+                text=b.text, web_app=types.WebAppInfo(url=b.url), style=style
+            )
 
         if isinstance(b, raw.types.KeyboardButtonRequestPeer):
             if isinstance(b.peer_type, raw.types.RequestPeerTypeBroadcast):
@@ -79,6 +87,7 @@ class KeyboardButton(Object):
                         is_username=b.peer_type.has_username,
                         max=b.max_quantity,
                     ),
+                    style=style,
                 )
             if isinstance(b.peer_type, raw.types.RequestPeerTypeChat):
                 return KeyboardButton(
@@ -90,6 +99,7 @@ class KeyboardButton(Object):
                         is_forum=b.peer_type.forum,
                         max=b.max_quantity,
                     ),
+                    style=style,
                 )
 
             if isinstance(b.peer_type, raw.types.RequestPeerTypeUser):
@@ -100,17 +110,21 @@ class KeyboardButton(Object):
                         is_premium=b.peer_type.premium,
                         max=b.max_quantity,
                     ),
+                    style=style,
                 )
             return None
         return None
 
     def write(self):
+        style = self.style.write() if self.style else None
+
         if self.request_contact:
-            return raw.types.KeyboardButtonRequestPhone(text=self.text)
+            return raw.types.KeyboardButtonRequestPhone(text=self.text, style=style)
         if self.request_location:
-            return raw.types.KeyboardButtonRequestGeoLocation(text=self.text)
+            return raw.types.KeyboardButtonRequestGeoLocation(text=self.text, style=style)
         if self.request_chat:
             if isinstance(self.request_chat, types.RequestPeerTypeChannel):
+                # Note: InputKeyboardButtonRequestPeer doesn't have style in schema
                 return raw.types.InputKeyboardButtonRequestPeer(
                     text=self.text,
                     button_id=self.request_chat.button_id,
@@ -154,5 +168,6 @@ class KeyboardButton(Object):
             return raw.types.KeyboardButtonSimpleWebView(
                 text=self.text,
                 url=self.web_app.url,
+                style=style,
             )
-        return raw.types.KeyboardButton(text=self.text)
+        return raw.types.KeyboardButton(text=self.text, style=style)
