@@ -19,7 +19,9 @@ class InlineKeyboardButtonBuy(Object):
     """
 
     def __init__(
-        self, text: str, style: types.KeyboardButtonStyle | None = None
+        self,
+        text: str,
+        style: types.KeyboardButtonStyle | None = None,
     ) -> None:
         super().__init__()
 

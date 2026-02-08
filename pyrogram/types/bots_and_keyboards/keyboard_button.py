@@ -124,7 +124,8 @@ class KeyboardButton(Object):
             return raw.types.KeyboardButtonRequestPhone(text=self.text, style=style)
         if self.request_location:
             return raw.types.KeyboardButtonRequestGeoLocation(
-                text=self.text, style=style
+                text=self.text,
+                style=style,
             )
         if self.request_chat:
             if isinstance(self.request_chat, types.RequestPeerTypeChannel):
