@@ -555,6 +555,7 @@ def pyrogram_api() -> None:
         Bot keyboards
             ReplyKeyboardMarkup
             KeyboardButton
+            KeyboardButtonStyle
             ReplyKeyboardRemove
             InlineKeyboardMarkup
             InlineKeyboardButton

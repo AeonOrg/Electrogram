@@ -56,6 +56,9 @@ class InlineKeyboardButton(Object):
 
         copy_text (``str``, *optional*):
             A button that copies the text to the clipboard.
+
+        style (:obj:`~pyrogram.types.KeyboardButtonStyle`, *optional*):
+            Button style.
     """
 
     def __init__(
@@ -71,6 +74,7 @@ class InlineKeyboardButton(Object):
         callback_game: types.CallbackGame | None = None,
         requires_password: bool | None = None,
         copy_text: str | None = None,
+        style: types.KeyboardButtonStyle | None = None,
     ) -> None:
         super().__init__()
 
@@ -85,9 +89,12 @@ class InlineKeyboardButton(Object):
         self.callback_game = callback_game
         self.requires_password = requires_password
         self.copy_text = copy_text
+        self.style = style
 
     @staticmethod
     def read(b: raw.base.KeyboardButton):
+        style = types.KeyboardButtonStyle.read(getattr(b, "style", None))
+
         if isinstance(b, raw.types.KeyboardButtonCallback):
             # Try decode data to keep it as string, but if fails, fallback to bytes so we don't lose any information,
             # instead of decoding by ignoring/replacing errors.
@@ -100,48 +107,63 @@ class InlineKeyboardButton(Object):
                 text=b.text,
                 callback_data=data,
                 requires_password=getattr(b, "requires_password", None),
+                style=style,
             )
 
         if isinstance(b, raw.types.KeyboardButtonUrl):
-            return InlineKeyboardButton(text=b.text, url=b.url)
+            return InlineKeyboardButton(text=b.text, url=b.url, style=style)
 
         if isinstance(b, raw.types.KeyboardButtonUrlAuth):
             return InlineKeyboardButton(
                 text=b.text,
                 login_url=types.LoginUrl.read(b),
+                style=style,
             )
 
         if isinstance(b, raw.types.KeyboardButtonUserProfile):
-            return InlineKeyboardButton(text=b.text, user_id=b.user_id)
+            return InlineKeyboardButton(text=b.text, user_id=b.user_id, style=style)
 
         if isinstance(b, raw.types.KeyboardButtonSwitchInline):
             if b.same_peer:
                 return InlineKeyboardButton(
                     text=b.text,
                     switch_inline_query_current_chat=b.query,
+                    style=style,
                 )
-            return InlineKeyboardButton(text=b.text, switch_inline_query=b.query)
+            return InlineKeyboardButton(
+                text=b.text,
+                switch_inline_query=b.query,
+                style=style,
+            )
 
         if isinstance(b, raw.types.KeyboardButtonGame):
             return InlineKeyboardButton(
                 text=b.text,
                 callback_game=types.CallbackGame(),
+                style=style,
             )
 
         if isinstance(b, raw.types.KeyboardButtonWebView):
             return InlineKeyboardButton(
                 text=b.text,
                 web_app=types.WebAppInfo(url=b.url),
+                style=style,
             )
 
         if isinstance(b, raw.types.KeyboardButtonCopy):
-            return types.InlineKeyboardButton(text=b.text, copy_text=b.copy_text)
+            return types.InlineKeyboardButton(
+                text=b.text,
+                copy_text=b.copy_text,
+                style=style,
+            )
 
         if isinstance(b, raw.types.KeyboardButtonBuy):
             return types.InlineKeyboardButtonBuy.read(b)
         return None
 
     async def write(self, client: pyrogram.Client):
+        style = self.style.write() if self.style else None
+
         if self.callback_data is not None:
             # Telegram only wants bytes, but we are allowed to pass strings too, for convenience.
             data = (
@@ -154,27 +176,35 @@ class InlineKeyboardButton(Object):
                 text=self.text,
                 data=data,
                 requires_password=self.requires_password,
+                style=style,
             )
 
         if self.url is not None:
-            return raw.types.KeyboardButtonUrl(text=self.text, url=self.url)
+            return raw.types.KeyboardButtonUrl(
+                text=self.text,
+                url=self.url,
+                style=style,
+            )
 
         if self.login_url is not None:
             return self.login_url.write(
                 text=self.text,
                 bot=await client.resolve_peer(self.login_url.bot_username or "self"),
+                style=style,
             )
 
         if self.user_id is not None:
             return raw.types.InputKeyboardButtonUserProfile(
                 text=self.text,
                 user_id=await client.resolve_peer(self.user_id),
+                style=style,
             )
 
         if self.switch_inline_query is not None:
             return raw.types.KeyboardButtonSwitchInline(
                 text=self.text,
                 query=self.switch_inline_query,
+                style=style,
             )
 
         if self.switch_inline_query_current_chat is not None:
@@ -182,19 +212,22 @@ class InlineKeyboardButton(Object):
                 text=self.text,
                 query=self.switch_inline_query_current_chat,
                 same_peer=True,
+                style=style,
             )
 
         if self.callback_game is not None:
-            return raw.types.KeyboardButtonGame(text=self.text)
+            return raw.types.KeyboardButtonGame(text=self.text, style=style)
 
         if self.web_app is not None:
             return raw.types.KeyboardButtonWebView(
                 text=self.text,
                 url=self.web_app.url,
+                style=style,
             )
         if self.copy_text is not None:
             return raw.types.KeyboardButtonCopy(
                 text=self.text,
                 copy_text=self.copy_text,
+                style=style,
             )
         return None
