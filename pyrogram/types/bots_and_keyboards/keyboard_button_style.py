@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import pyrogram
 from pyrogram import enums, raw
 from pyrogram.types.object import Object
 
