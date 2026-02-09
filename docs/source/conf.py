@@ -105,11 +105,11 @@ html_theme_options = {
     "social": [
         {
             "icon": "fontawesome/brands/github",
-            "link": "https://github.com/5hojib/Electrogram",
+            "link": "https://github.com/AeonOrg/Electrogram",
         },
         {
             "icon": "fontawesome/brands/telegram",
-            "link": "https://t.me/Electrogram",
+            "link": "https://t.me/AeonOrg",
         },
     ],
 }
