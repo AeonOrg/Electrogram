@@ -83,8 +83,8 @@ html_theme_options = {
         {
             "media": "(prefers-color-scheme: light)",
             "scheme": "default",
-            "primary": "blue-grey",
-            "accent": "light-blue",
+            "primary": "indigo",
+            "accent": "indigo",
             "toggle": {
                 "icon": "material/lightbulb-outline",
                 "name": "Switch to dark mode",
@@ -93,8 +93,8 @@ html_theme_options = {
         {
             "media": "(prefers-color-scheme: dark)",
             "scheme": "slate",
-            "primary": "blue-grey",
-            "accent": "lime",
+            "primary": "indigo",
+            "accent": "indigo",
             "toggle": {
                 "icon": "material/lightbulb",
                 "name": "Switch to light mode",
@@ -102,6 +102,16 @@ html_theme_options = {
         },
     ],
     "toc_title_is_page_title": True,
+    "social": [
+        {
+            "icon": "fontawesome/brands/github",
+            "link": "https://github.com/AeonOrg/Electrogram",
+        },
+        {
+            "icon": "fontawesome/brands/telegram",
+            "link": "https://t.me/AeonOrg",
+        },
+    ],
 }
 
 # HTML resources
