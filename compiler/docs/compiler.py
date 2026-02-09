@@ -6,6 +6,7 @@ import re
 import shutil
 from pathlib import Path
 
+# Paths
 HOME = "compiler/docs"
 DESTINATION = "docs/source/telegram"
 PYROGRAM_API_DEST = "docs/source/api"
@@ -18,13 +19,33 @@ FUNCTIONS_BASE = "functions"
 TYPES_BASE = "types"
 BASE_BASE = "base"
 
+METHODS_PATH = "pyrogram/methods"
+TYPES_LIB_PATH = "pyrogram/types"
+ENUMS_LIB_PATH = "pyrogram/enums"
+
+# Titles mapping for categories that need a pretty name
+METHODS_TITLES = {
+    "auth": "Authorization",
+    "business": "Telegram Business",
+}
+
+TYPES_TITLES = {
+    "bots_and_keyboards": "Bot keyboards",
+    "bot_commands": "Bot commands",
+    "business": "Telegram Business",
+    "messages_and_media": "Messages & Media",
+    "user_and_chats": "Users & Chats",
+    "input_message_content": "Input Message Content",
+    "input_privacy_rule": "Input Privacy Rule",
+}
+
 
 def snake(s: str):
     s = re.sub(r"(.)([A-Z][a-z]+)", r"\1_\2", s)
     return re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", s).lower()
 
 
-def generate(source_path, base) -> None:
+def generate_raw(source_path, base) -> None:
     all_entities = {}
 
     def build(path, level=0) -> None:
@@ -114,772 +135,292 @@ def generate(source_path, base) -> None:
 
 
 def pyrogram_api() -> None:
-    def get_title_list(s: str) -> list:
-        return [i.strip() for i in [j.strip() for j in s.split("\n") if j] if i]
+    # Discovery logic
 
-    # Methods
+    methods_categories = {}
+    methods_path = Path(METHODS_PATH)
+    if not methods_path.exists():
+        methods_path = Path("../../") / METHODS_PATH
 
-    categories = {
-        "utilities": """
-        Utilities
-            start
-            stop
-            run
-            run_sync
-            restart
-            add_handler
-            remove_handler
-            stop_transmission
-            export_session_string
-            set_parse_mode
-        """,
-        "messages": """
-        Messages
-            send_message
-            forward_messages
-            copy_message
-            copy_media_group
-            send_photo
-            send_audio
-            send_document
-            send_sticker
-            send_video
-            send_animation
-            send_voice
-            send_video_note
-            send_web_page
-            send_media_group
-            send_location
-            send_venue
-            send_contact
-            send_cached_media
-            send_reaction
-            send_paid_reaction
-            send_paid_media
-            edit_message_text
-            edit_message_caption
-            edit_message_media
-            edit_message_reply_markup
-            edit_inline_text
-            edit_inline_caption
-            edit_inline_media
-            edit_inline_reply_markup
-            send_chat_action
-            delete_messages
-            delete_scheduled_messages
-            get_available_effects
-            get_messages
-            get_scheduled_messages
-            get_media_group
-            get_chat_history
-            get_chat_history_count
-            read_chat_history
-            send_poll
-            vote_poll
-            stop_poll
-            retract_vote
-            send_dice
-            search_messages
-            search_messages_count
-            search_global
-            search_global_count
-            search_global_hashtag_messages
-            search_global_hashtag_messages_count
-            download_media
-            stream_media
-            get_discussion_message
-            get_discussion_replies
-            get_discussion_replies_count
-            get_custom_emoji_stickers
-            translate_text
-        """,
-        "chats": """
-        Chats
-            join_chat
-            leave_chat
-            ban_chat_member
-            unban_chat_member
-            restrict_chat_member
-            promote_chat_member
-            set_administrator_title
-            set_chat_photo
-            delete_chat_photo
-            delete_folder
-            export_folder_link
-            set_chat_title
-            set_chat_description
-            set_chat_permissions
-            pin_chat_message
-            unpin_chat_message
-            unpin_all_chat_messages
-            get_chat
-            get_chat_member
-            get_chat_members
-            get_chat_members_count
-            get_dialogs
-            get_dialogs_count
-            get_folders
-            get_forum_topics
-            get_forum_topics_by_id
-            set_chat_username
-            archive_chats
-            unarchive_chats
-            add_chat_members
-            create_channel
-            create_group
-            create_supergroup
-            delete_channel
-            delete_supergroup
-            delete_user_history
-            set_slow_mode
-            mark_chat_unread
-            get_chat_event_log
-            get_chat_online_count
-            get_send_as_chats
-            set_send_as_chat
-            set_chat_protected_content
-            close_forum_topic
-            close_general_topic
-            create_forum_topic
-            delete_forum_topic
-            edit_forum_topic
-            edit_general_topic
-            hide_general_topic
-            reopen_forum_topic
-            reopen_general_topic
-            unhide_general_topic
-            update_color
-            delete_chat_history
-            update_folder
-        """,
-        "users": """
-        Users
-            delete_account
-            get_me
-            get_users
-            get_chat_photos
-            get_chat_photos_count
-            set_profile_photo
-            delete_profile_photos
-            set_username
-            update_birthday
-            update_personal_chat
-            update_profile
-            block_user
-            unblock_user
-            get_common_chats
-            get_default_emoji_statuses
-            set_emoji_status
-        """,
-        "stories": """
-        Stories
-            delete_stories
-            edit_story
-            export_story_link
-            forward_story
-            get_all_stories
-            get_stories
-            get_stories_history
-            get_peer_stories
-            send_story
-        """,
-        "stickers": """
-        Stickers
-            add_sticker_to_set
-            create_sticker_set
-            get_sticker_set
-        """,
-        "invite_links": """
-        Invite Links
-            get_chat_invite_link
-            export_chat_invite_link
-            create_chat_invite_link
-            edit_chat_invite_link
-            revoke_chat_invite_link
-            delete_chat_invite_link
-            get_chat_invite_link_joiners
-            get_chat_invite_link_joiners_count
-            get_chat_admin_invite_links
-            get_chat_admin_invite_links_count
-            get_chat_admins_with_invite_links
-            get_chat_join_requests
-            delete_chat_admin_invite_links
-            approve_chat_join_request
-            approve_all_chat_join_requests
-            decline_chat_join_request
-            decline_all_chat_join_requests
-        """,
-        "contacts": """
-        Contacts
-            add_contact
-            delete_contacts
-            import_contacts
-            get_contacts
-            get_contacts_count
-            search_contacts
-        """,
-        "password": """
-        Password
-            enable_cloud_password
-            change_cloud_password
-            remove_cloud_password
-        """,
-        "bots": """
-        Bots
-            get_inline_bot_results
-            send_inline_bot_result
-            answer_callback_query
-            answer_inline_query
-            request_callback_answer
-            send_game
-            set_game_score
-            get_game_high_scores
-            set_bot_commands
-            get_bot_commands
-            delete_bot_commands
-            set_bot_default_privileges
-            get_bot_default_privileges
-            set_chat_menu_button
-            get_chat_menu_button
-            answer_web_app_query
-            get_bot_info
-            set_bot_info
-            get_collectible_item_info
-            get_available_gifts
-            get_user_gifts
-            sell_gift
-            send_gift
-            toggle_gift_is_saved
-        """,
-        "business": """
-        Telegram Business
-            answer_pre_checkout_query
-            answer_shipping_query
-            create_invoice_link
-            get_business_connection
-            get_stars_transactions
-            get_stars_transactions_by_id
-            refund_star_payment
-            send_invoice
-            get_payment_form
-            send_payment_form
-        """,
-        "authorization": """
-        Authorization
-            connect
-            disconnect
-            initialize
-            terminate
-            send_code
-            resend_code
-            sign_in
-            sign_in_bot
-            sign_up
-            get_password_hint
-            check_password
-            send_recovery_code
-            recover_password
-            accept_terms_of_service
-            log_out
-            get_active_sessions
-            reset_session
-            reset_sessions
-        """,
-        "advanced": """
-        Advanced
-            invoke
-            resolve_peer
-            save_file
-        """,
-        "account": """
-        Account
-            get_account_ttl
-            set_account_ttl
-            set_privacy
-            get_privacy
-        """,
-    }
+    for entry in sorted(methods_path.iterdir()):
+        if entry.is_dir() and entry.name != "decorators":
+            category_name = entry.name
+            methods = []
+            for file in sorted(entry.glob("*.py")):
+                if file.name == "__init__.py":
+                    continue
+
+                # Check if it defines a class or is special function (idle, compose)
+                with open(file, "r", encoding="utf-8") as f:
+                    tree = ast.parse(f.read())
+
+                has_class = any(isinstance(node, ast.ClassDef) for node in ast.walk(tree))
+                is_special = file.stem in ["idle", "compose"]
+
+                if has_class or is_special:
+                    methods.append(file.stem)
+
+            if methods:
+                title = METHODS_TITLES.get(
+                    category_name,
+                    category_name.replace("_", " ").title(),
+                )
+                methods_categories[category_name] = (title, methods)
+
+    types_categories = {}
+    types_lib_path = Path(TYPES_LIB_PATH)
+    if not types_lib_path.exists():
+        types_lib_path = Path("../../") / TYPES_LIB_PATH
+
+    for entry in sorted(types_lib_path.iterdir()):
+        if entry.is_dir():
+            category_name = entry.name
+            types = []
+            for file in sorted(entry.glob("*.py")):
+                if file.name == "__init__.py":
+                    continue
+                with Path(file).open(encoding="utf-8") as f:
+                    try:
+                        tree = ast.parse(f.read())
+                    except Exception:
+                        continue
+                for node in ast.walk(tree):
+                    if isinstance(node, ast.ClassDef):
+                        types.append(node.name)
+            if types:
+                title = TYPES_TITLES.get(
+                    category_name,
+                    category_name.replace("_", " ").title(),
+                )
+                types_categories[category_name] = (title, sorted(types))
+
+    bound_methods_categories = {}
+    for file in sorted(types_lib_path.rglob("*.py")):
+        if file.name == "__init__.py":
+            continue
+        with Path(file).open(encoding="utf-8") as f:
+            try:
+                tree = ast.parse(f.read())
+            except Exception:
+                continue
+        for node in ast.walk(tree):
+            if isinstance(node, ast.ClassDef):
+                class_name = node.name
+                class_bound_methods = []
+                for item in node.body:
+                    if isinstance(item, (ast.AsyncFunctionDef, ast.FunctionDef)):
+                        docstring = ast.get_docstring(item)
+                        if docstring and "Bound method" in docstring:
+                            class_bound_methods.append(f"{class_name}.{item.name}")
+                if class_bound_methods:
+                    if class_name not in bound_methods_categories:
+                        bound_methods_categories[class_name] = []
+                    bound_methods_categories[class_name].extend(
+                        sorted(class_bound_methods),
+                    )
+
+    enums_lib_path = Path(ENUMS_LIB_PATH)
+    if not enums_lib_path.exists():
+        enums_lib_path = Path("../../") / ENUMS_LIB_PATH
+
+    enums_list = []
+    for file in sorted(enums_lib_path.glob("*.py")):
+        if file.name in ["__init__.py", "auto_name.py"]:
+            continue
+        with Path(file).open(encoding="utf-8") as f:
+            try:
+                tree = ast.parse(f.read())
+            except Exception:
+                continue
+        for node in ast.walk(tree):
+            if isinstance(node, ast.ClassDef):
+                enums_list.append(node.name)
+
+    # Methods Generation
 
     root = PYROGRAM_API_DEST + "/methods"
-
     shutil.rmtree(root, ignore_errors=True)
-    Path(root).mkdir()
+    Path(root).mkdir(parents=True, exist_ok=True)
 
-    with Path(HOME, "template/methods.rst").open() as f:
-        template = f.read()
+    with Path(root, "index.rst").open("w", encoding="utf-8") as f:
+        f.write("Available Methods\n=================\n\n")
+        f.write(
+            "This page is about Electrogram methods. All the methods listed here are bound to a :class:`~pyrogram.Client` instance,\n",
+        )
+        f.write(
+            "except for :meth:`~pyrogram.idle()` and :meth:`~pyrogram.compose()`, which are special functions that can be found in\n",
+        )
+        f.write("the main package directly.\n\n")
+        f.write(".. code-block:: python\n\n")
+        f.write("    from pyrogram import Client\n\n")
+        f.write('    app = Client("my_account")\n\n')
+        f.write("    with app:\n")
+        f.write('        app.send_message("me", "hi")\n\n')
+        f.write("-----\n\n")
 
-    with Path(root, "index.rst").open("w") as f:
-        fmt_keys = {}
+        for cat_name, (title, methods) in methods_categories.items():
+            if cat_name == "utilities":
+                f.write(".. currentmodule:: pyrogram.Client\n\n")
+                f.write(f"{title}\n" + "-" * len(title) + "\n\n")
+                f.write(".. autosummary::\n    :nosignatures:\n\n")
+                for m in sorted(methods):
+                    if m not in ["idle", "compose"]:
+                        f.write(f"    {m}\n")
+                f.write("\n.. toctree::\n    :hidden:\n\n")
+                for m in sorted(methods):
+                    if m not in ["idle", "compose"]:
+                        f.write(f"    {m} <{m}>\n")
+                f.write("\n.. currentmodule:: pyrogram\n\n")
+                f.write(".. autosummary::\n    :nosignatures:\n\n")
+                if "idle" in methods:
+                    f.write("    idle\n")
+                if "compose" in methods:
+                    f.write("    compose\n")
+                f.write("\n.. toctree::\n    :hidden:\n\n")
+                if "idle" in methods:
+                    f.write("    idle <idle>\n")
+                if "compose" in methods:
+                    f.write("    compose <compose>\n")
+                f.write("\n")
+            else:
+                f.write(".. currentmodule:: pyrogram.Client\n\n")
+                f.write(f"{title}\n" + "-" * len(title) + "\n\n")
+                if cat_name == "advanced":
+                    f.write(
+                        "Methods used only when dealing with the raw Telegram API.\n",
+                    )
+                    f.write(
+                        "Learn more about how to use the raw API at :doc:`Advanced Usage <../../topics/advanced-usage>`.\n\n",
+                    )
+                f.write(".. autosummary::\n    :nosignatures:\n\n")
+                for m in sorted(methods):
+                    f.write(f"    {m}\n")
+                f.write("\n.. toctree::\n    :hidden:\n\n")
+                for m in sorted(methods):
+                    f.write(f"    {m} <{m}>\n")
+                f.write("\n")
 
-        for k, v in categories.items():
-            name, *methods = get_title_list(v)
-            fmt_keys.update({k: "\n    ".join(f"{m} <{m}>" for m in methods)})
+            for m in methods:
+                with Path(root, f"{m}.rst").open("w", encoding="utf-8") as f2:
+                    title_m = f"{m}()"
+                    f2.write(title_m + "\n" + "=" * len(title_m) + "\n\n")
+                    if m in ["idle", "compose"]:
+                        f2.write(f".. autofunction:: pyrogram.{m}()")
+                    else:
+                        f2.write(f".. automethod:: pyrogram.Client.{m}()")
 
-            for method in methods:
-                with Path(root, f"{method}.rst").open("w") as f2:
-                    title = f"{method}()"
-
-                    f2.write(title + "\n" + "=" * len(title) + "\n\n")
-                    f2.write(f".. automethod:: pyrogram.Client.{method}()")
-
-            functions = ["idle", "compose"]
-
-            for func in functions:
-                with Path(root, f"{func}.rst").open("w") as f2:
-                    title = f"{func}()"
-
-                    f2.write(title + "\n" + "=" * len(title) + "\n\n")
-                    f2.write(f".. autofunction:: pyrogram.{func}()")
-
-        f.write(template.format(**fmt_keys))
-
-    # Types
-
-    categories = {
-        "users_chats": """
-        Users & Chats
-            Birthday
-            BusinessInfo
-            BusinessMessage
-            BusinessRecipients
-            BusinessWeeklyOpen
-            BusinessWorkingHours
-            User
-            Chat
-            ChatPreview
-            ChatPhoto
-            ChatMember
-            ChatPermissions
-            ChatPrivileges
-            ChatInviteLink
-            ChatAdminWithInviteLinks
-            ChatEvent
-            ChatEventFilter
-            ChatMemberUpdated
-            ChatJoinRequest
-            ChatJoinedByRequest
-            ChatJoiner
-            Dialog
-            Folder
-            Restriction
-            EmojiStatus
-            ForumTopic
-            PeerUser
-            PeerChannel
-            BotInfo
-            ChatColor
-            FoundContacts
-            PrivacyRule
-            CollectibleItemInfo
-        """,
-        "messages_media": """
-        Messages & Media
-            Message
-            MessageEntity
-            Photo
-            Thumbnail
-            Audio
-            AvailableEffect
-            Document
-            Animation
-            AlternativeVideo
-            LabeledPrice
-            Video
-            Voice
-            VideoNote
-            Contact
-            Location
-            Venue
-            Sticker
-            StickerSet
-            ContactRegistered
-            ScreenshotTaken
-            Game
-            GiftedPremium
-            Gift
-            UserGift
-            Giveaway
-            GiveawayLaunched
-            GiveawayResult
-            MessageStory
-            WebPage
-            WebPageEmpty
-            WebPagePreview
-            Poll
-            PollOption
-            Dice
-            VideoChatScheduled
-            VideoChatStarted
-            VideoChatEnded
-            VideoChatMembersInvited
-            WebAppData
-            MessageReactions
-            MessageReactor
-            ChatReactions
-            ForumTopicCreated
-            ForumTopicEdited
-            ForumTopicClosed
-            ForumTopicReopened
-            GeneralTopicHidden
-            GeneralTopicUnhidden
-            Reaction
-            ReactionTypePaid
-            ReactionCount
-            ReactionType
-            MessageReactionUpdated
-            MessageReactionCountUpdated
-            TranslatedText
-            DraftMessage
-        """,
-        "stories": """
-        Stories
-            Story
-            StoryDeleted
-            StoryForwardHeader
-            StorySkipped
-            StoriesPrivacyRules
-            StoryViews
-            MediaArea
-            MediaAreaChannelPost
-            MediaAreaCoordinates
-            InputMediaArea
-            InputMediaAreaChannelPost
-        """,
-        "bot": """
-        Bot
-            BotAllowed
-            BotApp
-            BotBusinessConnection
-        """,
-        "bot_keyboards": """
-        Bot keyboards
-            ReplyKeyboardMarkup
-            KeyboardButton
-            KeyboardButtonStyle
-            ReplyKeyboardRemove
-            InlineKeyboardMarkup
-            InlineKeyboardButton
-            InlineKeyboardButtonBuy
-            RequestPeerTypeChannel
-            RequestPeerTypeChat
-            RequestPeerTypeUser
-            RequestedChats
-            RequestedChat
-            RequestedUser
-            LoginUrl
-            ForceReply
-            CallbackQuery
-            GameHighScore
-            CallbackGame
-            WebAppInfo
-            MenuButton
-            MenuButtonCommands
-            MenuButtonWebApp
-            MenuButtonDefault
-            SentWebAppMessage
-            PreCheckoutQuery
-        """,
-        "bot_commands": """
-        Bot commands
-            BotCommand
-            BotCommandScope
-            BotCommandScopeDefault
-            BotCommandScopeAllPrivateChats
-            BotCommandScopeAllGroupChats
-            BotCommandScopeAllChatAdministrators
-            BotCommandScopeChat
-            BotCommandScopeChatAdministrators
-            BotCommandScopeChatMember
-        """,
-        "business": """
-        Telegram Business
-            ExtendedMediaPreview
-            InputStarsTransaction
-            Invoice
-            PaidMedia
-            PaidMediaPreview
-            PaymentForm
-            PaymentInfo
-            PaymentRefunded
-            ShippingAddress
-            ShippingOption
-            ShippingQuery
-            StarsStatus
-            StarsTransaction
-            SuccessfulPayment
-        """,
-        "input_media": """
-        Input Media
-            InputMedia
-            InputMediaPhoto
-            InputMediaVideo
-            InputMediaAudio
-            InputMediaAnimation
-            InputMediaDocument
-            InputPhoneContact
-        """,
-        "inline_mode": """
-        Inline Mode
-            InlineQuery
-            InlineQueryResult
-            InlineQueryResultCachedAudio
-            InlineQueryResultCachedDocument
-            InlineQueryResultCachedAnimation
-            InlineQueryResultCachedPhoto
-            InlineQueryResultCachedSticker
-            InlineQueryResultCachedVideo
-            InlineQueryResultCachedVoice
-            InlineQueryResultArticle
-            InlineQueryResultAudio
-            InlineQueryResultContact
-            InlineQueryResultDocument
-            InlineQueryResultAnimation
-            InlineQueryResultLocation
-            InlineQueryResultPhoto
-            InlineQueryResultVenue
-            InlineQueryResultVideo
-            InlineQueryResultVoice
-            ChosenInlineResult
-        """,
-        "pre_checkout_query": """
-        PreCheckoutQuery
-            PreCheckoutQuery.answer
-        """,
-        "shipping_query": """
-        ShippingQuery
-            ShippingQuery.answer
-        """,
-        "input_message_content": """
-        InputMessageContent
-            InputMessageContent
-            InputReplyToMessage
-            InputReplyToStory
-            InputTextMessageContent
-            InputLocationMessageContent
-            InputVenueMessageContent
-            InputContactMessageContent
-            InputInvoiceMessageContent
-        """,
-        "authorization": """
-        Authorization
-            ActiveSession
-            ActiveSessions
-            SentCode
-            TermsOfService
-        """,
-        "input_privacy_rule": """
-        InputPrivacyRule
-            InputPrivacyRuleAllowAll
-            InputPrivacyRuleAllowContacts
-            InputPrivacyRuleAllowPremium
-            InputPrivacyRuleAllowUsers
-            InputPrivacyRuleAllowChats
-            InputPrivacyRuleDisallowAll
-            InputPrivacyRuleDisallowContacts
-            InputPrivacyRuleDisallowUsers
-            InputPrivacyRuleDisallowChats
-        """,
-    }
+    # Types Generation
 
     root = PYROGRAM_API_DEST + "/types"
-
     shutil.rmtree(root, ignore_errors=True)
-    Path(root).mkdir()
+    Path(root).mkdir(parents=True, exist_ok=True)
 
-    with Path(HOME, "template/types.rst").open() as f:
-        template = f.read()
+    with Path(root, "index.rst").open("w", encoding="utf-8") as f:
+        f.write("Available Types\n===============\n\n")
+        f.write(
+            "This page is about Electrogram Types. All types listed here are available through the ``pyrogram.types`` package.\n",
+        )
+        f.write(
+            "Unless required as argument to a client method, most of the types don't need to be manually instantiated because they\n",
+        )
+        f.write(
+            "are only returned by other methods. You also don't need to import them, unless you want to type-hint your variables.\n\n",
+        )
+        f.write(".. code-block:: python\n\n")
+        f.write("    from pyrogram.types import User, Message, ...\n\n")
+        f.write(".. note::\n\n")
+        f.write(
+            "    Optional fields always exist inside the object, but they could be empty and contain the value of ``None``.\n",
+        )
+        f.write(
+            "    Empty fields aren't shown when, for example, using ``print(message)`` and this means that\n",
+        )
+        f.write(
+            '    ``hasattr(message, "photo")`` always returns ``True``.\n\n',
+        )
+        f.write(
+            "    To tell whether a field is set or not, do a simple boolean check: ``if message.photo: ...``.\n\n"
+        )
+        f.write("-----\n\n")
+        f.write(".. currentmodule:: pyrogram.types\n\n")
 
-    with Path(root, "index.rst").open("w") as f:
-        fmt_keys = {}
+        for cat_name, (title, t_list) in sorted(types_categories.items()):
+            f.write(f"{title}\n" + "-" * len(title) + "\n\n")
+            f.write(".. autosummary::\n    :nosignatures:\n\n")
+            for t in sorted(t_list):
+                f.write(f"    {t}\n")
+            f.write("\n.. toctree::\n    :hidden:\n\n")
+            for t in sorted(t_list):
+                f.write(f"    {t} <{t}>\n")
+            f.write("\n")
 
-        for k, v in categories.items():
-            name, *types = get_title_list(v)
+            for t in t_list:
+                with Path(root, f"{t}.rst").open("w", encoding="utf-8") as f2:
+                    f2.write(t + "\n" + "=" * len(t) + "\n\n")
+                    f2.write(f".. autoclass:: pyrogram.types.{t}()\n")
 
-            fmt_keys.update({k: "\n    ".join(types)})
-
-            for type in types:
-                with Path(root, f"{type}.rst").open("w") as f2:
-                    title = f"{type}"
-
-                    f2.write(title + "\n" + "=" * len(title) + "\n\n")
-                    f2.write(f".. autoclass:: pyrogram.types.{type}()\n")
-
-        f.write(template.format(**fmt_keys))
-
-    # Bound Methods
-
-    categories = {
-        "message": """
-        Message
-            Message.ask
-            Message.click
-            Message.delete
-            Message.download
-            Message.forward
-            Message.copy
-            Message.pin
-            Message.unpin
-            Message.edit
-            Message.edit_text
-            Message.edit_caption
-            Message.edit_media
-            Message.edit_reply_markup
-            Message.reply
-            Message.reply_text
-            Message.reply_animation
-            Message.reply_audio
-            Message.reply_cached_media
-            Message.reply_chat_action
-            Message.reply_contact
-            Message.reply_document
-            Message.reply_game
-            Message.reply_inline_bot_result
-            Message.reply_location
-            Message.reply_media_group
-            Message.reply_photo
-            Message.reply_poll
-            Message.reply_sticker
-            Message.reply_venue
-            Message.reply_video
-            Message.reply_video_note
-            Message.reply_voice
-            Message.reply_web_page
-            Message.get_media_group
-            Message.react
-            Message.wait_for_click
-            Message.pay
-        """,
-        "usergift": """
-        UserGift
-            UserGift.toggle
-        """,
-        "chat": """
-        Chat
-            Chat.ask
-            Chat.listen
-            Chat.stop_listening
-            Chat.archive
-            Chat.unarchive
-            Chat.set_title
-            Chat.set_description
-            Chat.set_photo
-            Chat.ban_member
-            Chat.unban_member
-            Chat.restrict_member
-            Chat.promote_member
-            Chat.get_member
-            Chat.get_members
-            Chat.add_members
-            Chat.join
-            Chat.leave
-            Chat.mark_unread
-            Chat.set_protected_content
-            Chat.unpin_all_messages
-        """,
-        "user": """
-        User
-            User.ask
-            User.listen
-            User.stop_listening
-            User.archive
-            User.unarchive
-            User.block
-            User.unblock
-        """,
-        "story": """
-        Story
-            Story.delete
-            Story.download
-            Story.react
-            Story.edit
-            Story.edit_animation
-            Story.edit_caption
-            Story.edit_photo
-            Story.edit_privacy
-            Story.edit_video
-            Story.export_link
-            Story.forward
-            Story.reply_text
-            Story.reply_animation
-            Story.reply_audio
-            Story.reply_cached_media
-            Story.reply_media_group
-            Story.reply_photo
-            Story.reply_sticker
-            Story.reply_video
-            Story.reply_video_note
-            Story.reply_voice
-        """,
-        "callback_query": """
-        Callback Query
-            CallbackQuery.answer
-            CallbackQuery.edit_message_text
-            CallbackQuery.edit_message_caption
-            CallbackQuery.edit_message_media
-            CallbackQuery.edit_message_reply_markup
-        """,
-        "inline_query": """
-        InlineQuery
-            InlineQuery.answer
-        """,
-        "pre_checkout_query": """
-        PreCheckoutQuery
-            PreCheckoutQuery.answer
-        """,
-        "shipping_query": """
-        ShippingQuery
-            ShippingQuery.answer
-        """,
-        "chat_join_request": """
-        ChatJoinRequest
-            ChatJoinRequest.approve
-            ChatJoinRequest.decline
-        """,
-        "active_session": """
-        ActiveSession
-            ActiveSession.reset
-        """,
-    }
+    # Bound Methods Generation
 
     root = PYROGRAM_API_DEST + "/bound-methods"
-
     shutil.rmtree(root, ignore_errors=True)
-    Path(root).mkdir()
+    Path(root).mkdir(parents=True, exist_ok=True)
 
-    with Path(HOME, "template/bound-methods.rst").open() as f:
-        template = f.read()
+    with Path(root, "index.rst").open("w", encoding="utf-8") as f:
+        f.write("Bound Methods\n=============\n\n")
+        f.write(
+            "Some Electrogram types define what are called bound methods. Bound methods are functions attached to a type which are\n",
+        )
+        f.write(
+            "accessed via an instance of that type. They make it even easier to call specific methods by automatically inferring\n",
+        )
+        f.write("some of the required arguments.\n\n")
+        f.write(".. code-block:: python\n\n")
+        f.write("    from pyrogram import Client\n\n")
+        f.write('    app = Client("my_account")\n\n\n')
+        f.write("    @app.on_message()\n")
+        f.write("    def hello(client, message)\n")
+        f.write('        message.reply("hi")\n\n\n')
+        f.write("    app.run()\n\n")
+        f.write("-----\n\n")
+        f.write(".. currentmodule:: pyrogram.types\n\n")
 
-    with Path(root, "index.rst").open("w") as f:
-        fmt_keys = {}
-
-        for k, v in categories.items():
-            _name, *bound_methods = get_title_list(v)
-
-            fmt_keys.update(
-                {
-                    f"{k}_hlist": "\n    ".join(
-                        f"- :meth:`~{bm}`" for bm in bound_methods
-                    ),
-                },
-            )
-
-            fmt_keys.update(
-                {
-                    f"{k}_toctree": "\n    ".join(
-                        "{} <{}>".format(bm.split(".")[1], bm)
-                        for bm in bound_methods
-                    ),
-                },
-            )
+        for class_name, bound_methods in sorted(bound_methods_categories.items()):
+            f.write(f"{class_name}\n" + "-" * len(class_name) + "\n\n")
+            f.write(".. hlist::\n    :columns: 1\n\n")
+            for bm in sorted(bound_methods):
+                f.write(f"    - :meth:`~{bm}`\n")
+            f.write("\n.. toctree::\n    :hidden:\n\n")
+            for bm in sorted(bound_methods):
+                f.write(f"    {bm.split('.')[1]} <{bm}>\n")
+            f.write("\n")
 
             for bm in bound_methods:
-                with Path(root, f"{bm}.rst").open("w") as f2:
-                    title = f"{bm}()"
-
-                    f2.write(title + "\n" + "=" * len(title) + "\n\n")
+                with Path(root, f"{bm}.rst").open("w", encoding="utf-8") as f2:
+                    title_bm = f"{bm}()"
+                    f2.write(title_bm + "\n" + "=" * len(title_bm) + "\n\n")
                     f2.write(f".. automethod:: pyrogram.types.{bm}()")
 
-        f.write(template.format(**fmt_keys))
+    # Enums Generation
+
+    if enums_list:
+        root = PYROGRAM_API_DEST + "/enums"
+        shutil.rmtree(root, ignore_errors=True)
+        Path(root).mkdir(parents=True, exist_ok=True)
+
+        with Path(root, "index.rst").open("w", encoding="utf-8") as f:
+            f.write("Available Enums\n===============\n\n")
+            f.write(".. currentmodule:: pyrogram.enums\n\n")
+            f.write(".. autosummary::\n    :nosignatures:\n\n")
+            for e in sorted(enums_list):
+                f.write(f"    {e}\n")
+            f.write("\n.. toctree::\n    :hidden:\n\n")
+            for e in sorted(enums_list):
+                f.write(f"    {e} <{e}>\n")
+
+        for e in enums_list:
+            with Path(root, f"{e}.rst").open("w", encoding="utf-8") as f2:
+                f2.write(e + "\n" + "=" * len(e) + "\n\n")
+                f2.write(f".. autoclass:: pyrogram.enums.{e}()\n    :members:\n")
 
 
 def start() -> None:
@@ -893,9 +434,9 @@ def start() -> None:
     with Path(HOME, "template/toctree.txt").open(encoding="utf-8") as f:
         toctree = f.read()
 
-    generate(TYPES_PATH, TYPES_BASE)
-    generate(FUNCTIONS_PATH, FUNCTIONS_BASE)
-    generate(BASE_PATH, BASE_BASE)
+    generate_raw(TYPES_PATH, TYPES_BASE)
+    generate_raw(FUNCTIONS_PATH, FUNCTIONS_BASE)
+    generate_raw(BASE_PATH, BASE_BASE)
     pyrogram_api()
 
 
@@ -903,6 +444,9 @@ if __name__ == "__main__":
     FUNCTIONS_PATH = "../../pyrogram/raw/functions"
     TYPES_PATH = "../../pyrogram/raw/types"
     BASE_PATH = "../../pyrogram/raw/base"
+    METHODS_PATH = "../../pyrogram/methods"
+    TYPES_LIB_PATH = "../../pyrogram/types"
+    ENUMS_LIB_PATH = "../../pyrogram/enums"
     HOME = "."
     DESTINATION = "../../docs/source/telegram"
     PYROGRAM_API_DEST = "../../docs/source/api"
