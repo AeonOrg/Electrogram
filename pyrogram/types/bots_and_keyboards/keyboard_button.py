@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from pyrogram import raw, types
+import pyrogram
+from pyrogram import enums, raw, types
 from pyrogram.types.object import Object
 
 
@@ -35,7 +36,7 @@ class KeyboardButton(Object):
             button is pressed. The Web App will be able to send a “web_app_data” service message. Available in private
             chats only.
 
-        style (:obj:`~pyrogram.types.KeyboardButtonStyle`, *optional*):
+        style (:obj:`~pyrogram.types.KeyboardButtonStyle` | :obj:`~pyrogram.enums.ButtonStyle`, *optional*):
             Button style.
     """
 
@@ -48,7 +49,7 @@ class KeyboardButton(Object):
         | types.RequestPeerTypeChannel = None,
         request_user: types.RequestPeerTypeUser = None,
         web_app: types.WebAppInfo = None,
-        style: types.KeyboardButtonStyle = None,
+        style: types.KeyboardButtonStyle | enums.ButtonStyle = None,
     ) -> None:
         super().__init__()
 
@@ -58,7 +59,7 @@ class KeyboardButton(Object):
         self.request_chat = request_chat
         self.request_user = request_user
         self.web_app = web_app
-        self.style = style
+        self.style = types.KeyboardButtonStyle._parse(style)
 
     @staticmethod
     def read(b):
