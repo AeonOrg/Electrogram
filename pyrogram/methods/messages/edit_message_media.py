@@ -93,7 +93,8 @@ class EditMessageMedia:
 
         if isinstance(media, types.InputMediaPhoto):
             if isinstance(media.media, io.BytesIO) or (
-                isinstance(media.media, str) and await AsyncPath(media.media).is_file()
+                isinstance(media.media, str)
+                and await AsyncPath(media.media).is_file()
             ):
                 uploaded_media = await self.invoke(
                     raw.functions.messages.UploadMedia(
@@ -125,7 +126,8 @@ class EditMessageMedia:
                 )
         elif isinstance(media, types.InputMediaVideo):
             if isinstance(media.media, io.BytesIO) or (
-                isinstance(media.media, str) and await AsyncPath(media.media).is_file()
+                isinstance(media.media, str)
+                and await AsyncPath(media.media).is_file()
             ):
                 uploaded_media = await self.invoke(
                     raw.functions.messages.UploadMedia(
@@ -172,7 +174,8 @@ class EditMessageMedia:
                 )
         elif isinstance(media, types.InputMediaAudio):
             if isinstance(media.media, io.BytesIO) or (
-                isinstance(media.media, str) and await AsyncPath(media.media).is_file()
+                isinstance(media.media, str)
+                and await AsyncPath(media.media).is_file()
             ):
                 media = await self.invoke(
                     raw.functions.messages.UploadMedia(
@@ -212,7 +215,8 @@ class EditMessageMedia:
                 )
         elif isinstance(media, types.InputMediaAnimation):
             if isinstance(media.media, io.BytesIO) or (
-                isinstance(media.media, str) and await AsyncPath(media.media).is_file()
+                isinstance(media.media, str)
+                and await AsyncPath(media.media).is_file()
             ):
                 uploaded_media = await self.invoke(
                     raw.functions.messages.UploadMedia(
@@ -259,7 +263,8 @@ class EditMessageMedia:
                 )
         elif isinstance(media, types.InputMediaDocument):
             if isinstance(media.media, io.BytesIO) or (
-                isinstance(media.media, str) and await AsyncPath(media.media).is_file()
+                isinstance(media.media, str)
+                and await AsyncPath(media.media).is_file()
             ):
                 media = await self.invoke(
                     raw.functions.messages.UploadMedia(
