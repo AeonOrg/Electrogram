@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import ast
-import os
 import re
 import shutil
 from pathlib import Path
@@ -49,14 +48,16 @@ def generate_raw(source_path, base) -> None:
     all_entities = {}
 
     def build(path, level=0) -> None:
-        last = path.split("/")[-1]
+        path_obj = Path(path)
 
-        for i in os.listdir(path):
-            try:
-                if not i.startswith("__"):
-                    build("/".join([path, i]), level=level + 1)
-            except NotADirectoryError:
-                with Path(path, i).open(encoding="utf-8") as f:
+        for i in path_obj.iterdir():
+            if i.is_dir():
+                if not i.name.startswith("__"):
+                    build(str(i), level=level + 1)
+            else:
+                if i.name.startswith("__"):
+                    continue
+                with i.open(encoding="utf-8") as f:
                     p = ast.parse(f.read())
 
                 for node in ast.walk(p):
@@ -95,10 +96,10 @@ def generate_raw(source_path, base) -> None:
                         ),
                     )
 
-                if last not in all_entities:
-                    all_entities[last] = []
+                if path_obj.name not in all_entities:
+                    all_entities[path_obj.name] = []
 
-                all_entities[last].append(name)
+                all_entities[path_obj.name].append(name)
 
     build(source_path)
 
@@ -151,7 +152,7 @@ def pyrogram_api() -> None:
                     continue
 
                 # Check if it defines a class or is special function (idle, compose)
-                with open(file, encoding="utf-8") as f:
+                with Path(file).open(encoding="utf-8") as f:
                     tree = ast.parse(f.read())
 
                 has_class = any(
@@ -186,9 +187,11 @@ def pyrogram_api() -> None:
                         tree = ast.parse(f.read())
                     except Exception:
                         continue
-                for node in ast.walk(tree):
-                    if isinstance(node, ast.ClassDef):
-                        types.append(node.name)
+                types.extend(
+                    node.name
+                    for node in ast.walk(tree)
+                    if isinstance(node, ast.ClassDef)
+                )
             if types:
                 title = TYPES_TITLES.get(
                     category_name,
@@ -234,9 +237,9 @@ def pyrogram_api() -> None:
                 tree = ast.parse(f.read())
             except Exception:
                 continue
-        for node in ast.walk(tree):
-            if isinstance(node, ast.ClassDef):
-                enums_list.append(node.name)
+        enums_list.extend(
+            node.name for node in ast.walk(tree) if isinstance(node, ast.ClassDef)
+        )
 
     # Methods Generation
 
@@ -346,7 +349,7 @@ def pyrogram_api() -> None:
         f.write("-----\n\n")
         f.write(".. currentmodule:: pyrogram.types\n\n")
 
-        for cat_name, (title, t_list) in sorted(types_categories.items()):
+        for _, (title, t_list) in sorted(types_categories.items()):
             f.write(f"{title}\n" + "-" * len(title) + "\n\n")
             f.write(".. autosummary::\n    :nosignatures:\n\n")
             f.writelines(f"    {t}\n" for t in sorted(t_list))

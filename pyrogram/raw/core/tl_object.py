@@ -54,6 +54,8 @@ class TLObject:
             ),
         )
 
+    __hash__ = None
+
     def __eq__(self, other: object) -> bool:
         for attr in self.__slots__:
             try:
