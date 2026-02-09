@@ -120,6 +120,7 @@ ignore = [
     "N806",
     "N818",
     "PLR09",
+    "COM812", # Don't remove
     "RUF002",
     "SIM115",
     "PERF203",
