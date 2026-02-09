@@ -33,7 +33,9 @@ if ROOT_DIR.name == "dev_tools":
 
 
 SECTION_RE = re.compile(r"---(\w+)---")
-COMBINATOR_RE = re.compile(r"^([\w.]+)#([0-9a-f]+)\s(?:.*)=\s([\w<>.]+);$", re.MULTILINE)
+COMBINATOR_RE = re.compile(
+    r"^([\w.]+)#([0-9a-f]+)\s(?:.*)=\s([\w<>.]+);$", re.MULTILINE
+)
 
 
 BASE_URL = "https://corefork.telegram.org/"
@@ -51,7 +53,9 @@ client = httpx.AsyncClient()
 async def main():
     tl_data = parse_tl_file(ROOT_DIR / "compiler" / "api" / "source" / "main_api.tl")
 
-    it_count = len(tl_data["constructor"]) + len(tl_data["method"]) + len(tl_data["type"])
+    it_count = (
+        len(tl_data["constructor"]) + len(tl_data["method"]) + len(tl_data["type"])
+    )
 
     print(f"Getting {it_count} objects from {BASE_URL}…")
 
@@ -66,7 +70,9 @@ async def main():
             it_count_done += 1
             print(f"Parsing items {it_count_done}/{it_count}", end="\r", flush=True)
             await sem.acquire()
-            tasks.append(asyncio.create_task(get_object_data(it_type, it_name, doc_dict)))
+            tasks.append(
+                asyncio.create_task(get_object_data(it_type, it_name, doc_dict))
+            )
 
     # Be sure that all tasks are done before continuing
     for task in tasks:
@@ -74,7 +80,9 @@ async def main():
 
     await client.aclose()
 
-    with (ROOT_DIR / "compiler" / "api" / "docs.json").open("w", encoding="utf-8") as f:
+    with (ROOT_DIR / "compiler" / "api" / "docs.json").open(
+        "w", encoding="utf-8"
+    ) as f:
         json.dump(doc_dict, f, indent=2, sort_keys=True)
 
     print("\nDone!")
@@ -110,7 +118,9 @@ async def get_object_data(it_type: str, it_name: str, doc_dict: dict[str, dict])
         elif it_type in {"constructor", "method"}:
             params_link_xp = page_content.xpath("./h3/a[@id='parameters'][1]")
             if params_link_xp:
-                params_xp = params_link_xp[0].getparent().getnext().xpath("./tbody[1]")
+                params_xp = (
+                    params_link_xp[0].getparent().getnext().xpath("./tbody[1]")
+                )
                 if params_xp:
                     params = {
                         x.getchildren()[0].text_content().strip(): x.getchildren()[2]
