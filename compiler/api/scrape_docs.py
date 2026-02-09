@@ -34,7 +34,8 @@ if ROOT_DIR.name == "dev_tools":
 
 SECTION_RE = re.compile(r"---(\w+)---")
 COMBINATOR_RE = re.compile(
-    r"^([\w.]+)#([0-9a-f]+)\s(?:.*)=\s([\w<>.]+);$", re.MULTILINE
+    r"^([\w.]+)#([0-9a-f]+)\s(?:.*)=\s([\w<>.]+);$",
+    re.MULTILINE,
 )
 
 
@@ -71,7 +72,7 @@ async def main():
             print(f"Parsing items {it_count_done}/{it_count}", end="\r", flush=True)
             await sem.acquire()
             tasks.append(
-                asyncio.create_task(get_object_data(it_type, it_name, doc_dict))
+                asyncio.create_task(get_object_data(it_type, it_name, doc_dict)),
             )
 
     # Be sure that all tasks are done before continuing
@@ -81,7 +82,8 @@ async def main():
     await client.aclose()
 
     with (ROOT_DIR / "compiler" / "api" / "docs.json").open(
-        "w", encoding="utf-8"
+        "w",
+        encoding="utf-8",
     ) as f:
         json.dump(doc_dict, f, indent=2, sort_keys=True)
 
