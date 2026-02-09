@@ -2,7 +2,8 @@
 from __future__ import annotations
 
 import re
-from pathlib import Path
+
+from anyio import Path as AsyncPath
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -112,7 +113,7 @@ class EditStory:
 
         if animation:
             if isinstance(animation, str):
-                if Path(animation).is_file():
+                if await AsyncPath(animation).is_file():
                     file = await self.save_file(animation)
                     media = raw.types.InputMediaUploadedDocument(
                         mime_type=self.guess_mime_type(animation) or "video/mp4",
@@ -151,7 +152,7 @@ class EditStory:
                 )
         elif photo:
             if isinstance(photo, str):
-                if Path(photo).is_file():
+                if await AsyncPath(photo).is_file():
                     file = await self.save_file(photo)
                     media = raw.types.InputMediaUploadedPhoto(file=file)
                 elif re.match("^https?://", photo):
@@ -163,7 +164,7 @@ class EditStory:
                 media = raw.types.InputMediaUploadedPhoto(file=file)
         elif video:
             if isinstance(video, str):
-                if Path(video).is_file():
+                if await AsyncPath(video).is_file():
                     file = await self.save_file(video)
                     media = raw.types.InputMediaUploadedDocument(
                         mime_type=self.guess_mime_type(video) or "video/mp4",
