@@ -1,5 +1,14 @@
 from __future__ import annotations
 
+from ..stories.media_area import MediaArea
+from ..stories.media_area_channel_post import MediaAreaChannelPost
+from ..stories.media_area_coordinates import MediaAreaCoordinates
+from ..stories.stories_privacy_rules import StoriesPrivacyRules
+from ..stories.story import Story
+from ..stories.story_deleted import StoryDeleted
+from ..stories.story_forward_header import StoryForwardHeader
+from ..stories.story_skipped import StorySkipped
+from ..stories.story_views import StoryViews
 from .alternative_video import AlternativeVideo
 from .animation import Animation
 from .audio import Audio
@@ -17,9 +26,6 @@ from .giveaway_launched import GiveawayLaunched
 from .giveaway_result import GiveawayResult
 from .labeled_price import LabeledPrice
 from .location import Location
-from .media_area import MediaArea
-from .media_area_channel_post import MediaAreaChannelPost
-from .media_area_coordinates import MediaAreaCoordinates
 from .message import Message
 from .message_entity import MessageEntity
 from .message_reaction_count_updated import (
@@ -44,12 +50,6 @@ from .reaction import (
 from .screenshot_taken import ScreenshotTaken
 from .sticker import Sticker
 from .stickerset import StickerSet
-from .stories_privacy_rules import StoriesPrivacyRules
-from .story import Story
-from .story_deleted import StoryDeleted
-from .story_forward_header import StoryForwardHeader
-from .story_skipped import StorySkipped
-from .story_views import StoryViews
 from .stripped_thumbnail import StrippedThumbnail
 from .thumbnail import Thumbnail
 from .translated_text import TranslatedText

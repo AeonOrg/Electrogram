@@ -1,12 +1,5 @@
-Enumerations
-============
-
-This page is about Electrogram enumerations.
-Enumerations are types that hold a group of related values to be used whenever a constant value is required.
-They will help you deal with those values in a type-safe way and also enable code completion so that you can be sure
-to apply only a valid value among the expected ones.
-
------
+Available Enums
+===============
 
 .. currentmodule:: pyrogram.enums
 
@@ -43,29 +36,29 @@ to apply only a valid value among the expected ones.
 .. toctree::
     :hidden:
 
-    AccentColor
-    BusinessSchedule
-    ChatAction
-    ChatEventAction
-    ChatJoinType
-    ChatMemberStatus
-    ChatMembersFilter
-    ChatType
-    ClientPlatform
-    FolderColor
-    ListenerTypes
-    MessageEntityType
-    MessageMediaType
-    MessageServiceType
-    MessagesFilter
-    NextCodeType
-    ParseMode
-    PollType
-    PrivacyKey
-    ProfileColor
-    ReactionType
-    ReplyColor
-    SentCodeType
-    StoriesPrivacyRules
-    StoryPrivacy
-    UserStatus
+    AccentColor <AccentColor>
+    BusinessSchedule <BusinessSchedule>
+    ChatAction <ChatAction>
+    ChatEventAction <ChatEventAction>
+    ChatJoinType <ChatJoinType>
+    ChatMemberStatus <ChatMemberStatus>
+    ChatMembersFilter <ChatMembersFilter>
+    ChatType <ChatType>
+    ClientPlatform <ClientPlatform>
+    FolderColor <FolderColor>
+    ListenerTypes <ListenerTypes>
+    MessageEntityType <MessageEntityType>
+    MessageMediaType <MessageMediaType>
+    MessageServiceType <MessageServiceType>
+    MessagesFilter <MessagesFilter>
+    NextCodeType <NextCodeType>
+    ParseMode <ParseMode>
+    PollType <PollType>
+    PrivacyKey <PrivacyKey>
+    ProfileColor <ProfileColor>
+    ReactionType <ReactionType>
+    ReplyColor <ReplyColor>
+    SentCodeType <SentCodeType>
+    StoriesPrivacyRules <StoriesPrivacyRules>
+    StoryPrivacy <StoryPrivacy>
+    UserStatus <UserStatus>

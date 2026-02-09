@@ -1,26 +1,26 @@
 from __future__ import annotations
 
-from .bot_allowed import BotAllowed
-from .bot_app import BotApp
-from .bot_business_connection import BotBusinessConnection
-from .bot_command import BotCommand
-from .bot_command_scope import BotCommandScope
-from .bot_command_scope_all_chat_administrators import (
+from ..bot_commands.bot_command import BotCommand
+from ..bot_commands.bot_command_scope import BotCommandScope
+from ..bot_commands.bot_command_scope_all_chat_administrators import (
     BotCommandScopeAllChatAdministrators,
 )
-from .bot_command_scope_all_group_chats import (
+from ..bot_commands.bot_command_scope_all_group_chats import (
     BotCommandScopeAllGroupChats,
 )
-from .bot_command_scope_all_private_chats import (
+from ..bot_commands.bot_command_scope_all_private_chats import (
     BotCommandScopeAllPrivateChats,
 )
-from .bot_command_scope_chat import BotCommandScopeChat
-from .bot_command_scope_chat_administrators import (
+from ..bot_commands.bot_command_scope_chat import BotCommandScopeChat
+from ..bot_commands.bot_command_scope_chat_administrators import (
     BotCommandScopeChatAdministrators,
 )
-from .bot_command_scope_chat_member import BotCommandScopeChatMember
-from .bot_command_scope_default import BotCommandScopeDefault
-from .bot_info import BotInfo
+from ..bot_commands.bot_command_scope_chat_member import BotCommandScopeChatMember
+from ..bot_commands.bot_command_scope_default import BotCommandScopeDefault
+from ..bots.bot_allowed import BotAllowed
+from ..bots.bot_app import BotApp
+from ..bots.bot_business_connection import BotBusinessConnection
+from ..bots.bot_info import BotInfo
 from .callback_game import CallbackGame
 from .callback_query import CallbackQuery
 from .collectible_item_info import CollectibleItemInfo
