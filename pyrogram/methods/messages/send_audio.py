@@ -4,6 +4,8 @@ import re
 from pathlib import Path
 from typing import TYPE_CHECKING, BinaryIO
 
+from anyio import Path as AsyncPath
+
 import pyrogram
 from pyrogram import StopTransmissionError, enums, raw, types, utils
 from pyrogram.errors import FilePartMissing
@@ -204,7 +206,7 @@ class SendAudio:
 
         try:
             if isinstance(audio, str):
-                if Path(audio).is_file():
+                if await AsyncPath(audio).is_file():
                     thumb = await self.save_file(thumb)
                     file = await self.save_file(
                         audio,

@@ -20,6 +20,8 @@ from mimetypes import MimeTypes
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from anyio import Path as AsyncPath
+
 import pyrogram
 from pyrogram import __license__, __version__, enums, raw, utils
 from pyrogram.crypto import aes
@@ -962,7 +964,8 @@ class Client(Methods):
             progress_args,
         ) = packet
 
-        Path(directory).mkdir(parents=True, exist_ok=True) if not in_memory else None
+        if not in_memory:
+            await AsyncPath(directory).mkdir(parents=True, exist_ok=True)
         temp_file_path = (
             Path(directory)
             .joinpath(re.sub(r"\\", "/", file_name))
@@ -985,7 +988,7 @@ class Client(Methods):
         except BaseException as e:
             if not in_memory:
                 file.close()
-                Path(temp_file_path).unlink()
+                await AsyncPath(temp_file_path).unlink()
 
             if isinstance(e, asyncio.CancelledError):
                 raise e

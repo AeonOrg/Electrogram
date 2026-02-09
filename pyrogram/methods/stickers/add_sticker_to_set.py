@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import re
-from pathlib import Path
+
+from anyio import Path as AsyncPath
 
 import pyrogram
 from pyrogram import raw, types
@@ -41,7 +42,7 @@ class AddStickerToSet:
         """
 
         if isinstance(sticker, str):
-            if Path(sticker).is_file() or re.match("^https?://", sticker):
+            if await AsyncPath(sticker).is_file() or re.match("^https?://", sticker):
                 raise ValueError("file_id is invalid!")
             decoded = FileId.decode(sticker)
             media = raw.types.InputDocument(

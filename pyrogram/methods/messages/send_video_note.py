@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from pathlib import Path
 from typing import TYPE_CHECKING, BinaryIO
+
+from anyio import Path as AsyncPath
 
 import pyrogram
 from pyrogram import StopTransmissionError, enums, raw, types, utils
@@ -184,7 +185,7 @@ class SendVideoNote:
 
         try:
             if isinstance(video_note, str):
-                if Path(video_note).is_file():
+                if await AsyncPath(video_note).is_file():
                     thumb = await self.save_file(thumb)
                     file = await self.save_file(
                         video_note,

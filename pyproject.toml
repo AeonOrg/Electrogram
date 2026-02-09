@@ -10,6 +10,7 @@ dependencies = [
     "pymediainfo",
     "pymongo",
     "ElectroCrypto",
+    "anyio>=4.12.1",
 ]
 requires-python = ">=3.10"
 

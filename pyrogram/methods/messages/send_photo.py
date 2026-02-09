@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import re
-from pathlib import Path
 from typing import TYPE_CHECKING, BinaryIO
+
+from anyio import Path as AsyncPath
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -224,7 +225,7 @@ class SendPhoto:
 
         try:
             if isinstance(photo, str):
-                if Path(photo).is_file():
+                if await AsyncPath(photo).is_file():
                     file = await self.save_file(
                         photo,
                         progress=progress,

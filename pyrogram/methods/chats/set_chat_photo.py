@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from pathlib import Path
 from typing import BinaryIO
+
+from anyio import Path as AsyncPath
 
 import pyrogram
 from pyrogram import raw, utils
@@ -69,7 +70,7 @@ class SetChatPhoto:
         peer = await self.resolve_peer(chat_id)
 
         if isinstance(photo, str):
-            if Path(photo).is_file():
+            if await AsyncPath(photo).is_file():
                 photo = raw.types.InputChatUploadedPhoto(
                     file=await self.save_file(photo),
                     video=await self.save_file(video),

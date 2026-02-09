@@ -4,6 +4,8 @@ import re
 from pathlib import Path
 from typing import TYPE_CHECKING, BinaryIO
 
+from anyio import Path as AsyncPath
+
 import pyrogram
 from pyrogram import StopTransmissionError, enums, raw, types, utils
 from pyrogram.errors import FilePartMissing
@@ -191,7 +193,7 @@ class SendDocument:
 
         try:
             if isinstance(document, str):
-                if Path(document).is_file():
+                if await AsyncPath(document).is_file():
                     thumb = await self.save_file(thumb)
                     file = await self.save_file(
                         document,

@@ -1,11 +1,15 @@
 from __future__ import annotations
 
 import logging
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import aiosqlite
+from anyio import Path as AsyncPath
 
 from .sqlite_storage import SQLiteStorage
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 log = logging.getLogger(__name__)
 
@@ -54,7 +58,7 @@ class FileStorage(SQLiteStorage):
 
     async def open(self) -> None:
         path = self.database
-        file_exists = path.is_file()
+        file_exists = await AsyncPath(path).is_file()
 
         self.conn = await aiosqlite.connect(str(path), timeout=1)
 
@@ -69,4 +73,4 @@ class FileStorage(SQLiteStorage):
         await self.conn.commit()
 
     async def delete(self) -> None:
-        Path(self.database).unlink()
+        await AsyncPath(self.database).unlink()

@@ -5,6 +5,8 @@ import io
 import re
 from pathlib import Path
 
+from anyio import Path as AsyncPath
+
 import pyrogram
 from pyrogram import raw, types, utils
 from pyrogram.errors import MediaEmpty, RPCError
@@ -63,7 +65,9 @@ class EditInlineMedia:
         parse_mode = media.parse_mode
 
         is_bytes_io = isinstance(media.media, io.BytesIO)
-        is_uploaded_file = is_bytes_io or Path(media.media).is_file()
+        is_uploaded_file = is_bytes_io or (
+            isinstance(media.media, str) and await AsyncPath(media.media).is_file()
+        )
 
         is_external_url = not is_uploaded_file and re.match(
             "^https?://",

@@ -5,6 +5,7 @@ import re
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from anyio import Path as AsyncPath
 from pymediainfo import MediaInfo
 
 import pyrogram
@@ -171,7 +172,7 @@ class SendMediaGroup:
         for i in media:
             if isinstance(i, types.InputMediaPhoto):
                 if isinstance(i.media, str):
-                    if Path(i.media).is_file():
+                    if await AsyncPath(i.media).is_file():
                         media = await self.invoke(
                             raw.functions.messages.UploadMedia(
                                 peer=await self.resolve_peer(chat_id),
@@ -236,7 +237,7 @@ class SendMediaGroup:
             elif isinstance(i, types.InputMediaVideo | types.InputMediaAnimation):
                 if isinstance(i.media, str):
                     is_animation = False
-                    if Path(i.media).is_file():
+                    if await AsyncPath(i.media).is_file():
                         try:
                             videoInfo = MediaInfo.parse(i.media)
                         except OSError:
@@ -353,7 +354,7 @@ class SendMediaGroup:
                     )
             elif isinstance(i, types.InputMediaAudio):
                 if isinstance(i.media, str):
-                    if Path(i.media).is_file():
+                    if await AsyncPath(i.media).is_file():
                         media = await self.invoke(
                             raw.functions.messages.UploadMedia(
                                 peer=await self.resolve_peer(chat_id),
@@ -443,7 +444,7 @@ class SendMediaGroup:
                     )
             elif isinstance(i, types.InputMediaDocument):
                 if isinstance(i.media, str):
-                    if Path(i.media).is_file():
+                    if await AsyncPath(i.media).is_file():
                         media = await self.invoke(
                             raw.functions.messages.UploadMedia(
                                 peer=await self.resolve_peer(chat_id),

@@ -4,6 +4,8 @@ import io
 import re
 from pathlib import Path
 
+from anyio import Path as AsyncPath
+
 import pyrogram
 from pyrogram import enums, raw, types, utils
 from pyrogram.file_id import FileType
@@ -90,7 +92,9 @@ class EditMessageMedia:
             ).values()
 
         if isinstance(media, types.InputMediaPhoto):
-            if isinstance(media.media, io.BytesIO) or Path(media.media).is_file():
+            if isinstance(media.media, io.BytesIO) or (
+                isinstance(media.media, str) and await AsyncPath(media.media).is_file()
+            ):
                 uploaded_media = await self.invoke(
                     raw.functions.messages.UploadMedia(
                         peer=await self.resolve_peer(chat_id),
@@ -120,7 +124,9 @@ class EditMessageMedia:
                     FileType.PHOTO,
                 )
         elif isinstance(media, types.InputMediaVideo):
-            if isinstance(media.media, io.BytesIO) or Path(media.media).is_file():
+            if isinstance(media.media, io.BytesIO) or (
+                isinstance(media.media, str) and await AsyncPath(media.media).is_file()
+            ):
                 uploaded_media = await self.invoke(
                     raw.functions.messages.UploadMedia(
                         peer=await self.resolve_peer(chat_id),
@@ -165,7 +171,9 @@ class EditMessageMedia:
                     FileType.VIDEO,
                 )
         elif isinstance(media, types.InputMediaAudio):
-            if isinstance(media.media, io.BytesIO) or Path(media.media).is_file():
+            if isinstance(media.media, io.BytesIO) or (
+                isinstance(media.media, str) and await AsyncPath(media.media).is_file()
+            ):
                 media = await self.invoke(
                     raw.functions.messages.UploadMedia(
                         peer=await self.resolve_peer(chat_id),
@@ -203,7 +211,9 @@ class EditMessageMedia:
                     FileType.AUDIO,
                 )
         elif isinstance(media, types.InputMediaAnimation):
-            if isinstance(media.media, io.BytesIO) or Path(media.media).is_file():
+            if isinstance(media.media, io.BytesIO) or (
+                isinstance(media.media, str) and await AsyncPath(media.media).is_file()
+            ):
                 uploaded_media = await self.invoke(
                     raw.functions.messages.UploadMedia(
                         peer=await self.resolve_peer(chat_id),
@@ -248,7 +258,9 @@ class EditMessageMedia:
                     FileType.ANIMATION,
                 )
         elif isinstance(media, types.InputMediaDocument):
-            if isinstance(media.media, io.BytesIO) or Path(media.media).is_file():
+            if isinstance(media.media, io.BytesIO) or (
+                isinstance(media.media, str) and await AsyncPath(media.media).is_file()
+            ):
                 media = await self.invoke(
                     raw.functions.messages.UploadMedia(
                         peer=await self.resolve_peer(chat_id),
