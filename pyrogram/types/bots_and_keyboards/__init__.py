@@ -1,26 +1,31 @@
 from __future__ import annotations
 
-from ..bot_commands.bot_command import BotCommand
-from ..bot_commands.bot_command_scope import BotCommandScope
-from ..bot_commands.bot_command_scope_all_chat_administrators import (
+from pyrogram.types.bot_commands.bot_command import BotCommand
+from pyrogram.types.bot_commands.bot_command_scope import BotCommandScope
+from pyrogram.types.bot_commands.bot_command_scope_all_chat_administrators import (
     BotCommandScopeAllChatAdministrators,
 )
-from ..bot_commands.bot_command_scope_all_group_chats import (
+from pyrogram.types.bot_commands.bot_command_scope_all_group_chats import (
     BotCommandScopeAllGroupChats,
 )
-from ..bot_commands.bot_command_scope_all_private_chats import (
+from pyrogram.types.bot_commands.bot_command_scope_all_private_chats import (
     BotCommandScopeAllPrivateChats,
 )
-from ..bot_commands.bot_command_scope_chat import BotCommandScopeChat
-from ..bot_commands.bot_command_scope_chat_administrators import (
+from pyrogram.types.bot_commands.bot_command_scope_chat import BotCommandScopeChat
+from pyrogram.types.bot_commands.bot_command_scope_chat_administrators import (
     BotCommandScopeChatAdministrators,
 )
-from ..bot_commands.bot_command_scope_chat_member import BotCommandScopeChatMember
-from ..bot_commands.bot_command_scope_default import BotCommandScopeDefault
-from ..bots.bot_allowed import BotAllowed
-from ..bots.bot_app import BotApp
-from ..bots.bot_business_connection import BotBusinessConnection
-from ..bots.bot_info import BotInfo
+from pyrogram.types.bot_commands.bot_command_scope_chat_member import (
+    BotCommandScopeChatMember,
+)
+from pyrogram.types.bot_commands.bot_command_scope_default import (
+    BotCommandScopeDefault,
+)
+from pyrogram.types.bots.bot_allowed import BotAllowed
+from pyrogram.types.bots.bot_app import BotApp
+from pyrogram.types.bots.bot_business_connection import BotBusinessConnection
+from pyrogram.types.bots.bot_info import BotInfo
+
 from .callback_game import CallbackGame
 from .callback_query import CallbackQuery
 from .collectible_item_info import CollectibleItemInfo

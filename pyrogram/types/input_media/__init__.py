@@ -1,7 +1,10 @@
 from __future__ import annotations
 
-from ..stories.input_media_area import InputMediaArea
-from ..stories.input_media_area_channel_post import InputMediaAreaChannelPost
+from pyrogram.types.stories.input_media_area import InputMediaArea
+from pyrogram.types.stories.input_media_area_channel_post import (
+    InputMediaAreaChannelPost,
+)
+
 from .input_media import InputMedia
 from .input_media_animation import InputMediaAnimation
 from .input_media_audio import InputMediaAudio

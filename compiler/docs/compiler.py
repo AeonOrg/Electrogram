@@ -151,10 +151,12 @@ def pyrogram_api() -> None:
                     continue
 
                 # Check if it defines a class or is special function (idle, compose)
-                with open(file, "r", encoding="utf-8") as f:
+                with open(file, encoding="utf-8") as f:
                     tree = ast.parse(f.read())
 
-                has_class = any(isinstance(node, ast.ClassDef) for node in ast.walk(tree))
+                has_class = any(
+                    isinstance(node, ast.ClassDef) for node in ast.walk(tree)
+                )
                 is_special = file.stem in ["idle", "compose"]
 
                 if has_class or is_special:
@@ -339,7 +341,7 @@ def pyrogram_api() -> None:
             '    ``hasattr(message, "photo")`` always returns ``True``.\n\n',
         )
         f.write(
-            "    To tell whether a field is set or not, do a simple boolean check: ``if message.photo: ...``.\n\n"
+            "    To tell whether a field is set or not, do a simple boolean check: ``if message.photo: ...``.\n\n",
         )
         f.write("-----\n\n")
         f.write(".. currentmodule:: pyrogram.types\n\n")
@@ -347,11 +349,9 @@ def pyrogram_api() -> None:
         for cat_name, (title, t_list) in sorted(types_categories.items()):
             f.write(f"{title}\n" + "-" * len(title) + "\n\n")
             f.write(".. autosummary::\n    :nosignatures:\n\n")
-            for t in sorted(t_list):
-                f.write(f"    {t}\n")
+            f.writelines(f"    {t}\n" for t in sorted(t_list))
             f.write("\n.. toctree::\n    :hidden:\n\n")
-            for t in sorted(t_list):
-                f.write(f"    {t} <{t}>\n")
+            f.writelines(f"    {t} <{t}>\n" for t in sorted(t_list))
             f.write("\n")
 
             for t in t_list:
@@ -387,11 +387,11 @@ def pyrogram_api() -> None:
         for class_name, bound_methods in sorted(bound_methods_categories.items()):
             f.write(f"{class_name}\n" + "-" * len(class_name) + "\n\n")
             f.write(".. hlist::\n    :columns: 1\n\n")
-            for bm in sorted(bound_methods):
-                f.write(f"    - :meth:`~{bm}`\n")
+            f.writelines(f"    - :meth:`~{bm}`\n" for bm in sorted(bound_methods))
             f.write("\n.. toctree::\n    :hidden:\n\n")
-            for bm in sorted(bound_methods):
-                f.write(f"    {bm.split('.')[1]} <{bm}>\n")
+            f.writelines(
+                f"    {bm.split('.')[1]} <{bm}>\n" for bm in sorted(bound_methods)
+            )
             f.write("\n")
 
             for bm in bound_methods:
@@ -411,11 +411,9 @@ def pyrogram_api() -> None:
             f.write("Available Enums\n===============\n\n")
             f.write(".. currentmodule:: pyrogram.enums\n\n")
             f.write(".. autosummary::\n    :nosignatures:\n\n")
-            for e in sorted(enums_list):
-                f.write(f"    {e}\n")
+            f.writelines(f"    {e}\n" for e in sorted(enums_list))
             f.write("\n.. toctree::\n    :hidden:\n\n")
-            for e in sorted(enums_list):
-                f.write(f"    {e} <{e}>\n")
+            f.writelines(f"    {e} <{e}>\n" for e in sorted(enums_list))
 
         for e in enums_list:
             with Path(root, f"{e}.rst").open("w", encoding="utf-8") as f2:

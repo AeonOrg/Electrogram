@@ -1,14 +1,15 @@
 from __future__ import annotations
 
-from ..stories.media_area import MediaArea
-from ..stories.media_area_channel_post import MediaAreaChannelPost
-from ..stories.media_area_coordinates import MediaAreaCoordinates
-from ..stories.stories_privacy_rules import StoriesPrivacyRules
-from ..stories.story import Story
-from ..stories.story_deleted import StoryDeleted
-from ..stories.story_forward_header import StoryForwardHeader
-from ..stories.story_skipped import StorySkipped
-from ..stories.story_views import StoryViews
+from pyrogram.types.stories.media_area import MediaArea
+from pyrogram.types.stories.media_area_channel_post import MediaAreaChannelPost
+from pyrogram.types.stories.media_area_coordinates import MediaAreaCoordinates
+from pyrogram.types.stories.stories_privacy_rules import StoriesPrivacyRules
+from pyrogram.types.stories.story import Story
+from pyrogram.types.stories.story_deleted import StoryDeleted
+from pyrogram.types.stories.story_forward_header import StoryForwardHeader
+from pyrogram.types.stories.story_skipped import StorySkipped
+from pyrogram.types.stories.story_views import StoryViews
+
 from .alternative_video import AlternativeVideo
 from .animation import Animation
 from .audio import Audio
