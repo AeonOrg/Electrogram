@@ -66,6 +66,9 @@ class ChatPrivileges(Object):
             Channels only.
             True, if the administrator can delete stories in the channel.
 
+        can_manage_direct_messages (``bool``, *optional*):
+            True, if the administrator can manage direct messages.
+
         is_anonymous (``bool``, *optional*):
             True, if the user's presence in the chat is hidden.
     """
@@ -87,6 +90,7 @@ class ChatPrivileges(Object):
         can_post_stories: bool = False,
         can_edit_stories: bool = False,
         can_delete_stories: bool = False,
+        can_manage_direct_messages: bool = False,
         is_anonymous: bool = False,
     ) -> None:
         super().__init__(None)
@@ -105,6 +109,7 @@ class ChatPrivileges(Object):
         self.can_post_stories: bool = can_post_stories
         self.can_edit_stories: bool = can_edit_stories
         self.can_delete_stories: bool = can_delete_stories
+        self.can_manage_direct_messages: bool = can_manage_direct_messages
         self.is_anonymous: bool = is_anonymous
 
     @staticmethod
@@ -126,5 +131,6 @@ class ChatPrivileges(Object):
             can_post_stories=admin_rights.post_stories,
             can_edit_stories=admin_rights.edit_stories,
             can_delete_stories=admin_rights.delete_stories,
+            can_manage_direct_messages=admin_rights.manage_direct_messages,
             is_anonymous=admin_rights.anonymous,
         )

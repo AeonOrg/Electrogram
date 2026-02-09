@@ -20,6 +20,7 @@ from .dice import Dice
 from .document import Document
 from .draft_message import DraftMessage
 from .exported_story_link import ExportedStoryLink
+from .fact_check import FactCheck
 from .game import Game
 from .gifted_premium import GiftedPremium
 from .giveaway import Giveaway
@@ -74,6 +75,7 @@ __all__ = [
     "Document",
     "DraftMessage",
     "ExportedStoryLink",
+    "FactCheck",
     "Game",
     "GiftedPremium",
     "Giveaway",

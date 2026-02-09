@@ -86,6 +86,27 @@ class User(Object, Update):
         is_bot_business (``bool``, *optional*):
             True, if this bot can connect to business account.
 
+        is_bot_can_edit (``bool``, *optional*):
+            True, if this bot can be edited by the current user.
+
+        is_close_friend (``bool``, *optional*):
+            True, if this user is a close friend.
+
+        is_stories_hidden (``bool``, *optional*):
+            True, if stories from this user are hidden.
+
+        is_stories_unavailable (``bool``, *optional*):
+            True, if stories from this user are unavailable.
+
+        is_bot_has_main_app (``bool``, *optional*):
+            True, if this bot has a main app.
+
+        is_bot_forum_view (``bool``, *optional*):
+            True, if this bot has forum view enabled.
+
+        is_bot_forum_can_manage_topics (``bool``, *optional*):
+            True, if this bot can manage forum topics.
+
         first_name (``str``, *optional*):
             User's or bot's first name.
 
@@ -147,6 +168,12 @@ class User(Object, Update):
 
         active_users (``int``, *optional*):
             Bot's active users count.
+
+        bot_verification_icon (``int``, *optional*):
+            Identifier of the custom emoji used as a verification icon.
+
+        send_paid_messages_stars (``int``, *optional*):
+            Amount of stars required to send a paid message to this user.
     """
 
     def __init__(
@@ -167,6 +194,13 @@ class User(Object, Update):
         is_premium: bool | None = None,
         is_contacts_only: bool | None = None,
         is_bot_business: bool | None = None,
+        is_bot_can_edit: bool | None = None,
+        is_close_friend: bool | None = None,
+        is_stories_hidden: bool | None = None,
+        is_stories_unavailable: bool | None = None,
+        is_bot_has_main_app: bool | None = None,
+        is_bot_forum_view: bool | None = None,
+        is_bot_forum_can_manage_topics: bool | None = None,
         first_name: str | None = None,
         last_name: str | None = None,
         status: enums.UserStatus = None,
@@ -183,6 +217,8 @@ class User(Object, Update):
         reply_color: types.ChatColor = None,
         profile_color: types.ChatColor = None,
         active_users: int | None = None,
+        bot_verification_icon: int | None = None,
+        send_paid_messages_stars: int | None = None,
     ) -> None:
         super().__init__(client)
 
@@ -200,6 +236,13 @@ class User(Object, Update):
         self.is_premium = is_premium
         self.is_contacts_only = is_contacts_only
         self.is_bot_business = is_bot_business
+        self.is_bot_can_edit = is_bot_can_edit
+        self.is_close_friend = is_close_friend
+        self.is_stories_hidden = is_stories_hidden
+        self.is_stories_unavailable = is_stories_unavailable
+        self.is_bot_has_main_app = is_bot_has_main_app
+        self.is_bot_forum_view = is_bot_forum_view
+        self.is_bot_forum_can_manage_topics = is_bot_forum_can_manage_topics
         self.first_name = first_name
         self.last_name = last_name
         self.status = status
@@ -216,6 +259,8 @@ class User(Object, Update):
         self.reply_color = reply_color
         self.profile_color = profile_color
         self.active_users = active_users
+        self.bot_verification_icon = bot_verification_icon
+        self.send_paid_messages_stars = send_paid_messages_stars
 
     @property
     def full_name(self) -> str:
@@ -263,6 +308,17 @@ class User(Object, Update):
             is_premium=user.premium,
             is_contacts_only=user.contact_require_premium,
             is_bot_business=user.bot_business,
+            is_bot_can_edit=getattr(user, "bot_can_edit", None),
+            is_close_friend=getattr(user, "close_friend", None),
+            is_stories_hidden=getattr(user, "stories_hidden", None),
+            is_stories_unavailable=getattr(user, "stories_unavailable", None),
+            is_bot_has_main_app=getattr(user, "bot_has_main_app", None),
+            is_bot_forum_view=getattr(user, "bot_forum_view", None),
+            is_bot_forum_can_manage_topics=getattr(
+                user,
+                "bot_forum_can_manage_topics",
+                None,
+            ),
             first_name=user.first_name,
             last_name=user.last_name,
             **User._parse_status(user.status, user.bot),
@@ -287,6 +343,8 @@ class User(Object, Update):
                 getattr(user, "profile_color", None),
             ),
             active_users=active_users,
+            bot_verification_icon=getattr(user, "bot_verification_icon", None),
+            send_paid_messages_stars=getattr(user, "send_paid_messages_stars", None),
             client=client,
         )
 
