@@ -69,6 +69,8 @@ class Object:
             ),
         )
 
+    __hash__ = None
+
     def __eq__(self, other: Object) -> bool:
         for attr in self.__dict__:
             try:

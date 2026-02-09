@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import csv
-import os
 import re
 import shutil
 from pathlib import Path
@@ -23,7 +22,7 @@ def camel(s):
 def start() -> None:
     shutil.rmtree(DEST, ignore_errors=True)
     Path(DEST).mkdir(parents=True, exist_ok=True)
-    files = list(os.listdir(f"{HOME}/source"))
+    files = [i.name for i in Path(HOME, "source").iterdir() if i.is_file()]
 
     with Path(DEST, "all.py").open("w", encoding="utf-8") as f_all:
         f_all.write("count = {count}\n\n")

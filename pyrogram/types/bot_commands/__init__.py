@@ -11,3 +11,15 @@ from .bot_command_scope_chat import BotCommandScopeChat
 from .bot_command_scope_chat_administrators import BotCommandScopeChatAdministrators
 from .bot_command_scope_chat_member import BotCommandScopeChatMember
 from .bot_command_scope_default import BotCommandScopeDefault
+
+__all__ = [
+    "BotCommand",
+    "BotCommandScope",
+    "BotCommandScopeAllChatAdministrators",
+    "BotCommandScopeAllGroupChats",
+    "BotCommandScopeAllPrivateChats",
+    "BotCommandScopeChat",
+    "BotCommandScopeChatAdministrators",
+    "BotCommandScopeChatMember",
+    "BotCommandScopeDefault",
+]

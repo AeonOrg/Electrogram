@@ -11,3 +11,17 @@ from .story_deleted import StoryDeleted
 from .story_forward_header import StoryForwardHeader
 from .story_skipped import StorySkipped
 from .story_views import StoryViews
+
+__all__ = [
+    "InputMediaArea",
+    "InputMediaAreaChannelPost",
+    "MediaArea",
+    "MediaAreaChannelPost",
+    "MediaAreaCoordinates",
+    "StoriesPrivacyRules",
+    "Story",
+    "StoryDeleted",
+    "StoryForwardHeader",
+    "StorySkipped",
+    "StoryViews",
+]
