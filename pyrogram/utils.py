@@ -421,3 +421,11 @@ async def get_reply_to(
         peer = await client.resolve_peer(chat_id)
         reply_to = types.InputReplyToStory(peer=peer, story_id=reply_to_story_id)
     return reply_to
+
+
+async def get_input_quick_reply_shortcut(
+    shortcut: str | int,
+) -> raw.base.InputQuickReplyShortcut:
+    if isinstance(shortcut, int):
+        return raw.types.InputQuickReplyShortcutId(shortcut_id=shortcut)
+    return raw.types.InputQuickReplyShortcut(shortcut=shortcut)

@@ -63,6 +63,30 @@ class Chat(Object):
         is_paid_reactions_available (``bool``, *optional*):
             True, if paid reactions enabled in this chat.
 
+        is_stories_hidden (``bool``, *optional*):
+            True, if stories from this chat are hidden.
+
+        is_stories_hidden_min (``bool``, *optional*):
+            True, if stories from this chat are hidden for min users.
+
+        is_stories_unavailable (``bool``, *optional*):
+            True, if stories from this chat are unavailable.
+
+        is_signature_profiles (``bool``, *optional*):
+            True, if signature profiles are enabled in this chat.
+
+        is_autotranslation (``bool``, *optional*):
+            True, if autotranslation is enabled in this chat.
+
+        is_broadcast_messages_allowed (``bool``, *optional*):
+            True, if broadcast messages are allowed in this chat.
+
+        is_monoforum (``bool``, *optional*):
+            True, if monoforum is enabled in this chat.
+
+        is_forum_tabs (``bool``, *optional*):
+            True, if forum tabs are enabled in this chat.
+
         title (``str``, *optional*):
             Title, for supergroups, channels and basic group chats.
 
@@ -189,8 +213,17 @@ class Chat(Object):
         can_enable_paid_reaction (``bool``, *optional*):
             True, if paid reaction can be enabled in the channel chat; for channels only.
 
-        max_reaction_count (``int``):
-            The maximum number of reactions that can be set on a message in the chat
+        max_reaction_count (``int``, *optional*):
+            The maximum number of reactions that can be set on a message in the chat.
+
+        bot_verification_icon (``int``, *optional*):
+            Identifier of the custom emoji used as a verification icon.
+
+        send_paid_messages_stars (``int``, *optional*):
+            Amount of stars required to send a paid message to this chat.
+
+        linked_monoforum_id (``int``, *optional*):
+            Identifier of the linked monoforum.
     """
 
     def __init__(
@@ -211,6 +244,14 @@ class Chat(Object):
         is_join_to_send: bool | None = None,
         is_antispam: bool | None = None,
         is_slowmode_enabled: bool | None = None,
+        is_stories_hidden: bool | None = None,
+        is_stories_hidden_min: bool | None = None,
+        is_stories_unavailable: bool | None = None,
+        is_signature_profiles: bool | None = None,
+        is_autotranslation: bool | None = None,
+        is_broadcast_messages_allowed: bool | None = None,
+        is_monoforum: bool | None = None,
+        is_forum_tabs: bool | None = None,
         title: str | None = None,
         is_paid_reactions_available: bool | None = None,
         username: str | None = None,
@@ -246,6 +287,9 @@ class Chat(Object):
         subscription_until_date: datetime | None = None,
         can_enable_paid_reaction: bool | None = None,
         max_reaction_count: int | None = None,
+        bot_verification_icon: int | None = None,
+        send_paid_messages_stars: int | None = None,
+        linked_monoforum_id: int | None = None,
     ) -> None:
         super().__init__(client)
 
@@ -263,6 +307,14 @@ class Chat(Object):
         self.is_join_to_send = is_join_to_send
         self.is_antispam = is_antispam
         self.is_slowmode_enabled = is_slowmode_enabled
+        self.is_stories_hidden = is_stories_hidden
+        self.is_stories_hidden_min = is_stories_hidden_min
+        self.is_stories_unavailable = is_stories_unavailable
+        self.is_signature_profiles = is_signature_profiles
+        self.is_autotranslation = is_autotranslation
+        self.is_broadcast_messages_allowed = is_broadcast_messages_allowed
+        self.is_monoforum = is_monoforum
+        self.is_forum_tabs = is_forum_tabs
         self.title = title
         self.is_paid_reactions_available = is_paid_reactions_available
         self.username = username
@@ -298,6 +350,9 @@ class Chat(Object):
         self.subscription_until_date = subscription_until_date
         self.can_enable_paid_reaction = can_enable_paid_reaction
         self.max_reaction_count = max_reaction_count
+        self.bot_verification_icon = bot_verification_icon
+        self.send_paid_messages_stars = send_paid_messages_stars
+        self.linked_monoforum_id = linked_monoforum_id
 
     @property
     def full_name(self) -> str:
@@ -404,6 +459,18 @@ class Chat(Object):
             is_join_request=getattr(channel, "join_request", None),
             is_join_to_send=getattr(channel, "join_to_send", None),
             is_slowmode_enabled=getattr(channel, "slowmode_enabled", None),
+            is_stories_hidden=getattr(channel, "stories_hidden", None),
+            is_stories_hidden_min=getattr(channel, "stories_hidden_min", None),
+            is_stories_unavailable=getattr(channel, "stories_unavailable", None),
+            is_signature_profiles=getattr(channel, "signature_profiles", None),
+            is_autotranslation=getattr(channel, "autotranslation", None),
+            is_broadcast_messages_allowed=getattr(
+                channel,
+                "broadcast_messages_allowed",
+                None,
+            ),
+            is_monoforum=getattr(channel, "monoforum", None),
+            is_forum_tabs=getattr(channel, "forum_tabs", None),
             title=channel.title,
             username=user_name,
             usernames=usernames,
@@ -427,6 +494,13 @@ class Chat(Object):
                 getattr(channel, "subscription_until_date", None),
             ),
             reply_color=types.ChatColor._parse(getattr(channel, "color", None)),
+            bot_verification_icon=getattr(channel, "bot_verification_icon", None),
+            send_paid_messages_stars=getattr(
+                channel,
+                "send_paid_messages_stars",
+                None,
+            ),
+            linked_monoforum_id=getattr(channel, "linked_monoforum_id", None),
             client=client,
         )
 
