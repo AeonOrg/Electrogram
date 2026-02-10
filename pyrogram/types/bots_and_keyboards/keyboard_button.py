@@ -37,6 +37,9 @@ class KeyboardButton(Object):
 
         style (:obj:`~pyrogram.types.KeyboardButtonStyle` | :obj:`~pyrogram.enums.ButtonStyle`, *optional*):
             Button style.
+
+        icon (``int``, *optional*):
+            Custom icon for the button.
     """
 
     def __init__(
@@ -49,6 +52,7 @@ class KeyboardButton(Object):
         request_user: types.RequestPeerTypeUser = None,
         web_app: types.WebAppInfo = None,
         style: types.KeyboardButtonStyle | enums.ButtonStyle = None,
+        icon: int | None = None,
     ) -> None:
         super().__init__()
 
@@ -59,6 +63,12 @@ class KeyboardButton(Object):
         self.request_user = request_user
         self.web_app = web_app
         self.style = types.KeyboardButtonStyle._parse(style)
+
+        if icon is not None:
+            if self.style is None:
+                self.style = types.KeyboardButtonStyle(icon=icon)
+            else:
+                self.style.icon = icon
 
     @staticmethod
     def read(b):
