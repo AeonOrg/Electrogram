@@ -57,8 +57,8 @@ async def main():
             )
 
     # Be sure that all tasks are done before continuing
-    for task in tasks:
-        await task
+    await asyncio.gather(*tasks)
+
 
     await client.aclose()
 
@@ -105,12 +105,13 @@ async def get_object_data(it_type: str, it_name: str, doc_dict: dict[str, dict])
                     params_link_xp[0].getparent().getnext().xpath("./tbody[1]")
                 )
                 if params_xp:
-                    params = {
-                        x.getchildren()[0].text_content().strip(): x.getchildren()[2]
-                        .text_content()
-                        .strip()
-                        for x in params_xp[0].xpath("./tr")
-                    }
+                    params = {}
+                    for row in params_xp[0].xpath("./tr"):
+                        cells = row.getchildren()
+                        if len(cells) >= 3:
+                            params[cells[0].text_content().strip()] = (
+                                cells[2].text_content().strip()
+                            )
                 else:
                     print(f"No parameters for {it_type}/{it_name}")
                     params = {}
