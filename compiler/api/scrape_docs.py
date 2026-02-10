@@ -59,7 +59,6 @@ async def main():
     # Be sure that all tasks are done before continuing
     await asyncio.gather(*tasks)
 
-
     await client.aclose()
 
     with (ROOT_DIR / "compiler" / "api" / "docs.json").open(
