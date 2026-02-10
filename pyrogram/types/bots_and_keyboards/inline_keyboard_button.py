@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import enums, raw, types
 from pyrogram.types.object import Object
 
 
@@ -57,8 +57,11 @@ class InlineKeyboardButton(Object):
         copy_text (``str``, *optional*):
             A button that copies the text to the clipboard.
 
-        style (:obj:`~pyrogram.types.KeyboardButtonStyle`, *optional*):
+        style (:obj:`~pyrogram.types.KeyboardButtonStyle` | :obj:`~pyrogram.enums.ButtonStyle`, *optional*):
             Button style.
+
+        icon (``int``, *optional*):
+            Custom icon for the button.
     """
 
     def __init__(
@@ -74,7 +77,8 @@ class InlineKeyboardButton(Object):
         callback_game: types.CallbackGame | None = None,
         requires_password: bool | None = None,
         copy_text: str | None = None,
-        style: types.KeyboardButtonStyle | None = None,
+        style: types.KeyboardButtonStyle | enums.ButtonStyle | None = None,
+        icon: int | None = None,
     ) -> None:
         super().__init__()
 
@@ -89,7 +93,13 @@ class InlineKeyboardButton(Object):
         self.callback_game = callback_game
         self.requires_password = requires_password
         self.copy_text = copy_text
-        self.style = style
+        self.style = types.KeyboardButtonStyle._parse(style)
+
+        if icon is not None:
+            if self.style is None:
+                self.style = types.KeyboardButtonStyle(icon=icon)
+            else:
+                self.style.icon = icon
 
     @staticmethod
     def read(b: raw.base.KeyboardButton):

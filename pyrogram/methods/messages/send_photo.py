@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import re
-from pathlib import Path
 from typing import TYPE_CHECKING, BinaryIO
+
+from anyio import Path as AsyncPath
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -33,11 +34,19 @@ class SendPhoto:
         quote_text: str | None = None,
         quote_entities: list[types.MessageEntity] | None = None,
         schedule_date: datetime | None = None,
+        schedule_repeat_period: int | None = None,
         protect_content: bool | None = None,
         allow_paid_broadcast: bool | None = None,
+        allow_paid_stars: int | None = None,
         message_effect_id: int | None = None,
         view_once: bool | None = None,
         invert_media: bool | None = None,
+        quick_reply_shortcut: str | int | None = None,
+        send_as: int | str | None = None,
+        background: bool | None = None,
+        clear_draft: bool | None = None,
+        update_stickersets_order: bool | None = None,
+        suggested_post: types.SuggestedPost | None = None,
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
@@ -115,11 +124,17 @@ class SendPhoto:
             schedule_date (:py:obj:`~datetime.datetime`, *optional*):
                 Date when the message will be automatically sent.
 
+            schedule_repeat_period (``int``, *optional*):
+                Repeat period of the scheduled message.
+
             protect_content (``bool``, *optional*):
                 Protects the contents of the sent message from forwarding and saving.
 
             allow_paid_broadcast (``bool``, *optional*):
                 Pass True to allow the message to ignore regular broadcast limits for a small fee; for bots only
+
+            allow_paid_stars (``int``, *optional*):
+                Amount of stars to pay for the message; for bots only.
 
             message_effect_id (``int`` ``64-bit``, *optional*):
                 Unique identifier of the message effect to be added to the message; for private chats only.
@@ -130,6 +145,24 @@ class SendPhoto:
 
             invert_media (``bool``, *optional*):
                 Inverts the position of the photo and caption.
+
+            quick_reply_shortcut (``str`` | ``int``, *optional*):
+                Quick reply shortcut identifier or name.
+
+            send_as (``int`` | ``str``, *optional*):
+                Unique identifier (int) or username (str) of the chat to send the message as.
+
+            background (``bool``, *optional*):
+                Pass True to send the message in the background.
+
+            clear_draft (``bool``, *optional*):
+                Pass True to clear the draft.
+
+            update_stickersets_order (``bool``, *optional*):
+                Pass True to update the stickersets order.
+
+            suggested_post (:obj:`~pyrogram.types.SuggestedPost`, *optional*):
+                Suggested post information.
 
             reply_markup (:obj:`~pyrogram.types.InlineKeyboardMarkup` | :obj:`~pyrogram.types.ReplyKeyboardMarkup` | :obj:`~pyrogram.types.ReplyKeyboardRemove` | :obj:`~pyrogram.types.ForceReply`, *optional*):
                 Additional interface options. An object for an inline keyboard, custom reply keyboard,
@@ -192,7 +225,7 @@ class SendPhoto:
 
         try:
             if isinstance(photo, str):
-                if Path(photo).is_file():
+                if await AsyncPath(photo).is_file():
                     file = await self.save_file(
                         photo,
                         progress=progress,
@@ -241,6 +274,22 @@ class SendPhoto:
                         allow_paid_floodskip=allow_paid_broadcast,
                         effect=message_effect_id,
                         invert_media=invert_media,
+                        background=background,
+                        clear_draft=clear_draft,
+                        update_stickersets_order=update_stickersets_order,
+                        schedule_repeat_period=schedule_repeat_period,
+                        send_as=await self.resolve_peer(send_as)
+                        if send_as
+                        else None,
+                        quick_reply_shortcut=await utils.get_input_quick_reply_shortcut(
+                            quick_reply_shortcut,
+                        )
+                        if quick_reply_shortcut
+                        else None,
+                        allow_paid_stars=allow_paid_stars,
+                        suggested_post=await suggested_post.write()
+                        if suggested_post
+                        else None,
                         reply_markup=await reply_markup.write(self)
                         if reply_markup
                         else None,

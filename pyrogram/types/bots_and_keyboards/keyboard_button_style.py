@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from pyrogram import raw
+from pyrogram import enums, raw
 from pyrogram.types.object import Object
 
 
@@ -55,3 +55,19 @@ class KeyboardButtonStyle(Object):
             bg_success=self.bg_success,
             icon=self.icon,
         )
+
+    @staticmethod
+    def _parse(
+        style: KeyboardButtonStyle | enums.ButtonStyle | None,
+    ) -> KeyboardButtonStyle | None:
+        if style is None:
+            return None
+
+        if isinstance(style, enums.ButtonStyle):
+            return KeyboardButtonStyle(
+                bg_primary=style == enums.ButtonStyle.PRIMARY,
+                bg_danger=style == enums.ButtonStyle.DANGER,
+                bg_success=style == enums.ButtonStyle.SUCCESS,
+            )
+
+        return style

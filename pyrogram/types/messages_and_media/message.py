@@ -183,6 +183,36 @@ class Message(Object, Update):
         quote_entities (List of :obj:`~pyrogram.types.MessageEntity`, *optional*):
             For quote text, special entities like usernames, URLs, bot commands, etc. that appear in the quote text.
 
+        offline (``bool``, *optional*):
+            True, if the message was sent offline.
+
+        video_processing_pending (``bool``, *optional*):
+            True, if the video is still being processed.
+
+        paid_suggested_post_stars (``bool``, *optional*):
+            True, if the suggested post requires stars.
+
+        paid_suggested_post_ton (``bool``, *optional*):
+            True, if the suggested post requires TON.
+
+        fact_check (:obj:`~pyrogram.types.FactCheck`, *optional*):
+            Fact-check information.
+
+        report_delivery_until_date (:py:obj:`~datetime.datetime`, *optional*):
+            Date until which the report delivery is possible.
+
+        paid_message_stars (``int``, *optional*):
+            Amount of stars required to send a paid message.
+
+        suggested_post (:obj:`~pyrogram.types.SuggestedPost`, *optional*):
+            Suggested post information.
+
+        schedule_repeat_period (``int``, *optional*):
+            Repeat period of the scheduled message.
+
+        summary_from_language (``str``, *optional*):
+            Language from which the summary was generated.
+
         effect_id (``str``, *optional*):
             Unique identifier of the message effect added to the message.
 
@@ -485,6 +515,16 @@ class Message(Object, Update):
         caption_entities: list[types.MessageEntity] | None = None,
         quote_text: str | None = None,
         quote_entities: list[types.MessageEntity] | None = None,
+        offline: bool | None = None,
+        video_processing_pending: bool | None = None,
+        paid_suggested_post_stars: bool | None = None,
+        paid_suggested_post_ton: bool | None = None,
+        fact_check: types.FactCheck | None = None,
+        report_delivery_until_date: datetime | None = None,
+        paid_message_stars: int | None = None,
+        suggested_post: types.SuggestedPost | None = None,
+        schedule_repeat_period: int | None = None,
+        summary_from_language: str | None = None,
         effect_id: str | None = None,
         invert_media: bool | None = None,
         audio: types.Audio = None,
@@ -604,6 +644,16 @@ class Message(Object, Update):
         self.caption_entities = caption_entities
         self.quote_text = quote_text
         self.quote_entities = quote_entities
+        self.offline = offline
+        self.video_processing_pending = video_processing_pending
+        self.paid_suggested_post_stars = paid_suggested_post_stars
+        self.paid_suggested_post_ton = paid_suggested_post_ton
+        self.fact_check = fact_check
+        self.report_delivery_until_date = report_delivery_until_date
+        self.paid_message_stars = paid_message_stars
+        self.suggested_post = suggested_post
+        self.schedule_repeat_period = schedule_repeat_period
+        self.summary_from_language = summary_from_language
         self.effect_id = effect_id
         self.invert_media = invert_media
         self.audio = audio
@@ -1417,6 +1467,43 @@ class Message(Object, Update):
                 outgoing=message.out,
                 reply_markup=reply_markup,
                 reactions=reactions,
+                offline=getattr(message, "offline", None),
+                video_processing_pending=getattr(
+                    message,
+                    "video_processing_pending",
+                    None,
+                ),
+                paid_suggested_post_stars=getattr(
+                    message,
+                    "paid_suggested_post_stars",
+                    None,
+                ),
+                paid_suggested_post_ton=getattr(
+                    message,
+                    "paid_suggested_post_ton",
+                    None,
+                ),
+                fact_check=types.FactCheck._parse(
+                    client,
+                    getattr(message, "factcheck", None),
+                ),
+                report_delivery_until_date=utils.timestamp_to_datetime(
+                    getattr(message, "report_delivery_until_date", None),
+                ),
+                paid_message_stars=getattr(message, "paid_message_stars", None),
+                suggested_post=types.SuggestedPost._parse(
+                    getattr(message, "suggested_post", None),
+                ),
+                schedule_repeat_period=getattr(
+                    message,
+                    "schedule_repeat_period",
+                    None,
+                ),
+                summary_from_language=getattr(
+                    message,
+                    "summary_from_language",
+                    None,
+                ),
                 effect_id=getattr(message, "effect", None),
                 raw=message,
                 client=client,

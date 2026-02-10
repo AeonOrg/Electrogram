@@ -4,6 +4,8 @@ import re
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from anyio import Path as AsyncPath
+
 import pyrogram
 from pyrogram import enums, raw, types, utils
 from pyrogram.file_id import FileType
@@ -78,7 +80,7 @@ class SendPaidMedia:
         for i in media:
             if isinstance(i, types.InputPaidMediaPhoto):
                 if isinstance(i.media, str):
-                    if Path(i.media).is_file():
+                    if await AsyncPath(i.media).is_file():
                         media = await self.invoke(
                             raw.functions.messages.UploadMedia(
                                 peer=await self.resolve_peer(chat_id),
@@ -134,7 +136,7 @@ class SendPaidMedia:
                     )
             elif isinstance(i, types.InputPaidMediaVideo):
                 if isinstance(i.media, str):
-                    if Path(i.media).is_file():
+                    if await AsyncPath(i.media).is_file():
                         attributes = [
                             raw.types.DocumentAttributeVideo(
                                 supports_streaming=i.supports_streaming or None,

@@ -31,7 +31,7 @@ jobs:
           uv run -m ensurepip --upgrade
           uv run -m pip install --upgrade pip
           uv tool install pytest
-          uv run -m pip install pytest
+          uv run -m pip install pytest pytest-asyncio
           uv lock --upgrade
 
       - name: Run ruff to lint and format code

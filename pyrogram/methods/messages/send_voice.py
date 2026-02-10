@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import re
-from pathlib import Path
 from typing import TYPE_CHECKING, BinaryIO
+
+from anyio import Path as AsyncPath
 
 import pyrogram
 from pyrogram import StopTransmissionError, enums, raw, types, utils
@@ -177,7 +178,7 @@ class SendVoice:
 
         try:
             if isinstance(voice, str):
-                if Path(voice).is_file():
+                if await AsyncPath(voice).is_file():
                     file = await self.save_file(
                         voice,
                         progress=progress,

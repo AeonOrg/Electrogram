@@ -4,6 +4,8 @@ import re
 from pathlib import Path
 from typing import TYPE_CHECKING, BinaryIO
 
+from anyio import Path as AsyncPath
+
 import pyrogram
 from pyrogram import StopTransmissionError, enums, raw, types, utils
 from pyrogram.errors import FilePartMissing
@@ -165,7 +167,7 @@ class SendSticker:
 
         try:
             if isinstance(sticker, str):
-                if Path(sticker).is_file():
+                if await AsyncPath(sticker).is_file():
                     file = await self.save_file(
                         sticker,
                         progress=progress,
