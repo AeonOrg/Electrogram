@@ -9,7 +9,6 @@ ERRORS_HOME_PATH = Path(__file__).parent.resolve()
 REPO_HOME_PATH = ERRORS_HOME_PATH.parent.parent
 
 ERRORS_DEST_PATH = REPO_HOME_PATH / "pyrogram" / "errors" / "exceptions"
-NOTICE_PATH = REPO_HOME_PATH / "NOTICE"
 
 
 def snake(s):
@@ -29,12 +28,7 @@ def start():
 
     files = [i.name for i in (ERRORS_HOME_PATH / "source").iterdir()]
 
-    with NOTICE_PATH.open(encoding="utf-8") as f:
-        notice = [f"# {line}".strip() for line in f]
-        notice = "\n".join(notice)
-
     with (ERRORS_DEST_PATH / "all.py").open("w", encoding="utf-8") as f_all:
-        f_all.write(notice + "\n\n")
         f_all.write("count = {count}\n\n")
         f_all.write("exceptions = {\n")
 
@@ -48,8 +42,7 @@ def start():
             init = ERRORS_DEST_PATH / "__init__.py"
 
             if not init.exists():
-                with init.open("w", encoding="utf-8") as f_init:
-                    f_init.write(notice + "\n\n")
+                init.write_text("", encoding="utf-8")
 
             with init.open("a", encoding="utf-8") as f_init:
                 f_init.write(f"from .{name.lower()}_{code} import *\n")
@@ -63,9 +56,10 @@ def start():
                 reader = csv.reader(f_csv, delimiter="\t")
 
                 super_class = camel(name)
-                name = " ".join([
-                    i.capitalize() for i in name.replace(r"_", " ").lower().split(" ")
-                ])
+                name = " ".join(
+                    j.capitalize()
+                    for j in name.replace("_", " ").lower().split(" ")
+                )
 
                 sub_classes = []
 
@@ -77,14 +71,14 @@ def start():
 
                     count += 1
 
-                    if not row:  # Row is empty (blank line)
+                    if not row:
                         continue
 
                     error_id, error_message = row
 
-                    sub_class = camel(error_id.replace(r"_X", "_"))
+                    sub_class = camel(error_id.replace("_X", "_"))
                     sub_class = re.sub(r"^2", "Two", sub_class)
-                    sub_class = sub_class.replace(r" ", "")
+                    sub_class = sub_class.replace(" ", "")
 
                     f_all.write(f'        "{error_id}": "{sub_class}",\n')
 
@@ -95,26 +89,25 @@ def start():
                 ) as f_class_template:
                     class_template = f_class_template.read()
 
-                    with (ERRORS_HOME_PATH / "template" / "sub_class.txt").open(
-                        encoding="utf-8"
-                    ) as f_sub_class_template:
-                        sub_class_template = f_sub_class_template.read()
+                with (ERRORS_HOME_PATH / "template" / "sub_class.txt").open(
+                    encoding="utf-8"
+                ) as f_sub_class_template:
+                    sub_class_template = f_sub_class_template.read()
 
-                    class_template = class_template.format(
-                        notice=notice,
-                        super_class=super_class,
-                        code=code,
-                        docstring=f'"""{name}"""',
-                        sub_classes="".join([
-                            sub_class_template.format(
-                                sub_class=k[0],
-                                super_class=super_class,
-                                id=f'"{k[1]}"',
-                                docstring=f'"""{k[2]}"""',
-                            )
-                            for k in sub_classes
-                        ]),
-                    )
+                class_template = class_template.format(
+                    super_class=super_class,
+                    code=code,
+                    docstring=f'"""{name}"""',
+                    sub_classes="".join(
+                        sub_class_template.format(
+                            sub_class=k[0],
+                            super_class=super_class,
+                            id=f'"{k[1]}"',
+                            docstring=f'"""{k[2]}"""',
+                        )
+                        for k in sub_classes
+                    ),
+                )
 
                 f_class.write(class_template)
 
@@ -122,11 +115,12 @@ def start():
 
         f_all.write("}\n")
 
-    with (ERRORS_DEST_PATH / "all.py").open(encoding="utf-8") as f:
-        content = f.read()
-
-    with (ERRORS_DEST_PATH / "all.py").open("w", encoding="utf-8") as f:
-        f.write(re.sub(r"{count}", str(count), content))  # noqa: RUF027
+    all_file = ERRORS_DEST_PATH / "all.py"
+    content = all_file.read_text(encoding="utf-8")
+    all_file.write_text(
+        re.sub(r"{count}", str(count), content),
+        encoding="utf-8",
+    )
 
 
 if __name__ == "__main__":
