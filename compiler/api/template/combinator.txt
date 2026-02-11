@@ -25,9 +25,15 @@ class {name}(TLObject):  # type: ignore
         {read_types}
         return {name}({return_arguments})
 
-    def write(self, *args) -> bytes:
-        b = BytesIO()
-        b.write(Int(self.ID, False))
+    def write(self, b: BytesIO = None) -> bytes:
+        is_top = b is None
+
+        if is_top:
+            b = BytesIO()
+
+        Int.write(self.ID, b, False)
 
         {write_types}
-        return b.getvalue()
+
+        if is_top:
+            return b.getvalue()

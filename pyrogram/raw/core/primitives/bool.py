@@ -17,12 +17,15 @@ class BoolFalse(bytes, TLObject):
         return cls.value
 
     def __new__(cls) -> bytes:  # type: ignore
-        return cls.ID.to_bytes(4, "little")
+        return b"\x37\x97\x79\xbc"
 
 
 class BoolTrue(BoolFalse):
     ID = 0x997275B5
     value = True
+
+    def __new__(cls) -> bytes:  # type: ignore
+        return b"\xb5\x75\x72\x99"
 
 
 class Bool(bytes, TLObject):

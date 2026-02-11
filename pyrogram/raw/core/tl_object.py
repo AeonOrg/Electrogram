@@ -1,12 +1,10 @@
 from __future__ import annotations
 
+from io import BytesIO
 from json import dumps
-from typing import TYPE_CHECKING, Any, cast
+from typing import Any, cast
 
 from pyrogram.raw.all import objects
-
-if TYPE_CHECKING:
-    from io import BytesIO
 
 
 class TLObject:
@@ -21,8 +19,8 @@ class TLObject:
             *args,
         )
 
-    def write(self, *args: Any) -> bytes:
-        pass
+    def write(self, b: BytesIO = None) -> bytes:
+        return b""
 
     @staticmethod
     def default(obj: TLObject) -> str | dict[str, str]:

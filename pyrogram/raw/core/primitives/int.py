@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from io import BytesIO
+from typing import Any
 
 from pyrogram.raw.core.tl_object import TLObject
-
-if TYPE_CHECKING:
-    from io import BytesIO
 
 
 class Int(bytes, TLObject):
@@ -22,6 +20,10 @@ class Int(bytes, TLObject):
 
     def __new__(cls, value: int, signed: bool = True) -> bytes:
         return value.to_bytes(cls.SIZE, "little", signed=signed)
+
+    @classmethod
+    def write(cls, value: int, b: BytesIO, signed: bool = True):
+        b.write(value.to_bytes(cls.SIZE, "little", signed=signed))
 
 
 class Long(Int):
