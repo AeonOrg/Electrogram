@@ -68,6 +68,10 @@ html_theme_options = {
     "repo_url": "https://github.com/5hojib/Electrogram/",
     "repo_name": "Electrogram",
     "globaltoc_collapse": True,
+    "font": {
+        "text": "Inter",
+        "code": "JetBrains Mono",
+    },
     "features": [
         "navigation.expand",
         "navigation.tabs",
@@ -78,6 +82,10 @@ html_theme_options = {
         "toc.sticky",
         "content.tabs.link",
         "announce.dismiss",
+        "navigation.instant",
+        "navigation.tracking",
+        "content.code.copy",
+        "content.code.annotate",
     ],
     "palette": [
         {
