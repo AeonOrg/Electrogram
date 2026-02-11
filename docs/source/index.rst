@@ -3,17 +3,17 @@ Welcome to Electrogram
 
 .. raw:: html
 
-    <p>
-        <b>Telegram MTProto API Framework for Python</b>
-        <br>
-        <a href="https://github.com/5hojib/Electrogram">
-            Development
-        </a>
-        •
-        <a href="https://github.com/5hojib/Electrogram/issues">
-            Issues
-        </a>
-    </p>
+    <div style="display: flex; align-items: center; gap: 20px; margin-top: 1rem; margin-bottom: 1.5rem;">
+        <div>
+            <p style="margin: 0; font-size: 1.2rem; font-weight: 500; opacity: 0.9;">
+                Modern MTProto API Framework for Python
+            </p>
+            <div style="margin-top: 12px; display: flex; gap: 8px;">
+                <a href="https://github.com/5hojib/Electrogram" style="padding: 4px 14px; background: var(--md-primary-fg-color); color: white; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-decoration: none;">GitHub</a>
+                <a href="https://github.com/5hojib/Electrogram/issues" style="padding: 4px 14px; background: #f5f5f5; color: #333; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-decoration: none;">Issues</a>
+            </div>
+        </div>
+    </div>
 
 .. code-block:: python
 
@@ -36,12 +36,8 @@ It enables you to easily interact with the main Telegram API through a user acco
 How the Documentation is Organized
 ----------------------------------
 
-Contents are organized into sections composed of self-contained topics which can be all accessed from the sidebar, or by
-following them in order using the :guilabel:`Next` button at the end of each page.
-You can also switch to Dark or Light theme or leave on Auto (follows system preferences) by using the dedicated button
-in the top left corner.
-
-Here below you can, instead, find a list of the most relevant pages for a quick access.
+Contents are organized into sections composed of self-contained topics which can be all accessed from the sidebar.
+Here below you can find a list of the most relevant pages for quick access.
 
 First Steps
 ^^^^^^^^^^^
