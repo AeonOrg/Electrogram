@@ -57,8 +57,7 @@ def start():
 
                 super_class = camel(name)
                 name = " ".join(
-                    j.capitalize()
-                    for j in name.replace("_", " ").lower().split(" ")
+                    j.capitalize() for j in name.replace("_", " ").lower().split(" ")
                 )
 
                 sub_classes = []
