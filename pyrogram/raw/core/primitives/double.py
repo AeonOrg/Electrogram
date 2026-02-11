@@ -1,12 +1,10 @@
 from __future__ import annotations
 
+from io import BytesIO
 from struct import pack, unpack
-from typing import TYPE_CHECKING, Any, cast
+from typing import Any, cast
 
 from pyrogram.raw.core.tl_object import TLObject
-
-if TYPE_CHECKING:
-    from io import BytesIO
 
 
 class Double(bytes, TLObject):
@@ -16,3 +14,7 @@ class Double(bytes, TLObject):
 
     def __new__(cls, value: float) -> bytes:  # type: ignore
         return pack("d", value)
+
+    @classmethod
+    def write(cls, value: float, b: BytesIO):
+        b.write(pack("d", value))

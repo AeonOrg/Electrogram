@@ -50,12 +50,12 @@ class Vector(bytes, TLObject):
         if b is None:
             return cls(value, t)
 
-        b.write(b"\x15\xc4\xb5\x1c")
+        Int.write(cls.ID, b, False)
         Int.write(len(value), b)
 
         for i in value:
             if t:
-                b.write(t(i))
+                t.write(i, b)
             else:
                 i.write(b)
 

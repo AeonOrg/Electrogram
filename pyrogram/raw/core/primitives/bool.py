@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from io import BytesIO
+from typing import Any
 
 from pyrogram.raw.core.tl_object import TLObject
-
-if TYPE_CHECKING:
-    from io import BytesIO
 
 
 class BoolFalse(bytes, TLObject):
@@ -35,3 +33,7 @@ class Bool(bytes, TLObject):
 
     def __new__(cls, value: bool) -> bytes:  # type: ignore
         return BoolTrue() if value else BoolFalse()
+
+    @classmethod
+    def write(cls, value: bool, b: BytesIO):
+        b.write(BoolTrue() if value else BoolFalse())
