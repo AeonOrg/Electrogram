@@ -131,13 +131,19 @@ def get_latest_schema() -> SchemaData | None:
         processed_types_content = "\n".join(processed_types).strip()
 
         if functions_part:
-            schema_content = f"{SCHEMA_HEADER}\n{processed_types_content}\n\n{functions_part}"
+            schema_content = (
+                f"{SCHEMA_HEADER}\n{processed_types_content}\n\n{functions_part}"
+            )
         else:
             schema_content = f"{SCHEMA_HEADER}\n{processed_types_content}"
 
         schema_hash = hashlib.sha256(schema_content.encode()).hexdigest()
 
-        return {"content": schema_content, "hash": schema_hash, "layer": layer_version}
+        return {
+            "content": schema_content,
+            "hash": schema_hash,
+            "layer": layer_version,
+        }
     except requests.RequestException as e:
         logger.error("Error fetching schema: %s", e)
         return None
@@ -188,9 +194,13 @@ def main() -> int:
     Returns:
         int: Exit code (0: update applied, 1: error, 2: no update needed)
     """
-    parser = argparse.ArgumentParser(description="Check for updates to the Telegram API schema")
+    parser = argparse.ArgumentParser(
+        description="Check for updates to the Telegram API schema"
+    )
     parser.add_argument(
-        "--force-update", action="store_true", help="Force update even if no changes detected"
+        "--force-update",
+        action="store_true",
+        help="Force update even if no changes detected",
     )
     args = parser.parse_args()
 
