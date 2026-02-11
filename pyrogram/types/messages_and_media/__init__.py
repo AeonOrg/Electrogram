@@ -28,7 +28,7 @@ from .giveaway_launched import GiveawayLaunched
 from .giveaway_result import GiveawayResult
 from .labeled_price import LabeledPrice
 from .location import Location
-from .message import Message
+from .message import Message, Str
 from .message_entity import MessageEntity
 from .message_reaction_count_updated import (
     MessageReactionCountUpdated,
@@ -107,6 +107,7 @@ __all__ = [
     "Sticker",
     "StickerSet",
     "StoriesPrivacyRules",
+    "Str",
     "Story",
     "StoryDeleted",
     "StoryForwardHeader",

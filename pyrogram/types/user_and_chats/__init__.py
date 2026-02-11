@@ -34,6 +34,7 @@ from .found_contacts import FoundContacts
 from .general_forum_topic_hidden import GeneralTopicHidden
 from .general_forum_topic_unhidden import GeneralTopicUnhidden
 from .invite_link_importer import InviteLinkImporter
+from .user import Link
 from .peer_channel import PeerChannel
 from .peer_user import PeerUser
 from .privacy_rule import PrivacyRule
@@ -80,6 +81,7 @@ __all__ = [
     "GeneralTopicHidden",
     "GeneralTopicUnhidden",
     "InviteLinkImporter",
+    "Link",
     "PeerChannel",
     "PeerUser",
     "PrivacyRule",

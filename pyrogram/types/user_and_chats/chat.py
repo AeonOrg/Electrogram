@@ -154,7 +154,7 @@ class Chat(Object):
 
         join_requests_count (``int``, *optional*):
             Number of users who requested to join the chat.
-            Returned only in :meth:`~pyrogram.Client.get
+            Returned only in :meth:`~pyrogram.Client.get_chat`.
 
         restrictions (List of :obj:`~pyrogram.types.Restriction`, *optional*):
             The list of reasons why this chat might be unavailable to some users.

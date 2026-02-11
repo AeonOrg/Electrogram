@@ -39,5 +39,3 @@ GitHub Sponsor
        data-color-scheme="no-preference: light; light: light; dark: dark;"
        data-icon="octicon-heart" data-size="large"
        aria-label="Sponsor @5hojib on GitHub">Sponsor</a>
-
------
