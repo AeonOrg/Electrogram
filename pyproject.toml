@@ -47,7 +47,7 @@ dev = [
 ]
 
 docs = [
-    "sphinx<8.0.0",
+    "sphinx<9.0.0",
     "sphinx-immaterial",
     "sphinx_copybutton",
     "sphinx-autobuild",
