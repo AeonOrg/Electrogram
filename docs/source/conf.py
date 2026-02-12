@@ -33,6 +33,7 @@ intersphinx_mapping = {"python": ("https://docs.python.org/3", None)}
 master_doc = "index"
 source_suffix = ".rst"
 autodoc_member_order = "bysource"
+autodoc_preserve_defaults = True
 
 # Paths for templates and static files
 templates_path = []
@@ -56,7 +57,7 @@ pygments_style = "friendly"
 copybutton_prompt_text = "$ "
 
 # Suppress specific warnings
-suppress_warnings = ["image.not_readable"]
+suppress_warnings = ["image.not_readable", "misc.highlighting_failure"]
 
 # HTML theme options
 html_theme_options = {
