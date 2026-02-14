@@ -35,17 +35,12 @@ class Message(TLObject):
 
         return Message(TLObject.read(BytesIO(body)), msg_id, seq_no, length)
 
-    def write(self, b: BytesIO | None = None) -> bytes:
-        is_top = b is None
+    def write(self, *args: Any) -> bytes:  # noqa: ARG002
+        b = BytesIO()
 
-        if is_top:
-            b = BytesIO()
+        b.write(Long(self.msg_id))
+        b.write(Int(self.seq_no))
+        b.write(Int(self.length))
+        b.write(self.body.write())
 
-        Long.write(self.msg_id, b)
-        Int.write(self.seq_no, b)
-        Int.write(self.length, b)
-        self.body.write(b)
-
-        if is_top:
-            return b.getvalue()
-        return None
+        return b.getvalue()

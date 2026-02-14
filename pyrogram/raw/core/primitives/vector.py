@@ -1,13 +1,15 @@
 from __future__ import annotations
 
-from io import BytesIO
-from typing import Any
+from typing import TYPE_CHECKING, Any, cast
 
 from pyrogram.raw.core.list import List
 from pyrogram.raw.core.tl_object import TLObject
 
 from .bool import Bool, BoolFalse, BoolTrue
 from .int import Int, Long
+
+if TYPE_CHECKING:
+    from io import BytesIO
 
 
 class Vector(bytes, TLObject):
@@ -41,24 +43,7 @@ class Vector(bytes, TLObject):
         )
 
     def __new__(cls, value: list, t: Any = None) -> bytes:  # type: ignore
-        b = BytesIO()
-        cls.write(value, t, b)
-        return b.getvalue()
-
-    @classmethod
-    def write(
-        cls, value: list, t: Any = None, b: BytesIO | None = None
-    ) -> bytes | None:
-        if b is None:
-            return cls(value, t)
-
-        Int.write(cls.ID, b, False)
-        Int.write(len(value), b)
-
-        for i in value:
-            if t:
-                t.write(i, b)
-            else:
-                i.write(b)
-
-        return None
+        return b"".join(
+            [Int(cls.ID, False), Int(len(value))]
+            + [cast("bytes", t(i)) if t else i.write() for i in value],
+        )

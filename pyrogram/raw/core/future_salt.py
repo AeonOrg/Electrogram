@@ -27,16 +27,11 @@ class FutureSalt(TLObject):
 
         return FutureSalt(valid_since, valid_until, salt)
 
-    def write(self, b: BytesIO | None = None) -> bytes:
-        is_top = b is None
+    def write(self, *args: Any) -> bytes:  # noqa: ARG002
+        b = BytesIO()
 
-        if is_top:
-            b = BytesIO()
+        b.write(Int(self.valid_since))
+        b.write(Int(self.valid_until))
+        b.write(Long(self.salt))
 
-        Int.write(self.valid_since, b)
-        Int.write(self.valid_until, b)
-        Long.write(self.salt, b)
-
-        if is_top:
-            return b.getvalue()
-        return None
+        return b.getvalue()

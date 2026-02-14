@@ -21,8 +21,8 @@ class TLObject:
             *args,
         )
 
-    def write(self, b: BytesIO | None = None) -> bytes:
-        return b""
+    def write(self, *args: Any) -> bytes:
+        pass
 
     @staticmethod
     def default(obj: TLObject) -> str | dict[str, str]:

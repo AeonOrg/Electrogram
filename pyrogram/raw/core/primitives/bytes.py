@@ -1,9 +1,11 @@
 from __future__ import annotations
 
-from io import BytesIO
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from pyrogram.raw.core.tl_object import TLObject
+
+if TYPE_CHECKING:
+    from io import BytesIO
 
 
 class Bytes(bytes, TLObject):
@@ -22,20 +24,10 @@ class Bytes(bytes, TLObject):
         return x
 
     def __new__(cls, value: bytes) -> bytes:  # type: ignore
-        b = BytesIO()
-        cls.write(value, b)
-        return b.getvalue()
-
-    @classmethod
-    def write(cls, value: bytes, b: BytesIO):
         length = len(value)
 
         if length <= 253:
-            b.write(bytes([length]))
-            b.write(value)
-            b.write(bytes(-(length + 1) % 4))
-        else:
-            b.write(bytes([254]))
-            b.write(length.to_bytes(3, "little"))
-            b.write(value)
-            b.write(bytes(-length % 4))
+            return bytes([length]) + value + bytes(-(length + 1) % 4)
+        return (
+            bytes([254]) + length.to_bytes(3, "little") + value + bytes(-length % 4)
+        )

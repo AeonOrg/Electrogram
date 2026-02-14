@@ -432,7 +432,7 @@ def start() -> None:  # noqa: C901
                     [
                         f"{arg_name} = 0",
                         "\n        ".join(write_flags),
-                        f"Int.write({arg_name}, b)\n        ",
+                        f"b.write(Int({arg_name}))\n        ",
                     ],
                 )
 
@@ -451,7 +451,7 @@ def start() -> None:  # noqa: C901
                     write_types += "\n        "
                     write_types += f"if self.{arg_name} is not None:\n            "
                     write_types += (
-                        f"{flag_type.title()}.write(self.{arg_name}, b)\n        "
+                        f"b.write({flag_type.title()}(self.{arg_name}))\n        "
                     )
 
                     read_types += "\n        "
@@ -461,14 +461,14 @@ def start() -> None:  # noqa: C901
 
                     write_types += "\n        "
                     write_types += f"if self.{arg_name} is not None:\n            "
-                    write_types += f"Vector.write(self.{arg_name}, {sub_type.title() if sub_type in CORE_TYPES else 'None'}, b)\n        "
+                    write_types += f"b.write(Vector(self.{arg_name}{f', {sub_type.title()}' if sub_type in CORE_TYPES else ''}))\n        "
 
                     read_types += "\n        "
                     read_types += f"{arg_name} = TLObject.read(b{f', {sub_type.title()}' if sub_type in CORE_TYPES else ''}) if flags{number} & (1 << {index}) else []\n        "
                 else:
                     write_types += "\n        "
                     write_types += f"if self.{arg_name} is not None:\n            "
-                    write_types += f"self.{arg_name}.write(b)\n        "
+                    write_types += f"b.write(self.{arg_name}.write())\n        "
 
                     read_types += "\n        "
                     read_types += f"{arg_name} = TLObject.read(b) if flags{number} & (1 << {index}) else None\n        "
@@ -476,7 +476,7 @@ def start() -> None:  # noqa: C901
                 write_types += "\n        "
                 if arg_type in CORE_TYPES:
                     write_types += (
-                        f"{arg_type.title()}.write(self.{arg_name}, b)\n        "
+                        f"b.write({arg_type.title()}(self.{arg_name}))\n        "
                     )
 
                     read_types += "\n        "
@@ -486,12 +486,12 @@ def start() -> None:  # noqa: C901
                 elif "vector" in arg_type.lower():
                     sub_type = arg_type.split("<")[1][:-1]
 
-                    write_types += f"Vector.write(self.{arg_name}, {sub_type.title() if sub_type in CORE_TYPES else 'None'}, b)\n        "
+                    write_types += f"b.write(Vector(self.{arg_name}{f', {sub_type.title()}' if sub_type in CORE_TYPES else ''}))\n        "
 
                     read_types += "\n        "
                     read_types += f"{arg_name} = TLObject.read(b{f', {sub_type.title()}' if sub_type in CORE_TYPES else ''})\n        "
                 else:
-                    write_types += f"self.{arg_name}.write(b)\n        "
+                    write_types += f"b.write(self.{arg_name}.write())\n        "
 
                     read_types += "\n        "
                     read_types += f"{arg_name} = TLObject.read(b)\n        "

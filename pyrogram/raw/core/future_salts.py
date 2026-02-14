@@ -30,23 +30,18 @@ class FutureSalts(TLObject):
 
         return FutureSalts(req_msg_id, now, salts)
 
-    def write(self, b: BytesIO | None = None) -> bytes:
-        is_top = b is None
+    def write(self, *args: Any) -> bytes:  # noqa: ARG002
+        b = BytesIO()
 
-        if is_top:
-            b = BytesIO()
+        b.write(Int(self.ID, False))
 
-        Int.write(self.ID, b, False)
-
-        Long.write(self.req_msg_id, b)
-        Int.write(self.now, b)
+        b.write(Long(self.req_msg_id))
+        b.write(Int(self.now))
 
         count = len(self.salts)
-        Int.write(count, b)
+        b.write(Int(count))
 
         for salt in self.salts:
-            salt.write(b)
+            b.write(salt.write())
 
-        if is_top:
-            return b.getvalue()
-        return None
+        return b.getvalue()

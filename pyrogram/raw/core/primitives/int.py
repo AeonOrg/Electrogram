@@ -23,10 +23,6 @@ class Int(bytes, TLObject):
     def __new__(cls, value: int, signed: bool = True) -> bytes:
         return value.to_bytes(cls.SIZE, "little", signed=signed)
 
-    @classmethod
-    def write(cls, value: int, b: BytesIO, signed: bool = True):
-        b.write(value.to_bytes(cls.SIZE, "little", signed=signed))
-
 
 class Long(Int):
     SIZE = 8

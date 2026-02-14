@@ -17,7 +17,3 @@ class String(Bytes):
 
     def __new__(cls, value: str) -> bytes:
         return super().__new__(cls, value.encode())
-
-    @classmethod
-    def write(cls, value: str, b: BytesIO):
-        Bytes.write(value.encode(), b)

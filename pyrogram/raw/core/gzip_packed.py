@@ -27,15 +27,11 @@ class GzipPacked(TLObject):
             TLObject.read(BytesIO(decompress(Bytes.read(data)))),
         )
 
-    def write(self, b: BytesIO | None = None) -> bytes:
-        is_top = b is None
+    def write(self, *args: Any) -> bytes:  # noqa: ARG002
+        b = BytesIO()
 
-        if is_top:
-            b = BytesIO()
+        b.write(Int(self.ID, False))
 
-        Int.write(self.ID, b, False)
-        Bytes.write(compress(self.packed_data.write()), b)
+        b.write(Bytes(compress(self.packed_data.write())))
 
-        if is_top:
-            return b.getvalue()
-        return None
+        return b.getvalue()
