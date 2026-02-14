@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, cast
+from io import BytesIO
+from typing import cast
 
 from .bytes import Bytes
-
-if TYPE_CHECKING:
-    from io import BytesIO
 
 
 class String(Bytes):
@@ -17,3 +15,7 @@ class String(Bytes):
 
     def __new__(cls, value: str) -> bytes:
         return super().__new__(cls, value.encode())
+
+    @classmethod
+    def write(cls, value: str, b: BytesIO):
+        Bytes.write(value.encode(), b)

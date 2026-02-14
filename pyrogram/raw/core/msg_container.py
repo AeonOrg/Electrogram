@@ -23,15 +23,19 @@ class MsgContainer(TLObject):
         count = Int.read(data)
         return MsgContainer([Message.read(data) for _ in range(count)])
 
-    def write(self, *args: Any) -> bytes:  # noqa: ARG002
-        b = BytesIO()
+    def write(self, b: BytesIO = None) -> bytes:
+        is_top = b is None
 
-        b.write(Int(self.ID, False))
+        if is_top:
+            b = BytesIO()
+
+        Int.write(self.ID, b, False)
 
         count = len(self.messages)
-        b.write(Int(count))
+        Int.write(count, b)
 
         for message in self.messages:
-            b.write(message.write())
+            message.write(b)
 
-        return b.getvalue()
+        if is_top:
+            return b.getvalue()
