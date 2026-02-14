@@ -3,6 +3,7 @@ from __future__ import annotations
 from .answer_callback_query import AnswerCallbackQuery
 from .answer_inline_query import AnswerInlineQuery
 from .answer_web_app_query import AnswerWebAppQuery
+from .can_send_message import CanSendMessage
 from .delete_bot_commands import DeleteBotCommands
 from .get_bot_commands import GetBotCommands
 from .get_bot_default_privileges import GetBotDefaultPrivileges
@@ -24,6 +25,7 @@ from .set_game_score import SetGameScore
 class Bots(
     AnswerCallbackQuery,
     AnswerInlineQuery,
+    CanSendMessage,
     GetInlineBotResults,
     RequestCallbackAnswer,
     SendInlineBotResult,
