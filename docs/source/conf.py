@@ -33,6 +33,7 @@ intersphinx_mapping = {"python": ("https://docs.python.org/3", None)}
 master_doc = "index"
 source_suffix = ".rst"
 autodoc_member_order = "bysource"
+autodoc_preserve_defaults = True
 
 # Paths for templates and static files
 templates_path = []
@@ -56,7 +57,7 @@ pygments_style = "friendly"
 copybutton_prompt_text = "$ "
 
 # Suppress specific warnings
-suppress_warnings = ["image.not_readable"]
+suppress_warnings = ["image.not_readable", "misc.highlighting_failure"]
 
 # HTML theme options
 html_theme_options = {
@@ -68,6 +69,10 @@ html_theme_options = {
     "repo_url": "https://github.com/5hojib/Electrogram/",
     "repo_name": "Electrogram",
     "globaltoc_collapse": True,
+    "font": {
+        "text": "Inter",
+        "code": "JetBrains Mono",
+    },
     "features": [
         "navigation.expand",
         "navigation.tabs",
@@ -78,6 +83,10 @@ html_theme_options = {
         "toc.sticky",
         "content.tabs.link",
         "announce.dismiss",
+        "navigation.instant",
+        "navigation.tracking",
+        "content.code.copy",
+        "content.code.annotate",
     ],
     "palette": [
         {

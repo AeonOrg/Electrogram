@@ -3,62 +3,166 @@ Available Enums
 
 .. currentmodule:: pyrogram.enums
 
+General
+-------
+
 .. autosummary::
     :nosignatures:
 
-    AccentColor
-    BusinessSchedule
+    ClientPlatform
+    ListenerTypes
+    ParseMode
+
+.. toctree::
+    :hidden:
+
+    ClientPlatform <ClientPlatform>
+    ListenerTypes <ListenerTypes>
+    ParseMode <ParseMode>
+
+Chats
+-----
+
+.. autosummary::
+    :nosignatures:
+
     ChatAction
     ChatEventAction
     ChatJoinType
     ChatMemberStatus
     ChatMembersFilter
     ChatType
-    ClientPlatform
-    FolderColor
-    ListenerTypes
-    MessageEntityType
-    MessageMediaType
-    MessageServiceType
-    MessagesFilter
-    NextCodeType
-    ParseMode
-    PollType
-    PrivacyKey
-    ProfileColor
-    ReactionType
-    ReplyColor
-    SentCodeType
-    StoriesPrivacyRules
-    StoryPrivacy
-    UserStatus
 
 .. toctree::
     :hidden:
 
-    AccentColor <AccentColor>
-    BusinessSchedule <BusinessSchedule>
     ChatAction <ChatAction>
     ChatEventAction <ChatEventAction>
     ChatJoinType <ChatJoinType>
     ChatMemberStatus <ChatMemberStatus>
     ChatMembersFilter <ChatMembersFilter>
     ChatType <ChatType>
-    ClientPlatform <ClientPlatform>
-    FolderColor <FolderColor>
-    ListenerTypes <ListenerTypes>
+
+Messages
+--------
+
+.. autosummary::
+    :nosignatures:
+
+    ButtonStyle
+    MessageEntityType
+    MessageMediaType
+    MessageServiceType
+    MessagesFilter
+
+.. toctree::
+    :hidden:
+
+    ButtonStyle <ButtonStyle>
     MessageEntityType <MessageEntityType>
     MessageMediaType <MessageMediaType>
     MessageServiceType <MessageServiceType>
     MessagesFilter <MessagesFilter>
-    NextCodeType <NextCodeType>
-    ParseMode <ParseMode>
-    PollType <PollType>
-    PrivacyKey <PrivacyKey>
+
+Users
+-----
+
+.. autosummary::
+    :nosignatures:
+
+    UserStatus
+
+.. toctree::
+    :hidden:
+
+    UserStatus <UserStatus>
+
+Colors
+------
+
+.. autosummary::
+    :nosignatures:
+
+    AccentColor
+    FolderColor
+    ProfileColor
+    ReplyColor
+
+.. toctree::
+    :hidden:
+
+    AccentColor <AccentColor>
+    FolderColor <FolderColor>
     ProfileColor <ProfileColor>
-    ReactionType <ReactionType>
     ReplyColor <ReplyColor>
-    SentCodeType <SentCodeType>
+
+Privacy
+-------
+
+.. autosummary::
+    :nosignatures:
+
+    PrivacyKey
+    StoriesPrivacyRules
+    StoryPrivacy
+
+.. toctree::
+    :hidden:
+
+    PrivacyKey <PrivacyKey>
     StoriesPrivacyRules <StoriesPrivacyRules>
     StoryPrivacy <StoryPrivacy>
-    UserStatus <UserStatus>
+
+Polls
+-----
+
+.. autosummary::
+    :nosignatures:
+
+    PollType
+
+.. toctree::
+    :hidden:
+
+    PollType <PollType>
+
+Business
+--------
+
+.. autosummary::
+    :nosignatures:
+
+    BusinessSchedule
+
+.. toctree::
+    :hidden:
+
+    BusinessSchedule <BusinessSchedule>
+
+Authentication
+--------------
+
+.. autosummary::
+    :nosignatures:
+
+    NextCodeType
+    SentCodeType
+
+.. toctree::
+    :hidden:
+
+    NextCodeType <NextCodeType>
+    SentCodeType <SentCodeType>
+
+Reactions
+---------
+
+.. autosummary::
+    :nosignatures:
+
+    ReactionType
+
+.. toctree::
+    :hidden:
+
+    ReactionType <ReactionType>

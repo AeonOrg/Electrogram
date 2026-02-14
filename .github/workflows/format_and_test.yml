@@ -3,7 +3,7 @@ name: Format and test code with uv
 on: 
   push:
     branches:
-      - test
+      - beta
 
 jobs:
   lint-format-and-test:

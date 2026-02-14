@@ -4,13 +4,13 @@ import pyrogram
 from pyrogram import raw
 
 
-class RefundStarPayment:
-    async def refund_star_payment(
+class RefundStarsPayment:
+    async def refund_stars_payment(
         self: pyrogram.Client,
         user_id: int | str,
         telegram_payment_charge_id: str,
     ) -> bool:
-        """Refund the star to the user.
+        """Refund the stars to the user.
 
         Parameters:
             user_id (``int`` | ``str``):
@@ -25,7 +25,7 @@ class RefundStarPayment:
         Example:
             .. code-block:: python
 
-                await app.refund_star_payment(user_id, telegram_payment_charge_id)
+                await app.refund_stars_payment(user_id, telegram_payment_charge_id)
         """
         await self.invoke(
             raw.functions.payments.RefundStarsCharge(
@@ -35,3 +35,8 @@ class RefundStarPayment:
         )
 
         return True
+
+    refund_star_payment = refund_stars_payment
+
+
+RefundStarPayment = RefundStarsPayment

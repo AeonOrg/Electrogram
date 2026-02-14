@@ -38,6 +38,32 @@ TYPES_TITLES = {
     "input_privacy_rule": "Input Privacy Rule",
 }
 
+ENUMS_CATEGORIES = {
+    "General": ["ClientPlatform", "ListenerTypes", "ParseMode"],
+    "Chats": [
+        "ChatAction",
+        "ChatEventAction",
+        "ChatJoinType",
+        "ChatMemberStatus",
+        "ChatMembersFilter",
+        "ChatType",
+    ],
+    "Messages": [
+        "MessageEntityType",
+        "MessageMediaType",
+        "MessageServiceType",
+        "MessagesFilter",
+        "ButtonStyle",
+    ],
+    "Users": ["UserStatus"],
+    "Colors": ["AccentColor", "FolderColor", "ProfileColor", "ReplyColor"],
+    "Privacy": ["PrivacyKey", "StoryPrivacy", "StoriesPrivacyRules"],
+    "Polls": ["PollType"],
+    "Business": ["BusinessSchedule"],
+    "Authentication": ["SentCodeType", "NextCodeType"],
+    "Reactions": ["ReactionType"],
+}
+
 
 def snake(s: str):
     s = re.sub(r"(.)([A-Z][a-z]+)", r"\1_\2", s)
@@ -413,10 +439,27 @@ def pyrogram_api() -> None:
         with Path(root, "index.rst").open("w", encoding="utf-8") as f:
             f.write("Available Enums\n===============\n\n")
             f.write(".. currentmodule:: pyrogram.enums\n\n")
-            f.write(".. autosummary::\n    :nosignatures:\n\n")
-            f.writelines(f"    {e}\n" for e in sorted(enums_list))
-            f.write("\n.. toctree::\n    :hidden:\n\n")
-            f.writelines(f"    {e} <{e}>\n" for e in sorted(enums_list))
+
+            # Group enums
+            categorized_enums = {}
+            assigned_enums = set()
+            for title, e_list in ENUMS_CATEGORIES.items():
+                current_list = [e for e in e_list if e in enums_list]
+                if current_list:
+                    categorized_enums[title] = sorted(current_list)
+                    assigned_enums.update(current_list)
+
+            others = sorted([e for e in enums_list if e not in assigned_enums])
+            if others:
+                categorized_enums["Others"] = others
+
+            for title, e_list in categorized_enums.items():
+                f.write(f"{title}\n" + "-" * len(title) + "\n\n")
+                f.write(".. autosummary::\n    :nosignatures:\n\n")
+                f.writelines(f"    {e}\n" for e in e_list)
+                f.write("\n.. toctree::\n    :hidden:\n\n")
+                f.writelines(f"    {e} <{e}>\n" for e in e_list)
+                f.write("\n")
 
         for e in enums_list:
             with Path(root, f"{e}.rst").open("w", encoding="utf-8") as f2:
