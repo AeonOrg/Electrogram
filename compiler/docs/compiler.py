@@ -161,9 +161,7 @@ def generate_raw(source_path, base) -> None:
             f.write("\n")
 
 
-def pyrogram_api() -> None:
-    # Discovery logic
-
+def discover_methods():
     methods_categories = {}
     methods_path = Path(METHODS_PATH)
     if not methods_path.exists():
@@ -177,7 +175,6 @@ def pyrogram_api() -> None:
                 if file.name == "__init__.py":
                     continue
 
-                # Check if it defines a class or is special function (idle, compose)
                 with Path(file).open(encoding="utf-8") as f:
                     tree = ast.parse(f.read())
 
@@ -195,7 +192,10 @@ def pyrogram_api() -> None:
                     category_name.replace("_", " ").title(),
                 )
                 methods_categories[category_name] = (title, methods)
+    return methods_categories
 
+
+def discover_types():
     types_categories = {}
     types_lib_path = Path(TYPES_LIB_PATH)
     if not types_lib_path.exists():
@@ -224,8 +224,15 @@ def pyrogram_api() -> None:
                     category_name.replace("_", " ").title(),
                 )
                 types_categories[category_name] = (title, sorted(types))
+    return types_categories
 
+
+def discover_bound_methods():
     bound_methods_categories = {}
+    types_lib_path = Path(TYPES_LIB_PATH)
+    if not types_lib_path.exists():
+        types_lib_path = Path("../../") / TYPES_LIB_PATH
+
     for file in sorted(types_lib_path.rglob("*.py")):
         if file.name == "__init__.py":
             continue
@@ -249,7 +256,10 @@ def pyrogram_api() -> None:
                     bound_methods_categories[class_name].extend(
                         sorted(class_bound_methods),
                     )
+    return bound_methods_categories
 
+
+def discover_enums():
     enums_lib_path = Path(ENUMS_LIB_PATH)
     if not enums_lib_path.exists():
         enums_lib_path = Path("../../") / ENUMS_LIB_PATH
@@ -266,9 +276,10 @@ def pyrogram_api() -> None:
         enums_list.extend(
             node.name for node in ast.walk(tree) if isinstance(node, ast.ClassDef)
         )
+    return enums_list
 
-    # Methods Generation
 
+def generate_methods(methods_categories):
     root = PYROGRAM_API_DEST + "/methods"
     shutil.rmtree(root, ignore_errors=True)
     Path(root).mkdir(parents=True, exist_ok=True)
@@ -340,8 +351,8 @@ def pyrogram_api() -> None:
                     else:
                         f2.write(f".. automethod:: pyrogram.Client.{m}()")
 
-    # Types Generation
 
+def generate_types(types_categories):
     root = PYROGRAM_API_DEST + "/types"
     shutil.rmtree(root, ignore_errors=True)
     Path(root).mkdir(parents=True, exist_ok=True)
@@ -388,8 +399,8 @@ def pyrogram_api() -> None:
                     f2.write(t + "\n" + "=" * len(t) + "\n\n")
                     f2.write(f".. autoclass:: pyrogram.types.{t}()\n")
 
-    # Bound Methods Generation
 
+def generate_bound_methods(bound_methods_categories):
     root = PYROGRAM_API_DEST + "/bound-methods"
     shutil.rmtree(root, ignore_errors=True)
     Path(root).mkdir(parents=True, exist_ok=True)
@@ -429,8 +440,8 @@ def pyrogram_api() -> None:
                     f2.write(title_bm + "\n" + "=" * len(title_bm) + "\n\n")
                     f2.write(f".. automethod:: pyrogram.types.{bm}()")
 
-    # Enums Generation
 
+def generate_enums(enums_list):
     if enums_list:
         root = PYROGRAM_API_DEST + "/enums"
         shutil.rmtree(root, ignore_errors=True)
@@ -440,7 +451,6 @@ def pyrogram_api() -> None:
             f.write("Available Enums\n===============\n\n")
             f.write(".. currentmodule:: pyrogram.enums\n\n")
 
-            # Group enums
             categorized_enums = {}
             assigned_enums = set()
             for title, e_list in ENUMS_CATEGORIES.items():
@@ -465,6 +475,18 @@ def pyrogram_api() -> None:
             with Path(root, f"{e}.rst").open("w", encoding="utf-8") as f2:
                 f2.write(e + "\n" + "=" * len(e) + "\n\n")
                 f2.write(f".. autoclass:: pyrogram.enums.{e}()\n    :members:\n")
+
+
+def pyrogram_api() -> None:
+    methods_categories = discover_methods()
+    types_categories = discover_types()
+    bound_methods_categories = discover_bound_methods()
+    enums_list = discover_enums()
+
+    generate_methods(methods_categories)
+    generate_types(types_categories)
+    generate_bound_methods(bound_methods_categories)
+    generate_enums(enums_list)
 
 
 def start() -> None:
