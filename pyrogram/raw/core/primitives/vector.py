@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from io import BytesIO
-from typing import Any, cast
+from typing import Any
 
 from pyrogram.raw.core.list import List
 from pyrogram.raw.core.tl_object import TLObject
@@ -46,7 +46,9 @@ class Vector(bytes, TLObject):
         return b.getvalue()
 
     @classmethod
-    def write(cls, value: list, t: Any = None, b: BytesIO = None) -> bytes | None:
+    def write(
+        cls, value: list, t: Any = None, b: BytesIO | None = None
+    ) -> bytes | None:
         if b is None:
             return cls(value, t)
 

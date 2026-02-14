@@ -35,7 +35,7 @@ class Message(TLObject):
 
         return Message(TLObject.read(BytesIO(body)), msg_id, seq_no, length)
 
-    def write(self, b: BytesIO = None) -> bytes:
+    def write(self, b: BytesIO | None = None) -> bytes:
         is_top = b is None
 
         if is_top:
@@ -48,3 +48,4 @@ class Message(TLObject):
 
         if is_top:
             return b.getvalue()
+        return None

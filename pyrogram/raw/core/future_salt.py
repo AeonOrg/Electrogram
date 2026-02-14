@@ -27,7 +27,7 @@ class FutureSalt(TLObject):
 
         return FutureSalt(valid_since, valid_until, salt)
 
-    def write(self, b: BytesIO = None) -> bytes:
+    def write(self, b: BytesIO | None = None) -> bytes:
         is_top = b is None
 
         if is_top:
@@ -39,3 +39,4 @@ class FutureSalt(TLObject):
 
         if is_top:
             return b.getvalue()
+        return None
