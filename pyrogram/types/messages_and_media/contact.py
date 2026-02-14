@@ -32,7 +32,7 @@ class Contact(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client  | None = None,
         phone_number: str,
         first_name: str,
         last_name: str | None = None,

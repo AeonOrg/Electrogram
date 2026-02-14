@@ -30,7 +30,7 @@ class RequestedChat(Object):
         chat_type: enums.ChatType,
         name: str | None = None,
         username: str | None = None,
-        photo: types.ChatPhoto = None,
+        photo: types.ChatPhoto  | None = None,
     ) -> None:
         super().__init__()
 

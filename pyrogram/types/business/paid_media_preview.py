@@ -28,7 +28,7 @@ class PaidMediaPreview(Object):
         width: int | None = None,
         height: int | None = None,
         duration: int | None = None,
-        thumbnail: types.StrippedThumbnail = None,
+        thumbnail: types.StrippedThumbnail  | None = None,
     ) -> None:
         super().__init__()
 

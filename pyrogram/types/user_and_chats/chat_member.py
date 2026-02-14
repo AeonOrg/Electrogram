@@ -62,20 +62,20 @@ class ChatMember(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client  | None = None,
         status: enums.ChatMemberStatus,
-        user: types.User = None,
-        chat: types.Chat = None,
+        user: types.User  | None = None,
+        chat: types.Chat  | None = None,
         custom_title: str | None = None,
         until_date: datetime | None = None,
         joined_date: datetime | None = None,
-        invited_by: types.User = None,
-        promoted_by: types.User = None,
-        restricted_by: types.User = None,
+        invited_by: types.User  | None = None,
+        promoted_by: types.User  | None = None,
+        restricted_by: types.User  | None = None,
         is_member: bool | None = None,
         can_be_edited: bool | None = None,
-        permissions: types.ChatPermissions = None,
-        privileges: types.ChatPrivileges = None,
+        permissions: types.ChatPermissions  | None = None,
+        privileges: types.ChatPrivileges  | None = None,
     ) -> None:
         super().__init__(client)
 

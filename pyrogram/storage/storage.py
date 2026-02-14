@@ -3,7 +3,7 @@ from __future__ import annotations
 import base64
 import struct
 from abc import ABC, abstractmethod
-from typing import NoReturn
+from typing import Any, NoReturn
 
 
 class Storage(ABC):
@@ -41,54 +41,61 @@ class Storage(ABC):
     async def update_peers(
         self,
         peers: list[tuple[int, int, str, list[str], str]],
-    ) -> NoReturn:
+    ) -> Any:
+        raise NotImplementedError
+
+    @abstractmethod
+    async def update_usernames(
+        self,
+        usernames: list[tuple[int, str]],
+    ) -> Any:
         raise NotImplementedError
 
     @abstractmethod
     async def update_state(
         self,
-        update_state: tuple[int, int, int, int, int] = object,
-    ) -> NoReturn:
+        update_state: Any = object,
+    ) -> Any:
         raise NotImplementedError
 
     @abstractmethod
-    async def get_peer_by_id(self, peer_id: int) -> NoReturn:
+    async def get_peer_by_id(self, peer_id: int | str) -> Any:
         raise NotImplementedError
 
     @abstractmethod
-    async def get_peer_by_username(self, username: str) -> NoReturn:
+    async def get_peer_by_username(self, username: str) -> Any:
         raise NotImplementedError
 
     @abstractmethod
-    async def get_peer_by_phone_number(self, phone_number: str) -> NoReturn:
+    async def get_peer_by_phone_number(self, phone_number: str) -> Any:
         raise NotImplementedError
 
     @abstractmethod
-    async def dc_id(self, value: int = object) -> NoReturn:
+    async def dc_id(self, value: Any = object) -> Any:
         raise NotImplementedError
 
     @abstractmethod
-    async def api_id(self, value: int = object) -> NoReturn:
+    async def api_id(self, value: Any = object) -> Any:
         raise NotImplementedError
 
     @abstractmethod
-    async def test_mode(self, value: bool = object) -> NoReturn:
+    async def test_mode(self, value: Any = object) -> Any:
         raise NotImplementedError
 
     @abstractmethod
-    async def auth_key(self, value: bytes = object) -> NoReturn:
+    async def auth_key(self, value: Any = object) -> Any:
         raise NotImplementedError
 
     @abstractmethod
-    async def date(self, value: int = object) -> NoReturn:
+    async def date(self, value: Any = object) -> Any:
         raise NotImplementedError
 
     @abstractmethod
-    async def user_id(self, value: int = object) -> NoReturn:
+    async def user_id(self, value: Any = object) -> Any:
         raise NotImplementedError
 
     @abstractmethod
-    async def is_bot(self, value: bool = object) -> NoReturn:
+    async def is_bot(self, value: Any = object) -> Any:
         raise NotImplementedError
 
     async def export_session_string(self):

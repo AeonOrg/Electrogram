@@ -28,11 +28,11 @@ class ChatPreview(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client  | None = None,
         title: str,
         type: str,
         members_count: int,
-        photo: types.Photo = None,
+        photo: types.Photo  | None = None,
         members: list[types.User] | None = None,
     ) -> None:
         super().__init__(client)

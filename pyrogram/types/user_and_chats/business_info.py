@@ -28,10 +28,10 @@ class BusinessInfo(Object):
         self,
         *,
         address: str | None = None,
-        location: types.Location = None,
-        greeting_message: types.BusinessMessage = None,
-        away_message: types.BusinessMessage = None,
-        working_hours: types.BusinessWorkingHours = None,
+        location: types.Location  | None = None,
+        greeting_message: types.BusinessMessage  | None = None,
+        away_message: types.BusinessMessage  | None = None,
+        working_hours: types.BusinessWorkingHours  | None = None,
     ) -> None:
         self.address = address
         self.location = location
@@ -42,7 +42,7 @@ class BusinessInfo(Object):
     @staticmethod
     def _parse(
         client,
-        user: raw.types.UserFull = None,
+        user: raw.types.UserFull  | None = None,
         users: dict | None = None,
     ) -> BusinessInfo | None:
         working_hours = getattr(user, "business_work_hours", None)

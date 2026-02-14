@@ -10,7 +10,7 @@ class EditInlineReplyMarkup:
     async def edit_inline_reply_markup(
         self: pyrogram.Client,
         inline_message_id: str,
-        reply_markup: types.InlineKeyboardMarkup = None,
+        reply_markup: types.InlineKeyboardMarkup  | None = None,
     ) -> bool:
         """Edit only the reply markup of inline messages sent via the bot (for inline bots).
 
