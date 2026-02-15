@@ -18,7 +18,7 @@ from importlib import import_module
 from io import BytesIO, StringIO
 from mimetypes import MimeTypes
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, cast
+from typing import TYPE_CHECKING
 
 from anyio import Path as AsyncPath
 
@@ -248,21 +248,21 @@ class Client(Methods):
         session_string: str | None = None,
         is_telethon_string: bool = False,
         in_memory: bool | None = None,
-        storage: Storage | None = None,
+        storage: Storage = None,
         phone_number: str | None = None,
         phone_code: str | None = None,
         password: str | None = None,
         workers: int = WORKERS,
-        workdir: str = str(WORKDIR),
+        workdir: str = WORKDIR,
         plugins: dict | None = None,
-        parse_mode: enums.ParseMode | None = enums.ParseMode.DEFAULT,
+        parse_mode: enums.ParseMode = enums.ParseMode.DEFAULT,
         no_updates: bool | None = None,
         skip_updates: bool = True,
         takeout: bool | None = None,
         sleep_threshold: int = Session.SLEEP_THRESHOLD,
         hide_password: bool = False,
         max_concurrent_transmissions: int = MAX_CONCURRENT_TRANSMISSIONS,
-        init_params: raw.types.JsonObject | None = None,
+        init_params: raw.types.JsonObject = None,
         max_message_cache_size: int = MAX_MESSAGE_CACHE_SIZE,
         client_platform: enums.ClientPlatform = enums.ClientPlatform.OTHER,
         connection_factory: type[Connection] = Connection,
@@ -572,14 +572,13 @@ class Client(Methods):
                 username = (
                     peer.username.lower()
                     if peer.username
-                    else cast("Any", peer.usernames)[0].username.lower()
+                    else peer.usernames[0].username.lower()
                     if peer.usernames
                     else None
                 )
                 if peer.usernames is not None and len(peer.usernames) > 1:
                     usernames.extend(
-                        (peer.id, cast("Any", uname).username.lower())
-                        for uname in peer.usernames
+                        (peer.id, uname.username.lower()) for uname in peer.usernames
                     )
                 phone_number = peer.phone
                 peer_type = "bot" if peer.bot else "user"
@@ -593,14 +592,13 @@ class Client(Methods):
                 username = (
                     peer.username.lower()
                     if peer.username
-                    else cast("Any", peer.usernames)[0].username.lower()
+                    else peer.usernames[0].username.lower()
                     if peer.usernames
                     else None
                 )
                 if peer.usernames is not None and len(peer.usernames) > 1:
                     usernames.extend(
-                        (peer.id, cast("Any", uname).username.lower())
-                        for uname in peer.usernames
+                        (peer.id, uname.username.lower()) for uname in peer.usernames
                     )
                 peer_type = "channel" if peer.broadcast else "supergroup"
             elif isinstance(peer, raw.types.ChannelForbidden):
@@ -664,34 +662,19 @@ class Client(Methods):
                         try:
                             diff = await self.invoke(
                                 raw.functions.updates.GetChannelDifference(
-                                    channel=cast(
-                                        "Any",
-                                        await self.resolve_peer(
-                                            utils.get_channel_id(
-                                                cast("int", channel_id)
+                                    channel=await self.resolve_peer(
+                                        utils.get_channel_id(channel_id),
+                                    ),
+                                    filter=raw.types.ChannelMessagesFilter(
+                                        ranges=[
+                                            raw.types.MessageRange(
+                                                min_id=update.message.id,
+                                                max_id=update.message.id,
                                             ),
-                                        ),
+                                        ],
                                     ),
-                                    filter=cast(
-                                        "Any",
-                                        raw.types.ChannelMessagesFilter(
-                                            ranges=[
-                                                cast(
-                                                    "Any",
-                                                    raw.types.MessageRange(
-                                                        min_id=cast(
-                                                            "Any", update.message
-                                                        ).id,
-                                                        max_id=cast(
-                                                            "Any", update.message
-                                                        ).id,
-                                                    ),
-                                                ),
-                                            ],
-                                        ),
-                                    ),
-                                    pts=cast("int", pts) - cast("int", pts_count),
-                                    limit=cast("int", pts),
+                                    pts=pts - pts_count,
+                                    limit=pts,
                                 ),
                             )
                         except ChannelPrivate:
@@ -970,7 +953,7 @@ class Client(Methods):
             else:
                 log.warning('[%s] No plugin loaded from "%s"', self.name, root)
 
-    async def handle_download(self, packet) -> Any:
+    async def handle_download(self, packet) -> str:
         (
             file_id,
             directory,
@@ -993,16 +976,13 @@ class Client(Methods):
         file = BytesIO() if in_memory else Path(temp_file_path).open("wb")  # noqa: ASYNC230
 
         try:
-            async for chunk in cast(
-                "Any",
-                self.get_file(
-                    file_id,
-                    file_size,
-                    0,
-                    0,
-                    progress,
-                    progress_args,
-                ),
+            async for chunk in self.get_file(
+                file_id,
+                file_size,
+                0,
+                0,
+                progress,
+                progress_args,
             ):
                 file.write(chunk)
         except BaseException as e:
@@ -1019,7 +999,7 @@ class Client(Methods):
             return None
         else:
             if in_memory:
-                cast("Any", file).name = file_name
+                file.name = file_name
                 return file
             file.close()
             file_path = Path(temp_file_path).with_suffix("")
@@ -1039,51 +1019,37 @@ class Client(Methods):
             file_type = file_id.file_type
 
             if file_type == FileType.CHAT_PHOTO:
-                if cast("int", file_id.chat_id) > 0:
+                if file_id.chat_id > 0:
                     peer = raw.types.InputPeerUser(
-                        user_id=cast("int", file_id.chat_id),
-                        access_hash=cast("int", file_id.chat_access_hash),
+                        user_id=file_id.chat_id,
+                        access_hash=file_id.chat_access_hash,
                     )
                 elif file_id.chat_access_hash == 0:
-                    peer = raw.types.InputPeerChat(
-                        chat_id=-cast("int", file_id.chat_id)
-                    )
+                    peer = raw.types.InputPeerChat(chat_id=-file_id.chat_id)
                 else:
                     peer = raw.types.InputPeerChannel(
-                        channel_id=utils.get_channel_id(
-                            cast("int", file_id.chat_id)
-                        ),
-                        access_hash=cast("int", file_id.chat_access_hash),
+                        channel_id=utils.get_channel_id(file_id.chat_id),
+                        access_hash=file_id.chat_access_hash,
                     )
 
-                location = cast(
-                    "Any",
-                    raw.types.InputPeerPhotoFileLocation(
-                        peer=cast("Any", peer),
-                        photo_id=cast("int", file_id.media_id),
-                        big=file_id.thumbnail_source
-                        == ThumbnailSource.CHAT_PHOTO_BIG,
-                    ),
+                location = raw.types.InputPeerPhotoFileLocation(
+                    peer=peer,
+                    photo_id=file_id.media_id,
+                    big=file_id.thumbnail_source == ThumbnailSource.CHAT_PHOTO_BIG,
                 )
             elif file_type == FileType.PHOTO:
-                location = cast(
-                    "Any",
-                    raw.types.InputPhotoFileLocation(
-                        id=cast("int", file_id.media_id),
-                        access_hash=cast("int", file_id.access_hash),
-                        file_reference=file_id.file_reference,
-                        thumb_size=file_id.thumbnail_size,
-                    ),
+                location = raw.types.InputPhotoFileLocation(
+                    id=file_id.media_id,
+                    access_hash=file_id.access_hash,
+                    file_reference=file_id.file_reference,
+                    thumb_size=file_id.thumbnail_size,
                 )
             else:
-                location = cast(
-                    "Any",
-                    raw.types.InputDocumentFileLocation(
-                        id=cast("int", file_id.media_id),
-                        access_hash=cast("int", file_id.access_hash),
-                        file_reference=file_id.file_reference,
-                        thumb_size=file_id.thumbnail_size,
-                    ),
+                location = raw.types.InputDocumentFileLocation(
+                    id=file_id.media_id,
+                    access_hash=file_id.access_hash,
+                    file_reference=file_id.file_reference,
+                    thumb_size=file_id.thumbnail_size,
                 )
 
             current = 0
