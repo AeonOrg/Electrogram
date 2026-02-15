@@ -263,7 +263,7 @@ class User(Object, Update):
         self.send_paid_messages_stars = send_paid_messages_stars
 
     @property
-    def full_name(self) -> str:
+    def full_name(self) -> str | None:
         return " ".join(filter(None, [self.first_name, self.last_name])) or None
 
     @property
