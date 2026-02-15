@@ -45,7 +45,9 @@ WARNING = """
 # # # # # # # # # # # # # # # # # # # # # # # #
 """.strip()
 
-open = partial(open, encoding="utf-8")
+def open_utf8(path: str | Path, mode: str = "r", *args, **kwargs):
+    return open(path, mode, encoding="utf-8", *args, **kwargs)
+
 
 types_to_constructors: dict[str, list[str]] = {}
 types_to_functions: dict[str, list[str]] = {}
@@ -55,7 +57,7 @@ namespaces_to_constructors: dict[str, list[str]] = {}
 namespaces_to_functions: dict[str, list[str]] = {}
 
 try:
-    with open(API_HOME_PATH / "docs.json") as f:
+    with open_utf8(API_HOME_PATH / "docs.json") as f:
         docs = json.load(f)
 except FileNotFoundError:
     docs = {"type": {}, "constructor": {}, "method": {}}
@@ -190,23 +192,23 @@ def start() -> None:  # noqa: C901
     shutil.rmtree(DESTINATION_PATH / "base", ignore_errors=True)
 
     with (
-        open(API_HOME_PATH / "source/auth_key.tl") as f1,
-        open(API_HOME_PATH / "source/sys_msgs.tl") as f2,
-        open(API_HOME_PATH / "source/main_api.tl") as f3,
+        open_utf8(API_HOME_PATH / "source/auth_key.tl") as f1,
+        open_utf8(API_HOME_PATH / "source/sys_msgs.tl") as f2,
+        open_utf8(API_HOME_PATH / "source/main_api.tl") as f3,
     ):
-        schema = (f1.read() + f2.read() + f3.read()).splitlines()
+        schema = (str(f1.read()) + str(f2.read()) + str(f3.read())).splitlines()
 
     with (
-        open(API_HOME_PATH / "template/type.txt") as f1,
-        open(API_HOME_PATH / "template/combinator.txt") as f2,
+        open_utf8(API_HOME_PATH / "template/type.txt") as f1,
+        open_utf8(API_HOME_PATH / "template/combinator.txt") as f2,
     ):
-        type_tmpl = f1.read()
-        combinator_tmpl = f2.read()
+        type_tmpl = str(f1.read())
+        combinator_tmpl = str(f2.read())
 
     layer = None
     combinators: list[Combinator] = []
 
-    section = None
+    section = ""
     for line in schema:
         if section_match := SECTION_RE.match(line):
             section = section_match.group(1)
@@ -319,7 +321,7 @@ def start() -> None:  # noqa: C901
         if references:
             docstring += f"\n\n    Functions:\n        This object can be returned by {ref_count} function{'s' if ref_count > 1 else ''}.\n\n        .. currentmodule:: pyrogram.raw.functions\n\n        .. autosummary::\n            :nosignatures:\n\n            {references}"
 
-        with open(dir_path / f"{snake(module)}.py", "w") as f:
+        with open_utf8(dir_path / f"{snake(module)}.py", "w") as f:
             f.write(
                 type_tmpl.format(
                     warning=WARNING,
@@ -499,8 +501,18 @@ def start() -> None:  # noqa: C901
         slots = ", ".join([f'"{i[0]}"' for i in sorted_args])
         return_arguments = ", ".join([f"{i[0]}={i[0]}" for i in sorted_args])
 
+        base_class = (
+            f"raw.base.{c.qualtype}"
+            if c.qualtype in types_to_constructors
+            else "TLObject"
+        )
+
+        if c.section == "functions":
+            base_class = "TLObject"
+
         compiled_combinator = combinator_tmpl.format(
             warning=WARNING,
+            base=base_class,
             name=c.name,
             docstring=docstring,
             slots=slots,
@@ -524,7 +536,7 @@ def start() -> None:  # noqa: C901
         if module == "Updates":
             module = "UpdatesT"
 
-        with open(dir_path / f"{snake(module)}.py", "w") as f:
+        with open_utf8(dir_path / f"{snake(module)}.py", "w") as f:
             f.write(compiled_combinator)
 
         d = (
@@ -539,7 +551,7 @@ def start() -> None:  # noqa: C901
         d[c.namespace].append(c.name)
 
     for namespace, types in namespaces_to_types.items():
-        with open(DESTINATION_PATH / "base" / namespace / "__init__.py", "w") as f:
+        with open_utf8(DESTINATION_PATH / "base" / namespace / "__init__.py", "w") as f:
             f.write(f"{WARNING}\n\n")
 
             all = []
@@ -567,7 +579,7 @@ def start() -> None:  # noqa: C901
             f.write("]\n")
 
     for namespace, types in namespaces_to_constructors.items():
-        with open(DESTINATION_PATH / "types" / namespace / "__init__.py", "w") as f:
+        with open_utf8(DESTINATION_PATH / "types" / namespace / "__init__.py", "w") as f:
             f.write(f"{WARNING}\n\n")
 
             all = []
@@ -595,7 +607,7 @@ def start() -> None:  # noqa: C901
             f.write("]\n")
 
     for namespace, types in namespaces_to_functions.items():
-        with open(
+        with open_utf8(
             DESTINATION_PATH / "functions" / namespace / "__init__.py",
             "w",
         ) as f:
@@ -625,7 +637,7 @@ def start() -> None:  # noqa: C901
                 f.write(f'    "{it}",\n')
             f.write("]\n")
 
-    with open(DESTINATION_PATH / "all.py", "w", encoding="utf-8") as f:
+    with open_utf8(DESTINATION_PATH / "all.py", "w") as f:
         f.write(WARNING + "\n\n")
         f.write(f"layer = {layer}\n\n")
         f.write("objects = {")

@@ -6,6 +6,8 @@ import shutil
 from pathlib import Path
 
 # Paths
+page_template = ""
+toctree = ""
 HOME = "compiler/docs"
 DESTINATION = "docs/source/telegram"
 PYROGRAM_API_DEST = "docs/source/api"

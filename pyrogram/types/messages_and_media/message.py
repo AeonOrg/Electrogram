@@ -1113,14 +1113,14 @@ class Message(Object, Update):
         if reply_to:
             if getattr(reply_to, "forum_topic", None):
                 if getattr(reply_to, "reply_to_top_id", None):
-                        parsed_message.message_thread_id = (
+                    parsed_message.message_thread_id = (
                         reply_to.reply_to_top_id
-                        )
-                    else:
-                        parsed_message.message_thread_id = (
+                    )
+                else:
+                    parsed_message.message_thread_id = (
                         reply_to.reply_to_msg_id
-                        )
-                    parsed_message.is_topic_message = True
+                    )
+                parsed_message.is_topic_message = True
             elif (
                 parsed_message.chat.is_forum
                 and parsed_message.message_thread_id is None
