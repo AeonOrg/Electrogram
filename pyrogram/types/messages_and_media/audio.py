@@ -55,7 +55,7 @@ class Audio(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client  | None = None,
         file_id: str,
         file_unique_id: str,
         duration: int,

@@ -27,7 +27,7 @@ class SentCode(Object):
         *,
         type: enums.SentCodeType,
         phone_code_hash: str,
-        next_type: enums.NextCodeType = None,
+        next_type: enums.NextCodeType  | None = None,
         timeout: int | None = None,
     ) -> None:
         super().__init__()

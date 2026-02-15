@@ -22,7 +22,7 @@ class GameHighScore(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client  | None = None,
         user: types.User,
         score: int,
         position: int | None = None,

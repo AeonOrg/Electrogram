@@ -13,7 +13,7 @@ class EditInlineText:
         text: str,
         parse_mode: enums.ParseMode | None = None,
         disable_web_page_preview: bool | None = None,
-        reply_markup: types.InlineKeyboardMarkup = None,
+        reply_markup: types.InlineKeyboardMarkup  | None = None,
         invert_media: bool | None = None,
     ) -> bool:
         """Edit the text of inline messages.

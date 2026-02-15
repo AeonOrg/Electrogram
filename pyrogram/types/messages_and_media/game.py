@@ -33,13 +33,13 @@ class Game(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client  | None = None,
         id: int,
         title: str,
         short_name: str,
         description: str,
         photo: types.Photo,
-        animation: types.Animation = None,
+        animation: types.Animation  | None = None,
     ) -> None:
         super().__init__(client)
 

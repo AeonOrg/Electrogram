@@ -6,6 +6,7 @@ import functools
 import hashlib
 import os
 import struct
+from typing import Any, cast
 from concurrent.futures.thread import ThreadPoolExecutor
 from datetime import datetime, timezone
 from getpass import getpass
@@ -29,9 +30,9 @@ async def ainput(prompt: str = "", *, hide: bool = False):
 
 def get_input_media_from_file_id(
     file_id: str,
-    expected_file_type: FileType = None,
+    expected_file_type: FileType | None = None,
     ttl_seconds: int | None = None,
-) -> raw.types.InputMediaPhoto | raw.types.InputMediaDocument:
+) -> Any:
     try:
         decoded = FileId.decode(file_id)
     except Exception:
@@ -52,21 +53,21 @@ def get_input_media_from_file_id(
 
     if file_type in PHOTO_TYPES:
         return raw.types.InputMediaPhoto(
-            id=raw.types.InputPhoto(
+            id=cast(Any, raw.types.InputPhoto(
                 id=decoded.media_id,
                 access_hash=decoded.access_hash,
                 file_reference=decoded.file_reference,
-            ),
+            )),
             ttl_seconds=ttl_seconds,
         )
 
     if file_type in DOCUMENT_TYPES:
         return raw.types.InputMediaDocument(
-            id=raw.types.InputDocument(
+            id=cast(Any, raw.types.InputDocument(
                 id=decoded.media_id,
                 access_hash=decoded.access_hash,
                 file_reference=decoded.file_reference,
-            ),
+            )),
             ttl_seconds=ttl_seconds,
         )
 
@@ -75,10 +76,10 @@ def get_input_media_from_file_id(
 
 async def parse_messages(
     client,
-    messages: raw.types.messages.Messages,
+    messages: raw.types.messages.Messages | None,
     is_scheduled: bool = False,
     business_connection_id: str = "",
-    r: raw.base.Updates = None,
+    r: raw.base.Updates | None = None,
 ) -> list[types.Message]:
     parsed_messages = []
 
@@ -126,25 +127,26 @@ async def parse_messages(
 
         return types.List(parsed_messages)
 
-    users = {i.id: i for i in messages.users}
-    chats = {i.id: i for i in messages.chats}
+    if messages:
+        users = {cast(Any, i).id: i for i in messages.users}
+        chats = {cast(Any, i).id: i for i in messages.chats}
 
-    if not messages.messages:
-        return types.List()
+        if not messages.messages:
+            return types.List()
 
-    parsed_messages.extend(
-        [
-            await types.Message._parse(
-                client,
-                message,
-                users,
-                chats,
-                is_scheduled=is_scheduled,
-                replies=1,
-            )
-            for message in messages.messages
-        ],
-    )
+        parsed_messages.extend(
+            [
+                await types.Message._parse(
+                    client,
+                    message,
+                    users,
+                    chats,
+                    is_scheduled=is_scheduled,
+                    replies=1,
+                )
+                for message in messages.messages
+            ],
+        )
 
     return types.List(parsed_messages)
 
@@ -179,6 +181,7 @@ def parse_deleted_messages(
 def pack_inline_message_id(
     msg_id: raw.base.InputBotInlineMessageID,
 ):
+    msg_id = cast(Any, msg_id)
     if isinstance(msg_id, raw.types.InputBotInlineMessageID):
         inline_message_id_packed = struct.pack(
             "<iqq",
@@ -200,7 +203,7 @@ def pack_inline_message_id(
 
 def unpack_inline_message_id(
     inline_message_id: str,
-) -> raw.base.InputBotInlineMessageID:
+) -> Any:
     padded = inline_message_id + "=" * (-len(inline_message_id) % 4)
     decoded = base64.urlsafe_b64decode(padded)
 
@@ -306,7 +309,10 @@ def compute_password_check(
     r: raw.types.account.Password,
     password: str,
 ) -> raw.types.InputCheckPasswordSRP:
-    algo = r.current_algo
+    algo = cast(
+        raw.types.PasswordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow,
+        r.current_algo,
+    )
 
     p_bytes = algo.p
     p = btoi(algo.p)
@@ -314,10 +320,10 @@ def compute_password_check(
     g_bytes = itob(algo.g)
     g = algo.g
 
-    B_bytes = r.srp_B
+    B_bytes = cast(bytes, r.srp_B)
     B = btoi(B_bytes)
 
-    srp_id = r.srp_id
+    srp_id = cast(int, r.srp_id)
 
     x_bytes = compute_password_hash(algo, password)
     x = btoi(x_bytes)
@@ -359,22 +365,26 @@ def compute_password_check(
         + K_bytes,
     )
 
-    return raw.types.InputCheckPasswordSRP(srp_id=srp_id, A=A_bytes, M1=M1_bytes)
+    return raw.types.InputCheckPasswordSRP(
+        srp_id=srp_id,
+        A=A_bytes,
+        M1=M1_bytes,
+    )
 
 
 async def parse_text_entities(
     client: pyrogram.Client,
-    text: str,
-    parse_mode: enums.ParseMode,
-    entities: list[types.MessageEntity],
-) -> dict[str, str | list[raw.base.MessageEntity]]:
+    text: str | None,
+    parse_mode: enums.ParseMode | None,
+    entities: list[types.MessageEntity] | None,
+) -> dict[str, Any]:
     if entities:
         for entity in entities:
             entity._client = client
 
         entities = [await entity.write() for entity in entities] or None
     else:
-        text, entities = (await client.parser.parse(text, parse_mode)).values()
+        text, entities = (await client.parser.parse(text or "", parse_mode)).values()
 
     return {"message": text, "entities": entities}
 
@@ -400,16 +410,22 @@ async def get_reply_to(
     reply_to_chat_id: int | str | None = None,
     quote_text: str | None = None,
     quote_entities: list[types.MessageEntity] | None = None,
-    parse_mode: enums.ParseMode = None,
+    parse_mode: enums.ParseMode | None = None,
 ):
     reply_to = None
     reply_to_chat = None
     if reply_to_message_id or message_thread_id:
-        text, entities = (
-            await parse_text_entities(client, quote_text, parse_mode, quote_entities)
-        ).values()
+        parsed = await parse_text_entities(
+            client,
+            quote_text,
+            parse_mode,
+            quote_entities,
+        )
+        text = parsed["message"]
+        entities = parsed["entities"]
+
         if reply_to_chat_id is not None:
-            reply_to_chat = await client.resolve_peer(reply_to_chat_id)
+            reply_to_chat = cast(Any, await client.resolve_peer(reply_to_chat_id))
         reply_to = types.InputReplyToMessage(
             reply_to_message_id=reply_to_message_id,
             message_thread_id=message_thread_id,
@@ -418,14 +434,14 @@ async def get_reply_to(
             quote_entities=entities,
         )
     if reply_to_story_id:
-        peer = await client.resolve_peer(chat_id)
+        peer = await client.resolve_peer(cast(Any, chat_id))
         reply_to = types.InputReplyToStory(peer=peer, story_id=reply_to_story_id)
     return reply_to
 
 
 async def get_input_quick_reply_shortcut(
     shortcut: str | int,
-) -> raw.base.InputQuickReplyShortcut:
+) -> Any:
     if isinstance(shortcut, int):
         return raw.types.InputQuickReplyShortcutId(shortcut_id=shortcut)
     return raw.types.InputQuickReplyShortcut(shortcut=shortcut)

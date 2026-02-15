@@ -18,7 +18,7 @@ class FoundContacts(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client  | None = None,
         my_results: types.Chat | None = None,
         global_results: types.Chat | None = None,
     ) -> None:

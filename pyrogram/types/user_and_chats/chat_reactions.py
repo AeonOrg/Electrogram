@@ -24,7 +24,7 @@ class ChatReactions(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client  | None = None,
         all_are_enabled: bool | None = None,
         allow_custom_emoji: bool | None = None,
         reactions: list[types.Reaction] | None = None,

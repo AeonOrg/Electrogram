@@ -69,7 +69,7 @@ class ChatInviteLink(Object):
         date: datetime,
         is_primary: bool | None = None,
         is_revoked: bool | None = None,
-        creator: types.User = None,
+        creator: types.User  | None = None,
         name: str | None = None,
         creates_join_request: bool | None = None,
         start_date: datetime | None = None,

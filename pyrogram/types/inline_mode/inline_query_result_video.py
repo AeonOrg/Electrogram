@@ -75,8 +75,8 @@ class InlineQueryResultVideo(InlineQueryResult):
         caption: str = "",
         parse_mode: enums.ParseMode | None = None,
         caption_entities: list[types.MessageEntity] | None = None,
-        reply_markup: types.InlineKeyboardMarkup = None,
-        input_message_content: types.InputMessageContent = None,
+        reply_markup: types.InlineKeyboardMarkup  | None = None,
+        input_message_content: types.InputMessageContent  | None = None,
     ) -> None:
         super().__init__("video", id, input_message_content, reply_markup)
 
