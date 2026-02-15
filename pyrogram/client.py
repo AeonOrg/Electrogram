@@ -572,13 +572,13 @@ class Client(Methods):
                 username = (
                     peer.username.lower()
                     if peer.username
-                    else cast(Any, peer.usernames)[0].username.lower()
+                    else cast("Any", peer.usernames)[0].username.lower()
                     if peer.usernames
                     else None
                 )
                 if peer.usernames is not None and len(peer.usernames) > 1:
                     usernames.extend(
-                        (peer.id, cast(Any, uname).username.lower())
+                        (peer.id, cast("Any", uname).username.lower())
                         for uname in peer.usernames
                     )
                 phone_number = peer.phone
@@ -593,13 +593,13 @@ class Client(Methods):
                 username = (
                     peer.username.lower()
                     if peer.username
-                    else cast(Any, peer.usernames)[0].username.lower()
+                    else cast("Any", peer.usernames)[0].username.lower()
                     if peer.usernames
                     else None
                 )
                 if peer.usernames is not None and len(peer.usernames) > 1:
                     usernames.extend(
-                        (peer.id, cast(Any, uname).username.lower())
+                        (peer.id, cast("Any", uname).username.lower())
                         for uname in peer.usernames
                     )
                 peer_type = "channel" if peer.broadcast else "supergroup"
@@ -664,19 +664,34 @@ class Client(Methods):
                         try:
                             diff = await self.invoke(
                                 raw.functions.updates.GetChannelDifference(
-                                    channel=cast(Any, await self.resolve_peer(
-                                        utils.get_channel_id(cast(int, channel_id)),
-                                    )),
-                                    filter=cast(Any, raw.types.ChannelMessagesFilter(
-                                        ranges=[
-                                            cast(Any, raw.types.MessageRange(
-                                                min_id=cast(Any, update.message).id,
-                                                max_id=cast(Any, update.message).id,
-                                            )),
-                                        ],
-                                    )),
-                                    pts=cast(int, pts) - cast(int, pts_count),
-                                    limit=cast(int, pts),
+                                    channel=cast(
+                                        "Any",
+                                        await self.resolve_peer(
+                                            utils.get_channel_id(
+                                                cast("int", channel_id)
+                                            ),
+                                        ),
+                                    ),
+                                    filter=cast(
+                                        "Any",
+                                        raw.types.ChannelMessagesFilter(
+                                            ranges=[
+                                                cast(
+                                                    "Any",
+                                                    raw.types.MessageRange(
+                                                        min_id=cast(
+                                                            "Any", update.message
+                                                        ).id,
+                                                        max_id=cast(
+                                                            "Any", update.message
+                                                        ).id,
+                                                    ),
+                                                ),
+                                            ],
+                                        ),
+                                    ),
+                                    pts=cast("int", pts) - cast("int", pts_count),
+                                    limit=cast("int", pts),
                                 ),
                             )
                         except ChannelPrivate:
@@ -978,14 +993,17 @@ class Client(Methods):
         file = BytesIO() if in_memory else Path(temp_file_path).open("wb")  # noqa: ASYNC230
 
         try:
-            async for chunk in cast(Any, self.get_file(
-                file_id,
-                file_size,
-                0,
-                0,
-                progress,
-                progress_args,
-            )):
+            async for chunk in cast(
+                "Any",
+                self.get_file(
+                    file_id,
+                    file_size,
+                    0,
+                    0,
+                    progress,
+                    progress_args,
+                ),
+            ):
                 file.write(chunk)
         except BaseException as e:
             if not in_memory:
@@ -1001,7 +1019,7 @@ class Client(Methods):
             return None
         else:
             if in_memory:
-                cast(Any, file).name = file_name
+                cast("Any", file).name = file_name
                 return file
             file.close()
             file_path = Path(temp_file_path).with_suffix("")
@@ -1021,38 +1039,52 @@ class Client(Methods):
             file_type = file_id.file_type
 
             if file_type == FileType.CHAT_PHOTO:
-                if cast(int, file_id.chat_id) > 0:
+                if cast("int", file_id.chat_id) > 0:
                     peer = raw.types.InputPeerUser(
-                        user_id=cast(int, file_id.chat_id),
-                        access_hash=cast(int, file_id.chat_access_hash),
+                        user_id=cast("int", file_id.chat_id),
+                        access_hash=cast("int", file_id.chat_access_hash),
                     )
                 elif file_id.chat_access_hash == 0:
-                    peer = raw.types.InputPeerChat(chat_id=-cast(int, file_id.chat_id))
+                    peer = raw.types.InputPeerChat(
+                        chat_id=-cast("int", file_id.chat_id)
+                    )
                 else:
                     peer = raw.types.InputPeerChannel(
-                        channel_id=utils.get_channel_id(cast(int, file_id.chat_id)),
-                        access_hash=cast(int, file_id.chat_access_hash),
+                        channel_id=utils.get_channel_id(
+                            cast("int", file_id.chat_id)
+                        ),
+                        access_hash=cast("int", file_id.chat_access_hash),
                     )
 
-                location = cast(Any, raw.types.InputPeerPhotoFileLocation(
-                    peer=cast(Any, peer),
-                    photo_id=cast(int, file_id.media_id),
-                    big=file_id.thumbnail_source == ThumbnailSource.CHAT_PHOTO_BIG,
-                ))
+                location = cast(
+                    "Any",
+                    raw.types.InputPeerPhotoFileLocation(
+                        peer=cast("Any", peer),
+                        photo_id=cast("int", file_id.media_id),
+                        big=file_id.thumbnail_source
+                        == ThumbnailSource.CHAT_PHOTO_BIG,
+                    ),
+                )
             elif file_type == FileType.PHOTO:
-                location = cast(Any, raw.types.InputPhotoFileLocation(
-                    id=cast(int, file_id.media_id),
-                    access_hash=cast(int, file_id.access_hash),
-                    file_reference=file_id.file_reference,
-                    thumb_size=file_id.thumbnail_size,
-                ))
+                location = cast(
+                    "Any",
+                    raw.types.InputPhotoFileLocation(
+                        id=cast("int", file_id.media_id),
+                        access_hash=cast("int", file_id.access_hash),
+                        file_reference=file_id.file_reference,
+                        thumb_size=file_id.thumbnail_size,
+                    ),
+                )
             else:
-                location = cast(Any, raw.types.InputDocumentFileLocation(
-                    id=cast(int, file_id.media_id),
-                    access_hash=cast(int, file_id.access_hash),
-                    file_reference=file_id.file_reference,
-                    thumb_size=file_id.thumbnail_size,
-                ))
+                location = cast(
+                    "Any",
+                    raw.types.InputDocumentFileLocation(
+                        id=cast("int", file_id.media_id),
+                        access_hash=cast("int", file_id.access_hash),
+                        file_reference=file_id.file_reference,
+                        thumb_size=file_id.thumbnail_size,
+                    ),
+                )
 
             current = 0
             total = abs(limit) or (1 << 31) - 1

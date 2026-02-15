@@ -18,7 +18,7 @@ class ChatColor(Object):
     def __init__(
         self,
         *,
-        color: enums.ReplyColor | enums.ProfileColor  | None = None,
+        color: enums.ReplyColor | enums.ProfileColor | None = None,
         background_emoji_id: int | None = None,
     ) -> None:
         self.color = color
@@ -26,7 +26,7 @@ class ChatColor(Object):
 
     @staticmethod
     def _parse(
-        color: raw.types.PeerColor  | None = None,
+        color: raw.types.PeerColor | None = None,
     ) -> ChatColor | None:
         if not color:
             return None
@@ -40,7 +40,7 @@ class ChatColor(Object):
 
     @staticmethod
     def _parse_profile_color(
-        color: raw.types.PeerColor  | None = None,
+        color: raw.types.PeerColor | None = None,
     ) -> ChatColor | None:
         if not color:
             return None

@@ -60,7 +60,7 @@ class Folder(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client  | None = None,
+        client: pyrogram.Client | None = None,
         id: int,
         title: str,
         included_chats: list[types.Chat] | None = None,
@@ -75,7 +75,7 @@ class Folder(Object):
         exclude_read: bool | None = None,
         exclude_archived: bool | None = None,
         emoji: str | None = None,
-        color: enums.FolderColor  | None = None,
+        color: enums.FolderColor | None = None,
         has_my_invites: bool | None = None,
     ) -> None:
         super().__init__(client)
@@ -177,7 +177,7 @@ class Folder(Object):
         exclude_read: bool | None = None,
         exclude_archived: bool | None = None,
         emoji: str | None = None,
-        color: enums.FolderColor  | None = None,
+        color: enums.FolderColor | None = None,
     ):
         """Bound method *update_peers* of :obj:`~pyrogram.types.Folder`.
 

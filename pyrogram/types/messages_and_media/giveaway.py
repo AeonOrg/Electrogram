@@ -41,7 +41,7 @@ class Giveaway(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client  | None = None,
+        client: pyrogram.Client | None = None,
         chats: list[types.Chat],
         quantity: int,
         months: int,

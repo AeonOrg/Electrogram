@@ -30,7 +30,7 @@ class Venue(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client  | None = None,
+        client: pyrogram.Client | None = None,
         location: types.Location,
         title: str,
         address: str,

@@ -6,10 +6,10 @@ import functools
 import hashlib
 import os
 import struct
-from typing import Any, cast
 from concurrent.futures.thread import ThreadPoolExecutor
 from datetime import datetime, timezone
 from getpass import getpass
+from typing import Any, cast
 
 import pyrogram
 from pyrogram import enums, raw, types
@@ -53,21 +53,27 @@ def get_input_media_from_file_id(
 
     if file_type in PHOTO_TYPES:
         return raw.types.InputMediaPhoto(
-            id=cast(Any, raw.types.InputPhoto(
-                id=decoded.media_id,
-                access_hash=decoded.access_hash,
-                file_reference=decoded.file_reference,
-            )),
+            id=cast(
+                "Any",
+                raw.types.InputPhoto(
+                    id=decoded.media_id,
+                    access_hash=decoded.access_hash,
+                    file_reference=decoded.file_reference,
+                ),
+            ),
             ttl_seconds=ttl_seconds,
         )
 
     if file_type in DOCUMENT_TYPES:
         return raw.types.InputMediaDocument(
-            id=cast(Any, raw.types.InputDocument(
-                id=decoded.media_id,
-                access_hash=decoded.access_hash,
-                file_reference=decoded.file_reference,
-            )),
+            id=cast(
+                "Any",
+                raw.types.InputDocument(
+                    id=decoded.media_id,
+                    access_hash=decoded.access_hash,
+                    file_reference=decoded.file_reference,
+                ),
+            ),
             ttl_seconds=ttl_seconds,
         )
 
@@ -128,8 +134,8 @@ async def parse_messages(
         return types.List(parsed_messages)
 
     if messages:
-        users = {cast(Any, i).id: i for i in messages.users}
-        chats = {cast(Any, i).id: i for i in messages.chats}
+        users = {cast("Any", i).id: i for i in messages.users}
+        chats = {cast("Any", i).id: i for i in messages.chats}
 
         if not messages.messages:
             return types.List()
@@ -181,7 +187,7 @@ def parse_deleted_messages(
 def pack_inline_message_id(
     msg_id: raw.base.InputBotInlineMessageID,
 ):
-    msg_id = cast(Any, msg_id)
+    msg_id = cast("Any", msg_id)
     if isinstance(msg_id, raw.types.InputBotInlineMessageID):
         inline_message_id_packed = struct.pack(
             "<iqq",
@@ -310,7 +316,7 @@ def compute_password_check(
     password: str,
 ) -> raw.types.InputCheckPasswordSRP:
     algo = cast(
-        raw.types.PasswordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow,
+        "raw.types.PasswordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow",
         r.current_algo,
     )
 
@@ -320,10 +326,10 @@ def compute_password_check(
     g_bytes = itob(algo.g)
     g = algo.g
 
-    B_bytes = cast(bytes, r.srp_B)
+    B_bytes = cast("bytes", r.srp_B)
     B = btoi(B_bytes)
 
-    srp_id = cast(int, r.srp_id)
+    srp_id = cast("int", r.srp_id)
 
     x_bytes = compute_password_hash(algo, password)
     x = btoi(x_bytes)
@@ -425,7 +431,7 @@ async def get_reply_to(
         entities = parsed["entities"]
 
         if reply_to_chat_id is not None:
-            reply_to_chat = cast(Any, await client.resolve_peer(reply_to_chat_id))
+            reply_to_chat = cast("Any", await client.resolve_peer(reply_to_chat_id))
         reply_to = types.InputReplyToMessage(
             reply_to_message_id=reply_to_message_id,
             message_thread_id=message_thread_id,
@@ -434,7 +440,7 @@ async def get_reply_to(
             quote_entities=entities,
         )
     if reply_to_story_id:
-        peer = await client.resolve_peer(cast(Any, chat_id))
+        peer = await client.resolve_peer(cast("Any", chat_id))
         reply_to = types.InputReplyToStory(peer=peer, story_id=reply_to_story_id)
     return reply_to
 

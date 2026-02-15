@@ -74,7 +74,7 @@ class Invoice(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client  | None = None,
+        client: pyrogram.Client | None = None,
         currency: str,
         is_test: bool,
         title: str | None = None,
@@ -93,7 +93,7 @@ class Invoice(Object):
         max_tip_amount: int | None = None,
         suggested_tip_amounts: list[int] | None = None,
         terms_url: str | None = None,
-        raw: raw.types.MessageMediaInvoice | raw.types.Invoice  | None = None,
+        raw: raw.types.MessageMediaInvoice | raw.types.Invoice | None = None,
     ) -> None:
         super().__init__(client)
 

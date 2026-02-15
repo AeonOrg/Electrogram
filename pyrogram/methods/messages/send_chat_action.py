@@ -16,7 +16,7 @@ class SendChatAction:
         business_connection_id: str | None = None,
         emoji: str | None = None,
         emoji_message_id: int | None = None,
-        emoji_message_interaction: raw.types.DataJSON  | None = None,
+        emoji_message_interaction: raw.types.DataJSON | None = None,
     ) -> bool:
         """Tell the other party that something is happening on your side.
 

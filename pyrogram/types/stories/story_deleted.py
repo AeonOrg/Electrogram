@@ -23,10 +23,10 @@ class StoryDeleted(Object, Update):
     def __init__(
         self,
         *,
-        client: pyrogram.Client  | None = None,
+        client: pyrogram.Client | None = None,
         id: int,
-        from_user: types.User  | None = None,
-        sender_chat: types.Chat  | None = None,
+        from_user: types.User | None = None,
+        sender_chat: types.Chat | None = None,
     ) -> None:
         super().__init__(client)
 

@@ -9,7 +9,7 @@ class PromoteChatMember:
         self: pyrogram.Client,
         chat_id: int | str,
         user_id: int | str,
-        privileges: types.ChatPrivileges  | None = None,
+        privileges: types.ChatPrivileges | None = None,
         title: str | None = None,
     ) -> bool:
         """Promote or demote a user in a supergroup or a channel.

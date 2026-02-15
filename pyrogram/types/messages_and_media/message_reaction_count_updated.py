@@ -33,7 +33,7 @@ class MessageReactionCountUpdated(Object, Update):
     def __init__(
         self,
         *,
-        client: pyrogram.Client  | None = None,
+        client: pyrogram.Client | None = None,
         chat: types.Chat,
         message_id: int,
         date: datetime,

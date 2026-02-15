@@ -38,7 +38,7 @@ class ChatJoiner(Object):
         date: datetime | None = None,
         bio: str | None = None,
         pending: bool | None = None,
-        approved_by: types.User  | None = None,
+        approved_by: types.User | None = None,
     ) -> None:
         super().__init__(client)
 

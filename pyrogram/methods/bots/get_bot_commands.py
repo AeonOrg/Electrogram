@@ -7,7 +7,7 @@ from pyrogram import raw, types
 class GetBotCommands:
     async def get_bot_commands(
         self: pyrogram.Client,
-        scope: types.BotCommandScope  | None = None,
+        scope: types.BotCommandScope | None = None,
         language_code: str = "",
     ) -> list[types.BotCommand]:
         """Get the current list of the bot's commands for the given scope and user language.

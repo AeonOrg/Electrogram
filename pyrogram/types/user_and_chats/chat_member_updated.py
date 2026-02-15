@@ -43,16 +43,16 @@ class ChatMemberUpdated(Object, Update):
     def __init__(
         self,
         *,
-        client: pyrogram.Client  | None = None,
+        client: pyrogram.Client | None = None,
         chat: types.Chat,
         from_user: types.User,
         date: datetime,
         old_chat_member: types.ChatMember,
         new_chat_member: types.ChatMember,
-        invite_link: types.ChatInviteLink  | None = None,
+        invite_link: types.ChatInviteLink | None = None,
         via_join_request: bool | None = None,
         via_chat_folder_invite_link: bool = False,
-        _raw: raw.base.Update  | None = None,
+        _raw: raw.base.Update | None = None,
     ) -> None:
         super().__init__(client)
 

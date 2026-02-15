@@ -22,8 +22,8 @@ class MessageStory(Object):
     def __init__(
         self,
         *,
-        from_user: types.User  | None = None,
-        sender_chat: types.Chat  | None = None,
+        from_user: types.User | None = None,
+        sender_chat: types.Chat | None = None,
         story_id: int,
     ) -> None:
         super().__init__()

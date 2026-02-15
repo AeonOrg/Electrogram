@@ -19,13 +19,13 @@ class SendInvoice:
         photo_size: int | None = None,
         photo_mime_type: str | None = None,
         start_parameter: str | None = None,
-        extended_media: types.InputMedia  | None = None,
+        extended_media: types.InputMedia | None = None,
         reply_to_message_id: int | None = None,
         message_thread_id: int | None = None,
         quote_text: str | None = None,
         allow_paid_broadcast: bool | None = None,
         quote_entities: list[types.MessageEntity] | None = None,
-        reply_markup: types.InlineKeyboardMarkup  | None = None,
+        reply_markup: types.InlineKeyboardMarkup | None = None,
     ):
         """Use this method to send invoices.
 

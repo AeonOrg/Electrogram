@@ -138,9 +138,9 @@ class Gift(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client  | None = None,
+        client: pyrogram.Client | None = None,
         id: int,
-        sticker: types.Sticker  | None = None,
+        sticker: types.Sticker | None = None,
         star_count: int | None = None,
         default_sell_star_count: int | None = None,
         remaining_count: int | None = None,

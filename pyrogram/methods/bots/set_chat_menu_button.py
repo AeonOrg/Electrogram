@@ -8,7 +8,7 @@ class SetChatMenuButton:
     async def set_chat_menu_button(
         self: pyrogram.Client,
         chat_id: int | str | None = None,
-        menu_button: types.MenuButton  | None = None,
+        menu_button: types.MenuButton | None = None,
     ) -> bool:
         """Change the bot's menu button in a private chat, or the default menu button.
 

@@ -21,7 +21,7 @@ class RPCError(Exception):
 
     def __init__(
         self,
-        value: int | str | raw.types.RpcError  | None = None,
+        value: int | str | raw.types.RpcError | None = None,
         rpc_name: str | None = None,
         is_unknown: bool = False,
         is_signed: bool = False,

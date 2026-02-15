@@ -20,7 +20,7 @@ class UpdateFolder:
         exclude_muted: bool | None = None,
         exclude_read: bool | None = None,
         exclude_archived: bool | None = None,
-        color: enums.FolderColor  | None = None,
+        color: enums.FolderColor | None = None,
         emoji: str | None = None,
     ) -> bool:
         """Create or update a user's folder.

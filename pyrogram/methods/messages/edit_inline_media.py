@@ -22,7 +22,7 @@ class EditInlineMedia:
         self: pyrogram.Client,
         inline_message_id: str,
         media: types.InputMedia,
-        reply_markup: types.InlineKeyboardMarkup  | None = None,
+        reply_markup: types.InlineKeyboardMarkup | None = None,
     ) -> bool:
         """Edit animation, audio, document, photo or video messages, or replace text with animation, audio, document, photo or video messages.
 

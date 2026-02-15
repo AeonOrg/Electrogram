@@ -50,7 +50,7 @@ class BusinessMessage(Object):
         no_activity_days: int | None = None,
         offline_only: bool | None = None,
         recipients: list[types.User] | None = None,
-        schedule: enums.BusinessSchedule  | None = None,
+        schedule: enums.BusinessSchedule | None = None,
         start_date: datetime | None = None,
         end_date: datetime | None = None,
     ) -> None:

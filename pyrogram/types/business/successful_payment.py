@@ -40,7 +40,7 @@ class SuccessfulPayment(Object):
         telegram_payment_charge_id: str,
         provider_payment_charge_id: str,
         shipping_option_id: str | None = None,
-        payment_info: types.PaymentInfo  | None = None,
+        payment_info: types.PaymentInfo | None = None,
     ) -> None:
         super().__init__()
 

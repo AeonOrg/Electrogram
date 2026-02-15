@@ -4,7 +4,6 @@ import contextlib
 import json
 import re
 import shutil
-from functools import partial
 from pathlib import Path
 from typing import NamedTuple
 
@@ -44,6 +43,7 @@ WARNING = """
 # All changes made in this file will be lost! #
 # # # # # # # # # # # # # # # # # # # # # # # #
 """.strip()
+
 
 def open_utf8(path: str | Path, mode: str = "r", *args, **kwargs):
     return open(path, mode, encoding="utf-8", *args, **kwargs)
@@ -551,7 +551,9 @@ def start() -> None:  # noqa: C901
         d[c.namespace].append(c.name)
 
     for namespace, types in namespaces_to_types.items():
-        with open_utf8(DESTINATION_PATH / "base" / namespace / "__init__.py", "w") as f:
+        with open_utf8(
+            DESTINATION_PATH / "base" / namespace / "__init__.py", "w"
+        ) as f:
             f.write(f"{WARNING}\n\n")
 
             all = []
@@ -579,7 +581,9 @@ def start() -> None:  # noqa: C901
             f.write("]\n")
 
     for namespace, types in namespaces_to_constructors.items():
-        with open_utf8(DESTINATION_PATH / "types" / namespace / "__init__.py", "w") as f:
+        with open_utf8(
+            DESTINATION_PATH / "types" / namespace / "__init__.py", "w"
+        ) as f:
             f.write(f"{WARNING}\n\n")
 
             all = []

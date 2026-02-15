@@ -46,7 +46,7 @@ class Document(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client  | None = None,
+        client: pyrogram.Client | None = None,
         file_id: str,
         file_unique_id: str,
         file_name: str | None = None,

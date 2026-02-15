@@ -70,7 +70,7 @@ class Poll(Object, Update):
     def __init__(
         self,
         *,
-        client: pyrogram.Client  | None = None,
+        client: pyrogram.Client | None = None,
         id: str,
         question: str,
         options: list[types.PollOption],
@@ -78,7 +78,7 @@ class Poll(Object, Update):
         total_voter_count: int,
         is_closed: bool,
         is_anonymous: bool | None = None,
-        type: enums.PollType  | None = None,
+        type: enums.PollType | None = None,
         allows_multiple_answers: bool | None = None,
         chosen_option_id: int | None = None,
         correct_option_id: int | None = None,
@@ -243,7 +243,7 @@ class Poll(Object, Update):
 
     async def stop(
         self,
-        reply_markup: types.InlineKeyboardMarkup  | None = None,
+        reply_markup: types.InlineKeyboardMarkup | None = None,
         business_connection_id: str | None = None,
     ) -> types.Poll:
         """Bound method *stop* of :obj:`~pyrogram.types.Poll`.

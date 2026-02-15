@@ -51,11 +51,11 @@ class CallbackQuery(Object, Update):
     def __init__(
         self,
         *,
-        client: pyrogram.Client  | None = None,
+        client: pyrogram.Client | None = None,
         id: str,
         from_user: types.User,
         chat_instance: str,
-        message: types.Message  | None = None,
+        message: types.Message | None = None,
         inline_message_id: str | None = None,
         data: str | bytes | None = None,
         game_short_name: str | None = None,
@@ -174,7 +174,7 @@ class CallbackQuery(Object, Update):
         text: str,
         parse_mode: enums.ParseMode | None = None,
         disable_web_page_preview: bool | None = None,
-        reply_markup: types.InlineKeyboardMarkup  | None = None,
+        reply_markup: types.InlineKeyboardMarkup | None = None,
     ) -> types.Message | bool:
         """Edit the text of messages attached to callback queries.
 
@@ -227,7 +227,7 @@ class CallbackQuery(Object, Update):
         self,
         caption: str,
         parse_mode: enums.ParseMode | None = None,
-        reply_markup: types.InlineKeyboardMarkup  | None = None,
+        reply_markup: types.InlineKeyboardMarkup | None = None,
         business_connection_id: str | None = None,
     ) -> types.Message | bool:
         """Edit the caption of media messages attached to callback queries.
@@ -272,7 +272,7 @@ class CallbackQuery(Object, Update):
     async def edit_message_media(
         self,
         media: types.InputMedia,
-        reply_markup: types.InlineKeyboardMarkup  | None = None,
+        reply_markup: types.InlineKeyboardMarkup | None = None,
         business_connection_id: str | None = None,
     ) -> types.Message | bool:
         """Edit animation, audio, document, photo or video messages attached to callback queries.
@@ -319,7 +319,7 @@ class CallbackQuery(Object, Update):
 
     async def edit_message_reply_markup(
         self,
-        reply_markup: types.InlineKeyboardMarkup  | None = None,
+        reply_markup: types.InlineKeyboardMarkup | None = None,
         business_connection_id: str | None = None,
     ) -> types.Message | bool:
         """Edit only the reply markup of messages attached to callback queries.

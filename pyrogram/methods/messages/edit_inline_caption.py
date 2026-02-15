@@ -13,7 +13,7 @@ class EditInlineCaption:
         inline_message_id: str,
         caption: str,
         parse_mode: enums.ParseMode | None = None,
-        reply_markup: types.InlineKeyboardMarkup  | None = None,
+        reply_markup: types.InlineKeyboardMarkup | None = None,
         invert_media: bool | None = None,
     ) -> bool:
         """Edit the caption of inline media messages.

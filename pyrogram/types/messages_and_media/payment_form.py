@@ -48,7 +48,7 @@ class PaymentForm(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client  | None = None,
+        client: pyrogram.Client | None = None,
         id: int,
         bot: types.User,
         title: str,
@@ -59,7 +59,7 @@ class PaymentForm(Object):
         can_save_credentials: bool | None = None,
         is_password_missing: bool | None = None,
         native_provider: str | None = None,
-        raw: raw.base.payments.PaymentForm  | None = None,
+        raw: raw.base.payments.PaymentForm | None = None,
         # TODO: Add support for other params:
         # native_params
         # additional_params
