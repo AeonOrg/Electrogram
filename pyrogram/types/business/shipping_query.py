@@ -27,11 +27,11 @@ class ShippingQuery(Object, Update):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client | None = None,
         id: str,
         from_user: types.User,
         invoice_payload: str,
-        shipping_address: types.ShippingAddress = None,
+        shipping_address: types.ShippingAddress | None = None,
     ) -> None:
         super().__init__(client)
 
@@ -69,7 +69,7 @@ class ShippingQuery(Object, Update):
     async def answer(
         self,
         ok: bool,
-        shipping_options: types.ShippingOptions = None,
+        shipping_options: types.ShippingOptions | None = None,
         error_message: str | None = None,
     ):
         """Bound method *answer* of :obj:`~pyrogram.types.ShippingQuery`.

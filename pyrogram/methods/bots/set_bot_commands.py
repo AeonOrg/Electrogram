@@ -8,7 +8,7 @@ class SetBotCommands:
     async def set_bot_commands(
         self: pyrogram.Client,
         commands: list[types.BotCommand],
-        scope: types.BotCommandScope = None,
+        scope: types.BotCommandScope | None = None,
         language_code: str = "",
     ) -> bool:
         """Set the list of the bot's commands.

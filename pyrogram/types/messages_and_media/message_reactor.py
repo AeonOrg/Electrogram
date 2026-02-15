@@ -28,12 +28,12 @@ class MessageReactor(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client | None = None,
         amount: int,
         is_top: bool | None = None,
         is_my: bool | None = None,
         is_anonymous: bool | None = None,
-        from_user: types.User = None,
+        from_user: types.User | None = None,
     ) -> None:
         super().__init__(client)
 

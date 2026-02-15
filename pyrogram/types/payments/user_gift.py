@@ -47,7 +47,7 @@ class UserGift(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client | None = None,
         sender_user: types.User | None = None,
         text: str | None = None,
         entities: list[types.MessageEntity] | None = None,

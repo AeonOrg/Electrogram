@@ -21,7 +21,7 @@ class SendPoll:
         allows_multiple_answers: bool | None = None,
         correct_option_id: int | None = None,
         explanation: str | None = None,
-        explanation_parse_mode: enums.ParseMode = None,
+        explanation_parse_mode: enums.ParseMode | None = None,
         explanation_entities: list[types.MessageEntity] | None = None,
         open_period: int | None = None,
         close_date: datetime | None = None,

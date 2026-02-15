@@ -49,7 +49,7 @@ class Dialog(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client | None = None,
         chat: types.Chat,
         top_message: types.Message,
         unread_messages_count: int,
@@ -60,7 +60,7 @@ class Dialog(Object):
         chat_list: int,
         message_auto_delete_time: int,
         view_as_topics: bool,
-        draft: types.DraftMessage = None,
+        draft: types.DraftMessage | None = None,
         _raw: raw.types.Dialog = None,
     ) -> None:
         super().__init__(client)

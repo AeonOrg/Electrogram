@@ -33,7 +33,7 @@ class RequestedUser(Object):
         first_name: str | None = None,
         last_name: str | None = None,
         username: str | None = None,
-        photo: types.ChatPhoto = None,
+        photo: types.ChatPhoto | None = None,
     ) -> None:
         super().__init__()
 

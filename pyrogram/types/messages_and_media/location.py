@@ -19,7 +19,7 @@ class Location(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client | None = None,
         longitude: float,
         latitude: float,
     ) -> None:

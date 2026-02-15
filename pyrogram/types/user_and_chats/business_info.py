@@ -28,10 +28,10 @@ class BusinessInfo(Object):
         self,
         *,
         address: str | None = None,
-        location: types.Location = None,
-        greeting_message: types.BusinessMessage = None,
-        away_message: types.BusinessMessage = None,
-        working_hours: types.BusinessWorkingHours = None,
+        location: types.Location | None = None,
+        greeting_message: types.BusinessMessage | None = None,
+        away_message: types.BusinessMessage | None = None,
+        working_hours: types.BusinessWorkingHours | None = None,
     ) -> None:
         self.address = address
         self.location = location

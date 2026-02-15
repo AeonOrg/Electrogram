@@ -110,5 +110,14 @@ class MessageServiceType(AutoName):
     SCREENSHOT_TAKEN = auto()
     "A screenshot of a message in the chat has been taken"
 
+    CHAT_THEME_UPDATED = auto()
+    "Chat theme updated"
+
+    CHAT_WALLPAPER_UPDATED = auto()
+    "Chat wallpaper updated"
+
+    GIFT_CODE = auto()
+    "Gift code"
+
     UNKNOWN = auto()
     "This service message is unsupported by the current version of Electrogram"

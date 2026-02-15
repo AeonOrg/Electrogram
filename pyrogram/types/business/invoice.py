@@ -74,7 +74,7 @@ class Invoice(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client | None = None,
         currency: str,
         is_test: bool,
         title: str | None = None,

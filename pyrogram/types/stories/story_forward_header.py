@@ -29,9 +29,9 @@ class StoryForwardHeader(Object):
     def __init__(
         self,
         *,
-        user: types.User = None,
+        user: types.User | None = None,
         sender_name: str | None = None,
-        chat: types.Chat = None,
+        chat: types.Chat | None = None,
         story_id: int | None = None,
         is_modified: bool | None = None,
     ) -> None:

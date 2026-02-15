@@ -17,7 +17,7 @@ class EditMessageMedia:
         chat_id: int | str,
         message_id: int,
         media: types.InputMedia,
-        reply_markup: types.InlineKeyboardMarkup = None,
+        reply_markup: types.InlineKeyboardMarkup | None = None,
         file_name: str | None = None,
         parse_mode: enums.ParseMode | None = None,
         business_connection_id: str | None = None,

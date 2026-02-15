@@ -9,7 +9,7 @@ class EditMessageReplyMarkup:
         self: pyrogram.Client,
         chat_id: int | str,
         message_id: int,
-        reply_markup: types.InlineKeyboardMarkup = None,
+        reply_markup: types.InlineKeyboardMarkup | None = None,
         business_connection_id: str | None = None,
     ) -> types.Message:
         """Edit only the reply markup of messages sent by the bot.

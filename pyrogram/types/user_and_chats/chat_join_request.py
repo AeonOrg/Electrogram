@@ -34,12 +34,12 @@ class ChatJoinRequest(Object, Update):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client | None = None,
         chat: types.Chat,
         from_user: types.User,
         date: datetime,
         bio: str | None = None,
-        invite_link: types.ChatInviteLink = None,
+        invite_link: types.ChatInviteLink | None = None,
     ) -> None:
         super().__init__(client)
 

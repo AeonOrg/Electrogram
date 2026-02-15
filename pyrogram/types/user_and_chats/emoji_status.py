@@ -24,7 +24,7 @@ class EmojiStatus(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client | None = None,
         custom_emoji_id: int,
         until_date: datetime | None = None,
         _raw: raw.base.EmojiStatus = None,

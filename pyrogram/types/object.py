@@ -10,7 +10,7 @@ if typing.TYPE_CHECKING:
 
 
 class Object:
-    def __init__(self, client: pyrogram.Client = None) -> None:
+    def __init__(self, client: pyrogram.Client | None = None) -> None:
         self._client = client
 
     def bind(self, client: pyrogram.Client) -> None:

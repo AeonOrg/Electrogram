@@ -48,7 +48,7 @@ class PaymentForm(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client | None = None,
         id: int,
         bot: types.User,
         title: str,

@@ -46,14 +46,14 @@ class ChatPhoto(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client | None = None,
         small_file_id: str,
         small_photo_unique_id: str,
         big_file_id: str,
         big_photo_unique_id: str,
         has_animation: bool,
         is_personal: bool,
-        minithumbnail: types.StrippedThumbnail = None,
+        minithumbnail: types.StrippedThumbnail | None = None,
     ) -> None:
         super().__init__(client)
 

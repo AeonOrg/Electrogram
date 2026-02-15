@@ -25,7 +25,7 @@ class PollOption(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client | None = None,
         text: str,
         voter_count: int = 0,
         data: bytes | None = None,

@@ -32,8 +32,8 @@ class Reaction(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
-        type: types.ReactionType = None,
+        client: pyrogram.Client | None = None,
+        type: types.ReactionType | None = None,
         count: int | None = None,
         chosen_order: int | None = None,
         is_paid: bool | None = None,
