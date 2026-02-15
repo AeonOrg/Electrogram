@@ -8,12 +8,14 @@ from .run import Run
 from .start import Start
 from .stop import Stop
 from .stop_transmission import StopTransmissionError
+from .listening import Listening
 
 
 class Utilities(
     AddHandler,
     ExportSessionString,
     RemoveHandler,
+    Listening,
     Restart,
     Run,
     Start,
