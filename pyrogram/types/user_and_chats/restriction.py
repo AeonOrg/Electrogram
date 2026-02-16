@@ -1,11 +1,7 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
+from pyrogram import raw
 from pyrogram.types.object import Object
-
-if TYPE_CHECKING:
-    from pyrogram import raw
 
 
 class Restriction(Object):
@@ -31,8 +27,11 @@ class Restriction(Object):
 
     @staticmethod
     def _parse(
-        restriction: raw.types.RestrictionReason,
-    ) -> Restriction:
+        restriction: raw.base.RestrictionReason | None,
+    ) -> Restriction | None:
+        if not isinstance(restriction, raw.types.RestrictionReason):
+            return None
+
         return Restriction(
             platform=restriction.platform,
             reason=restriction.reason,

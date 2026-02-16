@@ -13,7 +13,11 @@ class Parser:
         self.html = HTML(client)
         self.markdown = Markdown(client)
 
-    async def parse(self, text: str, mode: enums.ParseMode | None = None):
+    async def parse(
+        self,
+        text: str,
+        mode: enums.ParseMode | None = None,
+    ) -> dict[str, str | list[pyrogram.raw.base.MessageEntity] | None]:
         text = str(text or "").strip()
 
         if mode is None:

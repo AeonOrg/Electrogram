@@ -37,7 +37,7 @@ class FactCheck(Object):
         self.hash = hash
 
     @staticmethod
-    def _parse(client, fact_check: raw.types.FactCheck) -> FactCheck | None:
+    def _parse(client, fact_check: raw.types.FactCheck | None) -> FactCheck | None:
         if not fact_check:
             return None
 

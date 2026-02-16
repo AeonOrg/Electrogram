@@ -23,7 +23,7 @@ class Dice(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client | None = None,
         emoji: str,
         value: int,
     ) -> None:

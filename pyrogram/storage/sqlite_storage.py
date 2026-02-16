@@ -153,7 +153,7 @@ class SQLiteStorage(Storage):
             usernames,
         )
 
-    async def update_state(self, value: tuple[int, int, int, int, int] = object):
+    async def update_state(self, value: Any = object):
         if value is object:
             return await (
                 await self.conn.execute(
@@ -247,28 +247,28 @@ class SQLiteStorage(Storage):
     async def _accessor(self, value: Any = object):
         return await self._get() if value is object else await self._set(value)
 
-    async def dc_id(self, value: int = object):
+    async def dc_id(self, value: Any = object):
         return await self._accessor(value)
 
-    async def api_id(self, value: int = object):
+    async def api_id(self, value: Any = object):
         return await self._accessor(value)
 
-    async def test_mode(self, value: bool = object):
+    async def test_mode(self, value: Any = object):
         return await self._accessor(value)
 
-    async def auth_key(self, value: bytes = object):
+    async def auth_key(self, value: Any = object):
         return await self._accessor(value)
 
-    async def date(self, value: int = object):
+    async def date(self, value: Any = object):
         return await self._accessor(value)
 
-    async def user_id(self, value: int = object):
+    async def user_id(self, value: Any = object):
         return await self._accessor(value)
 
-    async def is_bot(self, value: bool = object):
+    async def is_bot(self, value: Any = object):
         return await self._accessor(value)
 
-    async def version(self, value: int = object):
+    async def version(self, value: Any = object):
         if value is object:
             q = await self.conn.execute("SELECT number FROM version")
             row = await q.fetchone()

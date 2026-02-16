@@ -46,7 +46,7 @@ class InlineQueryResultArticle(InlineQueryResult):
         id: str | None = None,
         url: str | None = None,
         description: str | None = None,
-        reply_markup: types.InlineKeyboardMarkup = None,
+        reply_markup: types.InlineKeyboardMarkup | None = None,
         thumb_url: str | None = None,
         thumb_width: int = 0,
         thumb_height: int = 0,

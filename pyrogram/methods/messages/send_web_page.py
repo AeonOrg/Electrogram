@@ -32,6 +32,7 @@ class SendWebPage:
         allow_paid_broadcast: bool | None = None,
         message_effect_id: int | None = None,
         reply_markup: types.InlineKeyboardMarkup
+        | None
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
         | types.ForceReply = None,

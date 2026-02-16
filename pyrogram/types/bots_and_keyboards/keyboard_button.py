@@ -49,9 +49,9 @@ class KeyboardButton(Object):
         request_location: bool | None = None,
         request_chat: types.RequestPeerTypeChat
         | types.RequestPeerTypeChannel = None,
-        request_user: types.RequestPeerTypeUser = None,
-        web_app: types.WebAppInfo = None,
-        style: types.KeyboardButtonStyle | enums.ButtonStyle = None,
+        request_user: types.RequestPeerTypeUser | None = None,
+        web_app: types.WebAppInfo | None = None,
+        style: types.KeyboardButtonStyle | enums.ButtonStyle | None = None,
         icon: int | None = None,
     ) -> None:
         super().__init__()

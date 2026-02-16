@@ -35,14 +35,14 @@ class PreCheckoutQuery(Object, Update):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client | None = None,
         id: str,
         from_user: types.User,
         currency: str,
         total_amount: int,
         payload: str,
         shipping_option_id: str | None = None,
-        payment_info: types.PaymentInfo = None,
+        payment_info: types.PaymentInfo | None = None,
     ) -> None:
         super().__init__(client)
 

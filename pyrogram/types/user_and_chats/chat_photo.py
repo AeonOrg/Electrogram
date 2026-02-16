@@ -46,14 +46,14 @@ class ChatPhoto(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client | None = None,
         small_file_id: str,
         small_photo_unique_id: str,
         big_file_id: str,
         big_photo_unique_id: str,
         has_animation: bool,
         is_personal: bool,
-        minithumbnail: types.StrippedThumbnail = None,
+        minithumbnail: types.StrippedThumbnail | None = None,
     ) -> None:
         super().__init__(client)
 
@@ -68,7 +68,7 @@ class ChatPhoto(Object):
     @staticmethod
     def _parse(
         client,
-        chat_photo: raw.types.UserProfilePhoto | raw.types.ChatPhoto,
+        chat_photo: raw.types.UserProfilePhoto | raw.types.ChatPhoto | None,
         peer_id: int,
         peer_access_hash: int,
     ):
@@ -109,7 +109,7 @@ class ChatPhoto(Object):
                 file_unique_type=FileUniqueType.DOCUMENT,
                 media_id=chat_photo.photo_id,
             ).encode(),
-            has_animation=chat_photo.has_video,
+            has_animation=bool(getattr(chat_photo, "has_video", False)),
             is_personal=getattr(chat_photo, "personal", False),
             minithumbnail=types.StrippedThumbnail(data=chat_photo.stripped_thumb)
             if chat_photo.stripped_thumb

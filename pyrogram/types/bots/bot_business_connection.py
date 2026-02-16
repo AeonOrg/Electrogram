@@ -36,7 +36,7 @@ class BotBusinessConnection(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client | None = None,
         bot_connection_id: str,
         user: pyrogram.types.User,
         dc_id: int,

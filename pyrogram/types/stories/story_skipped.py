@@ -37,10 +37,10 @@ class StorySkipped(Object, Update):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client | None = None,
         id: int,
-        from_user: types.User = None,
-        sender_chat: types.Chat = None,
+        from_user: types.User | None = None,
+        sender_chat: types.Chat | None = None,
         date: datetime,
         expire_date: datetime,
         close_friends: bool | None = None,

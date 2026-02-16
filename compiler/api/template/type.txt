@@ -1,13 +1,8 @@
 {warning}
 
-from typing import Union
-from pyrogram import raw
 from pyrogram.raw.core import TLObject
 
-{name} = Union[{types}]
-
-
-class {name}:  # type: ignore
+class {name}(TLObject):  # type: ignore
     """{docstring}
     """
 

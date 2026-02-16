@@ -17,7 +17,7 @@ class ForwardStory:
         from_chat_id: int | str,
         from_story_id: int,
         chat_id: int | str | None = None,
-        privacy: enums.StoriesPrivacyRules = None,
+        privacy: enums.StoriesPrivacyRules | None = None,
         allowed_users: list[int] | None = None,
         denied_users: list[int] | None = None,
         # allowed_chats: list[int] = None,
@@ -25,7 +25,7 @@ class ForwardStory:
         pinned: bool | None = None,
         protect_content: bool | None = None,
         caption: str | None = None,
-        parse_mode: enums.ParseMode = None,
+        parse_mode: enums.ParseMode | None = None,
         caption_entities: list[types.MessageEntity] | None = None,
         period: int | None = None,
     ) -> types.Story:

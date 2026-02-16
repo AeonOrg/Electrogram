@@ -19,7 +19,7 @@ class MessageReactions(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client | None = None,
         reactions: list[types.Reaction] | None = None,
         top_reactors: list[types.MessageReactor] | None = None,
     ) -> None:

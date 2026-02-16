@@ -55,7 +55,7 @@ class AvailableEffect(Object):
     async def _parse(
         client,
         effect: raw.types.AvailableEffect,
-        document: raw.types.Document = None,
+        document: raw.types.Document | None = None,
     ) -> AvailableEffect:
         sticker = None
 

@@ -26,7 +26,7 @@ class ExtendedMediaPreview(Object):
         *,
         width: int | None = None,
         height: int | None = None,
-        thumb: types.Thumbnail = None,
+        thumb: types.Thumbnail | None = None,
         video_duration: int | None = None,
     ) -> None:
         super().__init__()

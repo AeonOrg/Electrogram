@@ -16,7 +16,7 @@ class GetChatEventLog:
         query: str = "",
         offset_id: int = 0,
         limit: int = 0,
-        filters: types.ChatEventFilter = None,
+        filters: types.ChatEventFilter | None = None,
         user_ids: list[int | str] | None = None,
     ) -> AsyncGenerator[types.ChatEvent, None] | None:
         """Get the actions taken by chat members and administrators in the last 48h.

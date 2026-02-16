@@ -48,9 +48,9 @@ class GiveawayResult(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
-        chat: types.Chat = None,
-        giveaway_message: types.Message = None,
+        client: pyrogram.Client | None = None,
+        chat: types.Chat | None = None,
+        giveaway_message: types.Message | None = None,
         quantity: int,
         unclaimed_quantity: int,
         winners: list[types.User] | None = None,

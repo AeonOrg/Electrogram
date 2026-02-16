@@ -39,11 +39,11 @@ class ChosenInlineResult(Object, Update):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client | None = None,
         result_id: str,
         from_user: types.User,
         query: str,
-        location: types.Location = None,
+        location: types.Location | None = None,
         inline_message_id: str | None = None,
     ) -> None:
         super().__init__(client)

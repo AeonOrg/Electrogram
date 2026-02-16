@@ -24,10 +24,10 @@ class EmojiStatus(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client | None = None,
         custom_emoji_id: int,
         until_date: datetime | None = None,
-        _raw: raw.base.EmojiStatus = None,
+        _raw: raw.base.EmojiStatus | None = None,
     ) -> None:
         super().__init__(client)
 
@@ -35,7 +35,9 @@ class EmojiStatus(Object):
         self.until_date = until_date
 
     @staticmethod
-    def _parse(client, emoji_status: raw.base.EmojiStatus) -> EmojiStatus | None:
+    def _parse(
+        client, emoji_status: raw.base.EmojiStatus | None
+    ) -> EmojiStatus | None:
         if isinstance(emoji_status, raw.types.EmojiStatus):
             return EmojiStatus(
                 client=client,
@@ -59,10 +61,9 @@ class EmojiStatus(Object):
         return None
 
     def write(self):
-        if self.until_date:
-            return raw.types.EmojiStatusUntil(
-                document_id=self.custom_emoji_id,
-                until=utils.datetime_to_timestamp(self.until_date),
-            )
-
-        return raw.types.EmojiStatus(document_id=self.custom_emoji_id)
+        return raw.types.EmojiStatus(
+            document_id=self.custom_emoji_id,
+            until=utils.datetime_to_timestamp(self.until_date)
+            if self.until_date
+            else None,
+        )

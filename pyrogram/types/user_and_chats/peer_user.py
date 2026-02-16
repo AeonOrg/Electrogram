@@ -17,11 +17,14 @@ class PeerUser(Object):
             Id of the user.
     """
 
-    def __init__(self, *, user_id: int) -> None:
+    def __init__(self, *, user_id: int | None = None) -> None:
         super().__init__()
 
         self.user_id = user_id
 
     @staticmethod
-    def _parse(action: raw.types.PeerUser) -> PeerUser:
+    def _parse(action: raw.types.PeerUser | None) -> PeerUser | None:
+        if not action:
+            return None
+
         return PeerUser(user_id=getattr(action, "user_id", None))
