@@ -33,8 +33,8 @@ class ChatJoiner(Object):
     def __init__(
         self,
         *,
-        client: pyrogram.Client,
-        user: types.User,
+        client: pyrogram.Client | None = None,
+        user: types.User | None = None,
         date: datetime | None = None,
         bio: str | None = None,
         pending: bool | None = None,
@@ -51,17 +51,20 @@ class ChatJoiner(Object):
     @staticmethod
     def _parse(
         client: pyrogram.Client,
-        joiner: raw.base.ChatInviteImporter,
+        joiner: raw.base.ChatInviteImporter | None,
         users: dict[int, raw.base.User],
-    ) -> ChatJoiner:
+    ) -> ChatJoiner | None:
+        if not isinstance(joiner, raw.types.ChatInviteImporter):
+            return None
+
         return ChatJoiner(
-            user=types.User._parse(client, users[joiner.user_id]),
-            date=utils.timestamp_to_datetime(joiner.date),
-            pending=joiner.requested,
-            bio=joiner.about,
+            user=types.User._parse(client, users.get(joiner.user_id)),
+            date=utils.timestamp_to_datetime(getattr(joiner, "date", None)),
+            pending=getattr(joiner, "requested", None),
+            bio=getattr(joiner, "about", None),
             approved_by=(
-                types.User._parse(client, users[joiner.approved_by])
-                if joiner.approved_by
+                types.User._parse(client, users.get(joiner.approved_by))
+                if getattr(joiner, "approved_by", None)
                 else None
             ),
             client=client,

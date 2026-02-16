@@ -31,8 +31,11 @@ class Restriction(Object):
 
     @staticmethod
     def _parse(
-        restriction: raw.types.RestrictionReason,
-    ) -> Restriction:
+        restriction: raw.base.RestrictionReason | None,
+    ) -> Restriction | None:
+        if not isinstance(restriction, raw.types.RestrictionReason):
+            return None
+
         return Restriction(
             platform=restriction.platform,
             reason=restriction.reason,

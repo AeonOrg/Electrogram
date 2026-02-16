@@ -53,7 +53,7 @@ class SendVideo:
         clear_draft: bool | None = None,
         update_stickersets_order: bool | None = None,
         suggested_post: types.SuggestedPost | None = None,
-        reply_markup: types.InlineKeyboardMarkup
+        reply_markup: types.InlineKeyboardMarkup | None
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
         | types.ForceReply = None,

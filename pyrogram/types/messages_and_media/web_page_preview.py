@@ -41,7 +41,7 @@ class WebPagePreview(Object):
     @staticmethod
     def _parse(
         client,
-        web_page_preview: raw.types.WebPage | raw.types.WebPageEmpty,
+        web_page_preview: raw.types.MessageMediaWebPage,
         invert_media: bool | None = None,
     ):
         if isinstance(web_page_preview.webpage, raw.types.WebPage):

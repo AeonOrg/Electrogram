@@ -50,7 +50,7 @@ class SuggestedPost(Object):
         )
 
     @staticmethod
-    def _parse(suggested_post: raw.types.SuggestedPost) -> SuggestedPost | None:
+    def _parse(suggested_post: raw.types.SuggestedPost | None) -> SuggestedPost | None:
         if not suggested_post:
             return None
 

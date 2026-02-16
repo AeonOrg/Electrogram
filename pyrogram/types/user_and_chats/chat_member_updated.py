@@ -44,11 +44,11 @@ class ChatMemberUpdated(Object, Update):
         self,
         *,
         client: pyrogram.Client | None = None,
-        chat: types.Chat,
-        from_user: types.User,
-        date: datetime,
-        old_chat_member: types.ChatMember,
-        new_chat_member: types.ChatMember,
+        chat: types.Chat | None = None,
+        from_user: types.User | None = None,
+        date: datetime | None = None,
+        old_chat_member: types.ChatMember | None = None,
+        new_chat_member: types.ChatMember | None = None,
         invite_link: types.ChatInviteLink | None = None,
         via_join_request: bool | None = None,
         via_chat_folder_invite_link: bool = False,
@@ -105,7 +105,7 @@ class ChatMemberUpdated(Object, Update):
                 client=client,
             )
 
-        chat_id = getattr(update, "chat_id", None) or update.channel_id
+        chat_id = getattr(update, "chat_id", 0) or getattr(update, "channel_id", 0)
 
         old_chat_member = None
         new_chat_member = None
@@ -134,9 +134,9 @@ class ChatMemberUpdated(Object, Update):
                 via_join_request = True
 
         return ChatMemberUpdated(
-            chat=types.Chat._parse_chat(client, chats[chat_id]),
-            from_user=types.User._parse(client, users[update.actor_id]),
-            date=utils.timestamp_to_datetime(update.date),
+            chat=types.Chat._parse_chat(client, chats.get(chat_id)),
+            from_user=types.User._parse(client, users.get(update.actor_id)),
+            date=utils.timestamp_to_datetime(getattr(update, "date", None)),
             old_chat_member=old_chat_member,
             new_chat_member=new_chat_member,
             invite_link=invite_link,

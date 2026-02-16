@@ -61,8 +61,8 @@ class Folder(Object):
         self,
         *,
         client: pyrogram.Client | None = None,
-        id: int,
-        title: str,
+        id: int | None = None,
+        title: str | None = None,
         included_chats: list[types.Chat] | None = None,
         excluded_chats: list[types.Chat] | None = None,
         pinned_chats: list[types.Chat] | None = None,
@@ -98,7 +98,13 @@ class Folder(Object):
         self.has_my_invites = has_my_invites
 
     @staticmethod
-    def _parse(client, folder: raw.types.DialogFilter, users, chats) -> Folder:
+    def _parse(client, folder: raw.base.DialogFilter | None, users: dict, chats: dict) -> Folder | None:
+        if not isinstance(folder, (raw.types.DialogFilter, raw.types.DialogFilterDefault)):
+            return None
+
+        if isinstance(folder, raw.types.DialogFilterDefault):
+            return Folder(id=0, title="All", client=client)
+
         included_chats = []
         excluded_chats = []
         pinned_chats = []
@@ -124,7 +130,7 @@ class Folder(Object):
 
         return Folder(
             id=folder.id,
-            title=folder.title,
+            title=str(folder.title),
             included_chats=types.List(included_chats) or None,
             excluded_chats=types.List(excluded_chats) or None,
             pinned_chats=types.List(pinned_chats) or None,
@@ -160,7 +166,7 @@ class Folder(Object):
             True on success.
         """
 
-        return await self._client.delete_folder(self.id)
+        return await self._client.delete_folder(self.id or 0)
 
     async def update(
         self,
@@ -257,8 +263,8 @@ class Folder(Object):
             pinned_chats = [i.id for i in self.pinned_chats or []]
 
         return await self._client.update_folder(
-            folder_id=self.id,
-            title=title or self.title,
+            folder_id=self.id or 0,
+            title=title or self.title or "",
             included_chats=included_chats,
             excluded_chats=excluded_chats,
             pinned_chats=pinned_chats,
@@ -436,17 +442,27 @@ class Folder(Object):
         Returns:
             True on success.
         """
+        assert self._client
         peer = await self._client.resolve_peer(chat_id)
-        peer_id = utils.get_peer_id(peer)
+        if isinstance(peer, raw.types.InputPeerUser):
+            peer_id = peer.user_id
+        elif isinstance(peer, raw.types.InputPeerChat):
+            peer_id = -peer.chat_id
+        elif isinstance(peer, raw.types.InputPeerChannel):
+            peer_id = utils.get_channel_id(peer.channel_id)
+        else:
+            peer_id = 0
 
         return await self.update(
             included_chats=[
-                i.id for i in self.included_chats or [] if peer_id != i.id
+                getattr(i, "id", 0) for i in self.included_chats or [] if peer_id != getattr(i, "id", 0)
             ],
             excluded_chats=[
-                i.id for i in self.excluded_chats or [] if peer_id != i.id
+                getattr(i, "id", 0) for i in self.excluded_chats or [] if peer_id != getattr(i, "id", 0)
             ],
-            pinned_chats=[i.id for i in self.pinned_chats or [] if peer_id != i.id],
+            pinned_chats=[
+                getattr(i, "id", 0) for i in self.pinned_chats or [] if peer_id != getattr(i, "id", 0)
+            ],
         )
 
     async def export_link(self):
@@ -467,4 +483,4 @@ class Folder(Object):
             ``str``: On success, a link to the folder as string is returned.
         """
 
-        return await self._client.export_folder_link(folder_id=self.id)
+        return await self._client.export_folder_link(folder_id=self.id or 0)

@@ -62,17 +62,17 @@ class ForumTopic(Object):
     def __init__(
         self,
         *,
-        id: int,
-        date: int,
-        title: str,
-        icon_color: int,
-        top_message: int,
-        read_inbox_max_id: int,
-        read_outbox_max_id: int,
-        unread_count: int,
-        unread_mentions_count: int,
-        unread_reactions_count: int,
-        from_id: types.PeerChannel | types.PeerUser,
+        id: int | None = None,
+        date: int | None = None,
+        title: str | None = None,
+        icon_color: int | None = None,
+        top_message: int | None = None,
+        read_inbox_max_id: int | None = None,
+        read_outbox_max_id: int | None = None,
+        unread_count: int | None = None,
+        unread_mentions_count: int | None = None,
+        unread_reactions_count: int | None = None,
+        from_id: types.PeerChannel | types.PeerUser | None = None,
         my: bool | None = None,
         closed: bool | None = None,
         pinned: bool | None = None,
@@ -99,8 +99,12 @@ class ForumTopic(Object):
         self.icon_emoji_id = icon_emoji_id
 
     @staticmethod
-    def _parse(forum_topic: raw.types.forum_topic) -> ForumTopic:
+    def _parse(forum_topic: raw.base.ForumTopic | None) -> ForumTopic | None:
+        if not isinstance(forum_topic, raw.types.ForumTopic):
+            return None
+
         from_id = forum_topic.from_id
+        peer = None
         if isinstance(from_id, raw.types.PeerChannel):
             peer = types.PeerChannel._parse(from_id)
         if isinstance(from_id, raw.types.PeerUser):

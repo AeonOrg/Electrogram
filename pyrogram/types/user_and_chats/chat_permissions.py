@@ -147,8 +147,8 @@ class ChatPermissions(Object):
 
     @staticmethod
     def _parse(
-        denied_permissions: raw.base.ChatBannedRights,
-    ) -> ChatPermissions:
+        denied_permissions: raw.base.ChatBannedRights | None,
+    ) -> ChatPermissions | None:
         if isinstance(denied_permissions, raw.types.ChatBannedRights):
             all_permissions = None
             all_params = [

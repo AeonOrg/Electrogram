@@ -27,6 +27,7 @@ from .giveaway import Giveaway
 from .giveaway_launched import GiveawayLaunched
 from .giveaway_result import GiveawayResult
 from .labeled_price import LabeledPrice
+from .link_preview_options import LinkPreviewOptions
 from .location import Location
 from .message import Message, Str
 from .message_entity import MessageEntity
@@ -82,6 +83,7 @@ __all__ = [
     "GiveawayLaunched",
     "GiveawayResult",
     "LabeledPrice",
+    "LinkPreviewOptions",
     "Location",
     "MediaArea",
     "MediaAreaChannelPost",

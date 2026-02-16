@@ -29,9 +29,9 @@ class ForumTopicCreated(Object):
     def __init__(
         self,
         *,
-        id: int,
-        title: str,
-        icon_color: int,
+        id: int | None = None,
+        title: str | None = None,
+        icon_color: int | None = None,
         icon_emoji_id: int | None = None,
     ) -> None:
         super().__init__()
@@ -42,7 +42,10 @@ class ForumTopicCreated(Object):
         self.icon_emoji_id = icon_emoji_id
 
     @staticmethod
-    def _parse(message: raw.base.Message) -> ForumTopicCreated:
+    def _parse(message: raw.base.Message | None) -> ForumTopicCreated | None:
+        if not isinstance(message, raw.types.MessageService):
+            return None
+
         return ForumTopicCreated(
             id=getattr(message, "id", None),
             title=getattr(message.action, "title", None),

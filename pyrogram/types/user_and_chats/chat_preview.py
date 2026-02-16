@@ -55,9 +55,9 @@ class ChatPreview(Object):
                 else "supergroup"
             ),
             members_count=chat_invite.participants_count,
-            photo=types.Photo._parse(client, chat_invite.photo),
+            photo=types.Photo._parse(client, chat_invite.photo) if isinstance(chat_invite.photo, raw.types.Photo) else None,
             members=[
-                types.User._parse(client, user) for user in chat_invite.participants
+                u for u in [types.User._parse(client, user) for user in (chat_invite.participants or [])] if u
             ]
             or None,
             client=client,

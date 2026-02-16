@@ -35,9 +35,9 @@ class ChatJoinRequest(Object, Update):
         self,
         *,
         client: pyrogram.Client | None = None,
-        chat: types.Chat,
-        from_user: types.User,
-        date: datetime,
+        chat: types.Chat | None = None,
+        from_user: types.User | None = None,
+        date: datetime | None = None,
         bio: str | None = None,
         invite_link: types.ChatInviteLink | None = None,
     ) -> None:
@@ -59,11 +59,11 @@ class ChatJoinRequest(Object, Update):
         chat_id = utils.get_raw_peer_id(update.peer)
 
         return ChatJoinRequest(
-            chat=types.Chat._parse_chat(client, chats[chat_id]),
-            from_user=types.User._parse(client, users[update.user_id]),
-            date=utils.timestamp_to_datetime(update.date),
-            bio=update.about,
-            invite_link=types.ChatInviteLink._parse(client, update.invite, users),
+            chat=types.Chat._parse_chat(client, chats.get(chat_id)),
+            from_user=types.User._parse(client, users.get(update.user_id)),
+            date=utils.timestamp_to_datetime(getattr(update, "date", None)),
+            bio=getattr(update, "about", None),
+            invite_link=types.ChatInviteLink._parse(client, getattr(update, "invite", None), users),
             client=client,
         )
 
