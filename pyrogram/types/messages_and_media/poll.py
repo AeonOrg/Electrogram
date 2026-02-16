@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, List, cast
+from typing import TYPE_CHECKING, cast
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -117,9 +117,9 @@ class Poll(Object, Update):
         media_poll: raw.types.MessageMediaPoll | raw.types.UpdateMessagePoll,
         users: dict,
     ) -> Poll:
-        poll = cast(raw.types.Poll, media_poll.poll)
-        poll_results = cast(raw.types.PollResults, media_poll.results)
-        results = cast(List[raw.types.PollAnswerVoters], poll_results.results)
+        poll = cast("raw.types.Poll", media_poll.poll)
+        poll_results = cast("raw.types.PollResults", media_poll.results)
+        results = cast("list[raw.types.PollAnswerVoters]", poll_results.results)
 
         chosen_option_id = None
         correct_option_id = None
@@ -138,7 +138,7 @@ class Poll(Object, Update):
                 if result.correct:
                     correct_option_id = i
 
-            answer_text = cast(raw.types.TextWithEntities, answer.text)
+            answer_text = cast("raw.types.TextWithEntities", answer.text)
             o_entities = (
                 [
                     types.MessageEntity._parse(client, entity, {})
@@ -148,7 +148,7 @@ class Poll(Object, Update):
                 else []
             )
             option_entities = cast(
-                list[types.MessageEntity],
+                "list[types.MessageEntity]",
                 types.List([i for i in o_entities if i is not None]),
             )
 
@@ -162,7 +162,7 @@ class Poll(Object, Update):
                 ),
             )
 
-        poll_question = cast(raw.types.TextWithEntities, poll.question)
+        poll_question = cast("raw.types.TextWithEntities", poll.question)
         q_entities = (
             [
                 types.MessageEntity._parse(client, entity, {})
@@ -172,7 +172,7 @@ class Poll(Object, Update):
             else []
         )
         question_entities = cast(
-            list[types.MessageEntity],
+            "list[types.MessageEntity]",
             types.List([i for i in q_entities if i is not None]),
         )
 
@@ -190,7 +190,7 @@ class Poll(Object, Update):
             correct_option_id=correct_option_id,
             explanation=poll_results.solution,
             explanation_entities=cast(
-                list[types.MessageEntity],
+                "list[types.MessageEntity]",
                 [
                     types.MessageEntity._parse(client, i, {})
                     for i in poll_results.solution_entities
@@ -216,10 +216,10 @@ class Poll(Object, Update):
         users: list[raw.base.User] | dict,
     ) -> Poll:
         if update.poll is not None:
-            return await Poll._parse(client, update, cast(dict, users))
+            return await Poll._parse(client, update, cast("dict", users))
 
-        poll_results = cast(raw.types.PollResults, update.results)
-        results = cast(List[raw.types.PollAnswerVoters], poll_results.results)
+        poll_results = cast("raw.types.PollResults", update.results)
+        results = cast("list[raw.types.PollAnswerVoters]", poll_results.results)
         chosen_option_id = None
         correct_option_id = None
         options = []
@@ -240,7 +240,11 @@ class Poll(Object, Update):
                 ),
             )
 
-        users_dict = users if isinstance(users, dict) else {cast(raw.types.User, i).id: i for i in users}
+        users_dict = (
+            users
+            if isinstance(users, dict)
+            else {cast("raw.types.User", i).id: i for i in users}
+        )
 
         parsed_poll = Poll(
             id=str(update.poll_id),
@@ -251,7 +255,7 @@ class Poll(Object, Update):
             chosen_option_id=chosen_option_id,
             correct_option_id=correct_option_id,
             recent_voters=cast(
-                list[types.User],
+                "list[types.User]",
                 [
                     types.User._parse(
                         client,
@@ -265,7 +269,9 @@ class Poll(Object, Update):
             client=client,
         )
 
-        parsed_poll.chat = types.Chat._parse(client, cast(Any, update), {}, {}, is_chat=True)
+        parsed_poll.chat = types.Chat._parse(
+            client, cast("Any", update), {}, {}, is_chat=True
+        )
         return parsed_poll
 
     async def stop(
@@ -304,8 +310,8 @@ class Poll(Object, Update):
         """
 
         return await self._client.stop_poll(
-            chat_id=cast(types.Chat, self.chat).id,
-            message_id=cast(int, self.message_id),
+            chat_id=cast("types.Chat", self.chat).id,
+            message_id=cast("int", self.message_id),
             reply_markup=reply_markup,
             business_connection_id=self.business_connection_id
             if business_connection_id is None

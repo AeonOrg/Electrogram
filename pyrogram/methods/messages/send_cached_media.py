@@ -29,7 +29,8 @@ class SendCachedMedia:
         protect_content: bool | None = None,
         allow_paid_broadcast: bool | None = None,
         invert_media: bool = False,
-        reply_markup: types.InlineKeyboardMarkup | None
+        reply_markup: types.InlineKeyboardMarkup
+        | None
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
         | types.ForceReply = None,

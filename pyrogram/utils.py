@@ -8,8 +8,8 @@ import os
 import struct
 from concurrent.futures.thread import ThreadPoolExecutor
 from datetime import datetime, timezone
-from typing import cast
 from getpass import getpass
+from typing import cast
 
 import pyrogram
 from pyrogram import enums, raw, types
@@ -390,8 +390,8 @@ async def parse_text_entities(
         raw_entities = [await entity.write() for entity in entities]
     elif text is not None:
         parsed = await client.parser.parse(text, parse_mode)
-        text = cast(str, parsed["message"])
-        raw_entities = cast(list, parsed["entities"])
+        text = cast("str", parsed["message"])
+        raw_entities = cast("list", parsed["entities"])
     else:
         raw_entities = None
 
@@ -424,7 +424,9 @@ async def get_reply_to(
     reply_to = None
     reply_to_chat = None
     if reply_to_message_id or message_thread_id:
-        parsed = await parse_text_entities(client, quote_text, parse_mode, quote_entities)
+        parsed = await parse_text_entities(
+            client, quote_text, parse_mode, quote_entities
+        )
         text = parsed["message"]
         entities = parsed["entities"]
 
@@ -453,6 +455,7 @@ async def get_input_quick_reply_shortcut(
     if isinstance(shortcut, int):
         return raw.types.InputQuickReplyShortcutId(shortcut_id=shortcut)
     return raw.types.InputQuickReplyShortcut(shortcut=shortcut)
+
 
 def get_first_url(message: raw.types.Message | raw.types.DraftMessage) -> str | None:
     if not message.entities:

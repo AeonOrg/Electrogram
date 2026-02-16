@@ -55,10 +55,12 @@ class ChatReactions(Object):
             return ChatReactions(
                 client=client,
                 reactions=[
-                    r for r in [
+                    r
+                    for r in [
                         types.ReactionType._parse(client, reaction)
                         for reaction in chat_reactions.reactions
-                    ] if r
+                    ]
+                    if r
                 ],
                 max_reaction_count=reactions_limit,
             )

@@ -63,7 +63,9 @@ class ChatJoinRequest(Object, Update):
             from_user=types.User._parse(client, users.get(update.user_id)),
             date=utils.timestamp_to_datetime(getattr(update, "date", None)),
             bio=getattr(update, "about", None),
-            invite_link=types.ChatInviteLink._parse(client, getattr(update, "invite", None), users),
+            invite_link=types.ChatInviteLink._parse(
+                client, getattr(update, "invite", None), users
+            ),
             client=client,
         )
 

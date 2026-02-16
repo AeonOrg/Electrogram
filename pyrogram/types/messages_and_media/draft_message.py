@@ -101,7 +101,9 @@ class DraftMessage(Object):
     @staticmethod
     def _parse(
         client: pyrogram.Client,
-        raw_draft_message: raw.types.DraftMessage | raw.types.DraftMessageEmpty | None,
+        raw_draft_message: raw.types.DraftMessage
+        | raw.types.DraftMessageEmpty
+        | None,
         users: dict,
     ) -> DraftMessage | None:
         if not raw_draft_message:
@@ -124,7 +126,6 @@ class DraftMessage(Object):
         video_note = None
         link_preview_options = None
         web_page_url = None
-        file_name = None
         media = raw_draft_message.media
         media_type = None
 
@@ -135,7 +136,7 @@ class DraftMessage(Object):
                 if isinstance(doc, raw.types.Document):
                     attributes = {type(i): i for i in doc.attributes}
 
-                    file_name = getattr(
+                    getattr(
                         attributes.get(raw.types.DocumentAttributeFilename),
                         "file_name",
                         None,
@@ -146,34 +147,38 @@ class DraftMessage(Object):
                             raw.types.DocumentAttributeVideo
                         ]
 
-                        if isinstance(
-                            video_attributes,
-                            raw.types.DocumentAttributeVideo,
+                        if (
+                            isinstance(
+                                video_attributes,
+                                raw.types.DocumentAttributeVideo,
+                            )
+                            and video_attributes.round_message
                         ):
-                            if video_attributes.round_message:
-                                video_note = types.VideoNote._parse(
-                                    client,
-                                    doc,
-                                    video_attributes,
-                                )
-                                media_type = enums.MessageMediaType.VIDEO_NOTE
+                            video_note = types.VideoNote._parse(
+                                client,
+                                doc,
+                                video_attributes,
+                            )
+                            media_type = enums.MessageMediaType.VIDEO_NOTE
 
                     elif raw.types.DocumentAttributeAudio in attributes:
                         audio_attributes = attributes[
                             raw.types.DocumentAttributeAudio
                         ]
 
-                        if isinstance(
-                            audio_attributes,
-                            raw.types.DocumentAttributeAudio,
+                        if (
+                            isinstance(
+                                audio_attributes,
+                                raw.types.DocumentAttributeAudio,
+                            )
+                            and audio_attributes.voice
                         ):
-                            if audio_attributes.voice:
-                                voice = types.Voice._parse(
-                                    client,
-                                    doc,
-                                    audio_attributes,
-                                )
-                                media_type = enums.MessageMediaType.VOICE
+                            voice = types.Voice._parse(
+                                client,
+                                doc,
+                                audio_attributes,
+                            )
+                            media_type = enums.MessageMediaType.VOICE
 
             elif isinstance(media, raw.types.MessageMediaWebPage):
                 if isinstance(media.webpage, raw.types.WebPage):

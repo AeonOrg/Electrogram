@@ -1,11 +1,7 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
+from pyrogram import raw
 from pyrogram.types.object import Object
-
-if TYPE_CHECKING:
-    from pyrogram import raw
 
 
 class ForumTopicCreated(Object):

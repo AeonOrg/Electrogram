@@ -39,7 +39,8 @@ class SendDocument:
         schedule_date: datetime | None = None,
         protect_content: bool | None = None,
         allow_paid_broadcast: bool | None = None,
-        reply_markup: types.InlineKeyboardMarkup | None
+        reply_markup: types.InlineKeyboardMarkup
+        | None
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
         | types.ForceReply = None,

@@ -382,9 +382,16 @@ class Chat(Object):
                 user.photo,
                 peer_id,
                 user.access_hash or 0,
-            ) if isinstance(user.photo, (raw.types.UserProfilePhoto, raw.types.ChatPhoto)) else None,
+            )
+            if isinstance(
+                user.photo, (raw.types.UserProfilePhoto, raw.types.ChatPhoto)
+            )
+            else None,
             restrictions=types.List(
-                [types.Restriction._parse(r) for r in (user.restriction_reason or [])],
+                [
+                    types.Restriction._parse(r)
+                    for r in (user.restriction_reason or [])
+                ],
             )
             or None,
             dc_id=getattr(getattr(user, "photo", None), "dc_id", None),
@@ -396,7 +403,9 @@ class Chat(Object):
         )
 
     @staticmethod
-    def _parse_chat_chat(client, chat: raw.types.Chat | raw.types.ChatForbidden) -> Chat:
+    def _parse_chat_chat(
+        client, chat: raw.types.Chat | raw.types.ChatForbidden
+    ) -> Chat:
         peer_id = -chat.id
         active_usernames = getattr(chat, "usernames", [])
         usernames = None
@@ -428,7 +437,9 @@ class Chat(Object):
         )
 
     @staticmethod
-    def _parse_channel_chat(client, channel: raw.types.Channel | raw.types.ChannelForbidden) -> Chat:
+    def _parse_channel_chat(
+        client, channel: raw.types.Channel | raw.types.ChannelForbidden
+    ) -> Chat:
         peer_id = utils.get_channel_id(channel.id)
         restriction_reason = getattr(channel, "restriction_reason", [])
         user_name = getattr(channel, "username", None)
@@ -616,7 +627,9 @@ class Chat(Object):
             chat_raw = chats.get(getattr(full_chat, "id", 0))
 
             if isinstance(full_chat, raw.types.ChatFull):
-                if not isinstance(chat_raw, (raw.types.Chat, raw.types.ChatForbidden)):
+                if not isinstance(
+                    chat_raw, (raw.types.Chat, raw.types.ChatForbidden)
+                ):
                     return None
                 parsed_chat = Chat._parse_chat_chat(client, chat_raw)
                 parsed_chat.description = full_chat.about or None
@@ -629,7 +642,9 @@ class Chat(Object):
                 if not isinstance(chat_raw, raw.types.Channel):
                     return None
                 parsed_chat = Chat._parse_channel_chat(client, chat_raw)
-                parsed_chat.members_count = getattr(full_chat, "participants_count", None)
+                parsed_chat.members_count = getattr(
+                    full_chat, "participants_count", None
+                )
                 parsed_chat.slow_mode_delay = getattr(
                     full_chat,
                     "slowmode_seconds",
@@ -641,13 +656,17 @@ class Chat(Object):
                     None,
                 )
                 parsed_chat.description = getattr(full_chat, "about", None) or None
-                parsed_chat.can_set_sticker_set = getattr(full_chat, "can_set_stickers", None)
+                parsed_chat.can_set_sticker_set = getattr(
+                    full_chat, "can_set_stickers", None
+                )
                 parsed_chat.sticker_set_name = getattr(
                     getattr(full_chat, "stickerset", None),
                     "short_name",
                     None,
                 )
-                parsed_chat.is_participants_hidden = getattr(full_chat, "participants_hidden", None)
+                parsed_chat.is_participants_hidden = getattr(
+                    full_chat, "participants_hidden", None
+                )
                 parsed_chat.is_antispam = getattr(full_chat, "antispam", None)
                 parsed_chat.folder_id = getattr(full_chat, "folder_id", None)
                 parsed_chat.can_enable_paid_reaction = getattr(
@@ -657,9 +676,13 @@ class Chat(Object):
                 )
 
                 linked_chat_id = getattr(full_chat, "linked_chat_id", None)
-                linked_chat_raw = chats.get(linked_chat_id) if linked_chat_id else None
+                linked_chat_raw = (
+                    chats.get(linked_chat_id) if linked_chat_id else None
+                )
 
-                if isinstance(linked_chat_raw, (raw.types.Channel, raw.types.ChannelForbidden)):
+                if isinstance(
+                    linked_chat_raw, (raw.types.Channel, raw.types.ChannelForbidden)
+                ):
                     parsed_chat.linked_chat = Chat._parse_channel_chat(
                         client,
                         linked_chat_raw,
@@ -671,10 +694,17 @@ class Chat(Object):
                     if isinstance(default_send_as, raw.types.PeerUser):
                         send_as_raw = users.get(default_send_as.user_id)
                     else:
-                        send_as_raw = chats.get(getattr(default_send_as, "channel_id", 0))
+                        send_as_raw = chats.get(
+                            getattr(default_send_as, "channel_id", 0)
+                        )
 
-                    if isinstance(send_as_raw, (raw.types.Chat, raw.types.User, raw.types.Channel)):
-                        parsed_chat.send_as_chat = Chat._parse_chat(client, send_as_raw)
+                    if isinstance(
+                        send_as_raw,
+                        (raw.types.Chat, raw.types.User, raw.types.Channel),
+                    ):
+                        parsed_chat.send_as_chat = Chat._parse_chat(
+                            client, send_as_raw
+                        )
 
                 full_chat_stories = getattr(full_chat, "stories", None)
                 if full_chat_stories:

@@ -35,7 +35,9 @@ class EmojiStatus(Object):
         self.until_date = until_date
 
     @staticmethod
-    def _parse(client, emoji_status: raw.base.EmojiStatus | None) -> EmojiStatus | None:
+    def _parse(
+        client, emoji_status: raw.base.EmojiStatus | None
+    ) -> EmojiStatus | None:
         if isinstance(emoji_status, raw.types.EmojiStatus):
             return EmojiStatus(
                 client=client,
@@ -61,5 +63,7 @@ class EmojiStatus(Object):
     def write(self):
         return raw.types.EmojiStatus(
             document_id=self.custom_emoji_id,
-            until=utils.datetime_to_timestamp(self.until_date) if self.until_date else None,
+            until=utils.datetime_to_timestamp(self.until_date)
+            if self.until_date
+            else None,
         )

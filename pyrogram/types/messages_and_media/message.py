@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 from functools import partial
-from typing import TYPE_CHECKING, Any, BinaryIO, cast
+from typing import TYPE_CHECKING, BinaryIO, cast
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -795,8 +795,14 @@ class Message(Object, Update):
                 r = await client.invoke(
                     raw.functions.users.GetUsers(
                         id=[
-                            cast(raw.base.InputUser, await client.resolve_peer(from_id)),
-                            cast(raw.base.InputUser, await client.resolve_peer(peer_id)),
+                            cast(
+                                "raw.base.InputUser",
+                                await client.resolve_peer(from_id),
+                            ),
+                            cast(
+                                "raw.base.InputUser",
+                                await client.resolve_peer(peer_id),
+                            ),
                         ],
                     ),
                 )
@@ -839,12 +845,8 @@ class Message(Object, Update):
             successful_payment = None
             payment_refunded = None
             boosts_applied = None
-            chat_theme_updated = None
-            chat_wallpaper_updated = None
             contact_registered = None
-            gift_code = None
             user_gift = None
-            star_gift = None
             screenshot_taken = None
             chat_join_type = None
 
@@ -859,14 +861,14 @@ class Message(Object, Update):
 
             if isinstance(action, raw.types.MessageActionChatAddUser):
                 new_chat_members = cast(
-                    list[types.User],
+                    "list[types.User]",
                     [types.User._parse(client, users.get(i)) for i in action.users],
                 )
                 service_type = enums.MessageServiceType.NEW_CHAT_MEMBERS
                 chat_join_type = enums.ChatJoinType.BY_ADD
             elif isinstance(action, raw.types.MessageActionChatJoinedByLink):
                 new_chat_members = cast(
-                    list[types.User],
+                    "list[types.User]",
                     [
                         types.User._parse(
                             client,
@@ -881,7 +883,9 @@ class Message(Object, Update):
                 service_type = enums.MessageServiceType.NEW_CHAT_MEMBERS
                 chat_join_type = enums.ChatJoinType.BY_REQUEST
             elif isinstance(action, raw.types.MessageActionChatDeleteUser):
-                left_chat_member = types.User._parse(client, users.get(action.user_id))
+                left_chat_member = types.User._parse(
+                    client, users.get(action.user_id)
+                )
                 service_type = enums.MessageServiceType.LEFT_CHAT_MEMBERS
             elif isinstance(action, raw.types.MessageActionChatEditTitle):
                 new_chat_title = action.title
@@ -1020,7 +1024,9 @@ class Message(Object, Update):
                 group_chat_created=group_chat_created,
                 bot_allowed=bot_allowed,
                 channel_chat_created=channel_chat_created,
-                chats_shared=cast(list[types.RequestedChats], [chats_shared]) if isinstance(chats_shared, types.RequestedChats) else None,
+                chats_shared=cast("list[types.RequestedChats]", [chats_shared])
+                if isinstance(chats_shared, types.RequestedChats)
+                else None,
                 is_topic_message=is_topic_message,
                 forum_topic_created=forum_topic_created,
                 forum_topic_closed=forum_topic_closed,
@@ -1042,7 +1048,7 @@ class Message(Object, Update):
                 boosts_applied=boosts_applied,
                 contact_registered=contact_registered,
                 screenshot_taken=screenshot_taken,
-                raw=cast(raw.types.Message, message),
+                raw=cast("raw.types.Message", message),
                 chat_join_type=chat_join_type,
                 client=client,
                 # TODO: supergroup_chat_created
@@ -1185,7 +1191,11 @@ class Message(Object, Update):
                     media_type = enums.MessageMediaType.PHOTO
                     has_media_spoiler = media.spoiler
                 elif isinstance(media, raw.types.MessageMediaGeo):
-                    location = types.Location._parse(client, media.geo) if isinstance(media.geo, raw.types.GeoPoint) else None
+                    location = (
+                        types.Location._parse(client, media.geo)
+                        if isinstance(media.geo, raw.types.GeoPoint)
+                        else None
+                    )
                     media_type = enums.MessageMediaType.LOCATION
                 elif isinstance(media, raw.types.MessageMediaContact):
                     contact = types.Contact._parse(client, media)
@@ -1325,7 +1335,9 @@ class Message(Object, Update):
                     else:
                         media = None
                 elif isinstance(media, raw.types.MessageMediaPoll):
-                    poll = await types.Poll._parse(client, media, cast(dict, users))
+                    poll = await types.Poll._parse(
+                        client, media, cast("dict", users)
+                    )
                     media_type = enums.MessageMediaType.POLL
                 elif isinstance(media, raw.types.MessageMediaDice):
                     dice = types.Dice._parse(client, media)

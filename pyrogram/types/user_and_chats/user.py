@@ -32,7 +32,9 @@ class Link(str):
     def __new__(cls, url, text, style):
         return str.__new__(cls, Link._format(url, text, style))
 
-    def __call__(self, other: str | None = None, *, style: enums.ParseMode | None = None):
+    def __call__(
+        self, other: str | None = None, *, style: enums.ParseMode | None = None
+    ):
         return Link._format(self.url, other or self.text, style or self.style)
 
     def __str__(self) -> str:
@@ -321,11 +323,15 @@ class User(Object, Update):
             ),
             first_name=user.first_name,
             last_name=user.last_name,
-            **User._parse_status(getattr(user, "status", None), bool(getattr(user, "bot", None))),
+            **User._parse_status(
+                getattr(user, "status", None), bool(getattr(user, "bot", None))
+            ),
             username=user_name,
             usernames=usernames,
             language_code=user.lang_code,
-            emoji_status=types.EmojiStatus._parse(client, getattr(user, "emoji_status", None)),
+            emoji_status=types.EmojiStatus._parse(
+                client, getattr(user, "emoji_status", None)
+            ),
             dc_id=getattr(user.photo, "dc_id", None),
             phone_number=user.phone,
             photo=types.ChatPhoto._parse(
@@ -333,11 +339,20 @@ class User(Object, Update):
                 user.photo,
                 user.id,
                 user.access_hash or 0,
-            ) if isinstance(user.photo, (raw.types.UserProfilePhoto, raw.types.ChatPhoto)) else None,
-            restrictions=types.List(
-                [types.Restriction._parse(r) for r in user.restriction_reason if isinstance(r, raw.types.RestrictionReason)],
             )
-            if user.restriction_reason else None,
+            if isinstance(
+                user.photo, (raw.types.UserProfilePhoto, raw.types.ChatPhoto)
+            )
+            else None,
+            restrictions=types.List(
+                [
+                    types.Restriction._parse(r)
+                    for r in user.restriction_reason
+                    if isinstance(r, raw.types.RestrictionReason)
+                ],
+            )
+            if user.restriction_reason
+            else None,
             reply_color=types.ChatColor._parse(getattr(user, "color", None)),
             profile_color=types.ChatColor._parse_profile_color(
                 getattr(user, "profile_color", None),

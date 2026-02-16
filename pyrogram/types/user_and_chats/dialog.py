@@ -93,7 +93,9 @@ class Dialog(Object):
             view_as_topics=not getattr(dialog, "view_forum_as_messages", True),
             client=client,
             draft=types.DraftMessage._parse(client, dialog.draft, users)
-            if isinstance(dialog.draft, (raw.types.DraftMessage, raw.types.DraftMessageEmpty))
+            if isinstance(
+                dialog.draft, (raw.types.DraftMessage, raw.types.DraftMessageEmpty)
+            )
             else None,
             _raw=dialog,
         )

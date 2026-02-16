@@ -98,8 +98,12 @@ class Folder(Object):
         self.has_my_invites = has_my_invites
 
     @staticmethod
-    def _parse(client, folder: raw.base.DialogFilter | None, users: dict, chats: dict) -> Folder | None:
-        if not isinstance(folder, (raw.types.DialogFilter, raw.types.DialogFilterDefault)):
+    def _parse(
+        client, folder: raw.base.DialogFilter | None, users: dict, chats: dict
+    ) -> Folder | None:
+        if not isinstance(
+            folder, (raw.types.DialogFilter, raw.types.DialogFilterDefault)
+        ):
             return None
 
         if isinstance(folder, raw.types.DialogFilterDefault):
@@ -455,13 +459,19 @@ class Folder(Object):
 
         return await self.update(
             included_chats=[
-                getattr(i, "id", 0) for i in self.included_chats or [] if peer_id != getattr(i, "id", 0)
+                getattr(i, "id", 0)
+                for i in self.included_chats or []
+                if peer_id != getattr(i, "id", 0)
             ],
             excluded_chats=[
-                getattr(i, "id", 0) for i in self.excluded_chats or [] if peer_id != getattr(i, "id", 0)
+                getattr(i, "id", 0)
+                for i in self.excluded_chats or []
+                if peer_id != getattr(i, "id", 0)
             ],
             pinned_chats=[
-                getattr(i, "id", 0) for i in self.pinned_chats or [] if peer_id != getattr(i, "id", 0)
+                getattr(i, "id", 0)
+                for i in self.pinned_chats or []
+                if peer_id != getattr(i, "id", 0)
             ],
         )
 

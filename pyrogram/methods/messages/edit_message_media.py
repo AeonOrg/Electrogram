@@ -3,11 +3,11 @@ from __future__ import annotations
 import io
 import re
 from pathlib import Path
+from typing import Any, cast
 
 from anyio import Path as AsyncPath
 
 import pyrogram
-from typing import cast, Any
 from pyrogram import enums, raw, types, utils
 from pyrogram.file_id import FileType
 
@@ -90,12 +90,12 @@ class EditMessageMedia:
                 parse_mode,
                 caption_entities,
             )
-            message = cast(Any, parsed["message"])
-            entities = cast(Any, parsed["entities"])
+            message = cast("Any", parsed["message"])
+            entities = cast("Any", parsed["entities"])
 
         raw_media: raw.base.InputMedia | None = None
 
-        peer = cast(raw.base.InputPeer, await self.resolve_peer(chat_id))
+        peer = cast("raw.base.InputPeer", await self.resolve_peer(chat_id))
 
         if isinstance(media, types.InputMediaPhoto):
             if isinstance(media.media, io.BytesIO) or (
@@ -120,7 +120,9 @@ class EditMessageMedia:
                     ),
                     spoiler=media.has_spoiler,
                 )
-            elif isinstance(media.media, str) and re.match("^https?://", media.media):
+            elif isinstance(media.media, str) and re.match(
+                "^https?://", media.media
+            ):
                 raw_media = raw.types.InputMediaPhotoExternal(
                     url=media.media,
                     spoiler=media.has_spoiler,
@@ -145,7 +147,12 @@ class EditMessageMedia:
                                 else None
                             )
                             or "video/mp4",
-                            thumb=cast(raw.base.InputFile, await self.save_file(media.thumb)) if media.thumb else None,
+                            thumb=cast(
+                                "raw.base.InputFile",
+                                await self.save_file(media.thumb),
+                            )
+                            if media.thumb
+                            else None,
                             spoiler=media.has_spoiler,
                             file=await self.save_file(media.media),
                             attributes=[
@@ -177,7 +184,9 @@ class EditMessageMedia:
                     ),
                     spoiler=media.has_spoiler,
                 )
-            elif isinstance(media.media, str) and re.match("^https?://", media.media):
+            elif isinstance(media.media, str) and re.match(
+                "^https?://", media.media
+            ):
                 raw_media = raw.types.InputMediaDocumentExternal(
                     url=media.media,
                     spoiler=media.has_spoiler,
@@ -202,7 +211,12 @@ class EditMessageMedia:
                                 else None
                             )
                             or "audio/mpeg",
-                            thumb=cast(raw.base.InputFile, await self.save_file(media.thumb)) if media.thumb else None,
+                            thumb=cast(
+                                "raw.base.InputFile",
+                                await self.save_file(media.thumb),
+                            )
+                            if media.thumb
+                            else None,
                             file=await self.save_file(media.media),
                             attributes=[
                                 raw.types.DocumentAttributeAudio(
@@ -230,7 +244,9 @@ class EditMessageMedia:
                         file_reference=uploaded_media.document.file_reference,
                     ),
                 )
-            elif isinstance(media.media, str) and re.match("^https?://", media.media):
+            elif isinstance(media.media, str) and re.match(
+                "^https?://", media.media
+            ):
                 raw_media = raw.types.InputMediaDocumentExternal(url=media.media)
             elif isinstance(media.media, str):
                 raw_media = utils.get_input_media_from_file_id(
@@ -252,7 +268,12 @@ class EditMessageMedia:
                                 else None
                             )
                             or "video/mp4",
-                            thumb=cast(raw.base.InputFile, await self.save_file(media.thumb)) if media.thumb else None,
+                            thumb=cast(
+                                "raw.base.InputFile",
+                                await self.save_file(media.thumb),
+                            )
+                            if media.thumb
+                            else None,
                             spoiler=media.has_spoiler,
                             file=await self.save_file(media.media),
                             attributes=[
@@ -284,7 +305,9 @@ class EditMessageMedia:
                     ),
                     spoiler=media.has_spoiler,
                 )
-            elif isinstance(media.media, str) and re.match("^https?://", media.media):
+            elif isinstance(media.media, str) and re.match(
+                "^https?://", media.media
+            ):
                 raw_media = raw.types.InputMediaDocumentExternal(
                     url=media.media,
                     spoiler=media.has_spoiler,
@@ -309,7 +332,12 @@ class EditMessageMedia:
                                 else None
                             )
                             or "application/zip",
-                            thumb=cast(raw.base.InputFile, await self.save_file(media.thumb)) if media.thumb else None,
+                            thumb=cast(
+                                "raw.base.InputFile",
+                                await self.save_file(media.thumb),
+                            )
+                            if media.thumb
+                            else None,
                             file=await self.save_file(media.media),
                             attributes=[
                                 raw.types.DocumentAttributeFilename(
@@ -332,7 +360,9 @@ class EditMessageMedia:
                         file_reference=uploaded_media.document.file_reference,
                     ),
                 )
-            elif isinstance(media.media, str) and re.match("^https?://", media.media):
+            elif isinstance(media.media, str) and re.match(
+                "^https?://", media.media
+            ):
                 raw_media = raw.types.InputMediaDocumentExternal(url=media.media)
             elif isinstance(media.media, str):
                 raw_media = utils.get_input_media_from_file_id(

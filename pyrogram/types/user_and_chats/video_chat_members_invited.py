@@ -24,6 +24,8 @@ class VideoChatMembersInvited(Object):
         action: raw.types.MessageActionInviteToGroupCall,
         users: dict[int, raw.types.User],
     ) -> VideoChatMembersInvited:
-        parsed_users = [types.User._parse(client, users.get(i)) for i in action.users]
+        parsed_users = [
+            types.User._parse(client, users.get(i)) for i in action.users
+        ]
 
         return VideoChatMembersInvited(users=[u for u in parsed_users if u])
