@@ -70,7 +70,7 @@ class DraftMessage(Object):
         date: datetime | None = None,
         text: Str | None = None,
         entities: list[types.MessageEntity] | None = None,
-        link_preview_options: types.LinkPreviewOptions | None = None,
+        link_preview_options: types.LinkPreviewOptions = None,
         effect_id: str | None = None,
         video_note: types.VideoNote | None = None,
         voice: types.Voice | None = None,
@@ -78,7 +78,7 @@ class DraftMessage(Object):
         media: enums.MessageMediaType | None = None,
         empty: bool | None = None,
         chat: types.Chat | None = None,
-        _raw: raw.base.DraftMessage | None = None,
+        _raw: raw.types.DraftMessage | None = None,
     ) -> None:
         super().__init__()
 
@@ -101,11 +101,9 @@ class DraftMessage(Object):
     @staticmethod
     def _parse(
         client: pyrogram.Client,
-        raw_draft_message: raw.types.DraftMessage
-        | raw.types.DraftMessageEmpty
-        | None,
+        raw_draft_message: raw.types.DraftMessage | raw.types.DraftMessageEmpty,
         users: dict,
-    ) -> DraftMessage | None:
+    ) -> DraftMessage:
         if not raw_draft_message:
             return None
         if isinstance(raw_draft_message, raw.types.DraftMessageEmpty):
@@ -115,17 +113,17 @@ class DraftMessage(Object):
                 _raw=raw_draft_message,
             )
 
-        entities_raw = [
+        entities = [
             types.MessageEntity._parse(client, entity, users)
-            for entity in raw_draft_message.entities or []
+            for entity in raw_draft_message.entities
         ]
-        entities = [i for i in entities_raw if i is not None]
         entities = types.List(filter(lambda x: x is not None, entities))
 
         voice = None
         video_note = None
         link_preview_options = None
         web_page_url = None
+        file_name = None
         media = raw_draft_message.media
         media_type = None
 
@@ -136,7 +134,7 @@ class DraftMessage(Object):
                 if isinstance(doc, raw.types.Document):
                     attributes = {type(i): i for i in doc.attributes}
 
-                    getattr(
+                    file_name = getattr(
                         attributes.get(raw.types.DocumentAttributeFilename),
                         "file_name",
                         None,
@@ -147,17 +145,12 @@ class DraftMessage(Object):
                             raw.types.DocumentAttributeVideo
                         ]
 
-                        if (
-                            isinstance(
-                                video_attributes,
-                                raw.types.DocumentAttributeVideo,
-                            )
-                            and video_attributes.round_message
-                        ):
+                        if video_attributes.round_message:
                             video_note = types.VideoNote._parse(
                                 client,
                                 doc,
                                 video_attributes,
+                                media.ttl_seconds,
                             )
                             media_type = enums.MessageMediaType.VIDEO_NOTE
 
@@ -166,17 +159,12 @@ class DraftMessage(Object):
                             raw.types.DocumentAttributeAudio
                         ]
 
-                        if (
-                            isinstance(
-                                audio_attributes,
-                                raw.types.DocumentAttributeAudio,
-                            )
-                            and audio_attributes.voice
-                        ):
+                        if audio_attributes.voice:
                             voice = types.Voice._parse(
                                 client,
                                 doc,
                                 audio_attributes,
+                                media.ttl_seconds,
                             )
                             media_type = enums.MessageMediaType.VOICE
 
@@ -210,9 +198,7 @@ class DraftMessage(Object):
             text=(Str(raw_draft_message.message).init(entities) or None),
             entities=entities or None,
             link_preview_options=link_preview_options,
-            effect_id=str(raw_draft_message.effect)
-            if raw_draft_message.effect
-            else None,
+            effect_id=raw_draft_message.effect,
             video_note=video_note,
             voice=voice,
             show_caption_above_media=getattr(
@@ -220,6 +206,7 @@ class DraftMessage(Object):
                 "invert_media",
                 False,
             ),
+            file_name=file_name,
             media=media_type,
             _raw=raw_draft_message,
         )

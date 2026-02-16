@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 from functools import partial
-from typing import TYPE_CHECKING, BinaryIO, cast
+from typing import TYPE_CHECKING, BinaryIO
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -787,22 +787,14 @@ class Message(Object, Update):
         if (
             isinstance(message.from_id, raw.types.PeerUser)
             and isinstance(message.peer_id, raw.types.PeerUser)
-            and from_id is not None
-            and peer_id is not None
             and (from_id not in users or peer_id not in users)
         ):
             try:
                 r = await client.invoke(
                     raw.functions.users.GetUsers(
                         id=[
-                            cast(
-                                "raw.base.InputUser",
-                                await client.resolve_peer(from_id),
-                            ),
-                            cast(
-                                "raw.base.InputUser",
-                                await client.resolve_peer(peer_id),
-                            ),
+                            await client.resolve_peer(from_id),
+                            await client.resolve_peer(peer_id),
                         ],
                     ),
                 )
@@ -845,8 +837,12 @@ class Message(Object, Update):
             successful_payment = None
             payment_refunded = None
             boosts_applied = None
+            chat_theme_updated = None
+            chat_wallpaper_updated = None
             contact_registered = None
+            gift_code = None
             user_gift = None
+            star_gift = None
             screenshot_taken = None
             chat_join_type = None
 
@@ -860,22 +856,18 @@ class Message(Object, Update):
             )
 
             if isinstance(action, raw.types.MessageActionChatAddUser):
-                new_chat_members = cast(
-                    "list[types.User]",
-                    [types.User._parse(client, users.get(i)) for i in action.users],
-                )
+                new_chat_members = [
+                    types.User._parse(client, users[i]) for i in action.users
+                ]
                 service_type = enums.MessageServiceType.NEW_CHAT_MEMBERS
                 chat_join_type = enums.ChatJoinType.BY_ADD
             elif isinstance(action, raw.types.MessageActionChatJoinedByLink):
-                new_chat_members = cast(
-                    "list[types.User]",
-                    [
-                        types.User._parse(
-                            client,
-                            users.get(utils.get_raw_peer_id(message.from_id)),
-                        ),
-                    ],
-                )
+                new_chat_members = [
+                    types.User._parse(
+                        client,
+                        users[utils.get_raw_peer_id(message.from_id)],
+                    ),
+                ]
                 service_type = enums.MessageServiceType.NEW_CHAT_MEMBERS
                 chat_join_type = enums.ChatJoinType.BY_LINK
             elif isinstance(action, raw.types.MessageActionChatJoinedByRequest):
@@ -883,9 +875,7 @@ class Message(Object, Update):
                 service_type = enums.MessageServiceType.NEW_CHAT_MEMBERS
                 chat_join_type = enums.ChatJoinType.BY_REQUEST
             elif isinstance(action, raw.types.MessageActionChatDeleteUser):
-                left_chat_member = types.User._parse(
-                    client, users.get(action.user_id)
-                )
+                left_chat_member = types.User._parse(client, users[action.user_id])
                 service_type = enums.MessageServiceType.LEFT_CHAT_MEMBERS
             elif isinstance(action, raw.types.MessageActionChatEditTitle):
                 new_chat_title = action.title
@@ -906,8 +896,7 @@ class Message(Object, Update):
                 channel_chat_created = True
                 service_type = enums.MessageServiceType.CHANNEL_CHAT_CREATED
             elif isinstance(action, raw.types.MessageActionChatEditPhoto):
-                if isinstance(action.photo, raw.types.Photo):
-                    new_chat_photo = types.Photo._parse(client, action.photo)
+                new_chat_photo = types.Photo._parse(client, action.photo)
                 service_type = enums.MessageServiceType.NEW_CHAT_PHOTO
             elif isinstance(action, raw.types.MessageActionBotAllowed):
                 bot_allowed = types.BotAllowed._parse(client, action)
@@ -968,11 +957,11 @@ class Message(Object, Update):
                 gifted_premium = await types.GiftedPremium._parse(
                     client,
                     action,
-                    from_user.id if from_user else 0,
+                    from_user.id,
                 )
                 service_type = enums.MessageServiceType.GIFTED_PREMIUM
             elif isinstance(action, raw.types.MessageActionGiveawayLaunch):
-                giveaway_launched = types.GiveawayLaunched()
+                giveaway_launched = types.GiveawayLaunched._parse(client, action)
                 service_type = enums.MessageServiceType.GIVEAWAY_LAUNCHED
             elif isinstance(action, raw.types.MessageActionGiveawayResults):
                 giveaway_result = await types.GiveawayResult._parse(
@@ -994,9 +983,32 @@ class Message(Object, Update):
             elif isinstance(action, raw.types.MessageActionPaymentRefunded):
                 payment_refunded = await types.PaymentRefunded._parse(client, action)
                 service_type = enums.MessageServiceType.PAYMENT_REFUNDED
+            elif isinstance(action, raw.types.MessageActionSetChatTheme):
+                chat_theme_updated = types.ChatTheme._parse(action)
+                service_type = enums.MessageServiceType.CHAT_THEME_UPDATED
+            elif isinstance(action, raw.types.MessageActionSetChatWallPaper):
+                chat_wallpaper_updated = types.ChatWallpaper._parse(client, action)
+                service_type = enums.MessageServiceType.CHAT_WALLPAPER_UPDATED
             elif isinstance(action, raw.types.MessageActionContactSignUp):
                 contact_registered = types.ContactRegistered()
                 service_type = enums.MessageServiceType.CONTACT_REGISTERED
+            elif isinstance(action, raw.types.MessageActionGiftCode):
+                gift_code = types.GiftCode._parse(client, action, chats)
+                service_type = enums.MessageServiceType.GIFT_CODE
+            elif isinstance(action, raw.types.MessageActionStarGift):
+                user_gift = await types.UserGift._parse_action(
+                    client,
+                    message,
+                    users,
+                )
+                service_type = enums.MessageServiceType.USER_GIFT
+            elif isinstance(action, raw.types.MessageActionStarGift):
+                star_gift = await types.StarGift._parse_action(
+                    client,
+                    message,
+                    users,
+                )
+                service_type = enums.MessageServiceType.STAR_GIFT
             elif isinstance(action, raw.types.MessageActionScreenshotTaken):
                 screenshot_taken = types.ScreenshotTaken()
                 service_type = enums.MessageServiceType.SCREENSHOT_TAKEN
@@ -1024,9 +1036,7 @@ class Message(Object, Update):
                 group_chat_created=group_chat_created,
                 bot_allowed=bot_allowed,
                 channel_chat_created=channel_chat_created,
-                chats_shared=cast("list[types.RequestedChats]", [chats_shared])
-                if isinstance(chats_shared, types.RequestedChats)
-                else None,
+                chats_shared=chats_shared,
                 is_topic_message=is_topic_message,
                 forum_topic_created=forum_topic_created,
                 forum_topic_closed=forum_topic_closed,
@@ -1044,16 +1054,19 @@ class Message(Object, Update):
                 giveaway_result=giveaway_result,
                 successful_payment=successful_payment,
                 user_gift=user_gift,
+                star_gift=star_gift,
                 payment_refunded=payment_refunded,
                 boosts_applied=boosts_applied,
+                chat_theme_updated=chat_theme_updated,
+                chat_wallpaper_updated=chat_wallpaper_updated,
                 contact_registered=contact_registered,
+                gift_code=gift_code,
                 screenshot_taken=screenshot_taken,
-                raw=cast("raw.types.Message", message),
+                raw=message,
                 chat_join_type=chat_join_type,
                 client=client,
                 # TODO: supergroup_chat_created
             )
-            assert parsed_message.chat
             if parsed_message.chat.type is not enums.ChatType.CHANNEL:
                 parsed_message.sender_chat = sender_chat
 
@@ -1112,9 +1125,6 @@ class Message(Object, Update):
                 parsed_message.message_thread_id = 1
                 parsed_message.is_topic_message = True
 
-            if parsed_message.poll:
-                parsed_message.poll.chat = parsed_message.chat
-                parsed_message.poll.message_id = parsed_message.id
             return parsed_message
 
         if isinstance(message, raw.types.Message):
@@ -1191,11 +1201,7 @@ class Message(Object, Update):
                     media_type = enums.MessageMediaType.PHOTO
                     has_media_spoiler = media.spoiler
                 elif isinstance(media, raw.types.MessageMediaGeo):
-                    location = (
-                        types.Location._parse(client, media.geo)
-                        if isinstance(media.geo, raw.types.GeoPoint)
-                        else None
-                    )
+                    location = types.Location._parse(client, media.geo)
                     media_type = enums.MessageMediaType.LOCATION
                 elif isinstance(media, raw.types.MessageMediaContact):
                     contact = types.Contact._parse(client, media)
@@ -1335,15 +1341,13 @@ class Message(Object, Update):
                     else:
                         media = None
                 elif isinstance(media, raw.types.MessageMediaPoll):
-                    poll = await types.Poll._parse(
-                        client, media, cast("dict", users)
-                    )
+                    poll = await types.Poll._parse(client, media, users)
                     media_type = enums.MessageMediaType.POLL
                 elif isinstance(media, raw.types.MessageMediaDice):
                     dice = types.Dice._parse(client, media)
                     media_type = enums.MessageMediaType.DICE
                 elif isinstance(media, raw.types.MessageMediaInvoice):
-                    invoice = types.Invoice._parse(client, media)
+                    invoice = types.Invoice._parse(media)
                     media = enums.MessageMediaType.INVOICE
                 elif isinstance(media, raw.types.MessageMediaPaidMedia):
                     paid_media = types.PaidMedia._parse(client, media)
@@ -1504,7 +1508,6 @@ class Message(Object, Update):
                 raw=message,
                 client=client,
             )
-            assert parsed_message.chat
             if parsed_message.chat.type is not enums.ChatType.CHANNEL:
                 parsed_message.sender_chat = sender_chat
 
@@ -1570,7 +1573,6 @@ class Message(Object, Update):
                     if rtci
                     else None
                 )
-                assert parsed_message.chat
                 if rtci is not None and parsed_message.chat.id != reply_to_chat_id:
                     parsed_message.reply_to_chat_id = reply_to_chat_id
 
@@ -1589,7 +1591,6 @@ class Message(Object, Update):
                                 "message_ids": key[1],
                             }
                         else:
-                            assert parsed_message.chat
                             key = (
                                 parsed_message.chat.id,
                                 parsed_message.reply_to_message_id,
@@ -1639,9 +1640,6 @@ class Message(Object, Update):
                     parsed_message
                 )
 
-            if parsed_message.poll:
-                parsed_message.poll.chat = parsed_message.chat
-                parsed_message.poll.message_id = parsed_message.id
             return parsed_message
         return None
 

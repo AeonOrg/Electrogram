@@ -9,7 +9,6 @@ import struct
 from concurrent.futures.thread import ThreadPoolExecutor
 from datetime import datetime, timezone
 from getpass import getpass
-from typing import cast
 
 import pyrogram
 from pyrogram import enums, raw, types
@@ -30,7 +29,7 @@ async def ainput(prompt: str = "", *, hide: bool = False):
 
 def get_input_media_from_file_id(
     file_id: str,
-    expected_file_type: FileType | None = None,
+    expected_file_type: FileType = None,
     ttl_seconds: int | None = None,
 ) -> raw.types.InputMediaPhoto | raw.types.InputMediaDocument:
     try:
@@ -79,7 +78,7 @@ async def parse_messages(
     messages: raw.types.messages.Messages,
     is_scheduled: bool = False,
     business_connection_id: str = "",
-    r: raw.base.Updates | None = None,
+    r: raw.base.Updates = None,
 ) -> list[types.Message]:
     parsed_messages = []
 
@@ -127,10 +126,10 @@ async def parse_messages(
 
         return types.List(parsed_messages)
 
-    users = {i.id: i for i in getattr(messages, "users", [])}
-    chats = {i.id: i for i in getattr(messages, "chats", [])}
+    users = {i.id: i for i in messages.users}
+    chats = {i.id: i for i in messages.chats}
 
-    if not getattr(messages, "messages", []):
+    if not messages.messages:
         return types.List()
 
     parsed_messages.extend(
@@ -187,7 +186,7 @@ def pack_inline_message_id(
             msg_id.id,
             msg_id.access_hash,
         )
-    elif isinstance(msg_id, raw.types.InputBotInlineMessageID64):
+    else:
         inline_message_id_packed = struct.pack(
             "<iqiq",
             msg_id.dc_id,
@@ -195,8 +194,6 @@ def pack_inline_message_id(
             msg_id.id,
             msg_id.access_hash,
         )
-    else:
-        raise ValueError(f"Unsupported InputBotInlineMessageID type: {type(msg_id)}")
 
     return base64.urlsafe_b64encode(inline_message_id_packed).decode().rstrip("=")
 
@@ -311,12 +308,6 @@ def compute_password_check(
 ) -> raw.types.InputCheckPasswordSRP:
     algo = r.current_algo
 
-    if not isinstance(
-        algo,
-        raw.types.PasswordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow,
-    ):
-        raise ValueError("Unsupported password algorithm")
-
     p_bytes = algo.p
     p = btoi(algo.p)
 
@@ -324,13 +315,9 @@ def compute_password_check(
     g = algo.g
 
     B_bytes = r.srp_B
-    if B_bytes is None:
-        raise ValueError("srp_B is missing")
     B = btoi(B_bytes)
 
     srp_id = r.srp_id
-    if srp_id is None:
-        raise ValueError("srp_id is missing")
 
     x_bytes = compute_password_hash(algo, password)
     x = btoi(x_bytes)
@@ -377,25 +364,19 @@ def compute_password_check(
 
 async def parse_text_entities(
     client: pyrogram.Client,
-    text: str | None,
-    parse_mode: enums.ParseMode | None,
-    entities: list[types.MessageEntity] | None,
-) -> dict[str, str | list[raw.base.MessageEntity] | None]:
-    raw_entities: list[raw.base.MessageEntity] | None = None
-
+    text: str,
+    parse_mode: enums.ParseMode,
+    entities: list[types.MessageEntity],
+) -> dict[str, str | list[raw.base.MessageEntity]]:
     if entities:
         for entity in entities:
             entity._client = client
 
-        raw_entities = [await entity.write() for entity in entities]
-    elif text is not None:
-        parsed = await client.parser.parse(text, parse_mode)
-        text = cast("str", parsed["message"])
-        raw_entities = cast("list", parsed["entities"])
+        entities = [await entity.write() for entity in entities] or None
     else:
-        raw_entities = None
+        text, entities = (await client.parser.parse(text, parse_mode)).values()
 
-    return {"message": text, "entities": raw_entities}  # type: ignore
+    return {"message": text, "entities": entities}
 
 
 def zero_datetime() -> datetime:
@@ -419,31 +400,24 @@ async def get_reply_to(
     reply_to_chat_id: int | str | None = None,
     quote_text: str | None = None,
     quote_entities: list[types.MessageEntity] | None = None,
-    parse_mode: enums.ParseMode | None = None,
+    parse_mode: enums.ParseMode = None,
 ):
     reply_to = None
     reply_to_chat = None
     if reply_to_message_id or message_thread_id:
-        parsed = await parse_text_entities(
-            client, quote_text, parse_mode, quote_entities
-        )
-        text = parsed["message"]
-        entities = parsed["entities"]
-
+        text, entities = (
+            await parse_text_entities(client, quote_text, parse_mode, quote_entities)
+        ).values()
         if reply_to_chat_id is not None:
             reply_to_chat = await client.resolve_peer(reply_to_chat_id)
-
-        if not isinstance(reply_to_chat, raw.base.InputPeer | None):
-            reply_to_chat = None
-
         reply_to = types.InputReplyToMessage(
             reply_to_message_id=reply_to_message_id,
             message_thread_id=message_thread_id,
             reply_to_chat=reply_to_chat,
-            quote_text=text if isinstance(text, str) else None,
-            quote_entities=entities if isinstance(entities, list) else None,
+            quote_text=text,
+            quote_entities=entities,
         )
-    if reply_to_story_id and chat_id is not None:
+    if reply_to_story_id:
         peer = await client.resolve_peer(chat_id)
         reply_to = types.InputReplyToStory(peer=peer, story_id=reply_to_story_id)
     return reply_to
@@ -455,14 +429,3 @@ async def get_input_quick_reply_shortcut(
     if isinstance(shortcut, int):
         return raw.types.InputQuickReplyShortcutId(shortcut_id=shortcut)
     return raw.types.InputQuickReplyShortcut(shortcut=shortcut)
-
-
-def get_first_url(message: raw.types.Message | raw.types.DraftMessage) -> str | None:
-    if not message.entities:
-        return None
-    for entity in message.entities:
-        if isinstance(entity, raw.types.MessageEntityUrl):
-            return message.message[entity.offset : entity.offset + entity.length]
-        if isinstance(entity, raw.types.MessageEntityTextUrl):
-            return entity.url
-    return None
