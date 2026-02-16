@@ -38,7 +38,7 @@ class SendPoll:
         parse_mode: enums.ParseMode | None = None,
         schedule_date: datetime | None = None,
         message_effect_id: int | None = None,
-        reply_markup: types.InlineKeyboardMarkup
+        reply_markup: types.InlineKeyboardMarkup | None
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
         | types.ForceReply = None,

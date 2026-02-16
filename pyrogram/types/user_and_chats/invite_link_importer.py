@@ -20,7 +20,7 @@ class InviteLinkImporter(Object):
             The user that has used the given invite link
     """
 
-    def __init__(self, *, date: datetime, user: types.User) -> None:
+    def __init__(self, *, date: datetime | None = None, user: types.User | None = None) -> None:
         super().__init__(None)
 
         self.date = date
@@ -33,13 +33,13 @@ class InviteLinkImporter(Object):
     ):
         importers = types.List()
 
-        d = {i.id: i for i in invite_importers.users}
+        d = {getattr(i, "id", 0): i for i in invite_importers.users}
 
         for j in invite_importers.importers:
             importers.append(
                 InviteLinkImporter(
-                    date=utils.timestamp_to_datetime(j.date),
-                    user=types.User._parse(client=None, user=d[j.user_id]),
+                    date=utils.timestamp_to_datetime(getattr(j, "date", None)),
+                    user=types.User._parse(client=None, user=d.get(getattr(j, "user_id", 0))),
                 ),
             )
 

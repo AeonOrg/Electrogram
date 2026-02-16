@@ -1,0 +1,300 @@
+                chat_join_type=chat_join_type,
+                client=client,
+                # TODO: supergroup_chat_created
+            )
+            if parsed_message.chat.type is not enums.ChatType.CHANNEL:
+                parsed_message.sender_chat = sender_chat
+
+            if isinstance(action, raw.types.MessageActionPinMessage):
+                try:
+                    parsed_message.pinned_message = await client.get_messages(
+                        parsed_message.chat.id,
+                        reply_to_message_ids=message.id,
+                        replies=0,
+                    )
+
+                    parsed_message.service = enums.MessageServiceType.PINNED_MESSAGE
+                except MessageIdsEmpty:
+                    pass
+
+            if isinstance(action, raw.types.MessageActionGameScore):
+                parsed_message.game_high_score = types.GameHighScore._parse_action(
+                    client,
+                    message,
+                    users,
+                )
+
+                if message.reply_to and replies:
+                    try:
+                        parsed_message.reply_to_message = await client.get_messages(
+                            parsed_message.chat.id,
+                            reply_to_message_ids=message.id,
+                            replies=0,
+                        )
+
+                        parsed_message.service = (
+                            enums.MessageServiceType.GAME_HIGH_SCORE
+                        )
+                    except MessageIdsEmpty:
+                        pass
+
+            client.message_cache[(parsed_message.chat.id, parsed_message.id)] = (
+                parsed_message
+            )
+
+            if message.reply_to:
+                if isinstance(message.reply_to, raw.types.MessageReplyHeader):
+                    if message.reply_to.forum_topic:
+                        if message.reply_to.reply_to_top_id:
+                            parsed_message.message_thread_id = (
+                                message.reply_to.reply_to_top_id
+                            )
+                        else:
+                            parsed_message.message_thread_id = (
+                                message.reply_to.reply_to_msg_id
+                            )
+                        parsed_message.is_topic_message = True
+            assert parsed_message.chat
+            if (
+                parsed_message.chat.is_forum
+                and parsed_message.message_thread_id is None
+            ):
+                parsed_message.message_thread_id = 1
+                parsed_message.is_topic_message = True
+
+            return parsed_message
+
+        if isinstance(message, raw.types.Message):
+            message_thread_id = None
+            entities_raw = [
+                types.MessageEntity._parse(client, entity, users)
+                for entity in (message.entities or [])
+            ]
+            entities = [i for i in entities_raw if i is not None]
+            entities = types.List(filter(lambda x: x is not None, entities))
+
+            sender_business_bot = None
+            forward_from = None
+            forward_sender_name = None
+            forward_from_chat = None
+            forward_from_message_id = None
+            forward_signature = None
+            forward_date = None
+            is_topic_message = None
+
+            forward_header = message.fwd_from
+
+            if isinstance(forward_header, raw.types.MessageFwdHeader):
+                forward_date = utils.timestamp_to_datetime(forward_header.date)
+
+                if forward_header.from_id:
+                    raw_peer_id = utils.get_raw_peer_id(forward_header.from_id)
+                    peer_id = utils.get_peer_id(forward_header.from_id)
+
+                    if peer_id is not None:
+                        if peer_id > 0:
+                            forward_from = types.User._parse(
+                                client,
+                                users.get(raw_peer_id),
+                            )
+                        else:
+                            chat_raw = chats.get(raw_peer_id)
+                            if isinstance(
+                                chat_raw,
+                                raw.types.Channel | raw.types.ChannelForbidden,
+                            ):
+                                forward_from_chat = types.Chat._parse_channel_chat(
+                                    client,
+                                    chat_raw,
+                                )
+                            forward_from_message_id = forward_header.channel_post
+                            forward_signature = forward_header.post_author
+                elif forward_header.from_name:
+                    forward_sender_name = forward_header.from_name
+
+            photo = None
+            paid_media = None
+            location = None
+            contact = None
+            venue = None
+            game = None
+            giveaway = None
+            giveaway_result = None
+            invoice = None
+            story = None
+            audio = None
+            voice = None
+            animation = None
+            video = None
+            alternative_videos = []
+            video_note = None
+            web_page_preview = None
+            sticker = None
+            document = None
+            poll = None
+            dice = None
+
+            media = message.media
+            media_type = None
+            has_media_spoiler = None
+
+            if media:
+                if isinstance(media, raw.types.MessageMediaPhoto):
+                    if isinstance(media.photo, raw.types.Photo):
+                        photo = types.Photo._parse(
+                            client,
+                            media.photo,
+                            media.ttl_seconds,
+                        )
+                    media_type = enums.MessageMediaType.PHOTO
+                    has_media_spoiler = media.spoiler
+                elif isinstance(media, raw.types.MessageMediaGeo):
+                    if isinstance(media.geo, raw.types.GeoPoint):
+                        location = types.Location._parse(client, media.geo)
+                    media_type = enums.MessageMediaType.LOCATION
+                elif isinstance(media, raw.types.MessageMediaContact):
+                    contact = types.Contact._parse(client, media)
+                    media_type = enums.MessageMediaType.CONTACT
+                elif isinstance(media, raw.types.MessageMediaVenue):
+                    venue = types.Venue._parse(client, media)
+                    media_type = enums.MessageMediaType.VENUE
+                elif isinstance(media, raw.types.MessageMediaGame):
+                    game = types.Game._parse(client, message)
+                    media_type = enums.MessageMediaType.GAME
+                elif isinstance(media, raw.types.MessageMediaGiveaway):
+                    giveaway = await types.Giveaway._parse(client, message)
+                    media_type = enums.MessageMediaType.GIVEAWAY
+                elif isinstance(media, raw.types.MessageMediaGiveawayResults):
+                    giveaway_result = await types.GiveawayResult._parse(
+                        client,
+                        media,
+                    )
+                    media_type = enums.MessageMediaType.GIVEAWAY_RESULT
+                elif isinstance(media, raw.types.MessageMediaStory):
+                    story = await types.MessageStory._parse(client, media)
+                    media_type = enums.MessageMediaType.STORY
+                elif isinstance(media, raw.types.MessageMediaDocument):
+                    doc = media.document
+
+                    if isinstance(doc, raw.types.Document):
+                        attributes = {type(i): i for i in doc.attributes}
+
+                        file_name = getattr(
+                            attributes.get(raw.types.DocumentAttributeFilename),
+                            "file_name",
+                            None,
+                        )
+
+                        if raw.types.DocumentAttributeAnimated in attributes:
+                            video_attributes = attributes.get(
+                                raw.types.DocumentAttributeVideo,
+                            )
+                            if isinstance(
+                                video_attributes,
+                                raw.types.DocumentAttributeVideo,
+                            ):
+                                animation = types.Animation._parse(
+                                    client,
+                                    doc,
+                                    video_attributes,
+                                    str(file_name) if file_name else "",
+                                )
+                                media_type = enums.MessageMediaType.ANIMATION
+                                has_media_spoiler = media.spoiler
+                        elif raw.types.DocumentAttributeSticker in attributes:
+                            sticker = await types.Sticker._parse(
+                                client,
+                                doc,
+                                attributes,
+                            )
+                            media_type = enums.MessageMediaType.STICKER
+                        elif raw.types.DocumentAttributeVideo in attributes:
+                            video_attributes = attributes[
+                                raw.types.DocumentAttributeVideo
+                            ]
+
+                            if isinstance(
+                                video_attributes,
+                                raw.types.DocumentAttributeVideo,
+                            ):
+                                if video_attributes.round_message:
+                                    video_note = types.VideoNote._parse(
+                                        client,
+                                        doc,
+                                        video_attributes,
+                                    )
+                                    media_type = enums.MessageMediaType.VIDEO_NOTE
+                                else:
+                                    video = types.Video._parse(
+                                        client,
+                                        doc,
+                                        video_attributes,
+                                        str(file_name) if file_name else "",
+                                        media.ttl_seconds,
+                                    )
+                                media_type = enums.MessageMediaType.VIDEO
+                                has_media_spoiler = media.spoiler
+                                altdocs = media.alt_documents or []
+                                for altdoc in altdocs:
+                                    if isinstance(altdoc, raw.types.Document):
+                                        altdoc_attributes = {
+                                            type(i): i for i in altdoc.attributes
+                                        }
+                                        altdoc_file_name = getattr(
+                                            altdoc_attributes.get(
+                                                raw.types.DocumentAttributeFilename,
+                                            ),
+                                            "file_name",
+                                            None,
+                                        )
+                                        altdoc_video_attribute = (
+                                            altdoc_attributes.get(
+                                                raw.types.DocumentAttributeVideo,
+                                            )
+                                        )
+                                        if isinstance(
+                                            altdoc_video_attribute,
+                                            raw.types.DocumentAttributeVideo,
+                                        ):
+                                            alternative_videos.append(
+                                                types.AlternativeVideo._parse(
+                                                    client,
+                                                    altdoc,
+                                                    altdoc_video_attribute,
+                                                    str(altdoc_file_name)
+                                                    if altdoc_file_name
+                                                    else "",
+                                                ),
+                                            )
+                        elif raw.types.DocumentAttributeAudio in attributes:
+                            audio_attributes = attributes[
+                                raw.types.DocumentAttributeAudio
+                            ]
+
+                            if isinstance(
+                                audio_attributes,
+                                raw.types.DocumentAttributeAudio,
+                            ):
+                                if audio_attributes.voice:
+                                    voice = types.Voice._parse(
+                                        client,
+                                        doc,
+                                        audio_attributes,
+                                    )
+                                    media_type = enums.MessageMediaType.VOICE
+                                else:
+                                    audio = types.Audio._parse(
+                                        client,
+                                        doc,
+                                        audio_attributes,
+                                        str(file_name) if file_name else "",
+                                    )
+                                    media_type = enums.MessageMediaType.AUDIO
+                        else:
+                            document = types.Document._parse(
+                                client,
+                                doc,
+                                str(file_name) if file_name else "",
+                            )
+                            media_type = enums.MessageMediaType.DOCUMENT
+                elif isinstance(media, raw.types.MessageMediaWebPage):

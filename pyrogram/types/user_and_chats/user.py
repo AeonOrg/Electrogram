@@ -24,19 +24,19 @@ class Link(str):
         self.style = style
 
     @staticmethod
-    def format(url: str, text: str, style: enums.ParseMode):
+    def _format(url: str, text: str, style: enums.ParseMode):
         fmt = Link.MARKDOWN if style == enums.ParseMode.MARKDOWN else Link.HTML
 
         return fmt.format(url=url, text=html.escape(text))
 
     def __new__(cls, url, text, style):
-        return str.__new__(cls, Link.format(url, text, style))
+        return str.__new__(cls, Link._format(url, text, style))
 
-    def __call__(self, other: str | None = None, *, style: str | None = None):
-        return Link.format(self.url, other or self.text, style or self.style)
+    def __call__(self, other: str | None = None, *, style: enums.ParseMode | None = None):
+        return Link._format(self.url, other or self.text, style or self.style)
 
     def __str__(self) -> str:
-        return Link.format(self.url, self.text, self.style)
+        return Link._format(self.url, self.text, self.style)
 
 
 class User(Object, Update):
@@ -271,12 +271,12 @@ class User(Object, Update):
         return Link(
             f"tg://user?id={self.id}",
             self.first_name or "Deleted Account",
-            self._client.parse_mode,
+            self._client.parse_mode or enums.ParseMode.DEFAULT,
         )
 
     @staticmethod
-    def _parse(client, user: raw.base.User) -> User | None:
-        if user is None or isinstance(user, raw.types.UserEmpty):
+    def _parse(client, user: raw.base.User | None) -> User | None:
+        if not isinstance(user, raw.types.User):
             return None
         user_name = user.username
         active_usernames = getattr(user, "usernames", [])
@@ -321,23 +321,23 @@ class User(Object, Update):
             ),
             first_name=user.first_name,
             last_name=user.last_name,
-            **User._parse_status(user.status, user.bot),
+            **User._parse_status(getattr(user, "status", None), bool(getattr(user, "bot", None))),
             username=user_name,
             usernames=usernames,
             language_code=user.lang_code,
-            emoji_status=types.EmojiStatus._parse(client, user.emoji_status),
+            emoji_status=types.EmojiStatus._parse(client, getattr(user, "emoji_status", None)),
             dc_id=getattr(user.photo, "dc_id", None),
             phone_number=user.phone,
             photo=types.ChatPhoto._parse(
                 client,
                 user.photo,
                 user.id,
-                user.access_hash,
-            ),
+                user.access_hash or 0,
+            ) if isinstance(user.photo, (raw.types.UserProfilePhoto, raw.types.ChatPhoto)) else None,
             restrictions=types.List(
-                [types.Restriction._parse(r) for r in user.restriction_reason],
+                [types.Restriction._parse(r) for r in user.restriction_reason if isinstance(r, raw.types.RestrictionReason)],
             )
-            or None,
+            if user.restriction_reason else None,
             reply_color=types.ChatColor._parse(getattr(user, "color", None)),
             profile_color=types.ChatColor._parse_profile_color(
                 getattr(user, "profile_color", None),
@@ -349,7 +349,7 @@ class User(Object, Update):
         )
 
     @staticmethod
-    def _parse_status(user_status: raw.base.UserStatus, is_bot: bool = False):
+    def _parse_status(user_status: raw.base.UserStatus | None, is_bot: bool = False):
         if isinstance(user_status, raw.types.UserStatusOnline):
             status, date = (
                 enums.UserStatus.ONLINE,

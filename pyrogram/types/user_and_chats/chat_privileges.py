@@ -114,23 +114,26 @@ class ChatPrivileges(Object):
 
     @staticmethod
     def _parse(
-        admin_rights: raw.base.ChatAdminRights,
-    ) -> ChatPrivileges:
+        admin_rights: raw.base.ChatAdminRights | None,
+    ) -> ChatPrivileges | None:
+        if not isinstance(admin_rights, raw.types.ChatAdminRights):
+            return None
+
         return ChatPrivileges(
-            can_manage_chat=admin_rights.other,
-            can_delete_messages=admin_rights.delete_messages,
-            can_manage_video_chats=admin_rights.manage_call,
-            can_restrict_members=admin_rights.ban_users,
-            can_promote_members=admin_rights.add_admins,
-            can_change_info=admin_rights.change_info,
-            can_post_messages=admin_rights.post_messages,
-            can_edit_messages=admin_rights.edit_messages,
-            can_invite_users=admin_rights.invite_users,
-            can_pin_messages=admin_rights.pin_messages,
-            can_manage_topics=admin_rights.manage_topics,
-            can_post_stories=admin_rights.post_stories,
-            can_edit_stories=admin_rights.edit_stories,
-            can_delete_stories=admin_rights.delete_stories,
-            can_manage_direct_messages=admin_rights.manage_direct_messages,
-            is_anonymous=admin_rights.anonymous,
+            can_manage_chat=bool(admin_rights.other),
+            can_delete_messages=bool(admin_rights.delete_messages),
+            can_manage_video_chats=bool(admin_rights.manage_call),
+            can_restrict_members=bool(admin_rights.ban_users),
+            can_promote_members=bool(admin_rights.add_admins),
+            can_change_info=bool(admin_rights.change_info),
+            can_post_messages=bool(admin_rights.post_messages),
+            can_edit_messages=bool(admin_rights.edit_messages),
+            can_invite_users=bool(admin_rights.invite_users),
+            can_pin_messages=bool(admin_rights.pin_messages),
+            can_manage_topics=bool(admin_rights.manage_topics),
+            can_post_stories=bool(admin_rights.post_stories),
+            can_edit_stories=bool(admin_rights.edit_stories),
+            can_delete_stories=bool(admin_rights.delete_stories),
+            can_manage_direct_messages=bool(admin_rights.manage_direct_messages),
+            is_anonymous=bool(admin_rights.anonymous),
         )

@@ -1,0 +1,300 @@
+                    if isinstance(
+                        media.webpage,
+                        raw.types.WebPage | raw.types.WebPageEmpty,
+                    ):
+                        web_page_preview = types.WebPagePreview._parse(
+                            client,
+                            media,
+                            message.invert_media,
+                        )
+                        media_type = enums.MessageMediaType.WEB_PAGE_PREVIEW
+                    else:
+                        media = None
+                elif isinstance(media, raw.types.MessageMediaPoll):
+                    poll = await types.Poll._parse(client, media, users)
+                    media_type = enums.MessageMediaType.POLL
+                elif isinstance(media, raw.types.MessageMediaDice):
+                    dice = types.Dice._parse(client, media)
+                    media_type = enums.MessageMediaType.DICE
+                elif isinstance(media, raw.types.MessageMediaInvoice):
+                    invoice = types.Invoice._parse(client, media)
+                    media_type = enums.MessageMediaType.INVOICE
+                elif isinstance(media, raw.types.MessageMediaPaidMedia):
+                    paid_media = types.PaidMedia._parse(client, media)
+                    media_type = enums.MessageMediaType.PAID_MEDIA
+                else:
+                    media = None
+
+            reply_markup = message.reply_markup
+
+            if reply_markup:
+                if isinstance(reply_markup, raw.types.ReplyKeyboardForceReply):
+                    reply_markup = types.ForceReply.read(reply_markup)
+                elif isinstance(reply_markup, raw.types.ReplyKeyboardMarkup):
+                    reply_markup = types.ReplyKeyboardMarkup.read(reply_markup)
+                elif isinstance(reply_markup, raw.types.ReplyInlineMarkup):
+                    reply_markup = types.InlineKeyboardMarkup.read(reply_markup)
+                elif isinstance(reply_markup, raw.types.ReplyKeyboardHide):
+                    reply_markup = types.ReplyKeyboardRemove.read(reply_markup)
+                else:
+                    reply_markup = None
+
+            from_user = types.User._parse(client, users.get(user_id))
+            sender_chat = (
+                types.Chat._parse(client, message, users, chats, is_chat=False)
+                if not from_user
+                else None
+            )
+
+            reactions = types.MessageReactions._parse(
+                client,
+                message.reactions,
+                users,
+            )
+
+            if message.via_business_bot_id:
+                sender_business_bot = types.User._parse(
+                    client,
+                    users.get(message.via_business_bot_id),
+                )
+
+            parsed_message = Message(
+                id=message.id,
+                message_thread_id=message_thread_id,
+                business_connection_id=business_connection_id,
+                date=utils.timestamp_to_datetime(message.date),
+                chat=types.Chat._parse(client, message, users, chats, is_chat=True),
+                topic=None,
+                from_user=from_user,
+                sender_business_bot=sender_business_bot,
+                text=(
+                    Str(message.message).init(entities) or None
+                    if media is None or web_page_preview is not None
+                    else None
+                ),
+                caption=(
+                    Str(message.message).init(entities) or None
+                    if media is not None and web_page_preview is None
+                    else None
+                ),
+                entities=(
+                    entities or None
+                    if media is None or web_page_preview is not None
+                    else None
+                ),
+                caption_entities=(
+                    entities or None
+                    if media is not None and web_page_preview is None
+                    else None
+                ),
+                author_signature=message.post_author,
+                has_protected_content=message.noforwards,
+                has_media_spoiler=has_media_spoiler,
+                forward_from=forward_from,
+                forward_sender_name=forward_sender_name,
+                forward_from_chat=forward_from_chat,
+                forward_from_message_id=forward_from_message_id,
+                forward_signature=forward_signature,
+                forward_date=forward_date,
+                is_topic_message=is_topic_message,
+                mentioned=message.mentioned,
+                scheduled=is_scheduled,
+                from_scheduled=message.from_scheduled,
+                media=media_type,
+                edit_hide=message.edit_hide,
+                edit_date=utils.timestamp_to_datetime(message.edit_date),
+                media_group_id=str(message.grouped_id) if message.grouped_id else None,
+                invert_media=message.invert_media,
+                photo=photo,
+                paid_media=paid_media,
+                location=location,
+                contact=contact,
+                venue=venue,
+                audio=audio,
+                voice=voice,
+                animation=animation,
+                game=game,
+                giveaway=giveaway,
+                giveaway_result=giveaway_result,
+                invoice=invoice,
+                story=story,
+                video=video,
+                alternative_videos=types.List(alternative_videos)
+                if alternative_videos
+                else None,
+                video_note=video_note,
+                web_page_preview=web_page_preview,
+                sticker=sticker,
+                document=document,
+                poll=poll,
+                dice=dice,
+                views=message.views,
+                forwards=message.forwards,
+                via_bot=types.User._parse(
+                    client,
+                    users.get(message.via_bot_id),
+                ),
+                outgoing=message.out,
+                reply_markup=cast(Any, reply_markup),
+                reactions=reactions,
+                offline=getattr(message, "offline", None),
+                video_processing_pending=getattr(
+                    message,
+                    "video_processing_pending",
+                    None,
+                ),
+                paid_suggested_post_stars=getattr(
+                    message,
+                    "paid_suggested_post_stars",
+                    None,
+                ),
+                paid_suggested_post_ton=getattr(
+                    message,
+                    "paid_suggested_post_ton",
+                    None,
+                ),
+                fact_check=types.FactCheck._parse(
+                    client,
+                    getattr(message, "factcheck", None),
+                ),
+                report_delivery_until_date=utils.timestamp_to_datetime(
+                    getattr(message, "report_delivery_until_date", None),
+                ),
+                paid_message_stars=getattr(message, "paid_message_stars", None),
+                suggested_post=types.SuggestedPost._parse(
+                    getattr(message, "suggested_post", None),
+                ),
+                schedule_repeat_period=getattr(
+                    message,
+                    "schedule_repeat_period",
+                    None,
+                ),
+                summary_from_language=getattr(
+                    message,
+                    "summary_from_language",
+                    None,
+                ),
+                effect_id=getattr(message, "effect", None),
+                raw=message,
+                client=client,
+            )
+            assert parsed_message.chat
+            if parsed_message.chat.type is not enums.ChatType.CHANNEL:
+                parsed_message.sender_chat = sender_chat
+
+            if message.reply_to:
+                if isinstance(message.reply_to, raw.types.MessageReplyHeader):
+                    parsed_message.quote_text = message.reply_to.quote_text
+                    if message.reply_to.quote_entities:
+                        quote_entities = [
+                            types.MessageEntity._parse(client, entity, users)
+                            for entity in message.reply_to.quote_entities
+                        ]
+                        parsed_message.quote_entities = types.List(
+                            filter(lambda x: x is not None, quote_entities),
+                        )
+                    if message.reply_to.forum_topic:
+                        if message.reply_to.reply_to_top_id:
+                            thread_id = message.reply_to.reply_to_top_id
+                            parsed_message.reply_to_message_id = (
+                                message.reply_to.reply_to_msg_id
+                            )
+                        else:
+                            thread_id = message.reply_to.reply_to_msg_id
+                        parsed_message.message_thread_id = thread_id
+                        parsed_message.is_topic_message = True
+                        if topic:
+                            parsed_message.topic = types.ForumTopic._parse(
+                                topic[thread_id],
+                            )
+                        else:
+                            try:
+                                assert parsed_message.chat
+                                msg = await client.get_messages(
+                                    parsed_message.chat.id,
+                                    message.id,
+                                )
+                                if isinstance(msg, Message) and msg.topic:
+                                    parsed_message.topic = msg.topic
+                            except Exception:
+                                pass
+                    else:
+                        parsed_message.reply_to_message_id = (
+                            message.reply_to.reply_to_msg_id
+                        )
+                        parsed_message.reply_to_top_message_id = (
+                            message.reply_to.reply_to_top_id
+                        )
+                elif isinstance(message.reply_to, raw.types.MessageReplyStoryHeader):
+                    parsed_message.reply_to_story_id = message.reply_to.story_id
+                    if isinstance(message.reply_to.peer, raw.types.PeerUser):
+                        parsed_message.reply_to_story_user_id = (
+                            message.reply_to.peer.user_id
+                        )
+                    elif isinstance(message.reply_to.peer, raw.types.PeerChat):
+                        parsed_message.reply_to_story_chat_id = utils.get_channel_id(
+                            message.reply_to.peer.chat_id,
+                        )
+                    elif isinstance(message.reply_to.peer, raw.types.PeerChannel):
+                        parsed_message.reply_to_story_chat_id = utils.get_channel_id(
+                            message.reply_to.peer.channel_id,
+                        )
+                rtci = getattr(message.reply_to, "reply_to_peer_id", None)
+                reply_to_chat_id = (
+                    utils.get_channel_id(cast(int, utils.get_raw_peer_id(rtci)))
+                    if rtci
+                    else None
+                )
+                assert parsed_message.chat
+                if rtci is not None and parsed_message.chat.id != reply_to_chat_id:
+                    parsed_message.reply_to_chat_id = reply_to_chat_id
+
+                if replies:
+                    if parsed_message.reply_to_message_id:
+                        if (
+                            rtci is not None
+                            and parsed_message.chat.id != reply_to_chat_id
+                        ):
+                            key = (
+                                reply_to_chat_id,
+                                getattr(message.reply_to, "reply_to_msg_id", 0),
+                            )
+                            reply_to_params = {
+                                "chat_id": key[0],
+                                "message_ids": key[1],
+                            }
+                        else:
+                            key = (
+                                parsed_message.chat.id,
+                                parsed_message.reply_to_message_id,
+                            )
+                            reply_to_params = {
+                                "chat_id": key[0],
+                                "reply_to_message_ids": message.id,
+                            }
+
+                        try:
+                            reply_to_message = client.message_cache[key]
+
+                            if not reply_to_message:
+                                reply_to_message = await client.get_messages(
+                                    replies=replies - 1,
+                                    chat_id=reply_to_params.get("chat_id"),
+                                    message_ids=reply_to_params.get("message_ids"),
+                                    reply_to_message_ids=reply_to_params.get(
+                                        "reply_to_message_ids",
+                                    ),
+                                )
+                            if (
+                                isinstance(reply_to_message, Message)
+                                and not reply_to_message.forum_topic_created
+                            ):
+                                parsed_message.reply_to_message = reply_to_message
+                        except MessageIdsEmpty:
+                            pass
+                        except ChannelPrivate:
+                            pass
+                    elif parsed_message.reply_to_story_id:
+                        try:
+                            chat_id = (
+                                parsed_message.reply_to_story_user_id

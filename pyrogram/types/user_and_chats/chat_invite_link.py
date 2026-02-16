@@ -65,8 +65,8 @@ class ChatInviteLink(Object):
     def __init__(
         self,
         *,
-        invite_link: str,
-        date: datetime,
+        invite_link: str | None = None,
+        date: datetime | None = None,
         is_primary: bool | None = None,
         is_revoked: bool | None = None,
         creator: types.User | None = None,
@@ -116,10 +116,10 @@ class ChatInviteLink(Object):
         subscription_pricing = getattr(invite, "subscription_pricing", None)
 
         return ChatInviteLink(
-            invite_link=invite.link,
-            date=utils.timestamp_to_datetime(invite.date),
-            is_primary=invite.permanent,
-            is_revoked=invite.revoked,
+            invite_link=getattr(invite, "link", None),
+            date=utils.timestamp_to_datetime(getattr(invite, "date", None)),
+            is_primary=getattr(invite, "permanent", None),
+            is_revoked=getattr(invite, "revoked", None),
             creator=creator,
             name=invite.title,
             creates_join_request=invite.request_needed,

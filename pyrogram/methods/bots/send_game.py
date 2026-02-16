@@ -19,7 +19,8 @@ class SendGame:
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
+        | types.ForceReply
+        | None = None,
     ) -> types.Message:
         """Send a game.
 

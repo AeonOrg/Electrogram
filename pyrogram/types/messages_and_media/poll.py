@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List, cast
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -107,15 +107,19 @@ class Poll(Object, Update):
         self.close_date = close_date
         self.recent_voters = recent_voters
 
+        self.chat: types.Chat | None = None
+        self.message_id: int | None = None
+        self.business_connection_id: str | None = None
+
     @staticmethod
     async def _parse(
         client,
         media_poll: raw.types.MessageMediaPoll | raw.types.UpdateMessagePoll,
-        users: list[raw.base.User],  # noqa: ARG004
+        users: dict,
     ) -> Poll:
-        poll: raw.types.Poll = media_poll.poll
-        poll_results: raw.types.PollResults = media_poll.results
-        results: list[raw.types.PollAnswerVoters] = poll_results.results
+        poll = cast(raw.types.Poll, media_poll.poll)
+        poll_results = cast(raw.types.PollResults, media_poll.results)
+        results = cast(List[raw.types.PollAnswerVoters], poll_results.results)
 
         chosen_option_id = None
         correct_option_id = None
@@ -134,19 +138,23 @@ class Poll(Object, Update):
                 if result.correct:
                     correct_option_id = i
 
+            answer_text = cast(raw.types.TextWithEntities, answer.text)
             o_entities = (
                 [
                     types.MessageEntity._parse(client, entity, {})
-                    for entity in answer.text.entities
+                    for entity in answer_text.entities
                 ]
-                if answer.text.entities
+                if answer_text.entities
                 else []
             )
-            option_entities = types.List(filter(lambda x: x is not None, o_entities))
+            option_entities = cast(
+                list[types.MessageEntity],
+                types.List([i for i in o_entities if i is not None]),
+            )
 
             options.append(
                 types.PollOption(
-                    text=answer.text.text,
+                    text=answer_text.text,
                     voter_count=voter_count,
                     data=answer.option,
                     entities=option_entities,
@@ -154,39 +162,46 @@ class Poll(Object, Update):
                 ),
             )
 
+        poll_question = cast(raw.types.TextWithEntities, poll.question)
         q_entities = (
             [
                 types.MessageEntity._parse(client, entity, {})
-                for entity in poll.question.entities
+                for entity in poll_question.entities
             ]
-            if poll.question.entities
+            if poll_question.entities
             else []
         )
-        question_entities = types.List(filter(lambda x: x is not None, q_entities))
+        question_entities = cast(
+            list[types.MessageEntity],
+            types.List([i for i in q_entities if i is not None]),
+        )
 
         return Poll(
             id=str(poll.id),
-            question=poll.question.text,
+            question=poll_question.text,
             options=options,
             question_entities=question_entities,
-            total_voter_count=media_poll.results.total_voters,
-            is_closed=poll.closed,
+            total_voter_count=poll_results.total_voters or 0,
+            is_closed=bool(poll.closed),
             is_anonymous=not poll.public_voters,
             type=enums.PollType.QUIZ if poll.quiz else enums.PollType.REGULAR,
-            allows_multiple_answers=poll.multiple_choice,
+            allows_multiple_answers=bool(poll.multiple_choice),
             chosen_option_id=chosen_option_id,
             correct_option_id=correct_option_id,
             explanation=poll_results.solution,
-            explanation_entities=[
-                types.MessageEntity._parse(client, i, {})
-                for i in poll_results.solution_entities
-            ]
+            explanation_entities=cast(
+                list[types.MessageEntity],
+                [
+                    types.MessageEntity._parse(client, i, {})
+                    for i in poll_results.solution_entities
+                ],
+            )
             if poll_results.solution_entities
             else None,
             open_period=poll.close_period,
             close_date=utils.timestamp_to_datetime(poll.close_date),
             recent_voters=[
-                await client.get_users(user.user_id)
+                await client.get_users(utils.get_raw_peer_id(user))
                 for user in poll_results.recent_voters
             ]
             if poll_results.recent_voters
@@ -198,12 +213,13 @@ class Poll(Object, Update):
     async def _parse_update(
         client,
         update: raw.types.UpdateMessagePoll,
-        users: list[raw.base.User],
+        users: list[raw.base.User] | dict,
     ) -> Poll:
         if update.poll is not None:
-            return await Poll._parse(client, update, users)
+            return await Poll._parse(client, update, cast(dict, users))
 
-        results = update.results.results
+        poll_results = cast(raw.types.PollResults, update.results)
+        results = cast(List[raw.types.PollAnswerVoters], poll_results.results)
         chosen_option_id = None
         correct_option_id = None
         options = []
@@ -224,22 +240,33 @@ class Poll(Object, Update):
                 ),
             )
 
-        return Poll(
+        users_dict = users if isinstance(users, dict) else {cast(raw.types.User, i).id: i for i in users}
+
+        parsed_poll = Poll(
             id=str(update.poll_id),
             question="",
             options=options,
-            total_voter_count=update.results.total_voters,
+            total_voter_count=poll_results.total_voters or 0,
             is_closed=False,
             chosen_option_id=chosen_option_id,
             correct_option_id=correct_option_id,
-            recent_voters=[
-                types.User._parse(client, users.get(user.user_id, None))
-                for user in update.results.recent_voters
-            ]
-            if update.results.recent_voters
+            recent_voters=cast(
+                list[types.User],
+                [
+                    types.User._parse(
+                        client,
+                        users_dict.get(utils.get_raw_peer_id(user) or 0),
+                    )
+                    for user in poll_results.recent_voters
+                ],
+            )
+            if poll_results.recent_voters
             else None,
             client=client,
         )
+
+        parsed_poll.chat = types.Chat._parse(client, cast(Any, update), {}, {}, is_chat=True)
+        return parsed_poll
 
     async def stop(
         self,
@@ -277,8 +304,8 @@ class Poll(Object, Update):
         """
 
         return await self._client.stop_poll(
-            chat_id=self.chat.id,
-            message_id=self.id,
+            chat_id=cast(types.Chat, self.chat).id,
+            message_id=cast(int, self.message_id),
             reply_markup=reply_markup,
             business_connection_id=self.business_connection_id
             if business_connection_id is None

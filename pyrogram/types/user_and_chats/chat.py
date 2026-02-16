@@ -359,7 +359,7 @@ class Chat(Object):
         return (
             " ".join(filter(None, [self.first_name, self.last_name]))
             or self.title
-            or None
+            or ""
         )
 
     @staticmethod
@@ -381,10 +381,10 @@ class Chat(Object):
                 client,
                 user.photo,
                 peer_id,
-                user.access_hash,
-            ),
+                user.access_hash or 0,
+            ) if isinstance(user.photo, (raw.types.UserProfilePhoto, raw.types.ChatPhoto)) else None,
             restrictions=types.List(
-                [types.Restriction._parse(r) for r in user.restriction_reason],
+                [types.Restriction._parse(r) for r in (user.restriction_reason or [])],
             )
             or None,
             dc_id=getattr(getattr(user, "photo", None), "dc_id", None),
@@ -396,7 +396,7 @@ class Chat(Object):
         )
 
     @staticmethod
-    def _parse_chat_chat(client, chat: raw.types.Chat) -> Chat:
+    def _parse_chat_chat(client, chat: raw.types.Chat | raw.types.ChatForbidden) -> Chat:
         peer_id = -chat.id
         active_usernames = getattr(chat, "usernames", [])
         usernames = None
@@ -428,7 +428,7 @@ class Chat(Object):
         )
 
     @staticmethod
-    def _parse_channel_chat(client, channel: raw.types.Channel) -> Chat:
+    def _parse_channel_chat(client, channel: raw.types.Channel | raw.types.ChannelForbidden) -> Chat:
         peer_id = utils.get_channel_id(channel.id)
         restriction_reason = getattr(channel, "restriction_reason", [])
         user_name = getattr(channel, "username", None)
@@ -536,15 +536,21 @@ class Chat(Object):
     async def _parse_full(
         client,
         chat_full: raw.types.messages.ChatFull | raw.types.users.UserFull,
-    ) -> Chat:
-        users = {u.id: u for u in chat_full.users}
-        chats = {c.id: c for c in chat_full.chats}
+    ) -> Chat | None:
+        users = {getattr(u, "id", 0): u for u in chat_full.users}
+        chats = {getattr(c, "id", 0): c for c in chat_full.chats}
 
         if isinstance(chat_full, raw.types.users.UserFull):
             full_user = chat_full.full_user
+            if not isinstance(full_user, raw.types.UserFull):
+                return None
 
-            parsed_chat = Chat._parse_user_chat(client, users[full_user.id])
-            parsed_chat.bio = full_user.about
+            user_raw = users.get(full_user.id)
+            if not isinstance(user_raw, raw.types.User):
+                return None
+
+            parsed_chat = Chat._parse_user_chat(client, user_raw)
+            parsed_chat.bio = getattr(full_user, "about", None)
             parsed_chat.folder_id = getattr(full_user, "folder_id", None)
             parsed_chat.business_info = types.BusinessInfo._parse(
                 client,
@@ -571,14 +577,16 @@ class Chat(Object):
                     personal_chat.chats[0],
                 )
 
-            if full_user.pinned_msg_id:
+            full_user_pinned_msg_id = getattr(full_user, "pinned_msg_id", None)
+            if full_user_pinned_msg_id:
                 parsed_chat.pinned_message = await client.get_messages(
                     parsed_chat.id,
-                    message_ids=full_user.pinned_msg_id,
+                    message_ids=full_user_pinned_msg_id,
                 )
 
-            if full_user.stories:
-                peer_stories: raw.types.PeerStories = full_user.stories
+            full_user_stories = getattr(full_user, "stories", None)
+            if full_user_stories:
+                peer_stories: raw.types.PeerStories = full_user_stories
                 parsed_chat.stories = (
                     types.List(
                         [
@@ -593,20 +601,23 @@ class Chat(Object):
                     or None
                 )
 
-            if full_user.wallpaper and isinstance(
-                full_user.wallpaper,
+            full_user_wallpaper = getattr(full_user, "wallpaper", None)
+            if full_user_wallpaper and isinstance(
+                full_user_wallpaper,
                 raw.types.WallPaper,
             ):
                 parsed_chat.wallpaper = types.Document._parse(
                     client,
-                    full_user.wallpaper.document,
+                    full_user_wallpaper.document,
                     "wallpaper.jpg",
                 )
         else:
             full_chat = chat_full.full_chat
-            chat_raw = chats[full_chat.id]
+            chat_raw = chats.get(getattr(full_chat, "id", 0))
 
             if isinstance(full_chat, raw.types.ChatFull):
+                if not isinstance(chat_raw, (raw.types.Chat, raw.types.ChatForbidden)):
+                    return None
                 parsed_chat = Chat._parse_chat_chat(client, chat_raw)
                 parsed_chat.description = full_chat.about or None
 
@@ -615,8 +626,10 @@ class Chat(Object):
                         full_chat.participants.participants,
                     )
             else:
+                if not isinstance(chat_raw, raw.types.Channel):
+                    return None
                 parsed_chat = Chat._parse_channel_chat(client, chat_raw)
-                parsed_chat.members_count = full_chat.participants_count
+                parsed_chat.members_count = getattr(full_chat, "participants_count", None)
                 parsed_chat.slow_mode_delay = getattr(
                     full_chat,
                     "slowmode_seconds",
@@ -627,40 +640,45 @@ class Chat(Object):
                     "paid_reactions_available",
                     None,
                 )
-                parsed_chat.description = full_chat.about or None
-                parsed_chat.can_set_sticker_set = full_chat.can_set_stickers
+                parsed_chat.description = getattr(full_chat, "about", None) or None
+                parsed_chat.can_set_sticker_set = getattr(full_chat, "can_set_stickers", None)
                 parsed_chat.sticker_set_name = getattr(
-                    full_chat.stickerset,
+                    getattr(full_chat, "stickerset", None),
                     "short_name",
                     None,
                 )
-                parsed_chat.is_participants_hidden = full_chat.participants_hidden
-                parsed_chat.is_antispam = full_chat.antispam
+                parsed_chat.is_participants_hidden = getattr(full_chat, "participants_hidden", None)
+                parsed_chat.is_antispam = getattr(full_chat, "antispam", None)
                 parsed_chat.folder_id = getattr(full_chat, "folder_id", None)
-                parsed_chat.can_enable_paid_reaction = (
-                    full_chat.paid_reactions_available
+                parsed_chat.can_enable_paid_reaction = getattr(
+                    full_chat,
+                    "paid_reactions_available",
+                    None,
                 )
 
-                linked_chat_raw = chats.get(full_chat.linked_chat_id)
+                linked_chat_id = getattr(full_chat, "linked_chat_id", None)
+                linked_chat_raw = chats.get(linked_chat_id) if linked_chat_id else None
 
-                if linked_chat_raw:
+                if isinstance(linked_chat_raw, (raw.types.Channel, raw.types.ChannelForbidden)):
                     parsed_chat.linked_chat = Chat._parse_channel_chat(
                         client,
                         linked_chat_raw,
                     )
 
-                default_send_as = full_chat.default_send_as
+                default_send_as = getattr(full_chat, "default_send_as", None)
 
                 if default_send_as:
                     if isinstance(default_send_as, raw.types.PeerUser):
-                        send_as_raw = users[default_send_as.user_id]
+                        send_as_raw = users.get(default_send_as.user_id)
                     else:
-                        send_as_raw = chats[default_send_as.channel_id]
+                        send_as_raw = chats.get(getattr(default_send_as, "channel_id", 0))
 
-                    parsed_chat.send_as_chat = Chat._parse_chat(client, send_as_raw)
+                    if isinstance(send_as_raw, (raw.types.Chat, raw.types.User, raw.types.Channel)):
+                        parsed_chat.send_as_chat = Chat._parse_chat(client, send_as_raw)
 
-                if full_chat.stories:
-                    peer_stories: raw.types.PeerStories = full_chat.stories
+                full_chat_stories = getattr(full_chat, "stories", None)
+                if full_chat_stories:
+                    peer_stories: raw.types.PeerStories = full_chat_stories
                     parsed_chat.stories = (
                         types.List(
                             [
@@ -675,31 +693,34 @@ class Chat(Object):
                         or None
                     )
 
-                if full_chat.wallpaper and isinstance(
-                    full_chat.wallpaper,
+                full_chat_wallpaper = getattr(full_chat, "wallpaper", None)
+                if full_chat_wallpaper and isinstance(
+                    full_chat_wallpaper,
                     raw.types.WallPaper,
                 ):
                     parsed_chat.wallpaper = types.Document._parse(
                         client,
-                        full_chat.wallpaper.document,
+                        full_chat_wallpaper.document,
                         "wallpaper.jpg",
                     )
 
-            if full_chat.pinned_msg_id:
+            pinned_msg_id = getattr(full_chat, "pinned_msg_id", None)
+            if pinned_msg_id:
                 parsed_chat.pinned_message = await client.get_messages(
                     parsed_chat.id,
-                    message_ids=full_chat.pinned_msg_id,
+                    message_ids=pinned_msg_id,
                 )
 
+            exported_invite = getattr(full_chat, "exported_invite", None)
             if isinstance(
-                full_chat.exported_invite,
+                exported_invite,
                 raw.types.ChatInviteExported,
             ):
-                parsed_chat.invite_link = full_chat.exported_invite.link
+                parsed_chat.invite_link = exported_invite.link
 
             parsed_chat.available_reactions = types.ChatReactions._parse(
                 client,
-                full_chat.available_reactions,
+                getattr(full_chat, "available_reactions", None),
             )
             parsed_chat.join_requests_count = getattr(
                 full_chat,
@@ -752,7 +773,7 @@ class Chat(Object):
             RPCError: In case of a Telegram RPC error.
             asyncio.TimeoutError: In case reply not received within the timeout.
         """
-        return self._client.listen(*args, chat_id=self.id, **kwargs)
+        return self._client.listen(self.id, *args, **kwargs)
 
     def ask(self, text, *args, **kwargs):
         """Bound method *ask* of :obj:`~pyrogram.types.Chat`.
@@ -810,7 +831,7 @@ class Chat(Object):
                 chat.stop_listen()
 
         """
-        return self._client.stop_listening(*args, chat_id=self.id, **kwargs)
+        return self._client.stop_listening(self.id, *args, **kwargs)
 
     async def archive(self):
         """Bound method *archive* of :obj:`~pyrogram.types.Chat`.

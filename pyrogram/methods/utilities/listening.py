@@ -11,7 +11,7 @@ class Listening:
     async def listen(
         self: pyrogram.Client,
         chat_id: int | str,
-        filters: filters.Filter = None,
+        filters: filters.Filter | None = None,
         timeout: int | None = None,
         *args,
         **kwargs,
@@ -22,7 +22,7 @@ class Listening:
     async def wait_for_message(
         self: pyrogram.Client,
         chat_id: int | str,
-        filters: filters.Filter = None,
+        filters: filters.Filter | None = None,
         timeout: int | None = None,
     ):
         """Wait for a new message in a chat."""
@@ -34,7 +34,7 @@ class Listening:
         self: pyrogram.Client,
         chat_id: int | str,
         text: str,
-        filters: filters.Filter = None,
+        filters: filters.Filter | None = None,
         timeout: int | None = None,
         *args,
         **kwargs,

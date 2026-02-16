@@ -27,7 +27,7 @@ class ChatReactions(Object):
         client: pyrogram.Client | None = None,
         all_are_enabled: bool | None = None,
         allow_custom_emoji: bool | None = None,
-        reactions: list[types.Reaction] | None = None,
+        reactions: list[types.ReactionType] | None = None,
         max_reaction_count: int = 11,
     ) -> None:
         super().__init__(client)
@@ -40,7 +40,7 @@ class ChatReactions(Object):
     @staticmethod
     def _parse(
         client,
-        chat_reactions: raw.base.ChatReactions,
+        chat_reactions: raw.base.ChatReactions | None,
         reactions_limit: int = 11,
     ) -> ChatReactions | None:
         if isinstance(chat_reactions, raw.types.ChatReactionsAll):
@@ -55,8 +55,10 @@ class ChatReactions(Object):
             return ChatReactions(
                 client=client,
                 reactions=[
-                    types.ReactionType._parse(client, reaction)
-                    for reaction in chat_reactions.reactions
+                    r for r in [
+                        types.ReactionType._parse(client, reaction)
+                        for reaction in chat_reactions.reactions
+                    ] if r
                 ],
                 max_reaction_count=reactions_limit,
             )
