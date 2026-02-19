@@ -33,9 +33,9 @@ class OnPoll:
                 )
             elif isinstance(self, Filter) or self is None:
                 if not hasattr(func, "handlers"):
-                    setattr(func, "handlers", [])
+                    func.handlers = []
 
-                getattr(func, "handlers").append(
+                func.handlers.append(
                     (
                         pyrogram.handlers.PollHandler(func, self),
                         group if filters is None else filters,

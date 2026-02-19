@@ -25,9 +25,9 @@ class OnRawUpdate:
                 self.add_handler(pyrogram.handlers.RawUpdateHandler(func), group)
             else:
                 if not hasattr(func, "handlers"):
-                    setattr(func, "handlers", [])
+                    func.handlers = []
 
-                getattr(func, "handlers").append(
+                func.handlers.append(
                     (pyrogram.handlers.RawUpdateHandler(func), group),
                 )
 

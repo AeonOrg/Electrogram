@@ -77,7 +77,9 @@ class SetChatPhoto:
                     video_start_ts=video_start_ts,
                 )
             else:
-                input_media = utils.get_input_media_from_file_id(photo, FileType.PHOTO)
+                input_media = utils.get_input_media_from_file_id(
+                    photo, FileType.PHOTO
+                )
                 input_photo = raw.types.InputChatPhoto(id=input_media.id)
         else:
             input_photo = raw.types.InputChatUploadedPhoto(
