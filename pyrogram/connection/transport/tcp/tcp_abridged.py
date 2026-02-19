@@ -29,15 +29,15 @@ class TCPAbridged(TCP):
         )
 
     async def recv(self, length: int = 0) -> bytes | None:
-        length = await super().recv(1)
+        length_bytes = await super().recv(1)
 
-        if length is None:
+        if length_bytes is None:
             return None
 
-        if length == b"\x7f":
-            length = await super().recv(3)
+        if length_bytes == b"\x7f":
+            length_bytes = await super().recv(3)
 
-            if length is None:
+            if length_bytes is None:
                 return None
 
-        return await super().recv(int.from_bytes(length, "little") * 4)
+        return await super().recv(int.from_bytes(length_bytes, "little") * 4)

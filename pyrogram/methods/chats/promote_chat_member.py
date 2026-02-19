@@ -46,8 +46,8 @@ class PromoteChatMember:
                 # Promote chat member to admin
                 await app.promote_chat_member(chat_id, user_id)
         """
-        chat_id = await self.resolve_peer(chat_id)
-        user_id = await self.resolve_peer(user_id)
+        peer_chat_id = await self.resolve_peer(chat_id)
+        peer_user_id = await self.resolve_peer(user_id)
 
         # See Chat.promote_member for the reason of this (instead of setting types.ChatPrivileges() as default arg).
         if privileges is None:
@@ -57,8 +57,8 @@ class PromoteChatMember:
             raw_chat_member = (
                 await self.invoke(
                     raw.functions.channels.GetParticipant(
-                        channel=chat_id,
-                        participant=user_id,
+                        channel=peer_chat_id,
+                        participant=peer_user_id,
                     ),
                 )
             ).participant
@@ -75,8 +75,8 @@ class PromoteChatMember:
 
         await self.invoke(
             raw.functions.channels.EditAdmin(
-                channel=chat_id,
-                user_id=user_id,
+                channel=peer_chat_id,
+                user_id=peer_user_id,
                 admin_rights=raw.types.ChatAdminRights(
                     anonymous=privileges.is_anonymous,
                     change_info=privileges.can_change_info,

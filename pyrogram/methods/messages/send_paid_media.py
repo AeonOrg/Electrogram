@@ -81,7 +81,7 @@ class SendPaidMedia:
             if isinstance(i, types.InputPaidMediaPhoto):
                 if isinstance(i.media, str):
                     if await AsyncPath(i.media).is_file():
-                        media = await self.invoke(
+                        uploaded_media = await self.invoke(
                             raw.functions.messages.UploadMedia(
                                 peer=await self.resolve_peer(chat_id),
                                 media=raw.types.InputMediaUploadedPhoto(
@@ -90,35 +90,35 @@ class SendPaidMedia:
                             ),
                         )
 
-                        media = raw.types.InputMediaPhoto(
+                        input_media = raw.types.InputMediaPhoto(
                             id=raw.types.InputPhoto(
-                                id=media.photo.id,
-                                access_hash=media.photo.access_hash,
-                                file_reference=media.photo.file_reference,
+                                id=uploaded_media.photo.id,
+                                access_hash=uploaded_media.photo.access_hash,
+                                file_reference=uploaded_media.photo.file_reference,
                             ),
                         )
                     elif re.match("^https?://", i.media):
-                        media = await self.invoke(
+                        uploaded_media = await self.invoke(
                             raw.functions.messages.UploadMedia(
                                 peer=await self.resolve_peer(chat_id),
                                 media=raw.types.InputMediaPhotoExternal(url=i.media),
                             ),
                         )
 
-                        media = raw.types.InputMediaPhoto(
+                        input_media = raw.types.InputMediaPhoto(
                             id=raw.types.InputPhoto(
-                                id=media.photo.id,
-                                access_hash=media.photo.access_hash,
-                                file_reference=media.photo.file_reference,
+                                id=uploaded_media.photo.id,
+                                access_hash=uploaded_media.photo.access_hash,
+                                file_reference=uploaded_media.photo.file_reference,
                             ),
                         )
                     else:
-                        media = utils.get_input_media_from_file_id(
+                        input_media = utils.get_input_media_from_file_id(
                             i.media,
                             FileType.PHOTO,
                         )
                 else:
-                    media = await self.invoke(
+                    uploaded_media = await self.invoke(
                         raw.functions.messages.UploadMedia(
                             peer=await self.resolve_peer(chat_id),
                             media=raw.types.InputMediaUploadedPhoto(
@@ -127,11 +127,11 @@ class SendPaidMedia:
                         ),
                     )
 
-                    media = raw.types.InputMediaPhoto(
+                    input_media = raw.types.InputMediaPhoto(
                         id=raw.types.InputPhoto(
-                            id=media.photo.id,
-                            access_hash=media.photo.access_hash,
-                            file_reference=media.photo.file_reference,
+                            id=uploaded_media.photo.id,
+                            access_hash=uploaded_media.photo.access_hash,
+                            file_reference=uploaded_media.photo.file_reference,
                         ),
                     )
             elif isinstance(i, types.InputPaidMediaVideo):
@@ -148,7 +148,7 @@ class SendPaidMedia:
                                 file_name=Path(i.media).name,
                             ),
                         ]
-                        media = await self.invoke(
+                        uploaded_media = await self.invoke(
                             raw.functions.messages.UploadMedia(
                                 peer=await self.resolve_peer(chat_id),
                                 media=raw.types.InputMediaUploadedDocument(
@@ -162,15 +162,15 @@ class SendPaidMedia:
                             ),
                         )
 
-                        media = raw.types.InputMediaDocument(
+                        input_media = raw.types.InputMediaDocument(
                             id=raw.types.InputDocument(
-                                id=media.document.id,
-                                access_hash=media.document.access_hash,
-                                file_reference=media.document.file_reference,
+                                id=uploaded_media.document.id,
+                                access_hash=uploaded_media.document.access_hash,
+                                file_reference=uploaded_media.document.file_reference,
                             ),
                         )
                     elif re.match("^https?://", i.media):
-                        media = await self.invoke(
+                        uploaded_media = await self.invoke(
                             raw.functions.messages.UploadMedia(
                                 peer=await self.resolve_peer(chat_id),
                                 media=raw.types.InputMediaDocumentExternal(
@@ -179,20 +179,20 @@ class SendPaidMedia:
                             ),
                         )
 
-                        media = raw.types.InputMediaDocument(
+                        input_media = raw.types.InputMediaDocument(
                             id=raw.types.InputDocument(
-                                id=media.document.id,
-                                access_hash=media.document.access_hash,
-                                file_reference=media.document.file_reference,
+                                id=uploaded_media.document.id,
+                                access_hash=uploaded_media.document.access_hash,
+                                file_reference=uploaded_media.document.file_reference,
                             ),
                         )
                     else:
-                        media = utils.get_input_media_from_file_id(
+                        input_media = utils.get_input_media_from_file_id(
                             i.media,
                             FileType.VIDEO,
                         )
                 else:
-                    media = await self.invoke(
+                    uploaded_media = await self.invoke(
                         raw.functions.messages.UploadMedia(
                             peer=await self.resolve_peer(chat_id),
                             media=raw.types.InputMediaUploadedDocument(
@@ -222,18 +222,18 @@ class SendPaidMedia:
                         ),
                     )
 
-                    media = raw.types.InputMediaDocument(
+                    input_media = raw.types.InputMediaDocument(
                         id=raw.types.InputDocument(
-                            id=media.document.id,
-                            access_hash=media.document.access_hash,
-                            file_reference=media.document.file_reference,
+                            id=uploaded_media.document.id,
+                            access_hash=uploaded_media.document.access_hash,
+                            file_reference=uploaded_media.document.file_reference,
                         ),
                     )
             else:
                 raise ValueError(
                     f"{i.__class__.__name__} is not a supported type for send_paid_media",
                 )
-            multi_media.append(media)
+            multi_media.append(input_media)
 
         rpc = raw.functions.messages.SendMedia(
             peer=await self.resolve_peer(chat_id),

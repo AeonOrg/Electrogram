@@ -9,6 +9,7 @@ import struct
 from concurrent.futures.thread import ThreadPoolExecutor
 from datetime import datetime, timezone
 from getpass import getpass
+from typing import Any
 
 import pyrogram
 from pyrogram import enums, raw, types
@@ -367,7 +368,7 @@ async def parse_text_entities(
     text: str | None,
     parse_mode: enums.ParseMode | None,
     entities: list[types.MessageEntity] | None,
-) -> dict[str, str | list[raw.base.MessageEntity] | None]:
+) -> dict[str, Any]:
     if entities:
         for entity in entities:
             entity._client = client

@@ -40,14 +40,14 @@ class SetAdministratorTitle:
 
                 await app.set_administrator_title(chat_id, user_id, "Admin Title")
         """
-        chat_id = await self.resolve_peer(chat_id)
-        user_id = await self.resolve_peer(user_id)
+        peer_chat_id = await self.resolve_peer(chat_id)
+        peer_user_id = await self.resolve_peer(user_id)
 
         r = (
             await self.invoke(
                 raw.functions.channels.GetParticipant(
-                    channel=chat_id,
-                    participant=user_id,
+                    channel=peer_chat_id,
+                    participant=peer_user_id,
                 ),
             )
         ).participant
@@ -63,8 +63,8 @@ class SetAdministratorTitle:
 
         await self.invoke(
             raw.functions.channels.EditAdmin(
-                channel=chat_id,
-                user_id=user_id,
+                channel=peer_chat_id,
+                user_id=peer_user_id,
                 admin_rights=admin_rights,
                 rank=title,
             ),
