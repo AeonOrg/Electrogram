@@ -106,7 +106,7 @@ class SQLiteStorage(Storage):
     def __init__(self, name: str) -> None:
         super().__init__(name)
 
-        self.conn: aiosqlite.Connection = None
+        self.conn: aiosqlite.Connection | None = None
 
     async def create(self) -> None:
         await self.conn.executescript(SCHEMA)

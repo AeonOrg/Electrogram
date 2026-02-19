@@ -2136,7 +2136,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -2294,7 +2294,7 @@ class Message(Object, Update):
             reply_to_message_id (``int``, *optional*):
                 If the message is a reply, ID of the original message.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -2482,7 +2482,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -2640,7 +2640,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -2977,7 +2977,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -3100,7 +3100,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -3250,7 +3250,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -3474,7 +3474,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -3619,7 +3619,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -3793,7 +3793,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -3973,7 +3973,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -4153,7 +4153,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -4331,7 +4331,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -4497,7 +4497,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
