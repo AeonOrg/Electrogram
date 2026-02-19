@@ -401,7 +401,7 @@ async def get_reply_to(
     quote_text: str | None = None,
     quote_entities: list[types.MessageEntity] | None = None,
     parse_mode: enums.ParseMode | None = None,
-):
+) -> types.InputReplyToMessage | types.InputReplyToStory | None:
     reply_to = None
     reply_to_chat = None
     if reply_to_message_id or message_thread_id:

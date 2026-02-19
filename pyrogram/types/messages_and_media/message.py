@@ -4900,7 +4900,7 @@ class Message(Object, Update):
         | types.ReplyKeyboardRemove
         | types.ForceReply
         | object = object,
-    ) -> types.Message | list[types.Message]:
+    ) -> types.Message | list[types.Message] | None:
         """Bound method *copy* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
