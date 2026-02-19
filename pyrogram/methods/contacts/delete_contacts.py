@@ -31,13 +31,11 @@ class DeleteContacts:
                 await app.delete_contacts([user_id1, user_id2, user_id3])
         """
         is_list = isinstance(user_ids, list)
-
-        if not is_list:
-            user_ids = [user_ids]
+        user_ids_list = user_ids if isinstance(user_ids, list) else [user_ids]
 
         r = await self.invoke(
             raw.functions.contacts.DeleteContacts(
-                id=[await self.resolve_peer(i) for i in user_ids],
+                id=[await self.resolve_peer(i) for i in user_ids_list],
             ),
         )
 

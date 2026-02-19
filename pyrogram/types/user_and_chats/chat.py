@@ -363,7 +363,7 @@ class Chat(Object):
         )
 
     @staticmethod
-    def _parse_user_chat(client, user: raw.types.User) -> Chat | None:
+    def _parse_user_chat(client, user: raw.types.User) -> Chat:
         peer_id = user.id
 
         return Chat(
@@ -405,7 +405,7 @@ class Chat(Object):
     @staticmethod
     def _parse_chat_chat(
         client, chat: raw.types.Chat | raw.types.ChatForbidden
-    ) -> Chat | None:
+    ) -> Chat:
         peer_id = -chat.id
         active_usernames = getattr(chat, "usernames", [])
         usernames = None
@@ -439,7 +439,7 @@ class Chat(Object):
     @staticmethod
     def _parse_channel_chat(
         client, channel: raw.types.Channel | raw.types.ChannelForbidden
-    ) -> Chat | None:
+    ) -> Chat:
         peer_id = utils.get_channel_id(channel.id)
         restriction_reason = getattr(channel, "restriction_reason", [])
         user_name = getattr(channel, "username", None)

@@ -759,15 +759,17 @@ def command(
     commands = commands if isinstance(commands, list) else [commands]
     commands = {c if case_sensitive else c.lower() for c in commands}
 
-    prefixes = [] if prefixes is None else prefixes
-    prefixes = prefixes if isinstance(prefixes, list) else [prefixes]
-    prefixes = set(prefixes) if prefixes else {""}
+    prefixes_list = [] if prefixes is None else prefixes
+    prefixes_list = (
+        prefixes_list if isinstance(prefixes_list, list) else [prefixes_list]
+    )
+    prefixes_set = set(prefixes_list) if prefixes_list else {""}
 
     return create(
         func,
         "CommandFilter",
         commands=commands,
-        prefixes=prefixes,
+        prefixes=prefixes_set,
         case_sensitive=case_sensitive,
     )
 

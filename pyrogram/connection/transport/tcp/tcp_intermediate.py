@@ -21,9 +21,9 @@ class TCPIntermediate(TCP):
         await super().send(pack("<i", len(data)) + data)
 
     async def recv(self, length: int = 0) -> bytes | None:
-        length = await super().recv(4)
+        length_bytes = await super().recv(4)
 
-        if length is None:
+        if length_bytes is None:
             return None
 
-        return await super().recv(unpack("<i", length)[0])
+        return await super().recv(unpack("<i", length_bytes)[0])
