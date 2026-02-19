@@ -11,7 +11,7 @@ class EditMessageReplyMarkup:
         message_id: int,
         reply_markup: types.InlineKeyboardMarkup | None = None,
         business_connection_id: str | None = None,
-    ) -> types.Message:
+    ) -> types.Message | None:
         """Edit only the reply markup of messages sent by the bot.
 
         .. include:: /_includes/usable-by/bots.rst

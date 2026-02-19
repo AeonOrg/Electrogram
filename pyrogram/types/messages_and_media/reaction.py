@@ -46,7 +46,7 @@ class Reaction(Object):
         self.is_paid = is_paid
 
     @staticmethod
-    def _parse(client: pyrogram.Client, reaction: raw.base.Reaction) -> Reaction:
+    def _parse(client: pyrogram.Client, reaction: raw.base.Reaction) -> Reaction | None:
         if isinstance(reaction, raw.types.ReactionEmoji):
             return Reaction(
                 client=client,
@@ -67,7 +67,7 @@ class Reaction(Object):
     def _parse_count(
         client: pyrogram.Client,
         reaction_count: raw.base.ReactionCount,
-    ) -> Reaction:
+    ) -> Reaction | None:
         reaction = Reaction._parse(client, reaction_count.reaction)
         reaction.count = reaction_count.count
         reaction.chosen_order = reaction_count.chosen_order

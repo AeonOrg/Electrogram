@@ -30,7 +30,7 @@ class EditStory:
         parse_mode: enums.ParseMode | None = None,
         caption_entities: list[types.MessageEntity] | None = None,
         media_areas: list[types.InputMediaArea] | None = None,
-    ) -> types.Story:
+    ) -> types.Story | types.StorySkipped | types.StoryDeleted | None:
         """Edit story.
 
         .. include:: /_includes/usable-by/users.rst

@@ -13,7 +13,7 @@ class SendReaction:
         emoji: int | str | list[int | str] | None = None,
         big: bool = False,
         add_to_recent: bool = False,
-    ) -> types.MessageReactions:
+    ) -> types.MessageReactions | bool | None:
         """Use this method to send reactions on a message/stories.
         Service messages can't be reacted to.
         Automatically forwarded messages from

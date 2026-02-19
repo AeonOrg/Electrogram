@@ -15,7 +15,7 @@ class SendPaidReaction:
         message_id: int,
         star_count: int | None = None,
         is_anonymous: bool = False,
-    ) -> types.MessageReactions:
+    ) -> types.MessageReactions | raw.base.Updates | None:
         """Adds the paid message reaction to a message.
 
         .. include:: /_includes/usable-by/users.rst

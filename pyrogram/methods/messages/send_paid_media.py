@@ -30,7 +30,7 @@ class SendPaidMedia:
         protect_content: bool | None = None,
         business_connection_id: str | None = None,
         schedule_date: datetime | None = None,
-    ) -> types.Message:
+    ) -> types.Message | None:
         """Use this method to send paid media.
 
         .. include:: /_includes/usable-by/users-bots.rst

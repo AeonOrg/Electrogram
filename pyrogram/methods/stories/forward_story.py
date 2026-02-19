@@ -28,7 +28,7 @@ class ForwardStory:
         parse_mode: enums.ParseMode | None = None,
         caption_entities: list[types.MessageEntity] | None = None,
         period: int | None = None,
-    ) -> types.Story:
+    ) -> types.Story | types.StorySkipped | types.StoryDeleted | None:
         """Forward a story.
 
         .. include:: /_includes/usable-by/users.rst

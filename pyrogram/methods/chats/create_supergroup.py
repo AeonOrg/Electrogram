@@ -9,7 +9,7 @@ class CreateSupergroup:
         self: pyrogram.Client,
         title: str,
         description: str = "",
-    ) -> types.Chat:
+    ) -> types.Chat | None:
         """Create a new supergroup.
 
         .. note::

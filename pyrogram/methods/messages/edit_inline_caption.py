@@ -15,7 +15,7 @@ class EditInlineCaption:
         parse_mode: enums.ParseMode | None = None,
         reply_markup: types.InlineKeyboardMarkup | None = None,
         invert_media: bool | None = None,
-    ) -> bool:
+    ) -> bool | None:
         """Edit the caption of inline media messages.
 
         .. include:: /_includes/usable-by/bots.rst

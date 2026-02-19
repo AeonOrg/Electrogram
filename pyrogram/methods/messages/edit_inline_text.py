@@ -15,7 +15,7 @@ class EditInlineText:
         disable_web_page_preview: bool | None = None,
         reply_markup: types.InlineKeyboardMarkup | None = None,
         invert_media: bool | None = None,
-    ) -> bool:
+    ) -> bool | None:
         """Edit the text of inline messages.
 
         .. include:: /_includes/usable-by/bots.rst

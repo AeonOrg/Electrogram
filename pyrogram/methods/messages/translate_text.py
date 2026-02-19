@@ -10,7 +10,7 @@ class TranslateText:
         to_language_code: str,
         chat_id: int | str,
         message_ids: int | list[int],
-    ) -> types.TranslatedText | list[types.TranslatedText]:
+    ) -> types.TranslatedText | list[types.TranslatedText] | None:
         """Extracts text or caption of the given message and translates it to the given language. If the current user is a Telegram Premium user, then text formatting is preserved.
 
         .. include:: /_includes/usable-by/users.rst
@@ -86,9 +86,11 @@ class TranslateText:
 
                 await app.translate_text("fa", "Pyrogram")
         """
-        message, entities = (
-            await utils.parse_text_entities(self, text, parse_mode, entities)
-        ).values()
+        parsed_text_entities = await utils.parse_text_entities(
+            self, text, parse_mode, entities
+        )
+        message = parsed_text_entities["message"]
+        entities = parsed_text_entities["entities"]
 
         r = await self.invoke(
             raw.functions.messages.TranslateText(

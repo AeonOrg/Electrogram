@@ -13,7 +13,7 @@ class GetFolders:
     async def get_folders(
         self: pyrogram.Client,
         folder_ids: int | Iterable[int] | None = None,
-    ) -> types.Folder | list[types.Folder]:
+    ) -> types.Folder | list[types.Folder] | None:
         """Get one or more folders by using folder identifiers.
 
         .. include:: /_includes/usable-by/users.rst

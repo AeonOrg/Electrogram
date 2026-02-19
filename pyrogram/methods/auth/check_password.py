@@ -10,7 +10,7 @@ log = logging.getLogger(__name__)
 
 
 class CheckPassword:
-    async def check_password(self: pyrogram.Client, password: str) -> types.User:
+    async def check_password(self: pyrogram.Client, password: str) -> types.User | None:
         """Check your Two-Step Verification password and log in.
 
         .. include:: /_includes/usable-by/users.rst

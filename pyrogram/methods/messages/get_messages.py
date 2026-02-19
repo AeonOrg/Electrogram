@@ -22,7 +22,7 @@ class GetMessages:
         replies: int = 1,
         is_scheduled: bool = False,
         link: str | None = None,
-    ) -> types.Message | list[types.Message] | types.DraftMessage:
+    ) -> types.Message | list[types.Message] | types.DraftMessage | None:
         """Get one or more messages from a chat by using message identifiers.
 
         You can retrieve up to 200 messages at once.

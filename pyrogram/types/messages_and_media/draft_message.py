@@ -103,7 +103,7 @@ class DraftMessage(Object):
         client: pyrogram.Client,
         raw_draft_message: raw.types.DraftMessage | raw.types.DraftMessageEmpty,
         users: dict,
-    ) -> DraftMessage:
+    ) -> DraftMessage | None:
         if not raw_draft_message:
             return None
         if isinstance(raw_draft_message, raw.types.DraftMessageEmpty):

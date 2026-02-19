@@ -21,7 +21,7 @@ class MediaArea(Object):
     async def _parse(
         self: pyrogram.Client,
         media_area: raw.base.MediaArea,
-    ) -> MediaArea:
+    ) -> MediaArea | None:
         if isinstance(media_area, raw.types.MediaAreaChannelPost):
             return await types.MediaAreaChannelPost._parse(self, media_area)
         return None

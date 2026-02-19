@@ -34,7 +34,7 @@ class SendLocation:
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
         | types.ForceReply = None,
-    ) -> types.Message:
+    ) -> types.Message | None:
         """Send points on the map.
 
         .. include:: /_includes/usable-by/users-bots.rst

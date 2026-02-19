@@ -17,7 +17,7 @@ class SendInlineBotResult:
         quote_text: str | None = None,
         quote_entities: list[types.MessageEntity] | None = None,
         parse_mode: enums.ParseMode | None = None,
-    ) -> types.Message:
+    ) -> types.Message | None:
         """Send an inline bot result.
         Bot results can be retrieved using :meth:`~pyrogram.Client.get_inline_bot_results`
 

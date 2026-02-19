@@ -364,19 +364,20 @@ def compute_password_check(
 
 async def parse_text_entities(
     client: pyrogram.Client,
-    text: str,
-    parse_mode: enums.ParseMode,
-    entities: list[types.MessageEntity],
-) -> dict[str, str | list[raw.base.MessageEntity]]:
+    text: str | None,
+    parse_mode: enums.ParseMode | None,
+    entities: list[types.MessageEntity] | None,
+) -> dict[str, str | list[raw.base.MessageEntity] | None]:
     if entities:
         for entity in entities:
             entity._client = client
 
-        entities = [await entity.write() for entity in entities] or None
-    else:
-        text, entities = (await client.parser.parse(text, parse_mode)).values()
+        return {
+            "message": text,
+            "entities": [await entity.write() for entity in entities] or None,
+        }
 
-    return {"message": text, "entities": entities}
+    return await client.parser.parse(text or "", parse_mode)
 
 
 def zero_datetime() -> datetime:
@@ -405,9 +406,12 @@ async def get_reply_to(
     reply_to = None
     reply_to_chat = None
     if reply_to_message_id or message_thread_id:
-        text, entities = (
-            await parse_text_entities(client, quote_text, parse_mode, quote_entities)
-        ).values()
+        parsed_text_entities = await parse_text_entities(
+            client, quote_text, parse_mode, quote_entities
+        )
+        text = parsed_text_entities["message"]
+        entities = parsed_text_entities["entities"]
+
         if reply_to_chat_id is not None:
             reply_to_chat = await client.resolve_peer(reply_to_chat_id)
         reply_to = types.InputReplyToMessage(

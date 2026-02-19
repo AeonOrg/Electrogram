@@ -9,7 +9,7 @@ class SetChatPermissions:
         self: pyrogram.Client,
         chat_id: int | str,
         permissions: types.ChatPermissions,
-    ) -> types.Chat:
+    ) -> types.Chat | None:
         """Set default chat permissions for all members.
 
         You must be an administrator in the group or a supergroup for this to work and must have the

@@ -17,7 +17,7 @@ class GetScheduledMessages:
         self: pyrogram.Client,
         chat_id: int | str,
         message_ids: int | Iterable[int],
-    ) -> types.Message | list[types.Message]:
+    ) -> types.Message | list[types.Message] | None:
         """Get one or more scheduled messages from a chat by using message identifiers.
         You can retrieve up to 200 messages at once.
 

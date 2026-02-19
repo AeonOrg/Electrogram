@@ -363,7 +363,7 @@ class Chat(Object):
         )
 
     @staticmethod
-    def _parse_user_chat(client, user: raw.types.User) -> Chat:
+    def _parse_user_chat(client, user: raw.types.User) -> Chat | None:
         peer_id = user.id
 
         return Chat(
@@ -405,7 +405,7 @@ class Chat(Object):
     @staticmethod
     def _parse_chat_chat(
         client, chat: raw.types.Chat | raw.types.ChatForbidden
-    ) -> Chat:
+    ) -> Chat | None:
         peer_id = -chat.id
         active_usernames = getattr(chat, "usernames", [])
         usernames = None
@@ -439,7 +439,7 @@ class Chat(Object):
     @staticmethod
     def _parse_channel_chat(
         client, channel: raw.types.Channel | raw.types.ChannelForbidden
-    ) -> Chat:
+    ) -> Chat | None:
         peer_id = utils.get_channel_id(channel.id)
         restriction_reason = getattr(channel, "restriction_reason", [])
         user_name = getattr(channel, "username", None)
@@ -522,7 +522,7 @@ class Chat(Object):
         users: dict,
         chats: dict,
         is_chat: bool,
-    ) -> Chat:
+    ) -> Chat | None:
         from_id = utils.get_raw_peer_id(message.from_id)
         peer_id = utils.get_raw_peer_id(message.peer_id)
         chat_id = (peer_id or from_id) if is_chat else (from_id or peer_id)
@@ -769,7 +769,7 @@ class Chat(Object):
     def _parse_chat(
         client,
         chat: raw.types.Chat | raw.types.User | raw.types.Channel,
-    ) -> Chat:
+    ) -> Chat | None:
         if isinstance(chat, raw.types.Chat | raw.types.ChatForbidden):
             return Chat._parse_chat_chat(client, chat)
         if isinstance(chat, raw.types.User):
@@ -1138,7 +1138,7 @@ class Chat(Object):
         user_id: int | str,
         permissions: types.ChatPermissions,
         until_date: datetime | None = None,
-    ) -> types.Chat:
+    ) -> types.Chat | None:
         """Bound method *unban_member* of :obj:`~pyrogram.types.Chat`.
 
         Use as a shortcut for:
@@ -1324,7 +1324,7 @@ class Chat(Object):
     async def get_member(
         self,
         user_id: int | str,
-    ) -> types.ChatMember:
+    ) -> types.ChatMember | None:
         """Bound method *get_member* of :obj:`~pyrogram.types.Chat`.
 
         Use as a shortcut for:

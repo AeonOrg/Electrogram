@@ -166,7 +166,7 @@ class Story(Object, Update):
         | raw.types.PeerUser
         | raw.types.InputPeerChannel
         | raw.types.InputPeerUser,
-    ) -> Story:
+    ) -> Story | StorySkipped | StoryDeleted | None:
         if isinstance(stories, raw.types.StoryItemSkipped):
             return await types.StorySkipped._parse(client, stories, peer)
         if isinstance(stories, raw.types.StoryItemDeleted):
@@ -338,7 +338,7 @@ class Story(Object, Update):
         self,
         reaction: int | str | None = None,
         add_to_recent: bool = True,
-    ) -> types.MessageReactions:
+    ) -> types.MessageReactions | None:
         """Bound method *react* of :obj:`~pyrogram.types.Story`.
 
         Use as a shortcut for:
@@ -411,7 +411,7 @@ class Story(Object, Update):
         schedule_date: datetime | None = None,
         protect_content: bool | None = None,
         reply_markup=None,
-    ) -> types.Message:
+    ) -> types.Message | None:
         """Bound method *reply_text* of :obj:`~pyrogram.types.Story`.
 
         An alias exists as *reply*.
@@ -508,7 +508,7 @@ class Story(Object, Update):
         reply_to_story_id: int | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> types.Message:
+    ) -> types.Message | None:
         """Bound method *reply_animation* :obj:`~pyrogram.types.Story`.
 
         Use as a shortcut for:
@@ -649,7 +649,7 @@ class Story(Object, Update):
         | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> types.Message:
+    ) -> types.Message | None:
         """Bound method *reply_audio* of :obj:`~pyrogram.types.Story`.
 
         Use as a shortcut for:
@@ -779,7 +779,7 @@ class Story(Object, Update):
         | types.ReplyKeyboardRemove
         | types.ForceReply
         | None = None,
-    ) -> types.Message:
+    ) -> types.Message | None:
         """Bound method *reply_cached_media* of :obj:`~pyrogram.types.Story`.
 
         Use as a shortcut for:
@@ -919,7 +919,7 @@ class Story(Object, Update):
         | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> types.Message:
+    ) -> types.Message | None:
         """Bound method *reply_photo* of :obj:`~pyrogram.types.Story`.
 
         Use as a shortcut for:
@@ -1038,7 +1038,7 @@ class Story(Object, Update):
         | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> types.Message:
+    ) -> types.Message | None:
         """Bound method *reply_sticker* of :obj:`~pyrogram.types.Story`.
 
         Use as a shortcut for:
@@ -1141,7 +1141,7 @@ class Story(Object, Update):
         | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> types.Message:
+    ) -> types.Message | None:
         """Bound method *reply_video* of :obj:`~pyrogram.types.Story`.
 
         Use as a shortcut for:
@@ -1286,7 +1286,7 @@ class Story(Object, Update):
         | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> types.Message:
+    ) -> types.Message | None:
         """Bound method *reply_video_note* of :obj:`~pyrogram.types.Story`.
 
         Use as a shortcut for:
@@ -1396,7 +1396,7 @@ class Story(Object, Update):
         | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> types.Message:
+    ) -> types.Message | None:
         """Bound method *reply_voice* of :obj:`~pyrogram.types.Story`.
 
         Use as a shortcut for:
@@ -1519,7 +1519,7 @@ class Story(Object, Update):
             story_ids=self.id,
         )
 
-    async def edit_animation(self, animation: str | BinaryIO) -> types.Story:
+    async def edit_animation(self, animation: str | BinaryIO) -> types.Story | types.StorySkipped | types.StoryDeleted | None:
         """Bound method *edit_animation* of :obj:`~pyrogram.types.Story`.
 
         Use as a shortcut for:
@@ -1564,7 +1564,7 @@ class Story(Object, Update):
         parse_mode: enums.ParseMode | None = None,
         caption_entities: list[types.MessageEntity] | None = None,
         media_areas: list[types.InputMediaArea] | None = None,
-    ) -> types.Story:
+    ) -> types.Story | types.StorySkipped | types.StoryDeleted | None:
         """Bound method *edit* of :obj:`~pyrogram.types.Story`.
 
         Use as a shortcut for:
@@ -1654,7 +1654,7 @@ class Story(Object, Update):
         caption: str,
         parse_mode: enums.ParseMode | None = None,
         caption_entities: list[types.MessageEntity] | None = None,
-    ) -> types.Story:
+    ) -> types.Story | types.StorySkipped | types.StoryDeleted | None:
         """Bound method *edit_caption* of :obj:`~pyrogram.types.Story`.
 
         Use as a shortcut for:
@@ -1696,7 +1696,7 @@ class Story(Object, Update):
             caption_entities=caption_entities,
         )
 
-    async def edit_photo(self, photo: str | BinaryIO) -> types.Story:
+    async def edit_photo(self, photo: str | BinaryIO) -> types.Story | types.StorySkipped | types.StoryDeleted | None:
         """Bound method *edit_photo* of :obj:`~pyrogram.types.Story`.
 
         Use as a shortcut for:
@@ -1734,7 +1734,7 @@ class Story(Object, Update):
         privacy: enums.StoriesPrivacyRules | None = None,
         allowed_users: list[int] | None = None,
         denied_users: list[int] | None = None,
-    ) -> types.Story:
+    ) -> types.Story | types.StorySkipped | types.StoryDeleted | None:
         """Bound method *edit_privacy* of :obj:`~pyrogram.types.Story`.
 
         Use as a shortcut for:
@@ -1775,7 +1775,7 @@ class Story(Object, Update):
             denied_users=denied_users,
         )
 
-    async def edit_video(self, video: str | BinaryIO) -> types.Story:
+    async def edit_video(self, video: str | BinaryIO) -> types.Story | types.StorySkipped | types.StoryDeleted | None:
         """Bound method *edit_video* of :obj:`~pyrogram.types.Story`.
 
         Use as a shortcut for:
@@ -1808,7 +1808,7 @@ class Story(Object, Update):
             video=video,
         )
 
-    async def export_link(self) -> types.ExportedStoryLink:
+    async def export_link(self) -> types.ExportedStoryLink | None:
         """Bound method *export_link* of :obj:`~pyrogram.types.Story`.
 
         Use as a shortcut for:
@@ -1928,7 +1928,7 @@ class Story(Object, Update):
         block: bool = True,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> str:
+    ) -> str | BinaryIO | None:
         """Bound method *download* of :obj:`~pyrogram.types.Story`.
 
         Use as a shortcut for:
@@ -1997,7 +1997,7 @@ class Story(Object, Update):
         )
 
     @property
-    def link(self) -> str:
+    def link(self) -> str | BinaryIO | None:
         if self.chat and self.chat.username:
             return f"https://t.me/{self.chat.username}/s/{self.id}"
         return None

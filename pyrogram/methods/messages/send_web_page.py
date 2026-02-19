@@ -36,7 +36,7 @@ class SendWebPage:
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
         | types.ForceReply = None,
-    ) -> types.Message:
+    ) -> types.Message | None:
         """Send text Web Page Preview.
 
         .. include:: /_includes/usable-by/users-bots.rst
