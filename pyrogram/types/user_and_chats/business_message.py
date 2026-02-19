@@ -68,7 +68,8 @@ class BusinessMessage(Object):
     def _parse(
         client,
         message: raw.types.BusinessGreetingMessage
-        | raw.types.BusinessAwayMessage = None,
+        | raw.types.BusinessAwayMessage
+        | None = None,
         users: dict | None = None,
     ) -> BusinessMessage | None:
         if not message:

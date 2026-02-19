@@ -29,7 +29,7 @@ async def ainput(prompt: str = "", *, hide: bool = False):
 
 def get_input_media_from_file_id(
     file_id: str,
-    expected_file_type: FileType = None,
+    expected_file_type: FileType | None = None,
     ttl_seconds: int | None = None,
 ) -> raw.types.InputMediaPhoto | raw.types.InputMediaDocument:
     try:
@@ -78,7 +78,7 @@ async def parse_messages(
     messages: raw.types.messages.Messages,
     is_scheduled: bool = False,
     business_connection_id: str = "",
-    r: raw.base.Updates = None,
+    r: raw.base.Updates | None = None,
 ) -> list[types.Message]:
     parsed_messages = []
 
@@ -400,8 +400,8 @@ async def get_reply_to(
     reply_to_chat_id: int | str | None = None,
     quote_text: str | None = None,
     quote_entities: list[types.MessageEntity] | None = None,
-    parse_mode: enums.ParseMode = None,
-):
+    parse_mode: enums.ParseMode | None = None,
+) -> types.InputReplyToMessage | types.InputReplyToStory | None:
     reply_to = None
     reply_to_chat = None
     if reply_to_message_id or message_thread_id:

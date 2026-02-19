@@ -503,7 +503,7 @@ class Story(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
+        | types.ForceReply | None = None,
         reply_to_story_id: int | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
@@ -644,7 +644,7 @@ class Story(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
+        | types.ForceReply | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
     ) -> types.Message:
@@ -775,7 +775,7 @@ class Story(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
+        | types.ForceReply | None = None,
     ) -> types.Message:
         """Bound method *reply_cached_media* of :obj:`~pyrogram.types.Story`.
 
@@ -912,7 +912,7 @@ class Story(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
+        | types.ForceReply | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
     ) -> types.Message:
@@ -1030,7 +1030,7 @@ class Story(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
+        | types.ForceReply | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
     ) -> types.Message:
@@ -1132,7 +1132,7 @@ class Story(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
+        | types.ForceReply | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
     ) -> types.Message:
@@ -1276,7 +1276,7 @@ class Story(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
+        | types.ForceReply | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
     ) -> types.Message:
@@ -1385,7 +1385,7 @@ class Story(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
+        | types.ForceReply | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
     ) -> types.Message:

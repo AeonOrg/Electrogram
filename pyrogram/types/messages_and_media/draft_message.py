@@ -70,7 +70,7 @@ class DraftMessage(Object):
         date: datetime | None = None,
         text: Str | None = None,
         entities: list[types.MessageEntity] | None = None,
-        link_preview_options: types.LinkPreviewOptions = None,
+        link_preview_options: types.LinkPreviewOptions | None = None,
         effect_id: str | None = None,
         video_note: types.VideoNote | None = None,
         voice: types.Voice | None = None,

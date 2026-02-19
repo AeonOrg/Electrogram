@@ -48,7 +48,8 @@ class KeyboardButton(Object):
         request_contact: bool | None = None,
         request_location: bool | None = None,
         request_chat: types.RequestPeerTypeChat
-        | types.RequestPeerTypeChannel = None,
+        | types.RequestPeerTypeChannel
+        | None = None,
         request_user: types.RequestPeerTypeUser | None = None,
         web_app: types.WebAppInfo | None = None,
         style: types.KeyboardButtonStyle | enums.ButtonStyle | None = None,
