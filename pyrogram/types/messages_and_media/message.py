@@ -1706,7 +1706,7 @@ class Message(Object, Update):
         message_effect_id: int | None = None,
         invert_media: bool | None = None,
         reply_markup=None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_text* of :obj:`~pyrogram.types.Message`.
 
         An alias exists as *reply*.
@@ -1866,7 +1866,7 @@ class Message(Object, Update):
         message_effect_id: int | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_animation* :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -2067,7 +2067,7 @@ class Message(Object, Update):
         | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_audio* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -2250,7 +2250,7 @@ class Message(Object, Update):
         | types.ReplyKeyboardRemove
         | types.ForceReply
         | None = None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_cached_media* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -2435,7 +2435,7 @@ class Message(Object, Update):
         | types.ReplyKeyboardRemove
         | types.ForceReply
         | None = None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_contact* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -2575,7 +2575,7 @@ class Message(Object, Update):
         | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_document* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -2751,7 +2751,7 @@ class Message(Object, Update):
         | types.ReplyKeyboardRemove
         | types.ForceReply
         | None = None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_game* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -2835,7 +2835,7 @@ class Message(Object, Update):
         quote_text: str | None = None,
         quote_entities: list[types.MessageEntity] | None = None,
         parse_mode: enums.ParseMode | None = None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_inline_bot_result* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -2933,7 +2933,7 @@ class Message(Object, Update):
         | types.ReplyKeyboardRemove
         | types.ForceReply
         | None = None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_location* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -3185,7 +3185,7 @@ class Message(Object, Update):
         | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_photo* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -3376,7 +3376,7 @@ class Message(Object, Update):
         | types.ReplyKeyboardRemove
         | types.ForceReply
         | None = None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_poll* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -3576,7 +3576,7 @@ class Message(Object, Update):
         | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_sticker* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -3737,7 +3737,7 @@ class Message(Object, Update):
         | types.ReplyKeyboardRemove
         | types.ForceReply
         | None = None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_venue* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -3893,7 +3893,7 @@ class Message(Object, Update):
         | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_video* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -4101,7 +4101,7 @@ class Message(Object, Update):
         | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_video_note* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -4278,7 +4278,7 @@ class Message(Object, Update):
         | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_voice* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -4443,7 +4443,7 @@ class Message(Object, Update):
         allow_paid_broadcast: bool | None = None,
         message_effect_id: int | None = None,
         reply_markup=None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_web_page* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -4582,7 +4582,7 @@ class Message(Object, Update):
         invert_media: bool | None = None,
         reply_markup: types.InlineKeyboardMarkup | None = None,
         business_connection_id: str | None = None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *edit_text* of :obj:`~pyrogram.types.Message`.
 
         An alias exists as *edit*.
@@ -4656,7 +4656,7 @@ class Message(Object, Update):
         invert_media: bool | None = None,
         reply_markup: types.InlineKeyboardMarkup | None = None,
         business_connection_id: str | None = None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *edit_caption* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -4721,7 +4721,7 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup | None = None,
         parse_mode: enums.ParseMode | None = None,
         business_connection_id: str | None = None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *edit_media* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -4779,7 +4779,7 @@ class Message(Object, Update):
         self,
         reply_markup: types.InlineKeyboardMarkup | None = None,
         business_connection_id: str | None = None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *edit_reply_markup* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -5395,7 +5395,7 @@ class Message(Object, Update):
         emoji: str = "",
         big: bool = False,
         add_to_recent: bool = True,
-    ) -> types.MessageReactions:
+    ) -> types.MessageReactions | bool | None:
         """Bound method *react* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -5479,7 +5479,7 @@ class Message(Object, Update):
         block: bool = True,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> str | BinaryIO:
+    ) -> str | BinaryIO | None:
         """Bound method *download* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -5589,7 +5589,7 @@ class Message(Object, Update):
         self,
         disable_notification: bool = False,
         both_sides: bool = False,
-    ) -> types.Message:
+    ) -> types.Message | None:
         """Bound method *pin* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -5668,7 +5668,7 @@ class Message(Object, Update):
         reply_markup=None,
         filters=None,
         timeout: int | None = None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *ask* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -5781,7 +5781,7 @@ class Message(Object, Update):
             message_id=self.id,
         )
 
-    async def translate(self, to_language_code: str) -> types.TranslatedText:
+    async def translate(self, to_language_code: str) -> types.TranslatedText | list[types.TranslatedText] | None:
         """Bound method *translate* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:

@@ -17,7 +17,7 @@ class CreateChatInviteLink:
         expire_date: datetime | None = None,
         member_limit: int | None = None,
         creates_join_request: bool | None = None,
-    ) -> types.ChatInviteLink:
+    ) -> types.ChatInviteLink | None:
         """Create an additional invite link for a chat.
 
         You must be an administrator in the chat for this to work and must have the appropriate admin rights.

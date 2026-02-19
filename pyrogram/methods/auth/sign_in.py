@@ -14,7 +14,7 @@ class SignIn:
         phone_number: str,
         phone_code_hash: str,
         phone_code: str,
-    ) -> types.User | types.TermsOfService | bool:
+    ) -> types.User | types.TermsOfService | bool | None:
         """Authorize a user in Telegram with a valid confirmation code.
 
         .. include:: /_includes/usable-by/users.rst

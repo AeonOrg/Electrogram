@@ -18,7 +18,7 @@ class CreateStickerSet:
         sticker: str,
         emoji: str = "🤔",
         masks: bool | None = None,
-    ) -> types.Message | None:
+    ) -> types.StickerSet | None:
         """Create a new stickerset.
 
         .. include:: /_includes/usable-by/users-bots.rst

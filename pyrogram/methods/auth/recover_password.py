@@ -12,7 +12,7 @@ class RecoverPassword:
     async def recover_password(
         self: pyrogram.Client,
         recovery_code: str,
-    ) -> types.User:
+    ) -> types.User | None:
         """Recover your password with a recovery code and log in.
 
         .. include:: /_includes/usable-by/users.rst

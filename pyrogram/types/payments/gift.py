@@ -227,7 +227,7 @@ class Gift(Object):
     async def _parse(
         client,
         star_gift: raw.base.StarGift,
-    ) -> Gift:
+    ) -> Gift | None:
         if isinstance(star_gift, raw.types.StarGift):
             doc = star_gift.sticker
             attributes = {type(i): i for i in doc.attributes}

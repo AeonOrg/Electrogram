@@ -15,7 +15,7 @@ class SignUp:
         phone_code_hash: str,
         first_name: str,
         last_name: str = "",
-    ) -> types.User:
+    ) -> types.User | None:
         """Register a new user in Telegram.
 
         .. include:: /_includes/usable-by/users.rst

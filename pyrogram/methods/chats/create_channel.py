@@ -9,7 +9,7 @@ class CreateChannel:
         self: pyrogram.Client,
         title: str,
         description: str = "",
-    ) -> types.Chat:
+    ) -> types.Chat | None:
         """Create a new broadcast channel.
 
         .. include:: /_includes/usable-by/users.rst

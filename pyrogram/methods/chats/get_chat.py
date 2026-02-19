@@ -8,7 +8,7 @@ class GetChat:
     async def get_chat(
         self: pyrogram.Client,
         chat_id: int | str,
-    ) -> types.Chat | types.ChatPreview:
+    ) -> types.Chat | types.ChatPreview | None:
         """Get up to date information about a chat.
 
         Information include current name of the user for one-on-one conversations, current username of a user, group or

@@ -11,7 +11,7 @@ class EditInlineReplyMarkup:
         self: pyrogram.Client,
         inline_message_id: str,
         reply_markup: types.InlineKeyboardMarkup | None = None,
-    ) -> bool:
+    ) -> bool | None:
         """Edit only the reply markup of inline messages sent via the bot (for inline bots).
 
         .. include:: /_includes/usable-by/bots.rst

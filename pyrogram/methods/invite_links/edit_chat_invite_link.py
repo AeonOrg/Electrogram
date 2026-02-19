@@ -18,7 +18,7 @@ class EditChatInviteLink:
         expire_date: datetime | None = None,
         member_limit: int | None = None,
         creates_join_request: bool | None = None,
-    ) -> types.ChatInviteLink:
+    ) -> types.ChatInviteLink | None:
         """Edit a non-primary invite link.
 
         You must be an administrator in the chat for this to work and must have the appropriate admin rights.

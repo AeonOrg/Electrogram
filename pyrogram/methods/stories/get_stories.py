@@ -17,7 +17,7 @@ class GetStories:
         self: pyrogram.Client,
         chat_id: int | str,
         story_ids: int | Iterable[int],
-    ) -> types.Story | list[types.Story]:
+    ) -> types.Story | list[types.Story] | None:
         """Get one or more story from an user by using story identifiers.
 
         .. include:: /_includes/usable-by/users.rst

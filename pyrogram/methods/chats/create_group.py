@@ -9,7 +9,7 @@ class CreateGroup:
         self: pyrogram.Client,
         title: str,
         users: int | str | list[int | str],
-    ) -> types.Chat:
+    ) -> types.Chat | None:
         """Create a new basic group.
 
         .. note::

@@ -10,7 +10,7 @@ class ExportChatInviteLink:
         chat_id: int | str,
         subscription_period: int | None = None,
         subscription_price: int | None = None,
-    ) -> types.ChatInviteLink:
+    ) -> types.ChatInviteLink | None:
         """Generate a new primary invite link for a chat; any previously generated primary link is revoked.
 
         You must be an administrator in the chat for this to work and must have the appropriate admin rights.

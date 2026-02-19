@@ -43,7 +43,7 @@ class SendPoll:
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
         | types.ForceReply = None,
-    ) -> types.Message:
+    ) -> types.Message | None:
         """Send a new poll.
 
         .. include:: /_includes/usable-by/users-bots.rst

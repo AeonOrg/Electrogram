@@ -36,7 +36,7 @@ class SendVenue:
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
         | types.ForceReply = None,
-    ) -> types.Message:
+    ) -> types.Message | None:
         """Send information about a venue.
 
         .. include:: /_includes/usable-by/users-bots.rst

@@ -18,7 +18,7 @@ from importlib import import_module
 from io import BytesIO, StringIO
 from mimetypes import MimeTypes
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, BinaryIO
 
 from anyio import Path as AsyncPath
 
@@ -374,7 +374,7 @@ class Client(Methods):
             ):
                 await self.invoke(raw.functions.updates.GetState())
 
-    async def authorize(self) -> User:
+    async def authorize(self) -> User | None:
         if self.bot_token:
             return await self.sign_in_bot(self.bot_token)
 
@@ -953,7 +953,7 @@ class Client(Methods):
             else:
                 log.warning('[%s] No plugin loaded from "%s"', self.name, root)
 
-    async def handle_download(self, packet) -> str:
+    async def handle_download(self, packet) -> str | BinaryIO | None:
         (
             file_id,
             directory,
@@ -999,7 +999,7 @@ class Client(Methods):
             return None
         else:
             if in_memory:
-                file.name = file_name
+                setattr(file, "name", file_name)
                 return file
             file.close()
             file_path = Path(temp_file_path).with_suffix("")
@@ -1014,7 +1014,7 @@ class Client(Methods):
         offset: int = 0,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> AsyncGenerator[bytes, None] | None:
+    ) -> AsyncGenerator[bytes, None]:
         async with self.get_file_semaphore:
             file_type = file_id.file_type
 

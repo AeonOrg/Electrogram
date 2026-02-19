@@ -29,7 +29,7 @@ class ShippingOption(Object):
     @staticmethod
     def _parse(
         shipping_option: raw.types.ShippingOption,
-    ) -> ShippingOption:
+    ) -> ShippingOption | None:
         if isinstance(shipping_option, raw.types.ShippingOption):
             return ShippingOption(
                 id=shipping_option.id,

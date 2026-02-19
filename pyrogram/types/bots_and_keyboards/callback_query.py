@@ -175,7 +175,7 @@ class CallbackQuery(Object, Update):
         parse_mode: enums.ParseMode | None = None,
         disable_web_page_preview: bool | None = None,
         reply_markup: types.InlineKeyboardMarkup | None = None,
-    ) -> types.Message | bool:
+    ) -> types.Message | bool | None:
         """Edit the text of messages attached to callback queries.
 
         Bound method *edit_message_text* of :obj:`~pyrogram.types.CallbackQuery`.
@@ -229,7 +229,7 @@ class CallbackQuery(Object, Update):
         parse_mode: enums.ParseMode | None = None,
         reply_markup: types.InlineKeyboardMarkup | None = None,
         business_connection_id: str | None = None,
-    ) -> types.Message | bool:
+    ) -> types.Message | bool | None:
         """Edit the caption of media messages attached to callback queries.
 
         Bound method *edit_message_caption* of :obj:`~pyrogram.types.CallbackQuery`.
@@ -274,7 +274,7 @@ class CallbackQuery(Object, Update):
         media: types.InputMedia,
         reply_markup: types.InlineKeyboardMarkup | None = None,
         business_connection_id: str | None = None,
-    ) -> types.Message | bool:
+    ) -> types.Message | bool | None:
         """Edit animation, audio, document, photo or video messages attached to callback queries.
 
         Bound method *edit_message_media* of :obj:`~pyrogram.types.CallbackQuery`.
@@ -321,7 +321,7 @@ class CallbackQuery(Object, Update):
         self,
         reply_markup: types.InlineKeyboardMarkup | None = None,
         business_connection_id: str | None = None,
-    ) -> types.Message | bool:
+    ) -> types.Message | bool | None:
         """Edit only the reply markup of messages attached to callback queries.
 
         Bound method *edit_message_reply_markup* of :obj:`~pyrogram.types.CallbackQuery`.

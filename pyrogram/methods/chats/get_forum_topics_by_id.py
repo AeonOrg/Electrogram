@@ -17,7 +17,7 @@ class GetForumTopicsByID:
         self: pyrogram.Client,
         chat_id: int | str,
         topic_ids: int | Iterable[int],
-    ) -> types.ForumTopic | list[types.ForumTopic]:
+    ) -> types.ForumTopic | list[types.ForumTopic] | None:
         """Get one or more topic from a chat by using topic identifiers.
 
         .. include:: /_includes/usable-by/users.rst

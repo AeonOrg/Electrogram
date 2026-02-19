@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import math
-from typing import BinaryIO
+from typing import BinaryIO, AsyncGenerator
 
 import pyrogram
 from pyrogram import types
@@ -14,7 +14,7 @@ class StreamMedia:
         message: types.Message | str,
         limit: int = 0,
         offset: int = 0,
-    ) -> str | BinaryIO | None:
+    ) -> AsyncGenerator[bytes, None]:
         """Stream the media from a message chunk by chunk.
 
         You can use this method to partially download a file into memory or to selectively download chunks of file.
