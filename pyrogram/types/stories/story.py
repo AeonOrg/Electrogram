@@ -1519,7 +1519,9 @@ class Story(Object, Update):
             story_ids=self.id,
         )
 
-    async def edit_animation(self, animation: str | BinaryIO) -> types.Story | types.StorySkipped | types.StoryDeleted | None:
+    async def edit_animation(
+        self, animation: str | BinaryIO
+    ) -> types.Story | types.StorySkipped | types.StoryDeleted | None:
         """Bound method *edit_animation* of :obj:`~pyrogram.types.Story`.
 
         Use as a shortcut for:
@@ -1696,7 +1698,9 @@ class Story(Object, Update):
             caption_entities=caption_entities,
         )
 
-    async def edit_photo(self, photo: str | BinaryIO) -> types.Story | types.StorySkipped | types.StoryDeleted | None:
+    async def edit_photo(
+        self, photo: str | BinaryIO
+    ) -> types.Story | types.StorySkipped | types.StoryDeleted | None:
         """Bound method *edit_photo* of :obj:`~pyrogram.types.Story`.
 
         Use as a shortcut for:
@@ -1775,7 +1779,9 @@ class Story(Object, Update):
             denied_users=denied_users,
         )
 
-    async def edit_video(self, video: str | BinaryIO) -> types.Story | types.StorySkipped | types.StoryDeleted | None:
+    async def edit_video(
+        self, video: str | BinaryIO
+    ) -> types.Story | types.StorySkipped | types.StoryDeleted | None:
         """Bound method *edit_video* of :obj:`~pyrogram.types.Story`.
 
         Use as a shortcut for:

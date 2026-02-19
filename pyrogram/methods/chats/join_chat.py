@@ -5,7 +5,9 @@ from pyrogram import raw, types
 
 
 class JoinChat:
-    async def join_chat(self: pyrogram.Client, chat_id: int | str) -> types.Chat | None:
+    async def join_chat(
+        self: pyrogram.Client, chat_id: int | str
+    ) -> types.Chat | None:
         """Join a group chat or channel.
 
         .. include:: /_includes/usable-by/users.rst

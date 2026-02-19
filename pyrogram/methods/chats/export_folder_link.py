@@ -5,7 +5,9 @@ from pyrogram import raw
 
 
 class ExportFolderLink:
-    async def export_folder_link(self: pyrogram.Client, folder_id: int) -> str | None:
+    async def export_folder_link(
+        self: pyrogram.Client, folder_id: int
+    ) -> str | None:
         """Export link to a user's folder.
 
         .. include:: /_includes/usable-by/users.rst

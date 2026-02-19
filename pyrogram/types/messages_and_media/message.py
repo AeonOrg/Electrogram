@@ -5781,7 +5781,9 @@ class Message(Object, Update):
             message_id=self.id,
         )
 
-    async def translate(self, to_language_code: str) -> types.TranslatedText | list[types.TranslatedText] | None:
+    async def translate(
+        self, to_language_code: str
+    ) -> types.TranslatedText | list[types.TranslatedText] | None:
         """Bound method *translate* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
