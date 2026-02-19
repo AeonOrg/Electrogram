@@ -1855,7 +1855,8 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply | None = None,
+        | types.ForceReply
+        | None = None,
         reply_to_message_id: int | None = None,
         business_connection_id: str | None = None,
         reply_in_chat_id: int | str | None = None,
@@ -2062,7 +2063,8 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply | None = None,
+        | types.ForceReply
+        | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
     ) -> Message:
@@ -2246,7 +2248,8 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply | None = None,
+        | types.ForceReply
+        | None = None,
     ) -> Message:
         """Bound method *reply_cached_media* of :obj:`~pyrogram.types.Message`.
 
@@ -2430,7 +2433,8 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply | None = None,
+        | types.ForceReply
+        | None = None,
     ) -> Message:
         """Bound method *reply_contact* of :obj:`~pyrogram.types.Message`.
 
@@ -2567,7 +2571,8 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply | None = None,
+        | types.ForceReply
+        | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
     ) -> Message:
@@ -2744,7 +2749,8 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply | None = None,
+        | types.ForceReply
+        | None = None,
     ) -> Message:
         """Bound method *reply_game* of :obj:`~pyrogram.types.Message`.
 
@@ -2925,7 +2931,8 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply | None = None,
+        | types.ForceReply
+        | None = None,
     ) -> Message:
         """Bound method *reply_location* of :obj:`~pyrogram.types.Message`.
 
@@ -3174,7 +3181,8 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply | None = None,
+        | types.ForceReply
+        | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
     ) -> Message:
@@ -3366,7 +3374,8 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply | None = None,
+        | types.ForceReply
+        | None = None,
     ) -> Message:
         """Bound method *reply_poll* of :obj:`~pyrogram.types.Message`.
 
@@ -3563,7 +3572,8 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply | None = None,
+        | types.ForceReply
+        | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
     ) -> Message:
@@ -3725,7 +3735,8 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply | None = None,
+        | types.ForceReply
+        | None = None,
     ) -> Message:
         """Bound method *reply_venue* of :obj:`~pyrogram.types.Message`.
 
@@ -3878,7 +3889,8 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply | None = None,
+        | types.ForceReply
+        | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
     ) -> Message:
@@ -4085,7 +4097,8 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply | None = None,
+        | types.ForceReply
+        | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
     ) -> Message:
@@ -4261,7 +4274,8 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply | None = None,
+        | types.ForceReply
+        | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
     ) -> Message:
