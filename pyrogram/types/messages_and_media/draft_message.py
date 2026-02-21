@@ -123,7 +123,6 @@ class DraftMessage(Object):
         video_note = None
         link_preview_options = None
         web_page_url = None
-        file_name = None
         media = raw_draft_message.media
         media_type = None
 
@@ -134,7 +133,7 @@ class DraftMessage(Object):
                 if isinstance(doc, raw.types.Document):
                     attributes = {type(i): i for i in doc.attributes}
 
-                    file_name = getattr(
+                    getattr(
                         attributes.get(raw.types.DocumentAttributeFilename),
                         "file_name",
                         None,
