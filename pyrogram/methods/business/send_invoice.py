@@ -138,7 +138,7 @@ class SendInvoice:
                 )
         """
 
-        is_iterable = not isinstance(prices, types.LabeledPrice)
+        not isinstance(prices, types.LabeledPrice)
 
         if reply_markup is not None:
             has_buy_button = False
