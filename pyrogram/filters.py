@@ -145,7 +145,7 @@ def create(func: Callable, name: str | None = None, **kwargs) -> Filter:
             :meth:`~pyrogram.filters.command` or :meth:`~pyrogram.filters.regex`.
     """
     return type(
-        name or func.__name__ or CUSTOM_FILTER_NAME,
+        name or getattr(func, "__name__", CUSTOM_FILTER_NAME),
         (Filter,),
         {"__call__": func, **kwargs},
     )()
@@ -290,11 +290,11 @@ giveaway = create(giveaway_filter)
 
 
 async def giveaway_result_filter(_, __, m: Message):
-    return bool(m.giveaway_winners or m.giveaway_completed)
+    return bool(m.giveaway_result)
 
 
 giveaway_result = create(giveaway_result_filter)
-"""Filter messages that contain :obj:`~pyrogram.types.GiveawayWinners` or :obj:`~pyrogram.types.GiveawayCompleted` objects."""
+"""Filter messages that contain :obj:`~pyrogram.types.GiveawayResult` objects."""
 
 
 async def gift_code_filter(_, __, m: Message):
@@ -370,7 +370,7 @@ venue = create(venue_filter)
 
 
 async def web_page_filter(_, __, m: Message):
-    return bool(m.web_page)
+    return bool(m.web_page_preview)
 
 
 web_page = create(web_page_filter)
@@ -714,7 +714,7 @@ def command(
     command_re = re.compile(r"([\"'])(.*?)(?<!\\)\1|(\S+)")
 
     async def func(flt, client: pyrogram.Client, message: Message) -> bool:
-        username = client.me.username or ""
+        username = client.me.username if client.me else ""
         text = message.text or message.caption
         message.command = None
 
@@ -756,8 +756,8 @@ def command(
 
         return False
 
-    commands = commands if isinstance(commands, list) else [commands]
-    commands = {c if case_sensitive else c.lower() for c in commands}
+    commands_list = commands if isinstance(commands, list) else [commands]
+    commands_set = {c if case_sensitive else c.lower() for c in commands_list}
 
     prefixes_list = [] if prefixes is None else prefixes
     prefixes_list = (
@@ -768,7 +768,7 @@ def command(
     return create(
         func,
         "CommandFilter",
-        commands=commands,
+        commands=commands_set,
         prefixes=prefixes_set,
         case_sensitive=case_sensitive,
     )

@@ -1,7 +1,12 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import pyrogram
 from pyrogram import types
+
+if TYPE_CHECKING:
+    from re import Match
 from pyrogram.types.object import Object
 from pyrogram.types.update import Update
 
@@ -30,6 +35,10 @@ class PreCheckoutQuery(Object, Update):
 
         payment_info (:obj:`~pyrogram.types.PaymentInfo`, *optional*):
             Payment information provided by the user.
+
+        matches (List of regex Matches, *optional*):
+            A list containing all `Match Objects <https://docs.python.org/3/library/re.html#match-objects>`_ that match
+            the payload of this query. Only applicable when using :obj:`Filters.regex <pyrogram.Filters.regex>`.
     """
 
     def __init__(
@@ -43,6 +52,7 @@ class PreCheckoutQuery(Object, Update):
         payload: str,
         shipping_option_id: str | None = None,
         payment_info: types.PaymentInfo | None = None,
+        matches: list[Match] | None = None,
     ) -> None:
         super().__init__(client)
 
@@ -53,6 +63,7 @@ class PreCheckoutQuery(Object, Update):
         self.payload = payload
         self.shipping_option_id = shipping_option_id
         self.payment_info = payment_info
+        self.matches = matches
 
     @staticmethod
     async def _parse(

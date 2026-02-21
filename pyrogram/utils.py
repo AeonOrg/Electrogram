@@ -51,6 +51,9 @@ def get_input_media_from_file_id(
     if file_type in (FileType.THUMBNAIL, FileType.CHAT_PHOTO):
         raise ValueError(f"This file id can only be used for download: {file_id}")
 
+    if decoded.media_id is None or decoded.access_hash is None:
+        raise ValueError('Invalid file id: missing "media_id" or "access_hash"')
+
     if file_type in PHOTO_TYPES:
         return raw.types.InputMediaPhoto(
             id=raw.types.InputPhoto(
@@ -84,8 +87,8 @@ async def parse_messages(
     parsed_messages = []
 
     if not messages and r:
-        users = {i.id: i for i in getattr(r, "users", [])}
-        chats = {i.id: i for i in getattr(r, "chats", [])}
+        users = {getattr(i, "id", None): i for i in getattr(r, "users", [])}
+        chats = {getattr(i, "id", None): i for i in getattr(r, "chats", [])}
 
         for u in getattr(r, "updates", []):
             if isinstance(
@@ -120,15 +123,14 @@ async def parse_messages(
                             "connection_id",
                             business_connection_id,
                         ),
-                        raw_reply_to_message=u.reply_to_message,
                         replies=0,
                     ),
                 )
 
         return types.List(parsed_messages)
 
-    users = {i.id: i for i in messages.users}
-    chats = {i.id: i for i in messages.chats}
+    users = {getattr(i, "id", None): i for i in messages.users}
+    chats = {getattr(i, "id", None): i for i in messages.chats}
 
     if not messages.messages:
         return types.List()
@@ -187,7 +189,7 @@ def pack_inline_message_id(
             msg_id.id,
             msg_id.access_hash,
         )
-    else:
+    elif isinstance(msg_id, raw.types.InputBotInlineMessageID64):
         inline_message_id_packed = struct.pack(
             "<iqiq",
             msg_id.dc_id,
@@ -195,6 +197,8 @@ def pack_inline_message_id(
             msg_id.id,
             msg_id.access_hash,
         )
+    else:
+        raise ValueError(f"Unsupported InputBotInlineMessageID type: {type(msg_id)}")
 
     return base64.urlsafe_b64encode(inline_message_id_packed).decode().rstrip("=")
 
@@ -309,6 +313,12 @@ def compute_password_check(
 ) -> raw.types.InputCheckPasswordSRP:
     algo = r.current_algo
 
+    if not isinstance(
+        algo,
+        raw.types.PasswordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow,
+    ):
+        raise ValueError(f"Unsupported password KDF algorithm: {type(algo)}")
+
     p_bytes = algo.p
     p = btoi(algo.p)
 
@@ -316,9 +326,13 @@ def compute_password_check(
     g = algo.g
 
     B_bytes = r.srp_B
+    if B_bytes is None:
+        raise ValueError("srp_B is missing from Password object")
     B = btoi(B_bytes)
 
     srp_id = r.srp_id
+    if srp_id is None:
+        raise ValueError("srp_id is missing from Password object")
 
     x_bytes = compute_password_hash(algo, password)
     x = btoi(x_bytes)
@@ -414,7 +428,10 @@ async def get_reply_to(
         entities = parsed_text_entities["entities"]
 
         if reply_to_chat_id is not None:
-            reply_to_chat = await client.resolve_peer(reply_to_chat_id)
+            peer = await client.resolve_peer(reply_to_chat_id)
+            if isinstance(peer, raw.base.InputPeer):
+                reply_to_chat = peer
+
         reply_to = types.InputReplyToMessage(
             reply_to_message_id=reply_to_message_id,
             message_thread_id=message_thread_id,
@@ -423,6 +440,8 @@ async def get_reply_to(
             quote_entities=entities,
         )
     if reply_to_story_id:
+        if chat_id is None:
+            raise ValueError("chat_id is required when reply_to_story_id is provided")
         peer = await client.resolve_peer(chat_id)
         reply_to = types.InputReplyToStory(peer=peer, story_id=reply_to_story_id)
     return reply_to
