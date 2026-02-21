@@ -1525,9 +1525,7 @@ class Message(Object, Update):
                             [
                                 e
                                 for e in [
-                                    types.MessageEntity._parse(
-                                        client, entity, users
-                                    )
+                                    types.MessageEntity._parse(client, entity, users)
                                     for entity in message.reply_to.quote_entities
                                 ]
                                 if e is not None

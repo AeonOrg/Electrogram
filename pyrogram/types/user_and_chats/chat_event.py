@@ -633,7 +633,9 @@ class ChatEvent(Object):
             raw.types.ChannelAdminLogEventActionParticipantJoinByRequest,
         ):
             invite_link = types.ChatInviteLink._parse(client, action.invite, users)
-            approver_user = types.User._parse(client, users_map.get(action.approved_by))
+            approver_user = types.User._parse(
+                client, users_map.get(action.approved_by)
+            )
             action = enums.ChatEventAction.MEMBER_JOINED_BY_REQUEST
 
         elif isinstance(
