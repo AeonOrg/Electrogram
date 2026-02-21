@@ -315,7 +315,7 @@ class Session:
                         "The msg_id is equal to any of the stored values",
                     )
 
-                time_diff = (msg.msg_id - MsgId()) / 2**32
+                time_diff = (msg.msg_id - int(MsgId())) / 2**32
 
                 if time_diff > 30:
                     raise SecurityCheckMismatch(
@@ -557,7 +557,7 @@ class Session:
             except (FloodWait, FloodPremiumWait) as e:
                 amount = e.value
 
-                if amount > sleep_threshold >= 0:
+                if isinstance(amount, int) and amount > sleep_threshold >= 0:
                     raise
 
                 log.warning(
