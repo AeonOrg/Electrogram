@@ -31,7 +31,7 @@ class Message(TLObject):
         msg_id = Long.read(b)
         seq_no = Int.read(b)
         length = Int.read(b)
-        body = data.read(length)
+        body = b.read(length)
 
         return Message(TLObject.read(BytesIO(body)), msg_id, seq_no, length)
 
