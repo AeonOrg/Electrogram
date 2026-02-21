@@ -1132,7 +1132,7 @@ class Message(Object, Update):
             message_thread_id = None
             entities = [
                 types.MessageEntity._parse(client, entity, users)
-                for entity in message.entities
+                for entity in (message.entities or [])
             ]
             entities = types.List(filter(lambda x: x is not None, entities))
 
@@ -1515,7 +1515,7 @@ class Message(Object, Update):
             if message.reply_to:
                 if isinstance(message.reply_to, raw.types.MessageReplyHeader):
                     parsed_message.quote_text = message.reply_to.quote_text
-                    if len(message.reply_to.quote_entities) > 0:
+                    if message.reply_to.quote_entities:
                         quote_entities = [
                             types.MessageEntity._parse(client, entity, users)
                             for entity in message.reply_to.quote_entities

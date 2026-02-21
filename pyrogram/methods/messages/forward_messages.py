@@ -77,17 +77,21 @@ class ForwardMessages:
                 await app.forward_messages(to_chat, from_chat, [1, 2, 3])
         """
 
-        is_iterable = not isinstance(message_ids, int)
-        message_ids = list(message_ids) if is_iterable else [message_ids]
+        if isinstance(message_ids, int):
+            is_iterable = False
+            ids = [message_ids]
+        else:
+            is_iterable = True
+            ids = list(message_ids)
 
         r = await self.invoke(
             raw.functions.messages.ForwardMessages(
                 to_peer=await self.resolve_peer(chat_id),
                 from_peer=await self.resolve_peer(from_chat_id),
-                id=message_ids,
+                id=ids,
                 top_msg_id=message_thread_id,
                 silent=disable_notification or None,
-                random_id=[self.rnd_id() for _ in message_ids],
+                random_id=[self.rnd_id() for _ in ids],
                 schedule_date=utils.datetime_to_timestamp(schedule_date),
                 noforwards=protect_content,
                 allow_paid_floodskip=allow_paid_broadcast,

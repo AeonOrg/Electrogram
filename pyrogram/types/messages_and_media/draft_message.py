@@ -115,7 +115,7 @@ class DraftMessage(Object):
 
         entities = [
             types.MessageEntity._parse(client, entity, users)
-            for entity in raw_draft_message.entities
+            for entity in (raw_draft_message.entities or [])
         ]
         entities = types.List(filter(lambda x: x is not None, entities))
 

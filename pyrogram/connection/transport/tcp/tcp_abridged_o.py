@@ -51,6 +51,10 @@ class TCPAbridgedO(TCP):
             if length <= 126
             else b"\x7f" + length.to_bytes(3, "little")
         ) + data
+
+        if self.encrypt is None:
+            raise ValueError("Transport not connected")
+
         payload = await self.loop.run_in_executor(
             pyrogram.crypto_executor,
             aes.ctr256_encrypt,
@@ -65,6 +69,9 @@ class TCPAbridgedO(TCP):
 
         if length_bytes is None:
             return None
+
+        if self.decrypt is None:
+            raise ValueError("Transport not connected")
 
         length_bytes = aes.ctr256_decrypt(length_bytes, *self.decrypt)
 
