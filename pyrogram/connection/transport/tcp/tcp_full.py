@@ -14,7 +14,7 @@ class TCPFull(TCP):
     def __init__(self, ipv6: bool, proxy: Proxy) -> None:
         super().__init__(ipv6, proxy)
 
-        self.seq_no: int | None = None
+        self.seq_no: int = 0
 
     async def connect(self, address: tuple[str, int]) -> None:
         await super().connect(address)

@@ -638,8 +638,8 @@ class Client(Methods):
                     None,
                 ) or getattr(update, "channel_id", None)
 
-                pts = getattr(update, "pts", None)
-                pts_count = getattr(update, "pts_count", None)
+                pts = getattr(update, "pts", 0)
+                pts_count = getattr(update, "pts_count", 0)
 
                 if pts and not self.skip_updates:
                     await self.storage.update_state(
@@ -1019,12 +1019,12 @@ class Client(Methods):
             file_type = file_id.file_type
 
             if file_type == FileType.CHAT_PHOTO:
-                if file_id.chat_id > 0:
+                if file_id.chat_id and file_id.chat_id > 0:
                     peer = raw.types.InputPeerUser(
                         user_id=file_id.chat_id,
                         access_hash=file_id.chat_access_hash,
                     )
-                elif file_id.chat_access_hash == 0:
+                elif file_id.chat_id and file_id.chat_access_hash == 0:
                     peer = raw.types.InputPeerChat(chat_id=-file_id.chat_id)
                 else:
                     peer = raw.types.InputPeerChannel(
