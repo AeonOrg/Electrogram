@@ -406,7 +406,9 @@ class ChatEvent(Object):
                 client,
                 chats_map[action.prev_value],
             )
-            new_linked_chat = types.Chat._parse_chat(client, chats_map[action.new_value])
+            new_linked_chat = types.Chat._parse_chat(
+                client, chats_map[action.new_value]
+            )
             action = enums.ChatEventAction.LINKED_CHAT_CHANGED
 
         elif isinstance(action, raw.types.ChannelAdminLogEventActionChangePhoto):
