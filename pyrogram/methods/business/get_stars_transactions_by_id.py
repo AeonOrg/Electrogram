@@ -55,12 +55,14 @@ class GetStarsTransactionsById:
             :obj:`~pyrogram.types.StarsStatus`: On success, a :obj:`~pyrogram.types.StarsStatus` object is returned.
         """
         peer = await self.resolve_peer(chat_id)
-        is_iterable = not isinstance(transaction_ids, types.InputStarsTransaction)
-        ids = (
-            [await transaction_ids.write()]
-            if not is_iterable
-            else [await x.write() for x in transaction_ids]
-        )
+
+        if isinstance(transaction_ids, types.InputStarsTransaction):
+            is_iterable = False
+            ids = [await transaction_ids.write()]
+        else:
+            is_iterable = True
+            ids = [await x.write() for x in transaction_ids]
+
 
         r = await self.invoke(
             raw.functions.payments.GetStarsTransactionsByID(peer=peer, id=ids),

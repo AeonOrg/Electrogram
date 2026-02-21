@@ -40,9 +40,14 @@ class GetUsers:
                 await app.get_users([user_id1, user_id2, user_id3])
         """
 
-        is_iterable = not isinstance(user_ids, int | str)
-        user_ids = list(user_ids) if is_iterable else [user_ids]
-        user_ids = await asyncio.gather(*[self.resolve_peer(i) for i in user_ids])
+        if isinstance(user_ids, int | str):
+            is_iterable = False
+            ids = [user_ids]
+        else:
+            is_iterable = True
+            ids = list(user_ids)
+
+        user_ids = await asyncio.gather(*[self.resolve_peer(i) for i in ids])
 
         r = await self.invoke(raw.functions.users.GetUsers(id=user_ids))
 

@@ -47,6 +47,9 @@ class GetMediaGroup:
             replies=0,
         )
 
+        if not isinstance(messages, list):
+            messages = [messages] if messages else []
+
         # There can be maximum 10 items in a media group.
         # If/else condition to fix the problem of getting correct `media_group_id` when `message_id` is less than 10.
         media_group_id = (

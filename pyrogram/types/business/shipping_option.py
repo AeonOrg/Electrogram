@@ -19,7 +19,12 @@ class ShippingOption(Object):
 
     """
 
-    def __init__(self, id: str, title: str, prices: types.LabeledPrice) -> None:
+    def __init__(
+        self,
+        id: str,
+        title: str,
+        prices: list[types.LabeledPrice],
+    ) -> None:
         super().__init__()
 
         self.id = id
