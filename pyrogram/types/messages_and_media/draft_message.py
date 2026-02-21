@@ -133,12 +133,6 @@ class DraftMessage(Object):
                 if isinstance(doc, raw.types.Document):
                     attributes = {type(i): i for i in doc.attributes}
 
-                    getattr(
-                        attributes.get(raw.types.DocumentAttributeFilename),
-                        "file_name",
-                        None,
-                    )
-
                     if raw.types.DocumentAttributeVideo in attributes:
                         video_attributes = attributes[
                             raw.types.DocumentAttributeVideo
