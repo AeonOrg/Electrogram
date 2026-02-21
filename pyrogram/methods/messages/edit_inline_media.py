@@ -75,7 +75,7 @@ class EditInlineMedia:
         )
 
         if is_bytes_io and not hasattr(media.media, "name"):
-            media.media.name = "media"
+            setattr(media.media, "name", "media")
 
         if is_uploaded_file:
             filename_attribute = [

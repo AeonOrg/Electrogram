@@ -14,7 +14,7 @@ class DeleteScheduledMessages:
         self: pyrogram.Client,
         chat_id: int | str,
         message_ids: int | Iterable[int],
-    ) -> int:
+    ) -> int | list[int]:
         """Delete scheduled messages.
 
         .. include:: /_includes/usable-by/users-bots.rst
@@ -41,14 +41,19 @@ class DeleteScheduledMessages:
                 await app.delete_scheduled_messages(chat_id, list_of_message_ids)
         """
         peer = await self.resolve_peer(chat_id)
-        is_iterable = not isinstance(message_ids, int)
-        message_ids = list(message_ids) if is_iterable else [message_ids]
+
+        if isinstance(message_ids, int):
+            is_iterable = False
+            ids = [message_ids]
+        else:
+            is_iterable = True
+            ids = list(message_ids)
 
         await self.invoke(
             raw.functions.messages.DeleteScheduledMessages(
-                peer=peer,
-                id=message_ids,
+                peer=peer,  # type: ignore
+                id=ids,
             ),
         )
 
-        return message_ids if is_iterable else message_ids[0]
+        return ids if is_iterable else ids[0]
