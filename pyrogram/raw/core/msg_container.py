@@ -19,7 +19,7 @@ class MsgContainer(TLObject):
         self.messages = messages
 
     @classmethod
-    def read(cls, b: BytesIO, *args: Any) -> Any:  # noqa: ARG004
+    def read(cls, b: BytesIO, *args: Any) -> Any:
         count = Int.read(b)
         return MsgContainer([Message.read(b) for _ in range(count)])
 

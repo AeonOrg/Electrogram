@@ -32,7 +32,7 @@ class Vector(bytes, TLObject):
         return TLObject.read(b)
 
     @classmethod
-    def read(cls, b: BytesIO, *args: Any) -> Any:  # noqa: ARG003
+    def read(cls, b: BytesIO, *args: Any) -> Any:
         t = args[0] if args else None
         count = Int.read(b)
         left = len(b.read())

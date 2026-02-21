@@ -21,7 +21,7 @@ class FutureSalts(TLObject):
         self.salts = salts
 
     @classmethod
-    def read(cls, b: BytesIO, *args: Any) -> Any:  # noqa: ARG004
+    def read(cls, b: BytesIO, *args: Any) -> Any:
         req_msg_id = Long.read(b)
         now = Int.read(b)
 

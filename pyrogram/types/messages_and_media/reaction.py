@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import NoReturn
-
 import pyrogram
 from pyrogram import raw, types
 from pyrogram.types.object import Object

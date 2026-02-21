@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
     import pyrogram
     from pyrogram.filters import Filter
-    from pyrogram.types import Message, Update
+    from pyrogram.types import Update
 
 
 class DeletedMessagesHandler(Handler):
