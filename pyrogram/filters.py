@@ -145,7 +145,7 @@ def create(func: Callable, name: str | None = None, **kwargs) -> Filter:
             :meth:`~pyrogram.filters.command` or :meth:`~pyrogram.filters.regex`.
     """
     return type(
-        name or func.__name__ or CUSTOM_FILTER_NAME,
+        name or getattr(func, "__name__", CUSTOM_FILTER_NAME),
         (Filter,),
         {"__call__": func, **kwargs},
     )()
@@ -290,11 +290,11 @@ giveaway = create(giveaway_filter)
 
 
 async def giveaway_result_filter(_, __, m: Message):
-    return bool(m.giveaway_winners or m.giveaway_completed)
+    return bool(m.giveaway_result)
 
 
 giveaway_result = create(giveaway_result_filter)
-"""Filter messages that contain :obj:`~pyrogram.types.GiveawayWinners` or :obj:`~pyrogram.types.GiveawayCompleted` objects."""
+"""Filter messages that contain :obj:`~pyrogram.types.GiveawayResult` objects."""
 
 
 async def gift_code_filter(_, __, m: Message):
@@ -370,7 +370,7 @@ venue = create(venue_filter)
 
 
 async def web_page_filter(_, __, m: Message):
-    return bool(m.web_page)
+    return bool(m.web_page_preview)
 
 
 web_page = create(web_page_filter)
@@ -714,7 +714,7 @@ def command(
     command_re = re.compile(r"([\"'])(.*?)(?<!\\)\1|(\S+)")
 
     async def func(flt, client: pyrogram.Client, message: Message) -> bool:
-        username = client.me.username or ""
+        username = client.me.username if client.me else ""
         text = message.text or message.caption
         message.command = None
 
@@ -756,18 +756,20 @@ def command(
 
         return False
 
-    commands = commands if isinstance(commands, list) else [commands]
-    commands = {c if case_sensitive else c.lower() for c in commands}
+    commands_list = commands if isinstance(commands, list) else [commands]
+    commands_set = {c if case_sensitive else c.lower() for c in commands_list}
 
-    prefixes = [] if prefixes is None else prefixes
-    prefixes = prefixes if isinstance(prefixes, list) else [prefixes]
-    prefixes = set(prefixes) if prefixes else {""}
+    prefixes_list = [] if prefixes is None else prefixes
+    prefixes_list = (
+        prefixes_list if isinstance(prefixes_list, list) else [prefixes_list]
+    )
+    prefixes_set = set(prefixes_list) if prefixes_list else {""}
 
     return create(
         func,
         "CommandFilter",
-        commands=commands,
-        prefixes=prefixes,
+        commands=commands_set,
+        prefixes=prefixes_set,
         case_sensitive=case_sensitive,
     )
 
@@ -844,14 +846,17 @@ class user(Filter, set):
             for u in users
         )
 
-    async def __call__(self, _, message: Message):
-        return message.from_user and (
-            message.from_user.id in self
+    async def __call__(self, _: pyrogram.Client, update: Update):
+        if not isinstance(update, Message):
+            return False
+
+        return update.from_user and (
+            update.from_user.id in self
             or (
-                message.from_user.username
-                and message.from_user.username.lower() in self
+                update.from_user.username
+                and update.from_user.username.lower() in self
             )
-            or ("me" in self and message.from_user.is_self)
+            or ("me" in self and update.from_user.is_self)
         )
 
 
@@ -882,35 +887,39 @@ class chat(Filter, set):
             for c in chats
         )
 
-    async def __call__(self, _, message: Message | Story):
-        if isinstance(message, Story):
+    async def __call__(self, _: pyrogram.Client, update: Update):
+        if isinstance(update, Story):
             return (
-                message.sender_chat
+                update.sender_chat
                 and (
-                    message.sender_chat.id in self
+                    update.sender_chat.id in self
                     or (
-                        message.sender_chat.username
-                        and message.sender_chat.username.lower() in self
+                        update.sender_chat.username
+                        and update.sender_chat.username.lower() in self
                     )
                 )
             ) or (
-                message.from_user
+                update.from_user
                 and (
-                    message.from_user.id in self
+                    update.from_user.id in self
                     or (
-                        message.from_user.username
-                        and message.from_user.username.lower() in self
+                        update.from_user.username
+                        and update.from_user.username.lower() in self
                     )
                 )
             )
-        return message.chat and (
-            message.chat.id in self
-            or (message.chat.username and message.chat.username.lower() in self)
+
+        if not isinstance(update, Message):
+            return False
+
+        return update.chat and (
+            update.chat.id in self
+            or (update.chat.username and update.chat.username.lower() in self)
             or (
                 "me" in self
-                and message.from_user
-                and message.from_user.is_self
-                and not message.outgoing
+                and update.from_user
+                and update.from_user.is_self
+                and not update.outgoing
             )
         )
 
@@ -938,5 +947,8 @@ class topic(Filter, set):
 
         super().__init__(t for t in topics)
 
-    async def __call__(self, _, message: Message):
-        return message.topic and message.topic.id in self
+    async def __call__(self, _: pyrogram.Client, update: Update):
+        if not isinstance(update, Message):
+            return False
+
+        return update.topic and update.topic.id in self

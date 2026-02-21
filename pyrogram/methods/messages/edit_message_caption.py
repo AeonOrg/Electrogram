@@ -18,7 +18,7 @@ class EditMessageCaption:
         invert_media: bool = False,
         reply_markup: types.InlineKeyboardMarkup | None = None,
         business_connection_id: str | None = None,
-    ) -> types.Message:
+    ) -> types.Message | None:
         """Edit the caption of media messages.
 
         .. include:: /_includes/usable-by/users-bots.rst

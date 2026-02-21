@@ -138,7 +138,7 @@ class SendInvoice:
                 )
         """
 
-        is_iterable = not isinstance(prices, types.LabeledPrice)
+        not isinstance(prices, types.LabeledPrice)
 
         if reply_markup is not None:
             has_buy_button = False
@@ -150,8 +150,11 @@ class SendInvoice:
                 text = "Pay"
                 if currency == "XTR":
                     prices_total = 0
-                    for price in prices:
-                        prices_total += price.amount
+                    if not isinstance(prices, types.LabeledPrice):
+                        for price in prices:
+                            prices_total += price.amount
+                    else:
+                        prices_total = prices.amount
                     text = f"Pay ⭐️{prices_total}"
                 reply_markup.inline_keyboard.insert(
                     0,
@@ -180,7 +183,7 @@ class SendInvoice:
                     invoice=raw.types.Invoice(
                         currency=currency,
                         prices=[price.write() for price in prices]
-                        if is_iterable
+                        if not isinstance(prices, types.LabeledPrice)
                         else [prices.write()],
                     ),
                     payload=encoded_payload,

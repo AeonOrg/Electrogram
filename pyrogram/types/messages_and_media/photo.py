@@ -76,7 +76,7 @@ class Photo(Object):
         client,
         photo: raw.types.Photo,
         ttl_seconds: int | None = None,
-    ) -> Photo:
+    ) -> Photo | None:
         if isinstance(photo, raw.types.Photo):
             photos: list[raw.types.PhotoSize] = []
 

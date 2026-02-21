@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import NoReturn
-
 import pyrogram
 from pyrogram import raw, types
 from pyrogram.types.object import Object
@@ -46,7 +44,9 @@ class Reaction(Object):
         self.is_paid = is_paid
 
     @staticmethod
-    def _parse(client: pyrogram.Client, reaction: raw.base.Reaction) -> Reaction:
+    def _parse(
+        client: pyrogram.Client, reaction: raw.base.Reaction
+    ) -> Reaction | None:
         if isinstance(reaction, raw.types.ReactionEmoji):
             return Reaction(
                 client=client,
@@ -67,7 +67,7 @@ class Reaction(Object):
     def _parse_count(
         client: pyrogram.Client,
         reaction_count: raw.base.ReactionCount,
-    ) -> Reaction:
+    ) -> Reaction | None:
         reaction = Reaction._parse(client, reaction_count.reaction)
         reaction.count = reaction_count.count
         reaction.chosen_order = reaction_count.chosen_order
@@ -111,7 +111,7 @@ class ReactionType(Object):
             return ReactionTypePaid()
         return None
 
-    def write(self, client: pyrogram.Client) -> NoReturn:
+    def write(self, client: pyrogram.Client) -> raw.base.Reaction:
         raise NotImplementedError
 
 

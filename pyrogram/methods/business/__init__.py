@@ -9,7 +9,7 @@ from .get_payment_form import GetPaymentForm
 from .get_stars_transactions import GetStarsTransactions
 from .get_stars_transactions_by_id import GetStarsTransactionsById
 from .get_user_gifts import GetUserGifts
-from .refund_stars_payment import RefundStarPayment, RefundStarsPayment
+from .refund_stars_charge import RefundStarsCharge
 from .sell_gift import SellGift
 from .send_gift import SendGift
 from .send_invoice import SendInvoice
@@ -29,7 +29,7 @@ class TelegramBusiness(
     ToggleGiftIsSaved,
     GetStarsTransactions,
     GetStarsTransactionsById,
-    RefundStarsPayment,
+    RefundStarsCharge,
     SendInvoice,
     GetPaymentForm,
     SendPaymentForm,

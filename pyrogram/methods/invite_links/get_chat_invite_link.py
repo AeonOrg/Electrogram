@@ -9,7 +9,7 @@ class GetChatInviteLink:
         self: pyrogram.Client,
         chat_id: int | str,
         invite_link: str,
-    ) -> types.ChatInviteLink:
+    ) -> types.ChatInviteLink | None:
         """Get detailed information about a chat invite link.
 
         .. include:: /_includes/usable-by/users-bots.rst

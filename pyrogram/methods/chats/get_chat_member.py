@@ -10,7 +10,7 @@ class GetChatMember:
         self: pyrogram.Client,
         chat_id: int | str,
         user_id: int | str,
-    ) -> types.ChatMember:
+    ) -> types.ChatMember | None:
         """Get information about one member of a chat.
 
         .. include:: /_includes/usable-by/users-bots.rst

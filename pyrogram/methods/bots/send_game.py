@@ -21,7 +21,7 @@ class SendGame:
         | types.ReplyKeyboardRemove
         | types.ForceReply
         | None = None,
-    ) -> types.Message:
+    ) -> types.Message | None:
         """Send a game.
 
         .. include:: /_includes/usable-by/bots.rst

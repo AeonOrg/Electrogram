@@ -3,7 +3,7 @@ from __future__ import annotations
 import contextlib
 import inspect
 import time
-from typing import TYPE_CHECKING, Any, NoReturn
+from typing import TYPE_CHECKING, Any
 
 from pyrogram import raw, utils
 
@@ -106,7 +106,7 @@ class SQLiteStorage(Storage):
     def __init__(self, name: str) -> None:
         super().__init__(name)
 
-        self.conn: aiosqlite.Connection = None
+        self.conn: aiosqlite.Connection | None = None
 
     async def create(self) -> None:
         await self.conn.executescript(SCHEMA)
@@ -117,7 +117,7 @@ class SQLiteStorage(Storage):
         )
         await self.conn.commit()
 
-    async def open(self) -> NoReturn:
+    async def open(self) -> None:
         raise NotImplementedError
 
     async def save(self) -> None:
@@ -127,12 +127,12 @@ class SQLiteStorage(Storage):
     async def close(self) -> None:
         await self.conn.close()
 
-    async def delete(self) -> NoReturn:
+    async def delete(self) -> None:
         raise NotImplementedError
 
     async def update_peers(
         self,
-        peers: list[tuple[int, int, str, str, str]],
+        peers: list[tuple[int, int, str, str | None, str | None]],
     ) -> None:
         with contextlib.suppress(Exception):
             await self.conn.executemany(
@@ -153,29 +153,29 @@ class SQLiteStorage(Storage):
             usernames,
         )
 
-    async def update_state(self, value: Any = object):
-        if value is object:
+    async def update_state(self, update_state: Any = object):
+        if update_state is object:
             return await (
                 await self.conn.execute(
                     "SELECT id, pts, qts, date, seq FROM update_state "
                     "ORDER BY date ASC",
                 )
             ).fetchall()
-        if isinstance(value, int):
+        if isinstance(update_state, int):
             await self.conn.execute(
                 "DELETE FROM update_state WHERE id = ?",
-                (value,),
+                (update_state,),
             )
         else:
             await self.conn.execute(
                 "REPLACE INTO update_state (id, pts, qts, date, seq)"
                 "VALUES (?, ?, ?, ?, ?)",
-                value,
+                update_state,
             )
         await self.conn.commit()
         return None
 
-    async def get_peer_by_id(self, peer_id: int):
+    async def get_peer_by_id(self, peer_id: int | str):
         q = await self.conn.execute(
             "SELECT id, access_hash, type FROM peers WHERE id = ?",
             (peer_id,),

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, types
 
 
 class GetBotInfo:
@@ -9,7 +9,7 @@ class GetBotInfo:
         self: pyrogram.Client,
         lang_code: str,
         bot: int | str | None = None,
-    ) -> pyrogram.types.BotInfo:
+    ) -> types.BotInfo | None:
         """Get the bot info in given language.
 
         .. include:: /_includes/usable-by/users-bots.rst

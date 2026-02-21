@@ -19,7 +19,12 @@ class ShippingOption(Object):
 
     """
 
-    def __init__(self, id: str, title: str, prices: types.LabeledPrice) -> None:
+    def __init__(
+        self,
+        id: str,
+        title: str,
+        prices: list[types.LabeledPrice],
+    ) -> None:
         super().__init__()
 
         self.id = id
@@ -29,7 +34,7 @@ class ShippingOption(Object):
     @staticmethod
     def _parse(
         shipping_option: raw.types.ShippingOption,
-    ) -> ShippingOption:
+    ) -> ShippingOption | None:
         if isinstance(shipping_option, raw.types.ShippingOption):
             return ShippingOption(
                 id=shipping_option.id,

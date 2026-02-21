@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, Any, cast
 
 from .bytes import Bytes
 
@@ -10,8 +10,8 @@ if TYPE_CHECKING:
 
 class String(Bytes):
     @classmethod
-    def read(cls, data: BytesIO, *args) -> str:  # noqa: ARG003
-        return cast("bytes", super(String, String).read(data)).decode(
+    def read(cls, b: BytesIO, *args: Any) -> Any:  # noqa: ARG003
+        return cast("bytes", super().read(b)).decode(
             errors="replace",
         )
 

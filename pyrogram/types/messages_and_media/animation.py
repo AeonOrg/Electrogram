@@ -87,7 +87,7 @@ class Animation(Object):
         animation: raw.types.Document,
         video_attributes: raw.types.DocumentAttributeVideo,
         file_name: str,
-    ) -> Animation:
+    ) -> Animation | None:
         return Animation(
             file_id=FileId(
                 file_type=FileType.ANIMATION,
@@ -112,7 +112,7 @@ class Animation(Object):
         )
 
     @staticmethod
-    def _parse_chat_animation(client, video: raw.types.Photo) -> Animation:
+    def _parse_chat_animation(client, video: raw.types.Photo) -> Animation | None:
         if isinstance(video, raw.types.Photo):
             if not video.video_sizes:
                 return None

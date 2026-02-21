@@ -36,7 +36,7 @@ class MessageStory(Object):
     async def _parse(
         client: pyrogram.Client,
         message_story: raw.types.MessageMediaStory,
-    ) -> MessageStory | types.Story:
+    ) -> MessageStory | types.Story | list[types.Story] | None:
         from_user = None
         sender_chat = None
         user_id = None

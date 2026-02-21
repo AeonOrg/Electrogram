@@ -3,7 +3,7 @@ from __future__ import annotations
 import inspect
 from typing import TYPE_CHECKING
 
-from pyrogram.types import CallbackQuery, Message
+from pyrogram.types import Message
 
 from .callback_query_handler import CallbackQueryHandler
 from .message_handler import MessageHandler
@@ -21,7 +21,7 @@ class ConversationHandler(MessageHandler, CallbackQueryHandler):
     async def check(
         self,
         client: pyrogram.Client,
-        update: Message | CallbackQuery,
+        update: pyrogram.types.Update,
     ) -> bool:
         if isinstance(update, Message) and update.outgoing:
             return False

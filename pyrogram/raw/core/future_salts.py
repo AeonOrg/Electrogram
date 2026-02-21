@@ -20,13 +20,13 @@ class FutureSalts(TLObject):
         self.now = now
         self.salts = salts
 
-    @staticmethod
-    def read(data: BytesIO, *args: Any) -> FutureSalts:  # noqa: ARG004
-        req_msg_id = Long.read(data)
-        now = Int.read(data)
+    @classmethod
+    def read(cls, b: BytesIO, *_: Any) -> Any:
+        req_msg_id = Long.read(b)
+        now = Int.read(b)
 
-        count = Int.read(data)
-        salts = [FutureSalt.read(data) for _ in range(count)]
+        count = Int.read(b)
+        salts = [FutureSalt.read(b) for _ in range(count)]
 
         return FutureSalts(req_msg_id, now, salts)
 

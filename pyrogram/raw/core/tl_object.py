@@ -14,8 +14,8 @@ class TLObject:
 
     QUALNAME = "Base"
 
-    @staticmethod
-    def read(b: BytesIO, *args: Any) -> Any:
+    @classmethod
+    def read(cls, b: BytesIO, *args: Any) -> Any:
         return cast("TLObject", objects[int.from_bytes(b.read(4), "little")]).read(
             b,
             *args,

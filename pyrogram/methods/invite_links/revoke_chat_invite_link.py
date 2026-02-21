@@ -9,7 +9,7 @@ class RevokeChatInviteLink:
         self: pyrogram.Client,
         chat_id: int | str,
         invite_link: str,
-    ) -> types.ChatInviteLink:
+    ) -> types.ChatInviteLink | None:
         """Revoke a previously created invite link.
 
         If the primary link is revoked, a new link is automatically generated.

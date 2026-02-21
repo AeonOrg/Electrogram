@@ -35,7 +35,7 @@ class CopyMessage:
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
         | types.ForceReply = None,
-    ) -> types.Message:
+    ) -> types.Message | list[types.Message] | None:
         """Copy messages of any kind.
 
         The method is analogous to the method :meth:`~Client.forward_messages`, but the copied message doesn't have a

@@ -60,6 +60,6 @@ class BusinessRecipients(Object):
                 types.User._parse(client, users[i]) for i in recipients.users
             )
             or None
-            if getattr(recipients, "users", None)
+            if recipients.users
             else None,
         )

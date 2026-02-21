@@ -34,7 +34,7 @@ class SendContact:
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
         | types.ForceReply = None,
-    ) -> types.Message:
+    ) -> types.Message | None:
         """Send phone contacts.
 
         .. include:: /_includes/usable-by/users-bots.rst

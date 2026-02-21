@@ -54,7 +54,7 @@ class SendStory:
         forward_from_chat_id: int | str | None = None,
         forward_from_story_id: int | None = None,
         media_areas: list[types.InputMediaArea] | None = None,
-    ) -> types.Story:
+    ) -> types.Story | types.StorySkipped | types.StoryDeleted | None:
         """Send new story.
 
         .. include:: /_includes/usable-by/users.rst

@@ -18,7 +18,7 @@ from importlib import import_module
 from io import BytesIO, StringIO
 from mimetypes import MimeTypes
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, BinaryIO
 
 from anyio import Path as AsyncPath
 
@@ -248,12 +248,12 @@ class Client(Methods):
         session_string: str | None = None,
         is_telethon_string: bool = False,
         in_memory: bool | None = None,
-        storage: Storage = None,
+        storage: Storage | None = None,
         phone_number: str | None = None,
         phone_code: str | None = None,
         password: str | None = None,
         workers: int = WORKERS,
-        workdir: str = WORKDIR,
+        workdir: str | Path = WORKDIR,
         plugins: dict | None = None,
         parse_mode: enums.ParseMode = enums.ParseMode.DEFAULT,
         no_updates: bool | None = None,
@@ -262,7 +262,7 @@ class Client(Methods):
         sleep_threshold: int = Session.SLEEP_THRESHOLD,
         hide_password: bool = False,
         max_concurrent_transmissions: int = MAX_CONCURRENT_TRANSMISSIONS,
-        init_params: raw.types.JsonObject = None,
+        init_params: raw.types.JsonObject | None = None,
         max_message_cache_size: int = MAX_MESSAGE_CACHE_SIZE,
         client_platform: enums.ClientPlatform = enums.ClientPlatform.OTHER,
         connection_factory: type[Connection] = Connection,
@@ -374,7 +374,7 @@ class Client(Methods):
             ):
                 await self.invoke(raw.functions.updates.GetState())
 
-    async def authorize(self) -> User:
+    async def authorize(self) -> User | None:
         if self.bot_token:
             return await self.sign_in_bot(self.bot_token)
 
@@ -638,8 +638,8 @@ class Client(Methods):
                     None,
                 ) or getattr(update, "channel_id", None)
 
-                pts = getattr(update, "pts", None)
-                pts_count = getattr(update, "pts_count", None)
+                pts = getattr(update, "pts", 0)
+                pts_count = getattr(update, "pts_count", 0)
 
                 if pts and not self.skip_updates:
                     await self.storage.update_state(
@@ -953,7 +953,7 @@ class Client(Methods):
             else:
                 log.warning('[%s] No plugin loaded from "%s"', self.name, root)
 
-    async def handle_download(self, packet) -> str:
+    async def handle_download(self, packet) -> str | BinaryIO | None:
         (
             file_id,
             directory,
@@ -1014,17 +1014,17 @@ class Client(Methods):
         offset: int = 0,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> AsyncGenerator[bytes, None] | None:
+    ) -> AsyncGenerator[bytes, None]:
         async with self.get_file_semaphore:
             file_type = file_id.file_type
 
             if file_type == FileType.CHAT_PHOTO:
-                if file_id.chat_id > 0:
+                if file_id.chat_id and file_id.chat_id > 0:
                     peer = raw.types.InputPeerUser(
                         user_id=file_id.chat_id,
                         access_hash=file_id.chat_access_hash,
                     )
-                elif file_id.chat_access_hash == 0:
+                elif file_id.chat_id and file_id.chat_access_hash == 0:
                     peer = raw.types.InputPeerChat(chat_id=-file_id.chat_id)
                 else:
                     peer = raw.types.InputPeerChannel(

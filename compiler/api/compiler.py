@@ -46,7 +46,9 @@ WARNING = """
 
 
 def open_utf8(path: str | Path, mode: str = "r", *args, **kwargs):
-    return open(path, mode, encoding="utf-8", *args, **kwargs)
+    if not isinstance(path, Path):
+        path = Path(path)
+    return path.open(mode, *args, encoding="utf-8", **kwargs)
 
 
 types_to_constructors: dict[str, list[str]] = {}
@@ -88,14 +90,11 @@ def camel(s: str):
 
 def get_type_hint(type: str) -> str:
     is_flag = FLAGS_RE.match(type)
-    is_core = False
 
     if is_flag:
         type = type.split("?")[1]
 
     if type in CORE_TYPES:
-        is_core = True
-
         if type == "long" or "int" in type:
             type = "int"
         elif type == "double":
@@ -106,22 +105,16 @@ def get_type_hint(type: str) -> str:
             type = "bool"
         else:  # bytes and object
             type = "bytes"
-
-    if type in {"Object", "!X"}:
-        return "TLObject"
-
-    if re.match("^vector", type, re.IGNORECASE):
-        is_core = True
-
+    elif type in {"Object", "!X"}:
+        type = "TLObject"
+    elif re.match("^vector", type, re.IGNORECASE):
         sub_type = type.split("<")[1][:-1]
         type = f"List[{get_type_hint(sub_type)}]"
+    else:
+        ns, name = type.split(".") if "." in type else ("", type)
+        type = '"raw.base.' + ".".join([ns, name]).strip(".") + '"'
 
-    if is_core:
-        return f"Optional[{type}] = None" if is_flag else type
-    ns, name = type.split(".") if "." in type else ("", type)
-    type = '"raw.base.' + ".".join([ns, name]).strip(".") + '"'
-
-    return f"{type}{' = None' if is_flag else ''}"
+    return f"Optional[{type}] = None" if is_flag else type
 
 
 def sort_args(args: list[tuple[str, str]]):

@@ -11,7 +11,7 @@ class CreateForumTopic:
         title: str,
         icon_color: int | None = None,
         icon_emoji_id: int | None = None,
-    ) -> types.ForumTopicCreated:
+    ) -> types.ForumTopicCreated | None:
         """Create a new forum topic.
 
         .. include:: /_includes/usable-by/users-bots.rst

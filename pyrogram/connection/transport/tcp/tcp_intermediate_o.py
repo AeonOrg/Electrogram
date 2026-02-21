@@ -45,19 +45,25 @@ class TCPIntermediateO(TCP):
         await super().send(nonce)
 
     async def send(self, data: bytes, *args) -> None:
+        if self.encrypt is None:
+            raise ValueError("Transport not connected")
+
         await super().send(
             aes.ctr256_encrypt(pack("<i", len(data)) + data, *self.encrypt),
         )
 
     async def recv(self, length: int = 0) -> bytes | None:
-        length = await super().recv(4)
+        length_bytes = await super().recv(4)
 
-        if length is None:
+        if length_bytes is None:
             return None
 
-        length = aes.ctr256_decrypt(length, *self.decrypt)
+        if self.decrypt is None:
+            raise ValueError("Transport not connected")
 
-        data = await super().recv(unpack("<i", length)[0])
+        length_bytes = aes.ctr256_decrypt(length_bytes, *self.decrypt)
+
+        data = await super().recv(unpack("<i", length_bytes)[0])
 
         if data is None:
             return None

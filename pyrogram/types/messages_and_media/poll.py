@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, Any, cast
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -115,7 +115,7 @@ class Poll(Object, Update):
     async def _parse(
         client,
         media_poll: raw.types.MessageMediaPoll | raw.types.UpdateMessagePoll,
-        users: dict,
+        _: dict,
     ) -> Poll:
         poll = cast("raw.types.Poll", media_poll.poll)
         poll_results = cast("raw.types.PollResults", media_poll.results)

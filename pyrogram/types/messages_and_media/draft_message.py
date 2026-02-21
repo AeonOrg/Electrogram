@@ -70,7 +70,7 @@ class DraftMessage(Object):
         date: datetime | None = None,
         text: Str | None = None,
         entities: list[types.MessageEntity] | None = None,
-        link_preview_options: types.LinkPreviewOptions = None,
+        link_preview_options: types.LinkPreviewOptions | None = None,
         effect_id: str | None = None,
         video_note: types.VideoNote | None = None,
         voice: types.Voice | None = None,
@@ -103,7 +103,7 @@ class DraftMessage(Object):
         client: pyrogram.Client,
         raw_draft_message: raw.types.DraftMessage | raw.types.DraftMessageEmpty,
         users: dict,
-    ) -> DraftMessage:
+    ) -> DraftMessage | None:
         if not raw_draft_message:
             return None
         if isinstance(raw_draft_message, raw.types.DraftMessageEmpty):
@@ -115,7 +115,7 @@ class DraftMessage(Object):
 
         entities = [
             types.MessageEntity._parse(client, entity, users)
-            for entity in raw_draft_message.entities
+            for entity in (raw_draft_message.entities or [])
         ]
         entities = types.List(filter(lambda x: x is not None, entities))
 

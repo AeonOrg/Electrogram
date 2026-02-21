@@ -8,7 +8,7 @@ class GetChatMenuButton:
     async def get_chat_menu_button(
         self: pyrogram.Client,
         chat_id: int | str | None = None,
-    ) -> types.MenuButton:
+    ) -> types.MenuButton | None:
         """Get the current value of the bot's menu button in a private chat, or the default menu button.
 
         .. include:: /_includes/usable-by/bots.rst

@@ -14,7 +14,7 @@ class TCPFull(TCP):
     def __init__(self, ipv6: bool, proxy: Proxy) -> None:
         super().__init__(ipv6, proxy)
 
-        self.seq_no: int | None = None
+        self.seq_no: int = 0
 
     async def connect(self, address: tuple[str, int]) -> None:
         await super().connect(address)
@@ -28,17 +28,17 @@ class TCPFull(TCP):
         await super().send(data)
 
     async def recv(self, length: int = 0) -> bytes | None:
-        length = await super().recv(4)
+        length_bytes = await super().recv(4)
 
-        if length is None:
+        if length_bytes is None:
             return None
 
-        packet = await super().recv(unpack("<I", length)[0] - 4)
+        packet = await super().recv(unpack("<I", length_bytes)[0] - 4)
 
         if packet is None:
             return None
 
-        packet = length + packet
+        packet = length_bytes + packet
         checksum = packet[-4:]
         packet = packet[:-4]
 

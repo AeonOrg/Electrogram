@@ -473,19 +473,19 @@ class Message(Object, Update):
     def __init__(
         self,
         *,
-        client: pyrogram.Client = None,
+        client: pyrogram.Client | None = None,
         id: int,
         message_thread_id: int | None = None,
         business_connection_id: str | None = None,
-        from_user: types.User = None,
-        sender_chat: types.Chat = None,
-        sender_business_bot: types.User = None,
+        from_user: types.User | None = None,
+        sender_chat: types.Chat | None = None,
+        sender_business_bot: types.User | None = None,
         date: datetime | None = None,
-        chat: types.Chat = None,
-        topic: types.ForumTopic = None,
-        forward_from: types.User = None,
+        chat: types.Chat | None = None,
+        topic: types.ForumTopic | None = None,
+        forward_from: types.User | None = None,
         forward_sender_name: str | None = None,
-        forward_from_chat: types.Chat = None,
+        forward_from_chat: types.Chat | None = None,
         forward_from_message_id: int | None = None,
         forward_signature: str | None = None,
         forward_date: datetime | None = None,
@@ -496,21 +496,21 @@ class Message(Object, Update):
         reply_to_story_user_id: int | None = None,
         reply_to_story_chat_id: int | None = None,
         reply_to_top_message_id: int | None = None,
-        reply_to_message: Message = None,
-        reply_to_story: types.Story = None,
+        reply_to_message: Message | None = None,
+        reply_to_story: types.Story | None = None,
         mentioned: bool | None = None,
         empty: bool | None = None,
-        service: enums.MessageServiceType = None,
+        service: enums.MessageServiceType | None = None,
         scheduled: bool | None = None,
         from_scheduled: bool | None = None,
         edit_hide: bool | None = None,
-        media: enums.MessageMediaType = None,
+        media: enums.MessageMediaType | None = None,
         edit_date: datetime | None = None,
         media_group_id: str | None = None,
         author_signature: str | None = None,
         has_protected_content: bool | None = None,
         has_media_spoiler: bool | None = None,
-        text: Str = None,
+        text: Str | None = None,
         entities: list[types.MessageEntity] | None = None,
         caption_entities: list[types.MessageEntity] | None = None,
         quote_text: str | None = None,
@@ -527,79 +527,80 @@ class Message(Object, Update):
         summary_from_language: str | None = None,
         effect_id: str | None = None,
         invert_media: bool | None = None,
-        audio: types.Audio = None,
-        document: types.Document = None,
-        photo: types.Photo = None,
-        paid_media: types.PaidMedia = None,
-        sticker: types.Sticker = None,
-        animation: types.Animation = None,
-        game: types.Game = None,
-        giveaway: types.Giveaway = None,
-        giveaway_result: types.GiveawayResult = None,
+        audio: types.Audio | None = None,
+        document: types.Document | None = None,
+        photo: types.Photo | None = None,
+        paid_media: types.PaidMedia | None = None,
+        sticker: types.Sticker | None = None,
+        animation: types.Animation | None = None,
+        game: types.Game | None = None,
+        giveaway: types.Giveaway | None = None,
+        giveaway_result: types.GiveawayResult | None = None,
         boosts_applied: int | None = None,
-        chat_theme_updated: types.ChatTheme = None,
-        chat_wallpaper_updated: types.ChatWallpaper = None,
-        contact_registered: types.ContactRegistered = None,
-        gift_code: types.GiftCode = None,
-        user_gift: types.UserGift = None,
-        star_gift: types.StarGift = None,
-        screenshot_taken: types.ScreenshotTaken = None,
-        invoice: types.Invoice = None,
-        story: types.MessageStory | types.Story = None,
-        video: types.Video = None,
+        chat_theme_updated: types.ChatTheme | None = None,
+        chat_wallpaper_updated: types.ChatWallpaper | None = None,
+        contact_registered: types.ContactRegistered | None = None,
+        gift_code: types.GiftCode | None = None,
+        user_gift: types.UserGift | None = None,
+        star_gift: types.StarGift | None = None,
+        screenshot_taken: types.ScreenshotTaken | None = None,
+        invoice: types.Invoice | None = None,
+        story: types.MessageStory | types.Story | None = None,
+        video: types.Video | None = None,
         alternative_videos: list[types.AlternativeVideo] | None = None,
-        voice: types.Voice = None,
-        video_note: types.VideoNote = None,
-        web_page_preview: types.WebPagePreview = None,
-        caption: Str = None,
-        contact: types.Contact = None,
-        location: types.Location = None,
-        venue: types.Venue = None,
-        poll: types.Poll = None,
-        dice: types.Dice = None,
+        voice: types.Voice | None = None,
+        video_note: types.VideoNote | None = None,
+        web_page_preview: types.WebPagePreview | None = None,
+        caption: Str | None = None,
+        contact: types.Contact | None = None,
+        location: types.Location | None = None,
+        venue: types.Venue | None = None,
+        poll: types.Poll | None = None,
+        dice: types.Dice | None = None,
         new_chat_members: list[types.User] | None = None,
-        chat_joined_by_request: types.ChatJoinedByRequest = None,
-        left_chat_member: types.User = None,
+        chat_joined_by_request: types.ChatJoinedByRequest | None = None,
+        left_chat_member: types.User | None = None,
         new_chat_title: str | None = None,
-        new_chat_photo: types.Photo = None,
+        new_chat_photo: types.Photo | None = None,
         delete_chat_photo: bool | None = None,
         group_chat_created: bool | None = None,
         supergroup_chat_created: bool | None = None,
         channel_chat_created: bool | None = None,
         migrate_to_chat_id: int | None = None,
         migrate_from_chat_id: int | None = None,
-        pinned_message: Message = None,
+        pinned_message: Message | None = None,
         game_high_score: int | None = None,
         views: int | None = None,
         forwards: int | None = None,
-        via_bot: types.User = None,
+        via_bot: types.User | None = None,
         outgoing: bool | None = None,
         matches: list[Match] | None = None,
         command: list[str] | None = None,
-        bot_allowed: types.BotAllowed = None,
+        bot_allowed: types.BotAllowed | None = None,
         chats_shared: list[types.RequestedChats] | None = None,
-        forum_topic_created: types.ForumTopicCreated = None,
-        forum_topic_closed: types.ForumTopicClosed = None,
-        forum_topic_reopened: types.ForumTopicReopened = None,
-        forum_topic_edited: types.ForumTopicEdited = None,
-        general_topic_hidden: types.GeneralTopicHidden = None,
-        general_topic_unhidden: types.GeneralTopicUnhidden = None,
-        gifted_premium: types.GiftedPremium = None,
-        giveaway_launched: types.GiveawayLaunched = None,
-        video_chat_scheduled: types.VideoChatScheduled = None,
-        video_chat_started: types.VideoChatStarted = None,
-        video_chat_ended: types.VideoChatEnded = None,
-        video_chat_members_invited: types.VideoChatMembersInvited = None,
-        web_app_data: types.WebAppData = None,
-        successful_payment: types.SuccessfulPayment = None,
-        payment_refunded: types.PaymentRefunded = None,
+        forum_topic_created: types.ForumTopicCreated | None = None,
+        forum_topic_closed: types.ForumTopicClosed | None = None,
+        forum_topic_reopened: types.ForumTopicReopened | None = None,
+        forum_topic_edited: types.ForumTopicEdited | None = None,
+        general_topic_hidden: types.GeneralTopicHidden | None = None,
+        general_topic_unhidden: types.GeneralTopicUnhidden | None = None,
+        gifted_premium: types.GiftedPremium | None = None,
+        giveaway_launched: types.GiveawayLaunched | None = None,
+        video_chat_scheduled: types.VideoChatScheduled | None = None,
+        video_chat_started: types.VideoChatStarted | None = None,
+        video_chat_ended: types.VideoChatEnded | None = None,
+        video_chat_members_invited: types.VideoChatMembersInvited | None = None,
+        web_app_data: types.WebAppData | None = None,
+        successful_payment: types.SuccessfulPayment | None = None,
+        payment_refunded: types.PaymentRefunded | None = None,
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
+        | types.ForceReply
+        | None = None,
         reactions: list[types.Reaction] | None = None,
-        chat_join_type: enums.ChatJoinType = None,
-        raw: raw.types.Message = None,
+        chat_join_type: enums.ChatJoinType | None = None,
+        raw: raw.types.Message | None = None,
     ) -> None:
         super().__init__(client)
 
@@ -1131,7 +1132,7 @@ class Message(Object, Update):
             message_thread_id = None
             entities = [
                 types.MessageEntity._parse(client, entity, users)
-                for entity in message.entities
+                for entity in (message.entities or [])
             ]
             entities = types.List(filter(lambda x: x is not None, entities))
 
@@ -1514,7 +1515,7 @@ class Message(Object, Update):
             if message.reply_to:
                 if isinstance(message.reply_to, raw.types.MessageReplyHeader):
                     parsed_message.quote_text = message.reply_to.quote_text
-                    if len(message.reply_to.quote_entities) > 0:
+                    if message.reply_to.quote_entities:
                         quote_entities = [
                             types.MessageEntity._parse(client, entity, users)
                             for entity in message.reply_to.quote_entities
@@ -1705,7 +1706,7 @@ class Message(Object, Update):
         message_effect_id: int | None = None,
         invert_media: bool | None = None,
         reply_markup=None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_text* of :obj:`~pyrogram.types.Message`.
 
         An alias exists as *reply*.
@@ -1854,7 +1855,8 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
+        | types.ForceReply
+        | None = None,
         reply_to_message_id: int | None = None,
         business_connection_id: str | None = None,
         reply_in_chat_id: int | str | None = None,
@@ -1864,7 +1866,7 @@ class Message(Object, Update):
         message_effect_id: int | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_animation* :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -2061,10 +2063,11 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
+        | types.ForceReply
+        | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_audio* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -2133,7 +2136,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -2245,8 +2248,9 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
-    ) -> Message:
+        | types.ForceReply
+        | None = None,
+    ) -> Message | None:
         """Bound method *reply_cached_media* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -2290,7 +2294,7 @@ class Message(Object, Update):
             reply_to_message_id (``int``, *optional*):
                 If the message is a reply, ID of the original message.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -2353,7 +2357,7 @@ class Message(Object, Update):
         business_connection_id: str | None = None,
         emoji: str | None = None,
         emoji_message_id: int | None = None,
-        emoji_message_interaction: raw.types.DataJSON = None,
+        emoji_message_interaction: raw.types.DataJSON | None = None,
     ) -> bool:
         """Bound method *reply_chat_action* of :obj:`~pyrogram.types.Message`.
 
@@ -2429,8 +2433,9 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
-    ) -> Message:
+        | types.ForceReply
+        | None = None,
+    ) -> Message | None:
         """Bound method *reply_contact* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -2477,7 +2482,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -2566,10 +2571,11 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
+        | types.ForceReply
+        | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_document* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -2634,7 +2640,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -2743,8 +2749,9 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
-    ) -> Message:
+        | types.ForceReply
+        | None = None,
+    ) -> Message | None:
         """Bound method *reply_game* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -2828,7 +2835,7 @@ class Message(Object, Update):
         quote_text: str | None = None,
         quote_entities: list[types.MessageEntity] | None = None,
         parse_mode: enums.ParseMode | None = None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_inline_bot_result* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -2924,8 +2931,9 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
-    ) -> Message:
+        | types.ForceReply
+        | None = None,
+    ) -> Message | None:
         """Bound method *reply_location* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -2969,7 +2977,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -3092,7 +3100,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -3173,10 +3181,11 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
+        | types.ForceReply
+        | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_photo* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -3241,7 +3250,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -3346,7 +3355,7 @@ class Message(Object, Update):
         allows_multiple_answers: bool | None = None,
         correct_option_id: int | None = None,
         explanation: str | None = None,
-        explanation_parse_mode: enums.ParseMode = None,
+        explanation_parse_mode: enums.ParseMode | None = None,
         explanation_entities: list[types.MessageEntity] | None = None,
         open_period: int | None = None,
         close_date: datetime | None = None,
@@ -3365,8 +3374,9 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
-    ) -> Message:
+        | types.ForceReply
+        | None = None,
+    ) -> Message | None:
         """Bound method *reply_poll* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -3464,7 +3474,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -3562,10 +3572,11 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
+        | types.ForceReply
+        | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_sticker* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -3608,7 +3619,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -3724,8 +3735,9 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
-    ) -> Message:
+        | types.ForceReply
+        | None = None,
+    ) -> Message | None:
         """Bound method *reply_venue* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -3781,7 +3793,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -3877,10 +3889,11 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
+        | types.ForceReply
+        | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_video* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -3960,7 +3973,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -4084,10 +4097,11 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
+        | types.ForceReply
+        | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_video_note* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -4139,7 +4153,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -4260,10 +4274,11 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = None,
+        | types.ForceReply
+        | None = None,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_voice* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -4316,7 +4331,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -4428,7 +4443,7 @@ class Message(Object, Update):
         allow_paid_broadcast: bool | None = None,
         message_effect_id: int | None = None,
         reply_markup=None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *reply_web_page* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -4482,7 +4497,7 @@ class Message(Object, Update):
                 Business connection identifier.
                 for business bots only.
 
-            reply_in_chat_id: Union[int, str] = None,
+            reply_in_chat_id: int | str | None = None,
                 Unique identifier of target chat.
                 for reply message in another chat.
 
@@ -4565,9 +4580,9 @@ class Message(Object, Update):
         entities: list[types.MessageEntity] | None = None,
         disable_web_page_preview: bool | None = None,
         invert_media: bool | None = None,
-        reply_markup: types.InlineKeyboardMarkup = None,
+        reply_markup: types.InlineKeyboardMarkup | None = None,
         business_connection_id: str | None = None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *edit_text* of :obj:`~pyrogram.types.Message`.
 
         An alias exists as *edit*.
@@ -4639,9 +4654,9 @@ class Message(Object, Update):
         parse_mode: enums.ParseMode | None = None,
         caption_entities: list[types.MessageEntity] | None = None,
         invert_media: bool | None = None,
-        reply_markup: types.InlineKeyboardMarkup = None,
+        reply_markup: types.InlineKeyboardMarkup | None = None,
         business_connection_id: str | None = None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *edit_caption* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -4703,10 +4718,10 @@ class Message(Object, Update):
         self,
         media: types.InputMedia,
         invert_media: bool | None = None,
-        reply_markup: types.InlineKeyboardMarkup = None,
+        reply_markup: types.InlineKeyboardMarkup | None = None,
         parse_mode: enums.ParseMode | None = None,
         business_connection_id: str | None = None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *edit_media* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -4762,9 +4777,9 @@ class Message(Object, Update):
 
     async def edit_reply_markup(
         self,
-        reply_markup: types.InlineKeyboardMarkup = None,
+        reply_markup: types.InlineKeyboardMarkup | None = None,
         business_connection_id: str | None = None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *edit_reply_markup* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -4897,8 +4912,9 @@ class Message(Object, Update):
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
-        | types.ForceReply = object,
-    ) -> types.Message | list[types.Message]:
+        | types.ForceReply
+        | object = object,
+    ) -> types.Message | list[types.Message] | None:
         """Bound method *copy* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -5379,7 +5395,7 @@ class Message(Object, Update):
         emoji: str = "",
         big: bool = False,
         add_to_recent: bool = True,
-    ) -> types.MessageReactions:
+    ) -> types.MessageReactions | bool | None:
         """Bound method *react* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -5463,7 +5479,7 @@ class Message(Object, Update):
         block: bool = True,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ) -> str | BinaryIO:
+    ) -> str | BinaryIO | None:
         """Bound method *download* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -5573,7 +5589,7 @@ class Message(Object, Update):
         self,
         disable_notification: bool = False,
         both_sides: bool = False,
-    ) -> types.Message:
+    ) -> types.Message | None:
         """Bound method *pin* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -5652,7 +5668,7 @@ class Message(Object, Update):
         reply_markup=None,
         filters=None,
         timeout: int | None = None,
-    ) -> Message:
+    ) -> Message | None:
         """Bound method *ask* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -5765,7 +5781,9 @@ class Message(Object, Update):
             message_id=self.id,
         )
 
-    async def translate(self, to_language_code: str) -> types.TranslatedText:
+    async def translate(
+        self, to_language_code: str
+    ) -> types.TranslatedText | list[types.TranslatedText] | None:
         """Bound method *translate* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:

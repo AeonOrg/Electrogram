@@ -3,7 +3,7 @@ from __future__ import annotations
 import base64
 import struct
 from abc import ABC, abstractmethod
-from typing import Any, NoReturn
+from typing import Any
 
 
 class Storage(ABC):
@@ -18,29 +18,29 @@ class Storage(ABC):
         self.name = name
 
     @abstractmethod
-    async def open(self) -> NoReturn:
+    async def open(self) -> None:
         """Opens the storage engine."""
         raise NotImplementedError
 
     @abstractmethod
-    async def save(self) -> NoReturn:
+    async def save(self) -> None:
         """Saves the current state of the storage engine."""
         raise NotImplementedError
 
     @abstractmethod
-    async def close(self) -> NoReturn:
+    async def close(self) -> None:
         """Closes the storage engine."""
         raise NotImplementedError
 
     @abstractmethod
-    async def delete(self) -> NoReturn:
+    async def delete(self) -> None:
         """Deletes the storage."""
         raise NotImplementedError
 
     @abstractmethod
     async def update_peers(
         self,
-        peers: list[tuple[int, int, str, list[str], str]],
+        peers: list[tuple[int, int, str, str | None, str | None]],
     ) -> Any:
         raise NotImplementedError
 

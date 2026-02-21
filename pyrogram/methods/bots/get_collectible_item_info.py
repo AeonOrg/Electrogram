@@ -9,7 +9,7 @@ class GetCollectibleItemInfo:
         self: pyrogram.Client,
         username: str | None = None,
         phone_number: str | None = None,
-    ) -> types.CollectibleInfo:
+    ) -> types.CollectibleItemInfo | None:
         """Returns information about a given collectible item that was purchased at https://fragment.com
 
         .. include:: /_includes/usable-by/users.rst

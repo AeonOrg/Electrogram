@@ -61,14 +61,16 @@ class RequestCallbackAnswer:
 
         if password:
             r = await self.invoke(raw.functions.account.GetPassword())
-            password = utils.compute_password_check(r, password)
+            password_check = utils.compute_password_check(r, password)
+        else:
+            password_check = None
 
         return await self.invoke(
             raw.functions.messages.GetBotCallbackAnswer(
                 peer=await self.resolve_peer(chat_id),
                 msg_id=message_id,
                 data=data,
-                password=password,
+                password=password_check,
             ),
             retries=0,
             timeout=timeout,

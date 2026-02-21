@@ -30,7 +30,7 @@ class EditStory:
         parse_mode: enums.ParseMode | None = None,
         caption_entities: list[types.MessageEntity] | None = None,
         media_areas: list[types.InputMediaArea] | None = None,
-    ) -> types.Story:
+    ) -> types.Story | types.StorySkipped | types.StoryDeleted | None:
         """Edit story.
 
         .. include:: /_includes/usable-by/users.rst
@@ -235,7 +235,9 @@ class EditStory:
                 entities=entities,
                 media_areas=[
                     await media_area.write(self) for media_area in media_areas
-                ],
+                ]
+                if media_areas
+                else None,
             ),
         )
         return await types.Story._parse(self, r.updates[0].story, r.updates[0].peer)

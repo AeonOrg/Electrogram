@@ -69,7 +69,7 @@ class ShippingQuery(Object, Update):
     async def answer(
         self,
         ok: bool,
-        shipping_options: types.ShippingOptions = None,
+        shipping_options: types.ShippingOptions | None = None,
         error_message: str | None = None,
     ):
         """Bound method *answer* of :obj:`~pyrogram.types.ShippingQuery`.
