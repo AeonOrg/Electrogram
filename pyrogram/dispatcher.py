@@ -336,20 +336,26 @@ class Dispatcher:
 
                     while True:
                         try:
-                            diff = await self.client.invoke(
-                                raw.functions.updates.GetChannelDifference(
-                                    channel=await self.client.resolve_peer(id),
+                            if id < 0:
+                                peer = await self.client.resolve_peer(id)
+
+                                if not isinstance(peer, raw.base.InputChannel):
+                                    break
+
+                                rpc = raw.functions.updates.GetChannelDifference(
+                                    channel=peer,
                                     filter=raw.types.ChannelMessagesFilterEmpty(),
                                     pts=local_pts,
                                     limit=10000,
                                 )
-                                if id < 0
-                                else raw.functions.updates.GetDifference(
+                            else:
+                                rpc = raw.functions.updates.GetDifference(
                                     pts=local_pts,
                                     date=local_date,
                                     qts=0,
-                                ),
-                            )
+                                )
+
+                            diff = await self.client.invoke(rpc)
                         except (
                             errors.ChannelPrivate,
                             errors.ChannelInvalid,
@@ -393,7 +399,7 @@ class Dispatcher:
                                         pts=local_pts,
                                         pts_count=-1,
                                     )
-                                    if id == self.client.me.id
+                                    if self.client.me and id == self.client.me.id
                                     else raw.types.UpdateNewChannelMessage(
                                         message=message,
                                         pts=local_pts,
