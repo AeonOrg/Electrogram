@@ -206,7 +206,6 @@ class DraftMessage(Object):
                 "invert_media",
                 False,
             ),
-            file_name=file_name,
             media=media_type,
             _raw=raw_draft_message,
         )

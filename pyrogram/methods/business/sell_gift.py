@@ -39,5 +39,7 @@ class SellGift:
             raise ValueError("sender_user_id must belong to a user.")
 
         return await self.invoke(
-            raw.functions.payments.ConvertStarGift(user_id=peer, msg_id=message_id),
+            raw.functions.payments.ConvertStarGift(
+                stargift=raw.types.InputSavedStarGiftUser(msg_id=message_id),
+            ),
         )

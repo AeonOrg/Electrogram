@@ -5381,7 +5381,7 @@ class Message(Object, Update):
                 )
                 return r.url
             if button.user_id:
-                return await self._client.get_chat(button.user_id, force_full=False)
+                return await self._client.get_chat(button.user_id)
             if button.switch_inline_query:
                 return button.switch_inline_query
             if button.switch_inline_query_current_chat:
