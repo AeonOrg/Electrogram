@@ -10,16 +10,16 @@ if TYPE_CHECKING:
 
 class Bytes(bytes, TLObject):
     @classmethod
-    def read(cls, data: BytesIO, *args: Any) -> bytes:  # noqa: ARG003
-        length = int.from_bytes(data.read(1), "little")
+    def read(cls, b: BytesIO, *args: Any) -> Any:  # noqa: ARG003
+        length = int.from_bytes(b.read(1), "little")
 
         if length <= 253:
-            x = data.read(length)
-            data.read(-(length + 1) % 4)
+            x = b.read(length)
+            b.read(-(length + 1) % 4)
         else:
-            length = int.from_bytes(data.read(3), "little")
-            x = data.read(length)
-            data.read(-length % 4)
+            length = int.from_bytes(b.read(3), "little")
+            x = b.read(length)
+            b.read(-length % 4)
 
         return x
 

@@ -113,7 +113,7 @@ class ReactionType(Object):
             return ReactionTypePaid()
         return None
 
-    def write(self, client: pyrogram.Client) -> NoReturn:
+    def write(self, client: pyrogram.Client) -> raw.base.Reaction:
         raise NotImplementedError
 
 
