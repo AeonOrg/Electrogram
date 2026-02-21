@@ -1,5 +1,7 @@
 {warning}
 
+from __future__ import annotations
+
 from pyrogram.raw.core import TLObject
 
 class {name}(TLObject):  # type: ignore

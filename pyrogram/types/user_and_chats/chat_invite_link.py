@@ -102,7 +102,7 @@ class ChatInviteLink(Object):
     @staticmethod
     def _parse(
         client: pyrogram.Client,
-        invite: raw.base.ExportedChatInvite,
+        invite: raw.base.ExportedChatInvite | None,
         users: dict[int, raw.types.User] | None = None,
     ) -> ChatInviteLink | None:
         if not isinstance(invite, raw.types.ChatInviteExported):

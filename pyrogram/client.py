@@ -663,7 +663,7 @@ class Client(Methods):
                             diff = await self.invoke(
                                 raw.functions.updates.GetChannelDifference(
                                     channel=await self.resolve_peer(
-                                        utils.get_channel_id(channel_id),
+                                        utils.get_channel_id(channel_id or 0),
                                     ),
                                     filter=raw.types.ChannelMessagesFilter(
                                         ranges=[
