@@ -166,7 +166,7 @@ class Story(Object, Update):
         | raw.types.PeerUser
         | raw.types.InputPeerChannel
         | raw.types.InputPeerUser,
-    ) -> Story | StorySkipped | StoryDeleted | None:
+    ) -> Story | types.StorySkipped | types.StoryDeleted | None:
         if isinstance(stories, raw.types.StoryItemSkipped):
             return await types.StorySkipped._parse(client, stories, peer)
         if isinstance(stories, raw.types.StoryItemDeleted):

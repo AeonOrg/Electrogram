@@ -13,8 +13,8 @@ class Listening:
         chat_id: int | str,
         filters: filters.Filter | None = None,
         timeout: int | None = None,
-        *args,
-        **kwargs,
+        *_,
+        **__,
     ):
         """Wait for a new message in a chat."""
         return await self.wait_for_message(chat_id, filters, timeout)
@@ -46,8 +46,8 @@ class Listening:
     async def stop_listening(
         self: pyrogram.Client,
         chat_id: int | str,
-        *args,
-        **kwargs,
+        *_,
+        **__,
     ):
         """Stop listening for messages in a chat."""
         raise NotImplementedError("Listening is not implemented in this fork yet.")

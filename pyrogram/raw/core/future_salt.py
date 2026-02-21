@@ -20,7 +20,7 @@ class FutureSalt(TLObject):
         self.salt = salt
 
     @classmethod
-    def read(cls, b: BytesIO, *args: Any) -> Any:
+    def read(cls, b: BytesIO, *_: Any) -> Any:
         valid_since = Int.read(b)
         valid_until = Int.read(b)
         salt = Long.read(b)

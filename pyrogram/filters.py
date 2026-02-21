@@ -846,7 +846,7 @@ class user(Filter, set):
             for u in users
         )
 
-    async def __call__(self, client: pyrogram.Client, update: Update):
+    async def __call__(self, _: pyrogram.Client, update: Update):
         if not isinstance(update, Message):
             return False
 
@@ -887,7 +887,7 @@ class chat(Filter, set):
             for c in chats
         )
 
-    async def __call__(self, client: pyrogram.Client, update: Update):
+    async def __call__(self, _: pyrogram.Client, update: Update):
         if isinstance(update, Story):
             return (
                 update.sender_chat
@@ -947,7 +947,7 @@ class topic(Filter, set):
 
         super().__init__(t for t in topics)
 
-    async def __call__(self, client: pyrogram.Client, update: Update):
+    async def __call__(self, _: pyrogram.Client, update: Update):
         if not isinstance(update, Message):
             return False
 

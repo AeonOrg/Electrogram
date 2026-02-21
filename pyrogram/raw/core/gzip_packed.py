@@ -20,7 +20,7 @@ class GzipPacked(TLObject):
         self.packed_data = packed_data
 
     @classmethod
-    def read(cls, b: BytesIO, *args: Any) -> Any:
+    def read(cls, b: BytesIO, *_: Any) -> Any:
         # Return the Object itself instead of a GzipPacked wrapping it
         return cast(
             "GzipPacked",

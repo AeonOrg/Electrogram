@@ -27,7 +27,7 @@ class Message(TLObject):
         self.body = body
 
     @classmethod
-    def read(cls, b: BytesIO, *args: Any) -> Any:
+    def read(cls, b: BytesIO, *_: Any) -> Any:
         msg_id = Long.read(b)
         seq_no = Int.read(b)
         length = Int.read(b)
