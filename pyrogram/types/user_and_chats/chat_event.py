@@ -311,7 +311,7 @@ class ChatEvent(Object):
         users_map = {i.id: i for i in users}
         chats_map = {i.id: i for i in chats}
 
-        user = types.User._parse(client, users_map[event.user_id])
+        user = types.User._parse(client, users_map.get(event.user_id))
         action = event.action
 
         old_description: str | None = None
@@ -404,10 +404,11 @@ class ChatEvent(Object):
         ):
             old_linked_chat = types.Chat._parse_chat(
                 client,
-                chats_map[action.prev_value],
+                chats_map.get(action.prev_value),
             )
             new_linked_chat = types.Chat._parse_chat(
-                client, chats_map[action.new_value]
+                client,
+                chats_map.get(action.new_value),
             )
             action = enums.ChatEventAction.LINKED_CHAT_CHANGED
 
@@ -632,7 +633,7 @@ class ChatEvent(Object):
             raw.types.ChannelAdminLogEventActionParticipantJoinByRequest,
         ):
             invite_link = types.ChatInviteLink._parse(client, action.invite, users)
-            approver_user = types.User._parse(client, users_map[action.approved_by])
+            approver_user = types.User._parse(client, users_map.get(action.approved_by))
             action = enums.ChatEventAction.MEMBER_JOINED_BY_REQUEST
 
         elif isinstance(
