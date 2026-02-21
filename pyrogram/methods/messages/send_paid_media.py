@@ -303,7 +303,6 @@ class SendPaidMedia:
                         "connection_id",
                         business_connection_id,
                     ),
-                    raw_reply_to_message=i.reply_to_message,
                     replies=0,
                 )
         return None

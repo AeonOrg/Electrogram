@@ -548,7 +548,6 @@ class SendMediaGroup:
             background=background,
             clear_draft=clear_draft,
             update_stickersets_order=update_stickersets_order,
-            schedule_repeat_period=schedule_repeat_period,
             send_as=await self.resolve_peer(send_as) if send_as else None,
             quick_reply_shortcut=await utils.get_input_quick_reply_shortcut(
                 quick_reply_shortcut,
