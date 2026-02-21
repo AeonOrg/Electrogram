@@ -46,7 +46,9 @@ WARNING = """
 
 
 def open_utf8(path: str | Path, mode: str = "r", *args, **kwargs):
-    return open(path, mode, encoding="utf-8", *args, **kwargs)
+    if not isinstance(path, Path):
+        path = Path(path)
+    return path.open(mode, *args, encoding="utf-8", **kwargs)
 
 
 types_to_constructors: dict[str, list[str]] = {}

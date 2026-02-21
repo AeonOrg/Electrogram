@@ -163,9 +163,7 @@ def generate_raw(source_path, base) -> None:
             f.write("\n")
 
 
-def pyrogram_api() -> None:
-    # Discovery logic
-
+def discover_methods() -> dict:
     methods_categories = {}
     methods_path = Path(METHODS_PATH)
     if not methods_path.exists():
@@ -197,7 +195,10 @@ def pyrogram_api() -> None:
                     category_name.replace("_", " ").title(),
                 )
                 methods_categories[category_name] = (title, methods)
+    return methods_categories
 
+
+def discover_types() -> dict:
     types_categories = {}
     types_lib_path = Path(TYPES_LIB_PATH)
     if not types_lib_path.exists():
@@ -226,8 +227,15 @@ def pyrogram_api() -> None:
                     category_name.replace("_", " ").title(),
                 )
                 types_categories[category_name] = (title, sorted(types))
+    return types_categories
 
+
+def discover_bound_methods() -> dict:
     bound_methods_categories = {}
+    types_lib_path = Path(TYPES_LIB_PATH)
+    if not types_lib_path.exists():
+        types_lib_path = Path("../../") / TYPES_LIB_PATH
+
     for file in sorted(types_lib_path.rglob("*.py")):
         if file.name == "__init__.py":
             continue
@@ -251,7 +259,10 @@ def pyrogram_api() -> None:
                     bound_methods_categories[class_name].extend(
                         sorted(class_bound_methods),
                     )
+    return bound_methods_categories
 
+
+def discover_enums() -> list:
     enums_lib_path = Path(ENUMS_LIB_PATH)
     if not enums_lib_path.exists():
         enums_lib_path = Path("../../") / ENUMS_LIB_PATH
@@ -268,6 +279,15 @@ def pyrogram_api() -> None:
         enums_list.extend(
             node.name for node in ast.walk(tree) if isinstance(node, ast.ClassDef)
         )
+    return enums_list
+
+
+def pyrogram_api() -> None:
+    # Discovery logic
+    methods_categories = discover_methods()
+    types_categories = discover_types()
+    bound_methods_categories = discover_bound_methods()
+    enums_list = discover_enums()
 
     # Methods Generation
 
