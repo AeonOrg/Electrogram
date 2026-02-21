@@ -8,7 +8,7 @@ class RefundStarsCharge:
     async def refund_stars_charge(
         self: pyrogram.Client,
         user_id: int | str,
-        telegram_payment_charge_id: str,
+        charge_id: str,
     ) -> bool:
         """Refund the stars to the user.
 
