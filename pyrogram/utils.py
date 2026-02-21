@@ -441,7 +441,9 @@ async def get_reply_to(
         )
     if reply_to_story_id:
         if chat_id is None:
-            raise ValueError("chat_id is required when reply_to_story_id is provided")
+            raise ValueError(
+                "chat_id is required when reply_to_story_id is provided"
+            )
         peer = await client.resolve_peer(chat_id)
         reply_to = types.InputReplyToStory(peer=peer, story_id=reply_to_story_id)
     return reply_to
