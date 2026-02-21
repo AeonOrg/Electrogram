@@ -14,11 +14,11 @@ class Int(bytes, TLObject):
     @classmethod
     def read(
         cls,
-        data: BytesIO,
-        signed: bool = True,
-        *args: Any,  # noqa: ARG003
-    ) -> int:
-        return int.from_bytes(data.read(cls.SIZE), "little", signed=signed)
+        b: BytesIO,
+        *args: Any,
+    ) -> Any:
+        signed = args[0] if args else True
+        return int.from_bytes(b.read(cls.SIZE), "little", signed=signed)
 
     def __new__(cls, value: int, signed: bool = True) -> bytes:
         return value.to_bytes(cls.SIZE, "little", signed=signed)

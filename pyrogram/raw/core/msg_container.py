@@ -18,10 +18,10 @@ class MsgContainer(TLObject):
     def __init__(self, messages: list[Message]) -> None:
         self.messages = messages
 
-    @staticmethod
-    def read(data: BytesIO, *args: Any) -> MsgContainer:  # noqa: ARG004
-        count = Int.read(data)
-        return MsgContainer([Message.read(data) for _ in range(count)])
+    @classmethod
+    def read(cls, b: BytesIO, *args: Any) -> Any:  # noqa: ARG004
+        count = Int.read(b)
+        return MsgContainer([Message.read(b) for _ in range(count)])
 
     def write(self, *args: Any) -> bytes:  # noqa: ARG002
         b = BytesIO()

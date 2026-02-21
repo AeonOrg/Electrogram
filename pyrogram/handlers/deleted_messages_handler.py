@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
     import pyrogram
     from pyrogram.filters import Filter
-    from pyrogram.types import Message
+    from pyrogram.types import Message, Update
 
 
 class DeletedMessagesHandler(Handler):
@@ -39,10 +39,13 @@ class DeletedMessagesHandler(Handler):
     def __init__(self, callback: Callable, filters: Filter | None = None) -> None:
         super().__init__(callback, filters)
 
-    async def check(self, client: pyrogram.Client, messages: list[Message]) -> bool:
+    async def check(self, client: pyrogram.Client, update: Update) -> bool:
+        if not isinstance(update, list):
+            return False
+
         # Every message should be checked, if at least one matches the filter True is returned
         # otherwise, or if the list is empty, False is returned
-        for message in messages:
+        for message in update:
             if await super().check(client, message):
                 return True
         return False

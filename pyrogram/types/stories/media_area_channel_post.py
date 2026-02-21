@@ -34,8 +34,9 @@ class MediaAreaChannelPost(MediaArea):
 
     async def _parse(
         self: pyrogram.Client,
-        media_area: raw.types.MediaAreaChannelPost,
+        media_area: raw.base.MediaArea,
     ) -> MediaAreaChannelPost:
+        assert isinstance(media_area, raw.types.MediaAreaChannelPost)
         channel_id = utils.get_channel_id(media_area.channel_id)
         chat = types.Chat._parse_chat(
             self,

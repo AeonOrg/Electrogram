@@ -71,7 +71,10 @@ class Object:
 
     __hash__ = None
 
-    def __eq__(self, other: Object) -> bool:
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Object):
+            return False
+
         for attr in self.__dict__:
             try:
                 if attr.startswith("_"):

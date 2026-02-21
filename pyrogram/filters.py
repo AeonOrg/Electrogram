@@ -846,14 +846,17 @@ class user(Filter, set):
             for u in users
         )
 
-    async def __call__(self, _, message: Message):
-        return message.from_user and (
-            message.from_user.id in self
+    async def __call__(self, client: pyrogram.Client, update: Update):
+        if not isinstance(update, Message):
+            return False
+
+        return update.from_user and (
+            update.from_user.id in self
             or (
-                message.from_user.username
-                and message.from_user.username.lower() in self
+                update.from_user.username
+                and update.from_user.username.lower() in self
             )
-            or ("me" in self and message.from_user.is_self)
+            or ("me" in self and update.from_user.is_self)
         )
 
 
@@ -884,35 +887,39 @@ class chat(Filter, set):
             for c in chats
         )
 
-    async def __call__(self, _, message: Message | Story):
-        if isinstance(message, Story):
+    async def __call__(self, client: pyrogram.Client, update: Update):
+        if isinstance(update, Story):
             return (
-                message.sender_chat
+                update.sender_chat
                 and (
-                    message.sender_chat.id in self
+                    update.sender_chat.id in self
                     or (
-                        message.sender_chat.username
-                        and message.sender_chat.username.lower() in self
+                        update.sender_chat.username
+                        and update.sender_chat.username.lower() in self
                     )
                 )
             ) or (
-                message.from_user
+                update.from_user
                 and (
-                    message.from_user.id in self
+                    update.from_user.id in self
                     or (
-                        message.from_user.username
-                        and message.from_user.username.lower() in self
+                        update.from_user.username
+                        and update.from_user.username.lower() in self
                     )
                 )
             )
-        return message.chat and (
-            message.chat.id in self
-            or (message.chat.username and message.chat.username.lower() in self)
+
+        if not isinstance(update, Message):
+            return False
+
+        return update.chat and (
+            update.chat.id in self
+            or (update.chat.username and update.chat.username.lower() in self)
             or (
                 "me" in self
-                and message.from_user
-                and message.from_user.is_self
-                and not message.outgoing
+                and update.from_user
+                and update.from_user.is_self
+                and not update.outgoing
             )
         )
 
@@ -940,5 +947,8 @@ class topic(Filter, set):
 
         super().__init__(t for t in topics)
 
-    async def __call__(self, _, message: Message):
-        return message.topic and message.topic.id in self
+    async def __call__(self, client: pyrogram.Client, update: Update):
+        if not isinstance(update, Message):
+            return False
+
+        return update.topic and update.topic.id in self

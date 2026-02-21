@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
     import pyrogram
     from pyrogram.filters import Filter
-    from pyrogram.types import Message
+    from pyrogram.types import Message, Update
 
 
 class DeletedBotBusinessMessagesHandler(Handler):
@@ -39,8 +39,11 @@ class DeletedBotBusinessMessagesHandler(Handler):
     def __init__(self, callback: Callable, filters: Filter | None = None) -> None:
         super().__init__(callback, filters)
 
-    async def check(self, client: pyrogram.Client, messages: list[Message]) -> bool:
-        for message in messages:
+    async def check(self, client: pyrogram.Client, update: Update) -> bool:
+        if not isinstance(update, list):
+            return False
+
+        for message in update:
             if await super().check(client, message):
                 return True
         return False
