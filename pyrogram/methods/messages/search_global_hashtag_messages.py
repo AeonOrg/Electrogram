@@ -56,6 +56,7 @@ class SearchGlobalHashtagMessages:
         limit = min(100, total)
 
         offset_peer = raw.types.InputPeerEmpty()
+        offset_rate = utils.datetime_to_timestamp(offset_date)
 
         while True:
             messages = await utils.parse_messages(
@@ -63,7 +64,7 @@ class SearchGlobalHashtagMessages:
                 await self.invoke(
                     raw.functions.channels.SearchPosts(
                         hashtag=hashtag,
-                        offset_rate=utils.datetime_to_timestamp(offset_date),
+                        offset_rate=offset_rate,
                         offset_peer=offset_peer,
                         offset_id=offset_id,
                         limit=limit,
@@ -77,7 +78,7 @@ class SearchGlobalHashtagMessages:
 
             last = messages[-1]
 
-            offset_date = utils.datetime_to_timestamp(last.date)
+            offset_rate = utils.datetime_to_timestamp(last.date)
             offset_peer = await self.resolve_peer(last.chat.id)
             offset_id = last.id
 

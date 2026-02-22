@@ -63,7 +63,12 @@ class ChatJoiner(Object):
             pending=getattr(joiner, "requested", None),
             bio=getattr(joiner, "about", None),
             approved_by=(
-                types.User._parse(client, users.get(joiner.approved_by))
+                types.User._parse(
+                    client,
+                    users.get(joiner.approved_by)
+                    if joiner.approved_by is not None
+                    else None,
+                )
                 if getattr(joiner, "approved_by", None)
                 else None
             ),

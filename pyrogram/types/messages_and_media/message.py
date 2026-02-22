@@ -33,11 +33,11 @@ class Str(str):
 
     @property
     def markdown(self):
-        return Parser.unparse(self, self.entities, False)
+        return Parser.unparse(self, self.entities or [], False)
 
     @property
     def html(self):
-        return Parser.unparse(self, self.entities, True)
+        return Parser.unparse(self, self.entities or [], True)
 
     def __getitem__(self, item):
         return parser_utils.remove_surrogates(
@@ -1130,11 +1130,16 @@ class Message(Object, Update):
 
         if isinstance(message, raw.types.Message):
             message_thread_id = None
-            entities = [
-                types.MessageEntity._parse(client, entity, users)
-                for entity in (message.entities or [])
-            ]
-            entities = types.List(filter(lambda x: x is not None, entities))
+            entities = types.List(
+                [
+                    e
+                    for e in [
+                        types.MessageEntity._parse(client, entity, users)
+                        for entity in (message.entities or [])
+                    ]
+                    if e is not None
+                ],
+            )
 
             sender_business_bot = None
             forward_from = None
@@ -1516,12 +1521,15 @@ class Message(Object, Update):
                 if isinstance(message.reply_to, raw.types.MessageReplyHeader):
                     parsed_message.quote_text = message.reply_to.quote_text
                     if message.reply_to.quote_entities:
-                        quote_entities = [
-                            types.MessageEntity._parse(client, entity, users)
-                            for entity in message.reply_to.quote_entities
-                        ]
                         parsed_message.quote_entities = types.List(
-                            filter(lambda x: x is not None, quote_entities),
+                            [
+                                e
+                                for e in [
+                                    types.MessageEntity._parse(client, entity, users)
+                                    for entity in message.reply_to.quote_entities
+                                ]
+                                if e is not None
+                            ],
                         )
                     if message.reply_to.forum_topic:
                         if message.reply_to.reply_to_top_id:
@@ -5134,7 +5142,7 @@ class Message(Object, Update):
                 return await self._client.send_web_page(
                     chat_id,
                     url=self.web_page_preview.webpage.url,
-                    text=self.text,
+                    text=self.text or "",
                     entities=self.entities,
                     parse_mode=enums.ParseMode.DISABLED,
                     large_media=self.web_page_preview.force_large_media,
@@ -5381,13 +5389,16 @@ class Message(Object, Update):
                 )
                 return r.url
             if button.user_id:
-                return await self._client.get_chat(button.user_id, force_full=False)
+                return await self._client.get_chat(button.user_id)
             if button.switch_inline_query:
                 return button.switch_inline_query
             if button.switch_inline_query_current_chat:
                 return button.switch_inline_query_current_chat
             raise ValueError("This button is not supported yet")
-        await self.reply(text=button, quote=quote)
+        await self.reply(
+            text=button if isinstance(button, str) else button.text,
+            quote=quote,
+        )
         return None
 
     async def react(

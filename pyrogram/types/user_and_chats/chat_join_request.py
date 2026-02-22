@@ -59,7 +59,10 @@ class ChatJoinRequest(Object, Update):
         chat_id = utils.get_raw_peer_id(update.peer)
 
         return ChatJoinRequest(
-            chat=types.Chat._parse_chat(client, chats.get(chat_id)),
+            chat=types.Chat._parse_chat(
+                client,
+                chats.get(chat_id) if chat_id is not None else None,
+            ),
             from_user=types.User._parse(client, users.get(update.user_id)),
             date=utils.timestamp_to_datetime(getattr(update, "date", None)),
             bio=getattr(update, "about", None),

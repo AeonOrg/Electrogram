@@ -69,8 +69,10 @@ class Reaction(Object):
         reaction_count: raw.base.ReactionCount,
     ) -> Reaction | None:
         reaction = Reaction._parse(client, reaction_count.reaction)
-        reaction.count = reaction_count.count
-        reaction.chosen_order = reaction_count.chosen_order
+
+        if reaction:
+            reaction.count = reaction_count.count
+            reaction.chosen_order = reaction_count.chosen_order
 
         return reaction
 
