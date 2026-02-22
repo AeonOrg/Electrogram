@@ -1353,8 +1353,8 @@ class Message(Object, Update):
                     dice = types.Dice._parse(client, media)
                     media_type = enums.MessageMediaType.DICE
                 elif isinstance(media, raw.types.MessageMediaInvoice):
-                    invoice = types.Invoice._parse(media)
-                    media = enums.MessageMediaType.INVOICE
+                    invoice = types.Invoice._parse(client, media)
+                    media_type = enums.MessageMediaType.INVOICE
                 elif isinstance(media, raw.types.MessageMediaPaidMedia):
                     paid_media = types.PaidMedia._parse(client, media)
                     media_type = enums.MessageMediaType.PAID_MEDIA

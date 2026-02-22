@@ -155,5 +155,6 @@ class CopyMediaGroup:
                 ],
                 users=r.users,
                 chats=r.chats,
+                topics=[],
             ),
         )

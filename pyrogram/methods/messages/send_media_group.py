@@ -586,6 +586,7 @@ class SendMediaGroup:
                 ],
                 users=r.users,
                 chats=r.chats,
+                topics=[],
             ),
             business_connection_id=business_connection_id,
         )
