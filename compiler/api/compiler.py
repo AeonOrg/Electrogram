@@ -96,7 +96,7 @@ def get_type_hint(type: str) -> str:
 
     def get_hint(t: str) -> str:
         if t in CORE_TYPES:
-            if t == "long" or "int" in t:
+            if t in {"long", "int", "int128", "int256"}:
                 return "int"
             if t == "double":
                 return "float"
