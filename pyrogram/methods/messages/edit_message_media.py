@@ -22,7 +22,7 @@ class EditMessageMedia:
         file_name: str | None = None,
         parse_mode: enums.ParseMode | None = None,
         business_connection_id: str | None = None,
-        invert_media: bool = False,
+        invert_media: bool | None = None,
     ) -> types.Message | None:
         """Edit animation, audio, document, photo or video messages, or replace text with animation, audio, document, photo or video messages.
 

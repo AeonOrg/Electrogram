@@ -89,32 +89,40 @@ def camel(s: str):
 
 
 def get_type_hint(type: str) -> str:
-    is_flag = FLAGS_RE.match(type)
+    is_flag = bool(FLAGS_RE.match(type))
 
     if is_flag:
         type = type.split("?")[1]
 
-    if type in CORE_TYPES:
-        if type == "long" or "int" in type:
-            type = "int"
-        elif type == "double":
-            type = "float"
-        elif type == "string":
-            type = "str"
-        elif type in {"Bool", "true"}:
-            type = "bool"
-        else:  # bytes and object
-            type = "bytes"
-    elif type in {"Object", "!X"}:
-        type = "TLObject"
-    elif re.match("^vector", type, re.IGNORECASE):
-        sub_type = type.split("<")[1][:-1]
-        type = f"List[{get_type_hint(sub_type)}]"
-    else:
-        ns, name = type.split(".") if "." in type else ("", type)
-        type = '"raw.base.' + ".".join([ns, name]).strip(".") + '"'
+    def get_hint(t: str) -> str:
+        if t in CORE_TYPES:
+            if t in {"long", "int", "int128", "int256"}:
+                return "int"
+            if t == "double":
+                return "float"
+            if t == "string":
+                return "str"
+            if t in {"Bool", "true"}:
+                return "bool"
+            return "bytes"
+        if t in {"Object", "!X"}:
+            return "TLObject"
+        if re.match("^vector", t, re.IGNORECASE):
+            sub_type = t.split("<", 1)[1][:-1]
+            return f"list[{get_hint(sub_type)}]"
+        ns, name = t.split(".") if "." in t else ("", t)
+        return "raw.base." + ".".join([ns, name]).strip(".")
 
-    return f"Optional[{type}] = None" if is_flag else type
+    hint = get_hint(type)
+
+    if is_flag:
+        if "raw.base" in hint:
+            return f'"{hint} | None" = None'
+        return f"{hint} | None = None"
+
+    if "raw.base" in hint:
+        return f'"{hint}"'
+    return hint
 
 
 def sort_args(args: list[tuple[str, str]]):

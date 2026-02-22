@@ -46,8 +46,8 @@ class Auth:
         return TLObject.read(b)
 
     async def invoke(self, data: TLObject):
-        data = self.pack(data)
-        await self.connection.send(data)
+        packed_data = self.pack(data)
+        await self.connection.send(packed_data)
         response = BytesIO(await self.connection.recv())
 
         return self.unpack(response)

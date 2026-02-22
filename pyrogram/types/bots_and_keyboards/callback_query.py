@@ -175,6 +175,7 @@ class CallbackQuery(Object, Update):
         parse_mode: enums.ParseMode | None = None,
         disable_web_page_preview: bool | None = None,
         reply_markup: types.InlineKeyboardMarkup | None = None,
+        business_connection_id: str | None = None,
     ) -> types.Message | bool | None:
         """Edit the text of messages attached to callback queries.
 
@@ -193,6 +194,10 @@ class CallbackQuery(Object, Update):
 
             reply_markup (:obj:`~pyrogram.types.InlineKeyboardMarkup`, *optional*):
                 An InlineKeyboardMarkup object.
+
+            business_connection_id (``str``, *optional*):
+                Unique identifier of the business connection.
+                for business bots only.
 
         Returns:
             :obj:`~pyrogram.types.Message` | ``bool``: On success, if the edited message was sent by the bot, the edited
@@ -213,7 +218,9 @@ class CallbackQuery(Object, Update):
                     self.message,
                     "business_connection_id",
                     None,
-                ),
+                )
+                if business_connection_id is None
+                else business_connection_id,
             )
         return await self._client.edit_inline_text(
             inline_message_id=self.inline_message_id,
@@ -256,17 +263,26 @@ class CallbackQuery(Object, Update):
         Raises:
             RPCError: In case of a Telegram RPC error.
         """
-        return await self.edit_message_text(
-            caption,
-            parse_mode,
-            reply_markup=reply_markup,
-            business_connection_id=getattr(
-                self.message,
-                "business_connection_id",
-                None,
+        if self.inline_message_id is None:
+            return await self._client.edit_message_caption(
+                chat_id=self.message.chat.id,
+                message_id=self.message.id,
+                caption=caption,
+                parse_mode=parse_mode,
+                reply_markup=reply_markup,
+                business_connection_id=getattr(
+                    self.message,
+                    "business_connection_id",
+                    None,
+                )
+                if business_connection_id is None
+                else business_connection_id,
             )
-            if business_connection_id is None
-            else business_connection_id,
+        return await self._client.edit_inline_caption(
+            inline_message_id=self.inline_message_id,
+            caption=caption,
+            parse_mode=parse_mode,
+            reply_markup=reply_markup,
         )
 
     async def edit_message_media(

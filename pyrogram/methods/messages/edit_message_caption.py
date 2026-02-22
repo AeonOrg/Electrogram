@@ -15,7 +15,7 @@ class EditMessageCaption:
         caption: str,
         parse_mode: enums.ParseMode | None = None,
         caption_entities: list[types.MessageEntity] | None = None,
-        invert_media: bool = False,
+        invert_media: bool | None = None,
         reply_markup: types.InlineKeyboardMarkup | None = None,
         business_connection_id: str | None = None,
     ) -> types.Message | None:

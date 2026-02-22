@@ -61,7 +61,10 @@ class Giveaway(Object):
         self.private_channel_ids = private_channel_ids
 
     @staticmethod
-    async def _parse(client, message: raw.types.Message) -> Giveaway:
+    async def _parse(client, message: raw.types.Message) -> Giveaway | None:
+        if not isinstance(message.media, raw.types.MessageMediaGiveaway):
+            return None
+
         giveaway: raw.types.MessageMediaGiveaway = message.media
         chats = []
         private_ids = []

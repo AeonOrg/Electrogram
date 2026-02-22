@@ -64,7 +64,7 @@ class SendGift:
         ).values()
 
         invoice = raw.types.InputInvoiceStarGift(
-            user_id=peer,
+            peer=peer,
             gift_id=gift_id,
             hide_name=is_private,
             message=raw.types.TextWithEntities(text=text, entities=entities or [])

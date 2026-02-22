@@ -768,8 +768,11 @@ class Chat(Object):
     @staticmethod
     def _parse_chat(
         client,
-        chat: raw.types.Chat | raw.types.User | raw.types.Channel,
+        chat: raw.types.Chat | raw.types.User | raw.types.Channel | None,
     ) -> Chat | None:
+        if chat is None:
+            return None
+
         if isinstance(chat, raw.types.Chat | raw.types.ChatForbidden):
             return Chat._parse_chat_chat(client, chat)
         if isinstance(chat, raw.types.User):

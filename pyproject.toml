@@ -136,3 +136,4 @@ ignore = [
 
 [tool.ty.rules]
 unresolved-import = "ignore"
+invalid-assignment = "ignore"
