@@ -8,7 +8,7 @@ class VotePoll:
     async def vote_poll(
         self: pyrogram.Client,
         chat_id: int | str,
-        message_id: id,
+        message_id: int,
         options: int | list[int],
     ) -> types.Poll:
         """Vote a poll.
