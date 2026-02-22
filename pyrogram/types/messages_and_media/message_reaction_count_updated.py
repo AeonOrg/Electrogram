@@ -52,14 +52,19 @@ class MessageReactionCountUpdated(Object, Update):
         update: raw.types.UpdateBotMessageReactions,
         users: dict[int, raw.types.User],
         chats: dict[int, raw.types.Chat],
-    ) -> MessageReactionCountUpdated:
+    ) -> MessageReactionCountUpdated | None:
         chat = None
         peer_id = utils.get_peer_id(update.peer)
         raw_peer_id = utils.get_raw_peer_id(update.peer)
-        if peer_id > 0:
-            chat = types.Chat._parse_user_chat(client, users[raw_peer_id])
-        else:
-            chat = types.Chat._parse_chat_chat(client, chats[raw_peer_id])
+
+        if raw_peer_id is not None:
+            if peer_id > 0:
+                chat = types.Chat._parse_user_chat(client, users[raw_peer_id])
+            else:
+                chat = types.Chat._parse_chat_chat(client, chats[raw_peer_id])
+
+        if chat is None:
+            return None
 
         return MessageReactionCountUpdated(
             client=client,
