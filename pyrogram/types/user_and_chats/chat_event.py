@@ -316,7 +316,7 @@ class ChatEvent(Object):
             return None
 
         raw_action = event.action
-        action: str = ""
+        action: enums.ChatEventAction | str = ""
 
         old_description: str | None = None
         new_description: str | None = None
