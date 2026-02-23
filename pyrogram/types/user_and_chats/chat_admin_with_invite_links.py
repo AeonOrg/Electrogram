@@ -39,7 +39,9 @@ class ChatAdminWithInviteLinks(Object):
         users: dict[int, raw.types.User] | None = None,
     ) -> ChatAdminWithInviteLinks:
         return ChatAdminWithInviteLinks(
-            admin=types.User._parse(client, users[admin.admin_id]),
+            admin=types.User._parse(
+                client, users.get(admin.admin_id) if users is not None else None
+            ),
             chat_invite_links_count=admin.invites_count,
             revoked_chat_invite_links_count=admin.revoked_invites_count,
         )
