@@ -20,7 +20,7 @@ class RequestedChat(Object):
         username (``str``, *optional*):
             Username of the chat.
 
-        photo (``types.ChatPhoto``, *optional*):
+        photo (``types.Photo``, *optional*):
             Chat photo.
     """
 
@@ -30,7 +30,7 @@ class RequestedChat(Object):
         chat_type: enums.ChatType,
         name: str | None = None,
         username: str | None = None,
-        photo: types.ChatPhoto | None = None,
+        photo: types.Photo | None = None,
     ) -> None:
         super().__init__()
 
@@ -43,25 +43,22 @@ class RequestedChat(Object):
     @staticmethod
     async def _parse(
         client,
-        request: raw.types.RequestedPeerChat
-        | raw.types.RequestedPeerChannel
-        | raw.types.PeerChat
-        | raw.types.PeerChannel,
+        request: raw.base.RequestedPeer | raw.base.Peer,
     ) -> RequestedChat:
         if isinstance(
             request,
             raw.types.RequestedPeerChannel | raw.types.PeerChannel,
         ):
-            type = enums.ChatType.CHANNEL
+            chat_type = enums.ChatType.CHANNEL
         else:
-            type = enums.ChatType.GROUP
+            chat_type = enums.ChatType.GROUP
         photo = None
         if getattr(request, "photo", None):
-            photo = types.Photo._parse(client, getattr(request, "photo", None), 0)
+            photo = types.Photo._parse(client, getattr(request, "photo", None))
 
         return RequestedChat(
-            chat_id=utils.get_channel_id(utils.get_raw_peer_id(request)),
-            chat_type=type,
+            chat_id=utils.get_channel_id(utils.get_raw_peer_id(request) or 0),
+            chat_type=chat_type,
             name=getattr(request, "title", None),
             username=getattr(request, "username", None),
             photo=photo,

@@ -172,7 +172,7 @@ class ChatEvent(Object):
         id: int,
         date: datetime,
         user: types.User,
-        action: str,
+        action: enums.ChatEventAction | str,
         old_description: str | None = None,
         new_description: str | None = None,
         old_history_ttl: int | None = None,

@@ -118,7 +118,7 @@ class ActiveSession(Object):
         self.is_official_application = is_official_application
 
     @staticmethod
-    def _parse(session: raw.types.Authorization) -> ActiveSession:
+    def _parse(session: raw.base.Authorization) -> ActiveSession:
         return ActiveSession(
             id=session.hash,
             device_model=session.device_model,
@@ -166,4 +166,4 @@ class ActiveSession(Object):
             RPCError: In case of a Telegram RPC error.
         """
 
-        return await self._client.reset_session(self.id)
+        return await self._client.reset_session(self.id or 0)
