@@ -53,7 +53,7 @@ class RequestedUser(Object):
             photo = types.Photo._parse(client, getattr(request, "photo", None))
 
         return RequestedUser(
-            user_id=getattr(request, "user_id"),
+            user_id=request.user_id,
             first_name=getattr(request, "first_name", None),
             last_name=getattr(request, "last_name", None),
             username=getattr(request, "username", None),

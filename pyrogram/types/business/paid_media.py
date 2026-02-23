@@ -38,14 +38,17 @@ class PaidMedia(Object):
             elif isinstance(m, raw.types.MessageExtendedMedia):
                 if isinstance(m.media, raw.types.MessageMediaPhoto):
                     extended_media.append(
-                        types.Photo._parse(client, m.media.photo, m.media.ttl_seconds),
+                        types.Photo._parse(
+                            client, m.media.photo, m.media.ttl_seconds
+                        ),
                     )
-                elif (
-                    isinstance(m.media, raw.types.MessageMediaDocument)
-                    and isinstance(m.media.document, raw.types.Document)
-                ):
+                elif isinstance(
+                    m.media, raw.types.MessageMediaDocument
+                ) and isinstance(m.media.document, raw.types.Document):
                     attributes = {type(i): i for i in m.media.document.attributes}
-                    file_name_attr = attributes.get(raw.types.DocumentAttributeFilename)
+                    file_name_attr = attributes.get(
+                        raw.types.DocumentAttributeFilename
+                    )
                     file_name = (
                         file_name_attr.file_name
                         if isinstance(
@@ -55,7 +58,9 @@ class PaidMedia(Object):
                         else ""
                     )
 
-                    video_attributes = attributes.get(raw.types.DocumentAttributeVideo)
+                    video_attributes = attributes.get(
+                        raw.types.DocumentAttributeVideo
+                    )
 
                     if (
                         raw.types.DocumentAttributeAnimated in attributes
