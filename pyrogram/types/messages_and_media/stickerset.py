@@ -51,10 +51,10 @@ class StickerSet(Object):
     @staticmethod
     def _parse(stickerset: raw.types.StickerSet) -> StickerSet:
         return StickerSet(
-            id=getattr(stickerset, "id", 0),
-            title=getattr(stickerset, "title", ""),
-            short_name=getattr(stickerset, "short_name", ""),
-            count=getattr(stickerset, "count", 0),
+            id=stickerset.id,
+            title=stickerset.title,
+            short_name=stickerset.short_name,
+            count=stickerset.count,
             masks=getattr(stickerset, "masks", None),
             emojis=getattr(stickerset, "emojis", None),
         )
