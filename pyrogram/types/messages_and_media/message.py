@@ -600,7 +600,7 @@ class Message(Object, Update):
         | None = None,
         reactions: list[types.Reaction] | None = None,
         chat_join_type: enums.ChatJoinType | None = None,
-        raw: raw.types.Message | None = None,
+        raw: raw.base.Message | None = None,
     ) -> None:
         super().__init__(client)
 
@@ -857,9 +857,7 @@ class Message(Object, Update):
             )
 
             if isinstance(action, raw.types.MessageActionChatAddUser):
-                new_chat_members = [
-                    types.User._parse(client, users[i]) for i in action.users
-                ]
+                new_chat_members = [u for i in action.users if (u := types.User._parse(client, users[i])) is not None]
                 service_type = enums.MessageServiceType.NEW_CHAT_MEMBERS
                 chat_join_type = enums.ChatJoinType.BY_ADD
             elif isinstance(action, raw.types.MessageActionChatJoinedByLink):
@@ -1131,14 +1129,7 @@ class Message(Object, Update):
         if isinstance(message, raw.types.Message):
             message_thread_id = None
             entities = types.List(
-                [
-                    e
-                    for e in [
-                        types.MessageEntity._parse(client, entity, users)
-                        for entity in (message.entities or [])
-                    ]
-                    if e is not None
-                ],
+                [e for entity in (message.entities or []) if (e := types.MessageEntity._parse(client, entity, users)) is not None],
             )
 
             sender_business_bot = None

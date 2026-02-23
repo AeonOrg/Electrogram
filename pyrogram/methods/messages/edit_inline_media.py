@@ -69,7 +69,7 @@ class EditInlineMedia:
             isinstance(media.media, str) and await AsyncPath(media.media).is_file()
         )
 
-        is_external_url = not is_uploaded_file and re.match(
+        is_external_url = not is_uploaded_file and isinstance(media.media, str) and re.match(
             "^https?://",
             media.media,
         )

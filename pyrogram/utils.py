@@ -9,7 +9,7 @@ import struct
 from concurrent.futures.thread import ThreadPoolExecutor
 from datetime import datetime, timezone
 from getpass import getpass
-from typing import Any
+from typing import Any, overload
 
 import pyrogram
 from pyrogram import enums, raw, types
@@ -399,8 +399,20 @@ def zero_datetime() -> datetime:
     return datetime.fromtimestamp(0, timezone.utc)
 
 
+@overload
+def timestamp_to_datetime(ts: int) -> datetime: ...
+
+
+@overload
+def timestamp_to_datetime(ts: None) -> None: ...
+
+
+@overload
+def timestamp_to_datetime(ts: int | None) -> datetime | None: ...
+
+
 def timestamp_to_datetime(ts: int | None) -> datetime | None:
-    return datetime.fromtimestamp(ts) if ts else None
+    return datetime.fromtimestamp(ts) if ts is not None else None
 
 
 def datetime_to_timestamp(dt: datetime | None) -> int | None:
