@@ -197,7 +197,7 @@ class SendMessage:
         )
 
         rpc = raw.functions.messages.SendMessage(
-            peer=cast(raw.base.InputPeer, await self.resolve_peer(chat_id)),
+            peer=cast("raw.base.InputPeer", await self.resolve_peer(chat_id)),
             no_webpage=disable_web_page_preview or None,
             silent=disable_notification or None,
             reply_to=reply_to,

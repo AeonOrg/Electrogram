@@ -18,7 +18,7 @@ from importlib import import_module
 from io import BytesIO, StringIO
 from mimetypes import MimeTypes
 from pathlib import Path
-from typing import TYPE_CHECKING, BinaryIO, cast
+from typing import TYPE_CHECKING, BinaryIO
 
 from anyio import Path as AsyncPath
 
@@ -1038,10 +1038,7 @@ class Client(Methods):
                         user_id=file_id.chat_id,
                         access_hash=file_id.chat_access_hash or 0,
                     )
-                elif (
-                    file_id.chat_id is not None
-                    and file_id.chat_access_hash == 0
-                ):
+                elif file_id.chat_id is not None and file_id.chat_access_hash == 0:
                     peer = raw.types.InputPeerChat(chat_id=-file_id.chat_id)
                 elif file_id.chat_id is not None:
                     peer = raw.types.InputPeerChannel(

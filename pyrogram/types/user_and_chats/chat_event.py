@@ -426,12 +426,16 @@ class ChatEvent(Object):
             new_title = raw_action.new_value
             action = enums.ChatEventAction.TITLE_CHANGED
 
-        elif isinstance(raw_action, raw.types.ChannelAdminLogEventActionChangeUsername):
+        elif isinstance(
+            raw_action, raw.types.ChannelAdminLogEventActionChangeUsername
+        ):
             old_username = raw_action.prev_value
             new_username = raw_action.new_value
             action = enums.ChatEventAction.USERNAME_CHANGED
 
-        elif isinstance(raw_action, raw.types.ChannelAdminLogEventActionChangeUsernames):
+        elif isinstance(
+            raw_action, raw.types.ChannelAdminLogEventActionChangeUsernames
+        ):
             old_usernames = types.List(
                 [types.Username(username=p) for p in raw_action.prev_value],
             )
@@ -452,7 +456,9 @@ class ChatEvent(Object):
             )
             action = enums.ChatEventAction.CHAT_PERMISSIONS_CHANGED
 
-        elif isinstance(raw_action, raw.types.ChannelAdminLogEventActionDeleteMessage):
+        elif isinstance(
+            raw_action, raw.types.ChannelAdminLogEventActionDeleteMessage
+        ):
             deleted_message = await types.Message._parse(
                 client,
                 raw_action.message,
@@ -533,7 +539,9 @@ class ChatEvent(Object):
             )
             action = enums.ChatEventAction.POLL_STOPPED
 
-        elif isinstance(raw_action, raw.types.ChannelAdminLogEventActionParticipantJoin):
+        elif isinstance(
+            raw_action, raw.types.ChannelAdminLogEventActionParticipantJoin
+        ):
             action = enums.ChatEventAction.MEMBER_JOINED
 
         elif isinstance(
@@ -542,7 +550,9 @@ class ChatEvent(Object):
         ):
             action = enums.ChatEventAction.MEMBER_LEFT
 
-        elif isinstance(raw_action, raw.types.ChannelAdminLogEventActionToggleInvites):
+        elif isinstance(
+            raw_action, raw.types.ChannelAdminLogEventActionToggleInvites
+        ):
             invites_enabled = raw_action.new_value
             action = enums.ChatEventAction.INVITES_ENABLED
 
@@ -560,12 +570,16 @@ class ChatEvent(Object):
             signatures_enabled = raw_action.new_value
             action = enums.ChatEventAction.SIGNATURES_ENABLED
 
-        elif isinstance(raw_action, raw.types.ChannelAdminLogEventActionToggleSlowMode):
+        elif isinstance(
+            raw_action, raw.types.ChannelAdminLogEventActionToggleSlowMode
+        ):
             old_slow_mode = raw_action.prev_value
             new_slow_mode = raw_action.new_value
             action = enums.ChatEventAction.SLOW_MODE_CHANGED
 
-        elif isinstance(raw_action, raw.types.ChannelAdminLogEventActionUpdatePinned):
+        elif isinstance(
+            raw_action, raw.types.ChannelAdminLogEventActionUpdatePinned
+        ):
             message = raw_action.message
 
             if isinstance(raw_action.message, raw.types.Message):
@@ -628,7 +642,9 @@ class ChatEvent(Object):
             raw_action,
             raw.types.ChannelAdminLogEventActionParticipantJoinByInvite,
         ):
-            invite_link = types.ChatInviteLink._parse(client, raw_action.invite, users_map)
+            invite_link = types.ChatInviteLink._parse(
+                client, raw_action.invite, users_map
+            )
             via_chat_folder_invite_link = getattr(raw_action, "via_chatlist", None)
             action = enums.ChatEventAction.MEMBER_JOINED_BY_LINK
 
@@ -636,7 +652,9 @@ class ChatEvent(Object):
             raw_action,
             raw.types.ChannelAdminLogEventActionParticipantJoinByRequest,
         ):
-            invite_link = types.ChatInviteLink._parse(client, raw_action.invite, users_map)
+            invite_link = types.ChatInviteLink._parse(
+                client, raw_action.invite, users_map
+            )
             approver_user = types.User._parse(
                 client, users_map.get(raw_action.approved_by)
             )
@@ -667,7 +685,9 @@ class ChatEvent(Object):
             show_message_sender_enabled = raw_action.new_value
             action = enums.ChatEventAction.SHOW_MESSAGE_SENDER_ENABLED
 
-        elif isinstance(raw_action, raw.types.ChannelAdminLogEventActionToggleAntiSpam):
+        elif isinstance(
+            raw_action, raw.types.ChannelAdminLogEventActionToggleAntiSpam
+        ):
             has_aggressive_anti_spam_enabled = raw_action.new_value
             action = enums.ChatEventAction.AGGRESSIVE_ANTI_SPAM_TOGGLED
 
