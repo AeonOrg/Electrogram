@@ -166,4 +166,6 @@ class ActiveSession(Object):
             RPCError: In case of a Telegram RPC error.
         """
 
-        return await self._client.reset_session(self.id or 0)
+        if self.id is None:
+            raise ValueError("Session ID is not set, cannot reset.")
+        return await self._client.reset_session(self.id)
