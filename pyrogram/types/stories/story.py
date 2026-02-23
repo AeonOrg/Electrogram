@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, BinaryIO
+from typing import TYPE_CHECKING, Any, BinaryIO
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -162,10 +162,7 @@ class Story(Object, Update):
     async def _parse(
         client: pyrogram.Client,
         stories: raw.base.StoryItem,
-        peer: raw.types.PeerChannel
-        | raw.types.PeerUser
-        | raw.types.InputPeerChannel
-        | raw.types.InputPeerUser,
+        peer: Any,
     ) -> Story | types.StorySkipped | types.StoryDeleted | None:
         if isinstance(stories, raw.types.StoryItemSkipped):
             return await types.StorySkipped._parse(client, stories, peer)
@@ -175,7 +172,7 @@ class Story(Object, Update):
             types.MessageEntity._parse(client, entity, {})
             for entity in stories.entities
         ]
-        entities = types.List(filter(lambda x: x is not None, entities))
+        entities = types.List([e for e in entities if e is not None])
         animation = None
         photo = None
         video = None

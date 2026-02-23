@@ -16,8 +16,8 @@ def ige256_decrypt(data: bytes, key: bytes, iv: bytes) -> bytes:
 
 
 def ctr256_encrypt(
-    data: bytes,
-    key: bytes,
+    data: bytes | bytearray,
+    key: bytes | bytearray,
     iv: bytearray,
     state: bytearray | None = None,
 ) -> bytes:
@@ -25,8 +25,8 @@ def ctr256_encrypt(
 
 
 def ctr256_decrypt(
-    data: bytes,
-    key: bytes,
+    data: bytes | bytearray,
+    key: bytes | bytearray,
     iv: bytearray,
     state: bytearray | None = None,
 ) -> bytes:

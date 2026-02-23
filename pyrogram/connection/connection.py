@@ -5,7 +5,7 @@ import logging
 
 from pyrogram.session.internals import DataCenter
 
-from .transport import TCP, TCPAbridged
+from .transport import TCP, Proxy, TCPAbridged
 
 log = logging.getLogger(__name__)
 
@@ -19,7 +19,7 @@ class Connection:
         test_mode: bool,
         ipv6: bool,
         alt_port: bool,
-        proxy: dict,
+        proxy: Proxy,
         media: bool = False,
         protocol_factory: type[TCP] = TCPAbridged,
     ) -> None:

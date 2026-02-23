@@ -35,9 +35,9 @@ class InlineQueryResult(Object):
     def __init__(
         self,
         type: str,
-        id: str,
-        input_message_content: types.InputMessageContent,
-        reply_markup: types.InlineKeyboardMarkup,
+        id: str | None,
+        input_message_content: types.InputMessageContent | None,
+        reply_markup: types.InlineKeyboardMarkup | None,
     ) -> None:
         super().__init__()
 

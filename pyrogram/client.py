@@ -18,7 +18,7 @@ from importlib import import_module
 from io import BytesIO, StringIO
 from mimetypes import MimeTypes
 from pathlib import Path
-from typing import TYPE_CHECKING, BinaryIO
+from typing import TYPE_CHECKING, BinaryIO, cast
 
 from anyio import Path as AsyncPath
 
@@ -660,11 +660,25 @@ class Client(Methods):
 
                     if not isinstance(message, raw.types.MessageEmpty):
                         try:
+                            peer = await self.resolve_peer(
+                                utils.get_channel_id(channel_id or 0),
+                            )
+
+                            if isinstance(peer, raw.types.InputPeerChannel):
+                                channel: raw.base.InputChannel = (
+                                    raw.types.InputChannel(
+                                        channel_id=peer.channel_id,
+                                        access_hash=peer.access_hash,
+                                    )
+                                )
+                            elif isinstance(peer, raw.base.InputChannel):
+                                channel = peer
+                            else:
+                                continue
+
                             diff = await self.invoke(
                                 raw.functions.updates.GetChannelDifference(
-                                    channel=await self.resolve_peer(
-                                        utils.get_channel_id(channel_id or 0),
-                                    ),
+                                    channel=channel,
                                     filter=raw.types.ChannelMessagesFilter(
                                         ranges=[
                                             raw.types.MessageRange(
@@ -1019,35 +1033,40 @@ class Client(Methods):
             file_type = file_id.file_type
 
             if file_type == FileType.CHAT_PHOTO:
-                if file_id.chat_id and file_id.chat_id > 0:
+                if file_id.chat_id is not None and file_id.chat_id > 0:
                     peer = raw.types.InputPeerUser(
                         user_id=file_id.chat_id,
-                        access_hash=file_id.chat_access_hash,
+                        access_hash=file_id.chat_access_hash or 0,
                     )
-                elif file_id.chat_id and file_id.chat_access_hash == 0:
+                elif (
+                    file_id.chat_id is not None
+                    and file_id.chat_access_hash == 0
+                ):
                     peer = raw.types.InputPeerChat(chat_id=-file_id.chat_id)
-                else:
+                elif file_id.chat_id is not None:
                     peer = raw.types.InputPeerChannel(
                         channel_id=utils.get_channel_id(file_id.chat_id),
-                        access_hash=file_id.chat_access_hash,
+                        access_hash=file_id.chat_access_hash or 0,
                     )
+                else:
+                    raise ValueError("Invalid chat_id for CHAT_PHOTO")
 
                 location = raw.types.InputPeerPhotoFileLocation(
                     peer=peer,
-                    photo_id=file_id.media_id,
+                    photo_id=file_id.media_id or 0,
                     big=file_id.thumbnail_source == ThumbnailSource.CHAT_PHOTO_BIG,
                 )
             elif file_type == FileType.PHOTO:
                 location = raw.types.InputPhotoFileLocation(
-                    id=file_id.media_id,
-                    access_hash=file_id.access_hash,
+                    id=file_id.media_id or 0,
+                    access_hash=file_id.access_hash or 0,
                     file_reference=file_id.file_reference,
                     thumb_size=file_id.thumbnail_size,
                 )
             else:
                 location = raw.types.InputDocumentFileLocation(
-                    id=file_id.media_id,
-                    access_hash=file_id.access_hash,
+                    id=file_id.media_id or 0,
+                    access_hash=file_id.access_hash or 0,
                     file_reference=file_id.file_reference,
                     thumb_size=file_id.thumbnail_size,
                 )
