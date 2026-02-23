@@ -999,7 +999,7 @@ class Client(Methods):
             return None
         else:
             if in_memory:
-                file.name = file_name
+                setattr(file, "name", file_name)
                 return file
             file.close()
             file_path = Path(temp_file_path).with_suffix("")

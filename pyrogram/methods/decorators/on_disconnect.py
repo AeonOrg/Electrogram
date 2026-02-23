@@ -21,9 +21,9 @@ class OnDisconnect:
                 self.add_handler(pyrogram.handlers.DisconnectHandler(func))
             else:
                 if not hasattr(func, "handlers"):
-                    func.handlers = []
+                    setattr(func, "handlers", [])
 
-                func.handlers.append((pyrogram.handlers.DisconnectHandler(func), 0))
+                getattr(func, "handlers").append((pyrogram.handlers.DisconnectHandler(func), 0))
 
             return func
 

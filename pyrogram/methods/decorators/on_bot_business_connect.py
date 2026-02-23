@@ -33,9 +33,9 @@ class OnBotBusinessConnect:
                 )
             elif isinstance(self, Filter) or self is None:
                 if not hasattr(func, "handlers"):
-                    func.handlers = []
+                    setattr(func, "handlers", [])
 
-                func.handlers.append(
+                getattr(func, "handlers").append(
                     (
                         pyrogram.handlers.BotBusinessConnectHandler(func, self),
                         group if filters is None else filters,
