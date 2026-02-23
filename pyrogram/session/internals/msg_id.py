@@ -5,15 +5,16 @@ import time
 
 log = logging.getLogger(__name__)
 
+_last_time = 0
+_offset = 0
 
-class MsgId:
-    last_time = 0
-    offset = 0
 
-    def __new__(cls) -> int:
-        now = int(time.time())
-        cls.offset = (cls.offset + 4) if now == cls.last_time else 0
-        msg_id = (now * 2**32) + cls.offset
-        cls.last_time = now
+def MsgId() -> int:
+    global _last_time, _offset
 
-        return msg_id
+    now = int(time.time())
+    _offset = (_offset + 4) if now == _last_time else 0
+    msg_id = (now * 2**32) + _offset
+    _last_time = now
+
+    return msg_id
