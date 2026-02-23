@@ -104,8 +104,8 @@ class GiveawayResult(Object):
         return GiveawayResult(
             chat=chat,
             giveaway_message=giveaway_message,
-            quantity=getattr(giveaway_result, "winners_count", None),
-            unclaimed_quantity=getattr(giveaway_result, "unclaimed_count", None),
+            quantity=getattr(giveaway_result, "winners_count", 0),
+            unclaimed_quantity=getattr(giveaway_result, "unclaimed_count", 0),
             winners=winners,
             months=getattr(giveaway_result, "months", None),
             expire_date=expired_date,

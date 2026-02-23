@@ -23,7 +23,7 @@ class TermsOfService(Object):
         *,
         id: str,
         text: str,
-        entities: list[types.MessageEntity],
+        entities: list[types.MessageEntity] | None = None,
     ) -> None:
         super().__init__()
 
@@ -38,10 +38,14 @@ class TermsOfService(Object):
         return TermsOfService(
             id=terms_of_service.id.data,
             text=terms_of_service.text,
-            entities=[
-                types.MessageEntity._parse(None, entity, {})
-                for entity in terms_of_service.entities
-            ]
+            entities=types.List(
+                [
+                    e
+                    for entity in terms_of_service.entities
+                    if (e := types.MessageEntity._parse(None, entity, {}))
+                    is not None
+                ]
+            )
             if terms_of_service.entities
             else None,
         )

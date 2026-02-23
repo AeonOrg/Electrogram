@@ -20,7 +20,7 @@ class RequestedUser(Object):
         username (``str``, *optional*):
             Username of the user.
 
-        photo (``types.UserProfilePhoto``, *optional*):
+        photo (``types.Photo``, *optional*):
             User photo.
 
         full_name (``str``, *optional*):
@@ -33,7 +33,7 @@ class RequestedUser(Object):
         first_name: str | None = None,
         last_name: str | None = None,
         username: str | None = None,
-        photo: types.ChatPhoto | None = None,
+        photo: types.Photo | None = None,
     ) -> None:
         super().__init__()
 
@@ -46,14 +46,14 @@ class RequestedUser(Object):
     @staticmethod
     async def _parse(
         client,
-        request: raw.types.RequestedPeerUser | raw.types.PeerUser,
+        request: raw.base.RequestedPeer | raw.base.Peer,
     ) -> RequestedUser:
         photo = None
         if getattr(request, "photo", None):
-            photo = types.Photo._parse(client, getattr(request, "photo", None), 0)
+            photo = types.Photo._parse(client, getattr(request, "photo", None))
 
         return RequestedUser(
-            user_id=getattr(request, "user_id", None),
+            user_id=getattr(request, "user_id"),
             first_name=getattr(request, "first_name", None),
             last_name=getattr(request, "last_name", None),
             username=getattr(request, "username", None),

@@ -74,7 +74,7 @@ class Photo(Object):
     @staticmethod
     def _parse(
         client,
-        photo: raw.types.Photo,
+        photo: raw.base.Photo | None,
         ttl_seconds: int | None = None,
     ) -> Photo | None:
         if isinstance(photo, raw.types.Photo):
