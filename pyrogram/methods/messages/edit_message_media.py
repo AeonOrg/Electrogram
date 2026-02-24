@@ -90,8 +90,8 @@ class EditMessageMedia:
                 parse_mode,
                 caption_entities,
             )
-            message = cast("Any", parsed["message"])
-            entities = cast("Any", parsed["entities"])
+            message = parsed["message"]
+            entities = parsed["entities"]
 
         raw_media: raw.base.InputMedia | None = None
 

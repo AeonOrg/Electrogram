@@ -28,7 +28,7 @@ class BusinessMessage(Object):
         offline_only (``bool``, *optional*):
             Dont send the away message if you've recently been online.
 
-        recipients (List of :obj:`~pyrogram.types.User`, *optional*):
+        recipients (:obj:`~pyrogram.types.BusinessRecipients`, *optional*):
             Recipients of the message.
 
         schedule (:obj:`~pyrogram.enums.BusinessSchedule`, *optional*):
@@ -49,7 +49,7 @@ class BusinessMessage(Object):
         is_away: bool | None = None,
         no_activity_days: int | None = None,
         offline_only: bool | None = None,
-        recipients: list[types.User] | None = None,
+        recipients: types.BusinessRecipients | None = None,
         schedule: enums.BusinessSchedule | None = None,
         start_date: datetime | None = None,
         end_date: datetime | None = None,

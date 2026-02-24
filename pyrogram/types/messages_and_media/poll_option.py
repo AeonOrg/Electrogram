@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
+from pyrogram import utils
 from pyrogram.types.object import Object
 
 
@@ -40,7 +41,7 @@ class PollOption(Object):
 
     async def write(self, client, i):
         option, entities = (
-            await pyrogram.utils.parse_text_entities(
+            await utils.parse_text_entities(
                 client,
                 self.text,
                 None,

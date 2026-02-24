@@ -192,7 +192,7 @@ class SendPoll:
             )
         ).values()
         q, q_entities = (
-            await pyrogram.utils.parse_text_entities(
+            await utils.parse_text_entities(
                 self,
                 question,
                 None,

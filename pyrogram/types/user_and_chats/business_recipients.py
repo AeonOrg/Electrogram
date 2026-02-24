@@ -35,7 +35,7 @@ class BusinessRecipients(Object):
         contacts: bool | None = None,
         non_contacts: bool | None = None,
         exclude_selected: bool | None = None,
-        users: list[int] | None = None,
+        users: list[types.User] | None = None,
     ) -> None:
         self.existing_chats = existing_chats
         self.new_chats = new_chats
@@ -47,7 +47,7 @@ class BusinessRecipients(Object):
     @staticmethod
     def _parse(
         client,
-        recipients: raw.types.BusinessRecipients,
+        recipients: raw.base.BusinessRecipients,
         users: dict | None = None,
     ) -> BusinessRecipients:
         return BusinessRecipients(
