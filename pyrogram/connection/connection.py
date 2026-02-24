@@ -31,7 +31,9 @@ class Connection:
         self.media = media
         self.protocol_factory = protocol_factory
 
-        self.address: tuple[str, int] = DataCenter(dc_id, test_mode, ipv6, alt_port, media)
+        self.address: tuple[str, int] = DataCenter(
+            dc_id, test_mode, ipv6, alt_port, media
+        )
         self.protocol: TCP | None = None
 
     async def connect(self) -> None:

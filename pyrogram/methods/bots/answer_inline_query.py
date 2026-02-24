@@ -85,7 +85,9 @@ class AnswerInlineQuery:
         return await self.invoke(
             raw.functions.messages.SetInlineBotResults(
                 query_id=int(inline_query_id),
-                results=[res for r in results if (res := await r.write(self)) is not None],
+                results=[
+                    res for r in results if (res := await r.write(self)) is not None
+                ],
                 cache_time=cache_time,
                 gallery=is_gallery or None,
                 private=is_personal or None,

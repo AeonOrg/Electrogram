@@ -470,8 +470,7 @@ async def get_reply_to(
             )
         peer = await client.resolve_peer(chat_id)
         reply_to = raw.types.InputReplyToStory(
-            peer=get_input_peer(peer),
-            story_id=reply_to_story_id
+            peer=get_input_peer(peer), story_id=reply_to_story_id
         )
     return reply_to
 
@@ -491,7 +490,9 @@ def get_input_user(
         return peer
 
     if isinstance(peer, raw.types.InputPeerUser):
-        return raw.types.InputUser(user_id=peer.user_id, access_hash=peer.access_hash)
+        return raw.types.InputUser(
+            user_id=peer.user_id, access_hash=peer.access_hash
+        )
 
     if isinstance(peer, raw.types.InputPeerSelf):
         return raw.types.InputUserSelf()
