@@ -42,7 +42,7 @@ class TCPIntermediateO(TCP):
 
         nonce[56:64] = aes.ctr256_encrypt(nonce, *self.encrypt)[56:64]
 
-        await super().send(nonce)
+        await super().send(bytes(nonce))
 
     async def send(self, data: bytes, *args) -> None:
         if self.encrypt is None:

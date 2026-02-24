@@ -36,9 +36,12 @@ class RPCError(Exception):
             ),
         )
 
-        try:
-            self.value = int(value)
-        except (ValueError, TypeError):
+        if isinstance(value, (int, str)):
+            try:
+                self.value = int(value)
+            except (ValueError, TypeError):
+                self.value = value
+        else:
             self.value = value
 
         if is_unknown:

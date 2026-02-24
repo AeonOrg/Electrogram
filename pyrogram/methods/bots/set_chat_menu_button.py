@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 
 class SetChatMenuButton:
@@ -24,9 +24,13 @@ class SetChatMenuButton:
                 Defaults to :obj:`~pyrogram.types.MenuButtonDefault`.
         """
 
+        user_id = utils.get_input_user(await self.resolve_peer(chat_id or "me"))
+        if user_id is None:
+            raise ValueError(f"Invalid user_id: {chat_id or 'me'}")
+
         await self.invoke(
             raw.functions.bots.SetBotMenuButton(
-                user_id=await self.resolve_peer(chat_id or "me"),
+                user_id=user_id,
                 button=(
                     (await menu_button.write(self))
                     if menu_button

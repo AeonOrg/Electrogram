@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 
 class GetPaymentForm:
@@ -39,8 +39,13 @@ class GetPaymentForm:
         invoice = None
 
         if isinstance(message_id, int):
+            peer = utils.get_input_peer(await self.resolve_peer(chat_id))
+
+            if peer is None:
+                raise ValueError(f"Invalid chat_id: {chat_id}")
+
             invoice = raw.types.InputInvoiceMessage(
-                peer=await self.resolve_peer(chat_id),
+                peer=peer,
                 msg_id=message_id,
             )
         elif isinstance(message_id, str):

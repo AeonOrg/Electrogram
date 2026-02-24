@@ -65,9 +65,14 @@ class RequestCallbackAnswer:
         else:
             password_check = None
 
+        peer = utils.get_input_peer(await self.resolve_peer(chat_id))
+
+        if peer is None:
+            raise ValueError(f"Invalid chat_id: {chat_id}")
+
         return await self.invoke(
             raw.functions.messages.GetBotCallbackAnswer(
-                peer=await self.resolve_peer(chat_id),
+                peer=peer,
                 msg_id=message_id,
                 data=data,
                 password=password_check,

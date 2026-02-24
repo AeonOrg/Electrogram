@@ -264,6 +264,13 @@ class FileId:
                 )
                 thumbnail_size = chr(thumbnail_size)
 
+                try:
+                    thumbnail_file_type = FileType(thumbnail_file_type)
+                except ValueError as e:
+                    raise ValueError(
+                        f"Unknown thumbnail_file_type {thumbnail_file_type} of file_id {file_id}",
+                    ) from e
+
                 return FileId(
                     major=major,
                     minor=minor,
@@ -473,6 +480,8 @@ class FileUniqueId:
 
     def encode(self):
         if self.file_unique_type == FileUniqueType.WEB:
+            if self.url is None:
+                raise ValueError("url is required for WEB type")
             string = struct.pack("<is", self.file_unique_type, String(self.url))
         elif self.file_unique_type == FileUniqueType.PHOTO:
             string = struct.pack(

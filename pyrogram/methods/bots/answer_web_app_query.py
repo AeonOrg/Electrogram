@@ -26,10 +26,13 @@ class AnswerWebAppQuery:
             :obj:`~pyrogram.types.SentWebAppMessage`: On success the sent web app message is returned.
         """
 
+        res = await result.write(self)
+        assert res is not None
+
         r = await self.invoke(
             raw.functions.messages.SendWebViewResultMessage(
                 bot_query_id=web_app_query_id,
-                result=await result.write(self),
+                result=res,
             ),
         )
 

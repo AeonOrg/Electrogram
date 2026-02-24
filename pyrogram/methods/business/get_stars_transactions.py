@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 
 class GetStarsTransactions:
@@ -58,7 +58,10 @@ class GetStarsTransactions:
         Returns:
             :obj:`~pyrogram.types.StarsStatus`: On success, a :obj:`~pyrogram.types.StarsStatus` object is returned.
         """
-        peer = await self.resolve_peer(chat_id)
+        peer = utils.get_input_peer(await self.resolve_peer(chat_id))
+
+        if peer is None:
+            raise ValueError(f"Invalid chat_id: {chat_id}")
 
         r = await self.invoke(
             raw.functions.payments.GetStarsTransactions(

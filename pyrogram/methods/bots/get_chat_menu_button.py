@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 
 class GetChatMenuButton:
@@ -21,9 +21,14 @@ class GetChatMenuButton:
         """
 
         if chat_id:
+            user_id = utils.get_input_user(await self.resolve_peer(chat_id))
+
+            if user_id is None:
+                raise ValueError(f"Invalid bot chat_id: {chat_id}")
+
             r = await self.invoke(
                 raw.functions.bots.GetBotMenuButton(
-                    user_id=await self.resolve_peer(chat_id),
+                    user_id=user_id,
                 ),
             )
         else:
