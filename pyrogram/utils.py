@@ -429,7 +429,7 @@ async def get_reply_to(
     quote_text: str | None = None,
     quote_entities: list[types.MessageEntity] | None = None,
     parse_mode: enums.ParseMode | None = None,
-) -> types.InputReplyToMessage | types.InputReplyToStory | None:
+) -> raw.base.InputReplyTo | None:
     reply_to = None
     reply_to_chat = None
     if reply_to_message_id or message_thread_id:
@@ -444,10 +444,22 @@ async def get_reply_to(
             if isinstance(peer, raw.base.InputPeer):
                 reply_to_chat = peer
 
-        reply_to = types.InputReplyToMessage(
-            reply_to_message_id=reply_to_message_id,
-            message_thread_id=message_thread_id,
-            reply_to_chat=reply_to_chat,
+        reply_to_msg_id = None
+        top_msg_id = None
+
+        if message_thread_id:
+            if not reply_to_message_id:
+                reply_to_msg_id = message_thread_id
+            else:
+                reply_to_msg_id = reply_to_message_id
+            top_msg_id = message_thread_id
+        else:
+            reply_to_msg_id = reply_to_message_id
+
+        reply_to = raw.types.InputReplyToMessage(
+            reply_to_msg_id=reply_to_msg_id,
+            top_msg_id=top_msg_id,
+            reply_to_peer_id=reply_to_chat,
             quote_text=text,
             quote_entities=entities,
         )
@@ -457,7 +469,10 @@ async def get_reply_to(
                 "chat_id is required when reply_to_story_id is provided"
             )
         peer = await client.resolve_peer(chat_id)
-        reply_to = types.InputReplyToStory(peer=peer, story_id=reply_to_story_id)
+        reply_to = raw.types.InputReplyToStory(
+            peer=get_input_peer(peer),
+            story_id=reply_to_story_id
+        )
     return reply_to
 
 
@@ -467,3 +482,55 @@ async def get_input_quick_reply_shortcut(
     if isinstance(shortcut, int):
         return raw.types.InputQuickReplyShortcutId(shortcut_id=shortcut)
     return raw.types.InputQuickReplyShortcut(shortcut=shortcut)
+
+
+def get_input_user(
+    peer: raw.base.InputPeer | raw.base.InputUser | raw.base.InputChannel | None,
+) -> raw.base.InputUser | None:
+    if isinstance(peer, raw.base.InputUser):
+        return peer
+
+    if isinstance(peer, raw.types.InputPeerUser):
+        return raw.types.InputUser(user_id=peer.user_id, access_hash=peer.access_hash)
+
+    if isinstance(peer, raw.types.InputPeerSelf):
+        return raw.types.InputUserSelf()
+
+    return None
+
+
+def get_input_channel(
+    peer: raw.base.InputPeer | raw.base.InputUser | raw.base.InputChannel | None,
+) -> raw.base.InputChannel | None:
+    if isinstance(peer, raw.base.InputChannel):
+        return peer
+
+    if isinstance(peer, raw.types.InputPeerChannel):
+        return raw.types.InputChannel(
+            channel_id=peer.channel_id, access_hash=peer.access_hash
+        )
+
+    return None
+
+
+def get_input_peer(
+    peer: raw.base.InputPeer | raw.base.InputUser | raw.base.InputChannel | None,
+) -> raw.base.InputPeer | None:
+    if isinstance(peer, raw.base.InputPeer):
+        return peer
+
+    if isinstance(peer, raw.base.InputUser):
+        if isinstance(peer, raw.types.InputUser):
+            return raw.types.InputPeerUser(
+                user_id=peer.user_id, access_hash=peer.access_hash
+            )
+        if isinstance(peer, raw.types.InputUserSelf):
+            return raw.types.InputPeerSelf()
+
+    if isinstance(peer, raw.base.InputChannel):
+        if isinstance(peer, raw.types.InputChannel):
+            return raw.types.InputPeerChannel(
+                channel_id=peer.channel_id, access_hash=peer.access_hash
+            )
+
+    return None

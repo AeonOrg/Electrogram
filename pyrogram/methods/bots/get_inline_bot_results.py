@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 from pyrogram.errors import UnknownError
 
 
@@ -54,9 +54,14 @@ class GetInlineBotResults:
         """
 
         try:
+            bot_user = utils.get_input_user(await self.resolve_peer(bot))
+
+            if bot_user is None:
+                raise ValueError(f"Invalid bot: {bot}")
+
             return await self.invoke(
                 raw.functions.messages.GetInlineBotResults(
-                    bot=await self.resolve_peer(bot),
+                    bot=bot_user,
                     peer=raw.types.InputPeerSelf(),
                     query=query,
                     offset=offset,

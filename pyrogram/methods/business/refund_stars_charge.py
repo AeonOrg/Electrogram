@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 
 class RefundStarsCharge:
@@ -27,9 +27,14 @@ class RefundStarsCharge:
 
                 await app.refund_stars_charge(user_id, telegram_payment_charge_id)
         """
+        user = utils.get_input_user(await self.resolve_peer(user_id))
+
+        if user is None:
+            raise ValueError(f"Invalid user_id: {user_id}")
+
         await self.invoke(
             raw.functions.payments.RefundStarsCharge(
-                user_id=await self.resolve_peer(user_id),
+                user_id=user,
                 charge_id=charge_id,
             ),
         )

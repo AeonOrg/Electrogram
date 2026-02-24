@@ -141,7 +141,7 @@ class SaveFile:
             if file_id is None:
                 file_id = self.rnd_id()
 
-            md5_sum = md5() if not is_big and not is_missing_part else None
+            md5_obj = md5() if not is_big and not is_missing_part else None
 
             pool = [
                 Session(
@@ -167,6 +167,8 @@ class SaveFile:
                 fp.seek(part_size * file_part)
                 next_chunk_task = self.loop.create_task(self.preload(fp, part_size))
 
+                md5_checksum = ""
+
                 while True:
                     chunk = await next_chunk_task
                     next_chunk_task = self.loop.create_task(
@@ -174,8 +176,8 @@ class SaveFile:
                     )
 
                     if not chunk:
-                        if not is_big and not is_missing_part:
-                            md5_sum = md5_sum.hexdigest()
+                        if md5_obj:
+                            md5_checksum = md5_obj.hexdigest()
                         break
 
                     await queue.put(
@@ -191,8 +193,8 @@ class SaveFile:
                     if is_missing_part:
                         return None
 
-                    if not is_big and not is_missing_part:
-                        md5_sum.update(chunk)
+                    if md5_obj:
+                        md5_obj.update(chunk)
 
                     file_part += 1
 
@@ -227,7 +229,7 @@ class SaveFile:
                     id=file_id,
                     parts=file_total_parts,
                     name=file_name,
-                    md5_checksum=md5_sum,
+                    md5_checksum=md5_checksum,
                 )
             finally:
                 for _ in workers:

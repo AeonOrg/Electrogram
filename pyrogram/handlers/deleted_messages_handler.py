@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 from .handler import Handler
 
@@ -46,6 +46,6 @@ class DeletedMessagesHandler(Handler):
         # Every message should be checked, if at least one matches the filter True is returned
         # otherwise, or if the list is empty, False is returned
         for message in update:
-            if await super().check(client, message):
+            if await super().check(client, cast("Update", message)):
                 return True
         return False

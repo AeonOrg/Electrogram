@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 from .handler import Handler
 
@@ -44,6 +44,6 @@ class DeletedBotBusinessMessagesHandler(Handler):
             return False
 
         for message in update:
-            if await super().check(client, message):
+            if await super().check(client, cast("Update", message)):
                 return True
         return False

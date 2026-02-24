@@ -42,7 +42,7 @@ class TCPAbridgedO(TCP):
 
         nonce[56:64] = aes.ctr256_encrypt(nonce, *self.encrypt)[56:64]
 
-        await super().send(nonce)
+        await super().send(bytes(nonce))
 
     async def send(self, data: bytes, *args) -> None:
         length = len(data) // 4

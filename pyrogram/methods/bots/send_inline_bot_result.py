@@ -83,9 +83,14 @@ class SendInlineBotResult:
             parse_mode=parse_mode,
         )
 
+        peer = utils.get_input_peer(await self.resolve_peer(chat_id))
+
+        if peer is None:
+            raise ValueError(f"Invalid chat_id: {chat_id}")
+
         r = await self.invoke(
             raw.functions.messages.SendInlineBotResult(
-                peer=await self.resolve_peer(chat_id),
+                peer=peer,
                 query_id=query_id,
                 id=result_id,
                 random_id=self.rnd_id(),

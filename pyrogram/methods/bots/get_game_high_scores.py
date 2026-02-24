@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 
 class GetGameHighScores:
@@ -42,11 +42,20 @@ class GetGameHighScores:
                 print(scores)
         """
 
+        peer = utils.get_input_peer(await self.resolve_peer(chat_id))
+        target_user_id = utils.get_input_user(await self.resolve_peer(user_id))
+
+        if peer is None:
+            raise ValueError(f"Invalid chat_id: {chat_id}")
+
+        if target_user_id is None:
+            raise ValueError(f"Invalid user_id: {user_id}")
+
         r = await self.invoke(
             raw.functions.messages.GetGameHighScores(
-                peer=await self.resolve_peer(chat_id),
-                id=message_id,
-                user_id=await self.resolve_peer(user_id),
+                peer=peer,
+                id=message_id or 0,
+                user_id=target_user_id,
             ),
         )
 

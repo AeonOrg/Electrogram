@@ -79,8 +79,13 @@ class SendGame:
             message_thread_id=message_thread_id,
         )
 
+        peer = utils.get_input_peer(await self.resolve_peer(chat_id))
+
+        if peer is None:
+            raise ValueError(f"Invalid chat_id: {chat_id}")
+
         rpc = raw.functions.messages.SendMedia(
-            peer=await self.resolve_peer(chat_id),
+            peer=peer,
             media=raw.types.InputMediaGame(
                 id=raw.types.InputGameShortName(
                     bot_id=raw.types.InputUserSelf(),

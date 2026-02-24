@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 
 class SetBotInfo:
@@ -38,7 +38,7 @@ class SetBotInfo:
         """
         peer = None
         if bot:
-            peer = await self.resolve_peer(bot)
+            peer = utils.get_input_user(await self.resolve_peer(bot))
         r = await self.invoke(
             raw.functions.bots.SetBotInfo(
                 lang_code=lang_code,
