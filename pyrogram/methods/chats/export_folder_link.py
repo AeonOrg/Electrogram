@@ -33,13 +33,13 @@ class ExportFolderLink:
         peers = []
 
         if folder.included_chats:
-            peers.extend(iter(folder.included_chats))
+            peers.extend(folder.included_chats)
 
         if folder.excluded_chats:
-            peers.extend(iter(folder.included_chats))
+            peers.extend(folder.excluded_chats)
 
         if folder.pinned_chats:
-            peers.extend(iter(folder.included_chats))
+            peers.extend(folder.pinned_chats)
 
         r = await self.invoke(
             raw.functions.chatlists.ExportChatlistInvite(
