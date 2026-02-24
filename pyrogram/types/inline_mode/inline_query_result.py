@@ -7,7 +7,7 @@ from pyrogram.types.object import Object
 
 if TYPE_CHECKING:
     import pyrogram
-    from pyrogram import types
+    from pyrogram import raw, types
 
 
 class InlineQueryResult(Object):

@@ -234,9 +234,12 @@ MAX_USER_ID = 999999999999
 
 
 def get_raw_peer_id(
-    peer: raw.base.Peer | raw.base.RequestedPeer,
+    peer: raw.base.Peer | raw.base.RequestedPeer | None,
 ) -> int | None:
     """Get the raw peer id from a Peer object"""
+    if peer is None:
+        return None
+
     if isinstance(peer, raw.types.PeerUser | raw.types.RequestedPeerUser):
         return peer.user_id
 
@@ -444,34 +447,32 @@ async def get_reply_to(
             if isinstance(peer, raw.base.InputPeer):
                 reply_to_chat = peer
 
-        reply_to_msg_id = None
-        top_msg_id = None
-
-        if message_thread_id:
-            if not reply_to_message_id:
-                reply_to_msg_id = message_thread_id
-            else:
-                reply_to_msg_id = reply_to_message_id
-            top_msg_id = message_thread_id
-        else:
-            reply_to_msg_id = reply_to_message_id
-
-        reply_to = raw.types.InputReplyToMessage(
-            reply_to_msg_id=reply_to_msg_id,
-            top_msg_id=top_msg_id,
-            reply_to_peer_id=reply_to_chat,
-            quote_text=text,
-            quote_entities=entities,
+        reply_to_msg_id = (
+            message_thread_id
+            if message_thread_id and not reply_to_message_id
+            else reply_to_message_id
         )
+        top_msg_id = message_thread_id
+
+        if reply_to_msg_id:
+            reply_to = raw.types.InputReplyToMessage(
+                reply_to_msg_id=reply_to_msg_id,
+                top_msg_id=top_msg_id,
+                reply_to_peer_id=reply_to_chat,
+                quote_text=text,
+                quote_entities=entities,
+            )
     if reply_to_story_id:
         if chat_id is None:
             raise ValueError(
                 "chat_id is required when reply_to_story_id is provided"
             )
         peer = await client.resolve_peer(chat_id)
-        reply_to = raw.types.InputReplyToStory(
-            peer=get_input_peer(peer), story_id=reply_to_story_id
-        )
+        input_peer = get_input_peer(peer)
+        if input_peer:
+            reply_to = raw.types.InputReplyToStory(
+                peer=input_peer, story_id=reply_to_story_id
+            )
     return reply_to
 
 

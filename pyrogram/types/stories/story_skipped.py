@@ -59,14 +59,18 @@ class StorySkipped(Object, Update):
         stories: raw.base.StoryItem,
         peer: raw.types.PeerChannel | raw.types.PeerUser,
     ) -> StorySkipped:
-        from_user = None
-        sender_chat = None
+        from_user: types.User | None = None
+        sender_chat: types.Chat | None = None
         if isinstance(peer, raw.types.PeerChannel):
-            sender_chat = await self.get_chat(peer.channel_id)
+            chat = await self.get_chat(peer.channel_id)
+            if isinstance(chat, types.Chat):
+                sender_chat = chat
         elif isinstance(peer, raw.types.InputPeerSelf):
             from_user = self.me
         else:
-            from_user = await self.get_users(peer.user_id)
+            user = await self.get_users(peer.user_id)
+            if isinstance(user, types.User):
+                from_user = user
 
         return StorySkipped(
             id=stories.id,
