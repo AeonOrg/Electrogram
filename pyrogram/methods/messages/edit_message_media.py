@@ -3,7 +3,7 @@ from __future__ import annotations
 import io
 import re
 from pathlib import Path
-from typing import Any, cast
+from typing import cast
 
 from anyio import Path as AsyncPath
 

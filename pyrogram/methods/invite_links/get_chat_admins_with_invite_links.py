@@ -37,10 +37,6 @@ class GetChatAdminsWithInviteLinks:
             [
                 a
                 for admin in r.admins
-                if (
-                    a := types.ChatAdminWithInviteLinks._parse(
-                        self, admin, users
-                    )
-                )
+                if (a := types.ChatAdminWithInviteLinks._parse(self, admin, users))
             ]
         )
