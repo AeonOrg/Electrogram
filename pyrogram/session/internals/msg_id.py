@@ -5,6 +5,7 @@ import time
 
 log = logging.getLogger(__name__)
 
+
 class _MsgIdGenerator:
     def __init__(self) -> None:
         self.last_time = 0
