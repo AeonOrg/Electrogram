@@ -6,14 +6,17 @@ import time
 log = logging.getLogger(__name__)
 
 
-class MsgId:
-    last_time = 0
-    offset = 0
+class _MsgIdGenerator:
+    def __init__(self) -> None:
+        self.last_time = 0
+        self.offset = 0
 
-    def __new__(cls) -> int:
+    def __call__(self) -> int:
         now = int(time.time())
-        cls.offset = (cls.offset + 4) if now == cls.last_time else 0
-        msg_id = (now * 2**32) + cls.offset
-        cls.last_time = now
-
+        self.offset = (self.offset + 4) if now == self.last_time else 0
+        msg_id = (now * 2**32) + self.offset
+        self.last_time = now
         return msg_id
+
+
+MsgId = _MsgIdGenerator()

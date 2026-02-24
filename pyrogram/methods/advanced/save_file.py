@@ -139,7 +139,7 @@ class SaveFile:
             is_missing_part = file_id is not None
 
             if file_id is None:
-                file_id = int(self.rnd_id())
+                file_id = self.rnd_id()
 
             md5_sum = md5() if not is_big and not is_missing_part else None
 

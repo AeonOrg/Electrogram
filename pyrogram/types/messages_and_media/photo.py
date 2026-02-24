@@ -51,12 +51,12 @@ class Photo(Object):
         self,
         *,
         client: pyrogram.Client | None = None,
-        file_id: str,
-        file_unique_id: str,
-        width: int,
-        height: int,
-        file_size: int,
-        date: datetime,
+        file_id: str | None = None,
+        file_unique_id: str | None = None,
+        width: int | None = None,
+        height: int | None = None,
+        file_size: int | None = None,
+        date: datetime | None = None,
         ttl_seconds: int | None = None,
         thumbs: list[types.Thumbnail] | None = None,
     ) -> None:
@@ -74,7 +74,7 @@ class Photo(Object):
     @staticmethod
     def _parse(
         client,
-        photo: raw.types.Photo,
+        photo: raw.base.Photo | None,
         ttl_seconds: int | None = None,
     ) -> Photo | None:
         if isinstance(photo, raw.types.Photo):

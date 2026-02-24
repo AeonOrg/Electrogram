@@ -118,19 +118,24 @@ class CopyMessage:
         """
         message = await self.get_messages(from_chat_id, message_id)
 
-        return await message.copy(
-            chat_id=chat_id,
-            caption=caption,
-            parse_mode=parse_mode,
-            caption_entities=caption_entities,
-            has_spoiler=has_spoiler,
-            disable_notification=disable_notification,
-            message_thread_id=message_thread_id,
-            reply_to_message_id=reply_to_message_id,
-            reply_to_chat_id=reply_to_chat_id,
-            schedule_date=schedule_date,
-            protect_content=protect_content,
-            allow_paid_broadcast=allow_paid_broadcast,
-            invert_media=invert_media,
-            reply_markup=reply_markup,
-        )
+        from pyrogram import types
+
+        if isinstance(message, types.Message):
+            return await message.copy(
+                chat_id=chat_id,
+                caption=caption,
+                parse_mode=parse_mode,
+                caption_entities=caption_entities,
+                has_spoiler=has_spoiler,
+                disable_notification=disable_notification,
+                message_thread_id=message_thread_id,
+                reply_to_message_id=reply_to_message_id,
+                reply_to_chat_id=reply_to_chat_id,
+                schedule_date=schedule_date,
+                protect_content=protect_content,
+                allow_paid_broadcast=allow_paid_broadcast,
+                invert_media=invert_media,
+                reply_markup=reply_markup,
+            )
+
+        return None

@@ -37,7 +37,7 @@ class KeyboardButtonStyle(Object):
         self.icon = icon
 
     @staticmethod
-    def read(b: raw.types.KeyboardButtonStyle) -> KeyboardButtonStyle | None:
+    def read(b: raw.types.KeyboardButtonStyle | None) -> KeyboardButtonStyle | None:
         if not b:
             return None
 

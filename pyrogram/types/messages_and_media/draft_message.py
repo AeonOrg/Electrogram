@@ -143,7 +143,6 @@ class DraftMessage(Object):
                                 client,
                                 doc,
                                 video_attributes,
-                                media.ttl_seconds,
                             )
                             media_type = enums.MessageMediaType.VIDEO_NOTE
 
@@ -157,7 +156,6 @@ class DraftMessage(Object):
                                 client,
                                 doc,
                                 audio_attributes,
-                                media.ttl_seconds,
                             )
                             media_type = enums.MessageMediaType.VOICE
 

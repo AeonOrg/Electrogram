@@ -339,11 +339,20 @@ class Dispatcher:
                             if id < 0:
                                 peer = await self.client.resolve_peer(id)
 
-                                if not isinstance(peer, raw.base.InputChannel):
+                                if isinstance(peer, raw.types.InputPeerChannel):
+                                    channel: raw.base.InputChannel = (
+                                        raw.types.InputChannel(
+                                            channel_id=peer.channel_id,
+                                            access_hash=peer.access_hash,
+                                        )
+                                    )
+                                elif isinstance(peer, raw.base.InputChannel):
+                                    channel = peer
+                                else:
                                     break
 
                                 rpc = raw.functions.updates.GetChannelDifference(
-                                    channel=peer,
+                                    channel=channel,
                                     filter=raw.types.ChannelMessagesFilterEmpty(),
                                     pts=local_pts,
                                     limit=10000,

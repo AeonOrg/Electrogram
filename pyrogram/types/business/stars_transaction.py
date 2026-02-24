@@ -22,7 +22,7 @@ class StarsTransaction(Object):
         date (:py:obj:`~datetime.datetime`):
             Date of the transaction.
 
-        chat (:obj:`~pyrogram.types.Chat`):
+        chat (:obj:`~pyrogram.types.Chat` | :obj:`~pyrogram.types.User`):
             Chat where the transaction was made.
 
         is_refund (``bool``, *optional*):
@@ -56,10 +56,10 @@ class StarsTransaction(Object):
     def __init__(
         self,
         *,
-        id: int,
+        id: str,
         stars: int,
         date: datetime,
-        chat: types.Chat,
+        chat: types.Chat | types.User | None = None,
         is_refund: bool | None = None,
         is_pending: bool | None = None,
         is_failed: bool | None = None,
@@ -97,7 +97,11 @@ class StarsTransaction(Object):
         try:
             payload = transaction.bot_payload.decode()
         except (UnicodeDecodeError, AttributeError):
-            payload = transaction.bot_payload
+            payload = (
+                transaction.bot_payload.decode("utf-8", "replace")
+                if isinstance(transaction.bot_payload, bytes)
+                else transaction.bot_payload
+            )
         return StarsTransaction(
             id=transaction.id,
             stars=transaction.stars,
@@ -112,6 +116,6 @@ class StarsTransaction(Object):
                 transaction.transaction_date,
             ),
             transaction_url=transaction.transaction_url,
-            payload=payload,
+            payload=payload if isinstance(payload, str) else None,
             message_id=transaction.msg_id,
         )

@@ -600,7 +600,7 @@ class Message(Object, Update):
         | None = None,
         reactions: list[types.Reaction] | None = None,
         chat_join_type: enums.ChatJoinType | None = None,
-        raw: raw.types.Message | None = None,
+        raw: raw.base.Message | None = None,
     ) -> None:
         super().__init__(client)
 
@@ -858,7 +858,9 @@ class Message(Object, Update):
 
             if isinstance(action, raw.types.MessageActionChatAddUser):
                 new_chat_members = [
-                    types.User._parse(client, users[i]) for i in action.users
+                    u
+                    for i in action.users
+                    if (u := types.User._parse(client, users[i])) is not None
                 ]
                 service_type = enums.MessageServiceType.NEW_CHAT_MEMBERS
                 chat_join_type = enums.ChatJoinType.BY_ADD
@@ -1133,11 +1135,9 @@ class Message(Object, Update):
             entities = types.List(
                 [
                     e
-                    for e in [
-                        types.MessageEntity._parse(client, entity, users)
-                        for entity in (message.entities or [])
-                    ]
-                    if e is not None
+                    for entity in (message.entities or [])
+                    if (e := types.MessageEntity._parse(client, entity, users))
+                    is not None
                 ],
             )
 
@@ -1353,8 +1353,8 @@ class Message(Object, Update):
                     dice = types.Dice._parse(client, media)
                     media_type = enums.MessageMediaType.DICE
                 elif isinstance(media, raw.types.MessageMediaInvoice):
-                    invoice = types.Invoice._parse(media)
-                    media = enums.MessageMediaType.INVOICE
+                    invoice = types.Invoice._parse(client, media)
+                    media_type = enums.MessageMediaType.INVOICE
                 elif isinstance(media, raw.types.MessageMediaPaidMedia):
                     paid_media = types.PaidMedia._parse(client, media)
                     media_type = enums.MessageMediaType.PAID_MEDIA

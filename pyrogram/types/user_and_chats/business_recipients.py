@@ -57,9 +57,9 @@ class BusinessRecipients(Object):
             non_contacts=getattr(recipients, "non_contacts", None),
             exclude_selected=getattr(recipients, "exclude_selected", None),
             users=types.List(
-                types.User._parse(client, users[i]) for i in recipients.users
+                types.User._parse(client, users.get(i)) for i in recipients.users
             )
             or None
-            if recipients.users
+            if recipients.users and users is not None
             else None,
         )
