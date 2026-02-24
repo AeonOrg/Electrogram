@@ -94,7 +94,7 @@ class GetMessages:
                 else (None, None)
             )
 
-            if ids is None:
+            if ids is None or ids_type is None:
                 raise ValueError(
                     "No argument supplied. Either pass message_ids or reply_to_message_ids",
                 )
