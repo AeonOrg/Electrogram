@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any, cast
+
 import pyrogram
 from pyrogram import raw, types, utils
 
@@ -174,9 +176,15 @@ class SendInvoice:
             encoded_payload = payload.encode()
         else:
             encoded_payload = f"{(title)}".encode()
+        peer = await self.resolve_peer(chat_id)
+        input_peer = utils.get_input_peer(peer)
+
+        if input_peer is None:
+            raise ValueError(f"Invalid chat_id: {chat_id}")
+
         r = await self.invoke(
             raw.functions.messages.SendMedia(
-                peer=await self.resolve_peer(chat_id),
+                peer=input_peer,
                 media=raw.types.InputMediaInvoice(
                     title=title,
                     description=description,
@@ -200,7 +208,7 @@ class SendInvoice:
                     if photo_url
                     else None,
                     start_param=start_parameter,
-                    extended_media=extended_media,
+                    extended_media=cast("Any", extended_media),
                 ),
                 allow_paid_floodskip=allow_paid_broadcast,
                 random_id=self.rnd_id(),

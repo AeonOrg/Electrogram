@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 
 class AddChatMembers:
@@ -52,19 +52,34 @@ class AddChatMembers:
 
         if isinstance(peer, raw.types.InputPeerChat):
             for user_id in user_ids:
+                input_user = utils.get_input_user(await self.resolve_peer(user_id))
+
+                if input_user is not None:
+                    await self.invoke(
+                        raw.functions.messages.AddChatUser(
+                            chat_id=peer.chat_id,
+                            user_id=input_user,
+                            fwd_limit=forward_limit,
+                        ),
+                    )
+        else:
+            input_channel = utils.get_input_channel(peer)
+
+            if input_channel is not None:
                 await self.invoke(
-                    raw.functions.messages.AddChatUser(
-                        chat_id=peer.chat_id,
-                        user_id=await self.resolve_peer(user_id),
-                        fwd_limit=forward_limit,
+                    raw.functions.channels.InviteToChannel(
+                        channel=input_channel,
+                        users=[
+                            u
+                            for user_id in user_ids
+                            if (
+                                u := utils.get_input_user(
+                                    await self.resolve_peer(user_id),
+                                )
+                            )
+                            is not None
+                        ],
                     ),
                 )
-        else:
-            await self.invoke(
-                raw.functions.channels.InviteToChannel(
-                    channel=peer,
-                    users=[await self.resolve_peer(user_id) for user_id in user_ids],
-                ),
-            )
 
         return True

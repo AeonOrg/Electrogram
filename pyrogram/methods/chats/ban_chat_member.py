@@ -69,12 +69,18 @@ class BanChatMember:
         user_peer = await self.resolve_peer(user_id)
 
         if isinstance(chat_peer, raw.types.InputPeerChannel):
+            input_channel = utils.get_input_channel(chat_peer)
+            participant = utils.get_input_peer(user_peer)
+
+            if input_channel is None or participant is None:
+                return False
+
             r = await self.invoke(
                 raw.functions.channels.EditBanned(
-                    channel=chat_peer,
-                    participant=user_peer,
+                    channel=input_channel,
+                    participant=participant,
                     banned_rights=raw.types.ChatBannedRights(
-                        until_date=utils.datetime_to_timestamp(until_date),
+                        until_date=utils.datetime_to_timestamp(until_date) or 0,
                         view_messages=True,
                         send_messages=True,
                         send_media=True,
@@ -88,10 +94,21 @@ class BanChatMember:
                 ),
             )
         else:
+            input_user = utils.get_input_user(user_peer)
+
+            if input_user is None:
+                return False
+
+            chat_id_to_use = 0
+            if isinstance(chat_id, (int, float)):
+                chat_id_to_use = int(chat_id)
+            elif isinstance(chat_peer, raw.types.InputPeerChat):
+                chat_id_to_use = chat_peer.chat_id
+
             r = await self.invoke(
                 raw.functions.messages.DeleteChatUser(
-                    chat_id=abs(chat_id),
-                    user_id=user_peer,
+                    chat_id=abs(chat_id_to_use),
+                    user_id=input_user,
                     revoke_history=revoke_messages,
                 ),
             )
