@@ -70,7 +70,7 @@ class EditMessageText:
         """
 
         rpc = raw.functions.messages.EditMessage(
-            peer=await self.resolve_peer(chat_id),
+            peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
             id=message_id,
             no_webpage=disable_web_page_preview or None,
             invert_media=invert_media,

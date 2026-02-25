@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import re
-from typing import TYPE_CHECKING, BinaryIO
+from typing import TYPE_CHECKING, BinaryIO, cast
 
 from anyio import Path as AsyncPath
 
@@ -265,7 +265,7 @@ class SendPhoto:
             while True:
                 try:
                     rpc = raw.functions.messages.SendMedia(
-                        peer=await self.resolve_peer(chat_id),
+                        peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                         media=media,
                         silent=disable_notification or None,
                         reply_to=reply_to,
@@ -279,7 +279,9 @@ class SendPhoto:
                         clear_draft=clear_draft,
                         update_stickersets_order=update_stickersets_order,
                         schedule_repeat_period=schedule_repeat_period,
-                        send_as=await self.resolve_peer(send_as)
+                        send_as=utils.get_input_peer(
+                            await self.resolve_peer(send_as)
+                        )
                         if send_as
                         else None,
                         quick_reply_shortcut=await utils.get_input_quick_reply_shortcut(
@@ -294,11 +296,19 @@ class SendPhoto:
                         reply_markup=await reply_markup.write(self)
                         if reply_markup
                         else None,
-                        **await utils.parse_text_entities(
-                            self,
-                            caption,
-                            parse_mode,
-                            caption_entities,
+                        message=cast(
+                            "str",
+                            (
+                                parsed := await utils.parse_text_entities(
+                                    self,
+                                    caption,
+                                    parse_mode,
+                                    caption_entities,
+                                )
+                            )["message"],
+                        ),
+                        entities=cast(
+                            "list[raw.base.MessageEntity]", parsed["entities"]
                         ),
                     )
                     if business_connection_id is not None:

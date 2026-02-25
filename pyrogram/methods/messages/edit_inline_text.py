@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
 from pyrogram import enums, raw, types, utils
 
@@ -63,6 +65,8 @@ class EditInlineText:
 
         session = await get_session(self, dc_id)
 
+        parsed = await self.parser.parse(text, parse_mode)
+
         return await session.invoke(
             raw.functions.messages.EditInlineBotMessage(
                 id=unpacked,
@@ -70,7 +74,8 @@ class EditInlineText:
                 reply_markup=await reply_markup.write(self)
                 if reply_markup
                 else None,
-                **await self.parser.parse(text, parse_mode),
+                message=cast("str", parsed["message"]),
+                entities=cast("list[raw.base.MessageEntity]", parsed["entities"]),
                 invert_media=invert_media,
             ),
             sleep_threshold=self.sleep_threshold,

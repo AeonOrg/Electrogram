@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 
 class SetGameScore:
@@ -58,12 +58,24 @@ class SetGameScore:
                 # Force set new score
                 await app.set_game_score(user_id, 25, force=True)
         """
+        if chat_id is None:
+            raise ValueError("chat_id is required")
+
+        peer = utils.get_input_peer(await self.resolve_peer(chat_id))
+        target_user_id = utils.get_input_user(await self.resolve_peer(user_id))
+
+        if peer is None:
+            raise ValueError(f"Invalid chat_id: {chat_id}")
+
+        if target_user_id is None:
+            raise ValueError(f"Invalid user_id: {user_id}")
+
         r = await self.invoke(
             raw.functions.messages.SetGameScore(
-                peer=await self.resolve_peer(chat_id),
+                peer=peer,
                 score=score,
-                id=message_id,
-                user_id=await self.resolve_peer(user_id),
+                id=message_id or 0,
+                user_id=target_user_id,
                 force=force or None,
                 edit_message=not disable_edit_message or None,
             ),

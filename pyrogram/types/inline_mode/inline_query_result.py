@@ -7,7 +7,7 @@ from pyrogram.types.object import Object
 
 if TYPE_CHECKING:
     import pyrogram
-    from pyrogram import types
+    from pyrogram import raw, types
 
 
 class InlineQueryResult(Object):
@@ -46,5 +46,5 @@ class InlineQueryResult(Object):
         self.input_message_content = input_message_content
         self.reply_markup = reply_markup
 
-    async def write(self, client: pyrogram.Client) -> None:
-        pass
+    async def write(self, client: pyrogram.Client) -> raw.base.InputBotInlineResult:
+        raise NotImplementedError

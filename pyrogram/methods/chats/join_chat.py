@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 
 class JoinChat:
@@ -45,7 +47,10 @@ class JoinChat:
             return None
         chat = await self.invoke(
             raw.functions.channels.JoinChannel(
-                channel=await self.resolve_peer(chat_id),
+                channel=cast(
+                    "raw.base.InputChannel",
+                    utils.get_input_channel(await self.resolve_peer(chat_id)),
+                ),
             ),
         )
 

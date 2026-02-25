@@ -88,8 +88,8 @@ class SearchGlobal:
 
             last = messages[-1]
 
-            offset_date = utils.datetime_to_timestamp(last.date)
-            offset_peer = await self.resolve_peer(last.chat.id)
+            offset_date = utils.datetime_to_timestamp(last.date) or 0
+            offset_peer = utils.get_input_peer(await self.resolve_peer(last.chat.id))
             offset_id = last.id
 
             for message in messages:

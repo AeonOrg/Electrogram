@@ -180,9 +180,11 @@ class SendMessage:
                         ]))
         """
 
-        message, entities = (
-            await utils.parse_text_entities(self, text, parse_mode, entities)
-        ).values()
+        parsed_text = await utils.parse_text_entities(
+            self, text, parse_mode, entities
+        )
+        message = cast("str", parsed_text["message"])
+        entities = cast("list", parsed_text["entities"])
 
         reply_to = await utils.get_reply_to(
             client=self,
@@ -197,7 +199,7 @@ class SendMessage:
         )
 
         rpc = raw.functions.messages.SendMessage(
-            peer=cast("raw.base.InputPeer", await self.resolve_peer(chat_id)),
+            peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
             no_webpage=disable_web_page_preview or None,
             silent=disable_notification or None,
             reply_to=reply_to,
@@ -214,7 +216,7 @@ class SendMessage:
             clear_draft=clear_draft,
             update_stickersets_order=update_stickersets_order,
             schedule_repeat_period=schedule_repeat_period,
-            send_as=await self.resolve_peer(send_as) if send_as else None,
+            send_as=utils.get_input_peer(await self.resolve_peer(send_as)),
             quick_reply_shortcut=await utils.get_input_quick_reply_shortcut(
                 quick_reply_shortcut,
             )
@@ -249,13 +251,15 @@ class SendMessage:
                     type=enums.ChatType.PRIVATE,
                     client=self,
                 ),
-                text=message,
+                text=types.messages_and_media.message.Str(message),
                 date=utils.timestamp_to_datetime(r.date),
                 outgoing=r.out,
                 reply_markup=reply_markup,
                 entities=[
-                    types.MessageEntity._parse(None, entity, {})
+                    e
                     for entity in entities
+                    if (e := types.MessageEntity._parse(None, entity, {}))
+                    is not None
                 ]
                 if entities
                 else None,

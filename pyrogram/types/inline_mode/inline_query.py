@@ -45,10 +45,10 @@ class InlineQuery(Object, Update):
         *,
         client: pyrogram.Client | None = None,
         id: str,
-        from_user: types.User,
+        from_user: types.User | None = None,
         query: str,
         offset: str,
-        chat_type: enums.ChatType,
+        chat_type: enums.ChatType | None = None,
         location: types.Location | None = None,
         matches: list[Match] | None = None,
     ) -> None:

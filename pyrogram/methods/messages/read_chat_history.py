@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 
 class ReadChatHistory:
@@ -41,9 +43,14 @@ class ReadChatHistory:
         peer = await self.resolve_peer(chat_id)
 
         if isinstance(peer, raw.types.InputPeerChannel):
-            q = raw.functions.channels.ReadHistory(channel=peer, max_id=max_id)
+            q = raw.functions.channels.ReadHistory(
+                channel=cast("raw.base.InputChannel", utils.get_input_channel(peer)),
+                max_id=max_id,
+            )
         else:
-            q = raw.functions.messages.ReadHistory(peer=peer, max_id=max_id)
+            q = raw.functions.messages.ReadHistory(
+                peer=utils.get_input_peer(peer), max_id=max_id
+            )
 
         await self.invoke(q)
 

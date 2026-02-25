@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
-from typing import TYPE_CHECKING, BinaryIO
+from typing import TYPE_CHECKING, BinaryIO, cast
 
 from anyio import Path as AsyncPath
 
@@ -178,7 +178,7 @@ class SendDocument:
 
                 await app.send_document("me", "document.zip", progress=progress)
         """
-        file = None
+        file: raw.base.InputFile | None = None
 
         reply_to = await utils.get_reply_to(
             client=self,
@@ -195,7 +195,7 @@ class SendDocument:
         try:
             if isinstance(document, str):
                 if await AsyncPath(document).is_file():
-                    thumb = await self.save_file(thumb)
+                    thumb_file = await self.save_file(thumb)
                     file = await self.save_file(
                         document,
                         progress=progress,
@@ -204,9 +204,9 @@ class SendDocument:
                     media = raw.types.InputMediaUploadedDocument(
                         mime_type=self.guess_mime_type(document)
                         or "application/zip",
-                        file=file,
+                        file=cast("raw.base.InputFile", file),
                         force_file=force_document or None,
-                        thumb=thumb,
+                        thumb=thumb_file,
                         attributes=[
                             raw.types.DocumentAttributeFilename(
                                 file_name=file_name or Path(document).name,
@@ -221,7 +221,7 @@ class SendDocument:
                         FileType.DOCUMENT,
                     )
             else:
-                thumb = await self.save_file(thumb)
+                thumb_file = await self.save_file(thumb)
                 file = await self.save_file(
                     document,
                     progress=progress,
@@ -230,8 +230,8 @@ class SendDocument:
                 media = raw.types.InputMediaUploadedDocument(
                     mime_type=self.guess_mime_type(file_name or document.name)
                     or "application/zip",
-                    file=file,
-                    thumb=thumb,
+                    file=cast("raw.base.InputFile", file),
+                    thumb=thumb_file,
                     attributes=[
                         raw.types.DocumentAttributeFilename(
                             file_name=file_name or document.name,
@@ -242,7 +242,7 @@ class SendDocument:
             while True:
                 try:
                     rpc = raw.functions.messages.SendMedia(
-                        peer=await self.resolve_peer(chat_id),
+                        peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                         media=media,
                         silent=disable_notification or None,
                         reply_to=reply_to,

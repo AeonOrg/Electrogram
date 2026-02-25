@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -44,8 +44,7 @@ class DeleteStories:
                 await app.delete_stories([12345, 12346])
         """
 
-        is_iterable = not isinstance(story_ids, int)
-        ids = list(story_ids) if is_iterable else [story_ids]
+        ids = [story_ids] if isinstance(story_ids, int) else list(story_ids)
 
         if chat_id:
             peer = await self.resolve_peer(chat_id)
@@ -53,7 +52,12 @@ class DeleteStories:
             peer = await self.resolve_peer("me")
 
         try:
-            await self.invoke(raw.functions.stories.DeleteStories(peer=peer, id=ids))
+            await self.invoke(
+                raw.functions.stories.DeleteStories(
+                    peer=cast("raw.base.InputPeer", utils.get_input_peer(peer)),
+                    id=ids,
+                )
+            )
         except Exception as e:
             print(e)
             return False

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 
 class ApproveChatJoinRequest:
@@ -32,7 +32,7 @@ class ApproveChatJoinRequest:
         """
         await self.invoke(
             raw.functions.messages.HideChatJoinRequest(
-                peer=await self.resolve_peer(chat_id),
+                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                 user_id=await self.resolve_peer(user_id),
                 approved=True,
             ),

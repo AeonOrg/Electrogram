@@ -94,8 +94,8 @@ class AlternativeVideo(Object):
     def _parse(
         client: pyrogram.Client,
         video: raw.types.Document,
-        video_attributes: raw.types.DocumentAttributeVideo,
-        file_name: str,
+        video_attributes: raw.base.DocumentAttribute | None,
+        file_name: str | None,
     ) -> AlternativeVideo:
         file_id = (
             FileId(
@@ -122,15 +122,15 @@ class AlternativeVideo(Object):
             client=client,
             file_id=file_id,
             file_unique_id=file_unique_id,
-            width=video_attributes.w if video_attributes else 0,
-            height=video_attributes.h if video_attributes else 0,
-            codec=video_attributes.video_codec if video_attributes else "",
-            duration=video_attributes.duration if video_attributes else 0,
+            width=getattr(video_attributes, "w", 0),
+            height=getattr(video_attributes, "h", 0),
+            codec=getattr(video_attributes, "video_codec", ""),
+            duration=getattr(video_attributes, "duration", 0),
             file_name=file_name,
             mime_type=video.mime_type if video else "",
-            supports_streaming=video_attributes.supports_streaming
-            if video_attributes
-            else False,
+            supports_streaming=getattr(
+                video_attributes, "supports_streaming", False
+            ),
             file_size=video.size if video else 0,
             date=utils.timestamp_to_datetime(video.date) if video else None,
             thumbs=types.Thumbnail._parse(client, video) if video else None,

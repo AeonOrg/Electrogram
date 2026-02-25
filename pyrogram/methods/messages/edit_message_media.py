@@ -3,7 +3,7 @@ from __future__ import annotations
 import io
 import re
 from pathlib import Path
-from typing import Any, cast
+from typing import cast
 
 from anyio import Path as AsyncPath
 
@@ -90,8 +90,8 @@ class EditMessageMedia:
                 parse_mode,
                 caption_entities,
             )
-            message = cast("Any", parsed["message"])
-            entities = cast("Any", parsed["entities"])
+            message = parsed["message"]
+            entities = parsed["entities"]
 
         raw_media: raw.base.InputMedia | None = None
 

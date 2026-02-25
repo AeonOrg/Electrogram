@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 
 class GetChatMembersCount:
@@ -44,7 +46,11 @@ class GetChatMembersCount:
             return r.chats[0].requests_pending
         if isinstance(peer, raw.types.InputPeerChannel):
             r = await self.invoke(
-                raw.functions.channels.GetFullChannel(channel=peer),
+                raw.functions.channels.GetFullChannel(
+                    channel=cast(
+                        "raw.base.InputChannel", utils.get_input_channel(peer)
+                    )
+                ),
             )
 
             if not join_request:

@@ -170,6 +170,9 @@ class UserGift(Object):
             ``bool``: On success, True is returned.
 
         """
+        assert self.sender_user is not None
+        assert self.message_id is not None
+
         return await self._client.toggle_gift_is_saved(
             sender_user_id=self.sender_user.id,
             message_id=self.message_id,

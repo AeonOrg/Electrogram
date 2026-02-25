@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 
 class GetChatAdminInviteLinksCount:
@@ -36,7 +36,7 @@ class GetChatAdminInviteLinksCount:
         """
         r = await self.invoke(
             raw.functions.messages.GetExportedChatInvites(
-                peer=await self.resolve_peer(chat_id),
+                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                 admin_id=await self.resolve_peer(admin_id),
                 limit=1,
                 revoked=revoked,

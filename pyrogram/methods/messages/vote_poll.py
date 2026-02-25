@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 
 class VotePoll:
@@ -42,9 +44,11 @@ class VotePoll:
 
         r = await self.invoke(
             raw.functions.messages.SendVote(
-                peer=await self.resolve_peer(chat_id),
+                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                 msg_id=message_id,
-                options=[poll.options[option].data for option in options],
+                options=[
+                    cast("bytes", poll.options[option].data) for option in options
+                ],
             ),
         )
 

@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 
 class LeaveChat:
@@ -40,7 +42,9 @@ class LeaveChat:
         if isinstance(peer, raw.types.InputPeerChannel):
             return await self.invoke(
                 raw.functions.channels.LeaveChannel(
-                    channel=await self.resolve_peer(chat_id),
+                    channel=cast(
+                        "raw.base.InputChannel", utils.get_input_channel(peer)
+                    ),
                 ),
             )
         if isinstance(peer, raw.types.InputPeerChat):

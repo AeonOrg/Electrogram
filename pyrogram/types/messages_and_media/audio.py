@@ -84,8 +84,8 @@ class Audio(Object):
     def _parse(
         client,
         audio: raw.types.Document,
-        audio_attributes: raw.types.DocumentAttributeAudio,
-        file_name: str,
+        audio_attributes: raw.base.DocumentAttribute | None,
+        file_name: str | None,
     ) -> Audio:
         return Audio(
             file_id=FileId(
@@ -99,9 +99,9 @@ class Audio(Object):
                 file_unique_type=FileUniqueType.DOCUMENT,
                 media_id=audio.id,
             ).encode(),
-            duration=audio_attributes.duration,
-            performer=audio_attributes.performer,
-            title=audio_attributes.title,
+            duration=getattr(audio_attributes, "duration", 0),
+            performer=getattr(audio_attributes, "performer", None),
+            title=getattr(audio_attributes, "title", None),
             mime_type=audio.mime_type,
             file_size=audio.size,
             file_name=file_name,

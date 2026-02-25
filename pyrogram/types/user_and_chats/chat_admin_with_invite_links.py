@@ -37,11 +37,16 @@ class ChatAdminWithInviteLinks(Object):
         client: pyrogram.Client,
         admin: raw.types.ChatAdminWithInvites,
         users: dict[int, raw.types.User] | None = None,
-    ) -> ChatAdminWithInviteLinks:
+    ) -> ChatAdminWithInviteLinks | None:
+        user = types.User._parse(
+            client, users.get(admin.admin_id) if users is not None else None
+        )
+
+        if not user:
+            return None
+
         return ChatAdminWithInviteLinks(
-            admin=types.User._parse(
-                client, users.get(admin.admin_id) if users is not None else None
-            ),
+            admin=user,
             chat_invite_links_count=admin.invites_count,
             revoked_chat_invite_links_count=admin.revoked_invites_count,
         )

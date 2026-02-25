@@ -25,9 +25,9 @@ async def get_chunk(
         from_date = utils.zero_datetime()
     messages = await client.invoke(
         raw.functions.messages.GetHistory(
-            peer=await client.resolve_peer(chat_id),
+            peer=utils.get_input_peer(await client.resolve_peer(chat_id)),
             offset_id=from_message_id,
-            offset_date=utils.datetime_to_timestamp(from_date),
+            offset_date=utils.datetime_to_timestamp(from_date) or 0,
             add_offset=offset,
             limit=limit,
             max_id=max_id,

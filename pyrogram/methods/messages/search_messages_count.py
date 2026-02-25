@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import enums, raw
+from pyrogram import enums, raw, utils
 
 
 class SearchMessagesCount:
@@ -46,7 +46,7 @@ class SearchMessagesCount:
         """
         r = await self.invoke(
             raw.functions.messages.Search(
-                peer=await self.resolve_peer(chat_id),
+                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                 q=query,
                 filter=filter.value(),
                 min_date=0,
@@ -56,7 +56,9 @@ class SearchMessagesCount:
                 limit=1,
                 min_id=0,
                 max_id=0,
-                from_id=(await self.resolve_peer(from_user) if from_user else None),
+                from_id=utils.get_input_peer(
+                    await self.resolve_peer(from_user) if from_user else None
+                ),
                 hash=0,
                 top_msg_id=thread_id,
             ),

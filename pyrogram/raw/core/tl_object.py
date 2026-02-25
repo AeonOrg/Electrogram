@@ -22,7 +22,7 @@ class TLObject:
         )
 
     def write(self, *args: Any) -> bytes:
-        pass
+        return b""
 
     @staticmethod
     def default(obj: TLObject) -> str | dict[str, str]:

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 
 class SendReaction:
@@ -82,7 +82,7 @@ class SendReaction:
         if message_id is not None:
             r = await self.invoke(
                 raw.functions.messages.SendReaction(
-                    peer=await self.resolve_peer(chat_id),
+                    peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                     msg_id=message_id,
                     reaction=reaction,
                     big=big,
@@ -94,13 +94,21 @@ class SendReaction:
                     return types.MessageReactions._parse(self, i.reactions)
             return None
         if story_id is not None:
+            if isinstance(emoji, list):
+                emoji = emoji[0] if emoji else None
+
+            if isinstance(emoji, int):
+                story_reaction = raw.types.ReactionCustomEmoji(document_id=emoji)
+            elif isinstance(emoji, str):
+                story_reaction = raw.types.ReactionEmoji(emoticon=emoji)
+            else:
+                story_reaction = raw.types.ReactionEmpty()
+
             await self.invoke(
                 raw.functions.stories.SendReaction(
-                    peer=await self.resolve_peer(chat_id),
+                    peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                     story_id=story_id,
-                    reaction=raw.types.ReactionEmoji(emoticon=emoji)
-                    if emoji
-                    else None,
+                    reaction=story_reaction,
                     add_to_recent=add_to_recent,
                 ),
             )

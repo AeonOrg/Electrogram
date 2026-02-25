@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 
 class CreateGroup:
@@ -41,7 +41,12 @@ class CreateGroup:
         r = await self.invoke(
             raw.functions.messages.CreateChat(
                 title=title,
-                users=[await self.resolve_peer(u) for u in users],
+                users=[
+                    iu
+                    for i in users
+                    if (u := await self.resolve_peer(i))
+                    if (iu := utils.get_input_user(u))
+                ],
             ),
         )
 

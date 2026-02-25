@@ -8,7 +8,7 @@ import logging
 import math
 from hashlib import md5
 from pathlib import Path, PurePath
-from typing import TYPE_CHECKING, BinaryIO
+from typing import TYPE_CHECKING, BinaryIO, overload
 
 import pyrogram
 from pyrogram import StopTransmissionError, raw
@@ -21,6 +21,7 @@ log = logging.getLogger(__name__)
 
 
 class SaveFile:
+    @overload
     async def save_file(
         self: pyrogram.Client,
         path: str | BinaryIO,
@@ -28,7 +29,26 @@ class SaveFile:
         file_part: int = 0,
         progress: Callable | None = None,
         progress_args: tuple = (),
-    ):
+    ) -> raw.base.InputFile: ...
+
+    @overload
+    async def save_file(
+        self: pyrogram.Client,
+        path: None,
+        file_id: int | None = None,
+        file_part: int = 0,
+        progress: Callable | None = None,
+        progress_args: tuple = (),
+    ) -> None: ...
+
+    async def save_file(
+        self: pyrogram.Client,
+        path: str | BinaryIO | None,
+        file_id: int | None = None,
+        file_part: int = 0,
+        progress: Callable | None = None,
+        progress_args: tuple = (),
+    ) -> raw.base.InputFile | None:
         """Upload a file onto Telegram servers, without actually sending the message to anyone.
         Useful whenever an InputFile type is required.
 
@@ -141,7 +161,7 @@ class SaveFile:
             if file_id is None:
                 file_id = self.rnd_id()
 
-            md5_sum = md5() if not is_big and not is_missing_part else None
+            md5_obj = md5() if not is_big and not is_missing_part else None
 
             pool = [
                 Session(
@@ -167,6 +187,8 @@ class SaveFile:
                 fp.seek(part_size * file_part)
                 next_chunk_task = self.loop.create_task(self.preload(fp, part_size))
 
+                md5_checksum = ""
+
                 while True:
                     chunk = await next_chunk_task
                     next_chunk_task = self.loop.create_task(
@@ -174,8 +196,8 @@ class SaveFile:
                     )
 
                     if not chunk:
-                        if not is_big and not is_missing_part:
-                            md5_sum = md5_sum.hexdigest()
+                        if md5_obj:
+                            md5_checksum = md5_obj.hexdigest()
                         break
 
                     await queue.put(
@@ -191,8 +213,8 @@ class SaveFile:
                     if is_missing_part:
                         return None
 
-                    if not is_big and not is_missing_part:
-                        md5_sum.update(chunk)
+                    if md5_obj:
+                        md5_obj.update(chunk)
 
                     file_part += 1
 
@@ -227,7 +249,7 @@ class SaveFile:
                     id=file_id,
                     parts=file_total_parts,
                     name=file_name,
-                    md5_checksum=md5_sum,
+                    md5_checksum=md5_checksum,
                 )
             finally:
                 for _ in workers:

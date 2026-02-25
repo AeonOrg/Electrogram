@@ -25,8 +25,21 @@ class GetBotInfo:
                 Unique identifier (int) or username (str) of the target bot.
         """
         peer = None
+
         if bot:
-            peer = await self.resolve_peer(bot)
+            resolved = await self.resolve_peer(bot)
+
+            if isinstance(resolved, raw.base.InputUser):
+                peer = resolved
+            elif isinstance(resolved, raw.types.InputPeerUser):
+                peer = raw.types.InputUser(
+                    user_id=resolved.user_id, access_hash=resolved.access_hash
+                )
+            elif isinstance(resolved, raw.types.InputPeerSelf):
+                peer = raw.types.InputUserSelf()
+            else:
+                raise TypeError(f"Bot peer must be a user, not {type(resolved)}")
+
         r = await self.invoke(
             raw.functions.bots.GetBotInfo(lang_code=lang_code, bot=peer),
         )

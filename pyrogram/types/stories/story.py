@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, BinaryIO
+from typing import TYPE_CHECKING, Any, BinaryIO, cast
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -181,8 +181,8 @@ class Story(Object, Update):
         sender_chat = None
         privacy = None
         forward_from = None
-        allowed_users = None
-        denied_users = None
+        allowed_users: list[int] | None = None
+        denied_users: list[int] | None = None
         if stories.media:
             if isinstance(stories.media, raw.types.MessageMediaPhoto):
                 photo = types.Photo._parse(
@@ -228,7 +228,14 @@ class Story(Object, Update):
             chat_id = utils.get_channel_id(peer.channel_id)
             chat = await client.invoke(
                 raw.functions.channels.GetChannels(
-                    id=[await client.resolve_peer(chat_id)],
+                    id=[
+                        cast(
+                            "raw.base.InputChannel",
+                            utils.get_input_channel(
+                                await client.resolve_peer(chat_id)
+                            ),
+                        )
+                    ],
                 ),
             )
             sender_chat = types.Chat._parse_chat(client, chat.chats[0])
@@ -245,8 +252,10 @@ class Story(Object, Update):
                 chat = await client.invoke(
                     raw.functions.channels.GetChannels(
                         id=[
-                            await client.resolve_peer(
-                                utils.get_channel_id(from_id.channel_id),
+                            utils.get_input_channel(
+                                await client.resolve_peer(
+                                    utils.get_channel_id(from_id.channel_id),
+                                ),
                             ),
                         ],
                     ),
@@ -256,8 +265,10 @@ class Story(Object, Update):
                 chat = await client.invoke(
                     raw.functions.channels.GetChannels(
                         id=[
-                            await client.resolve_peer(
-                                utils.get_channel_id(from_id.chat_id),
+                            utils.get_input_channel(
+                                await client.resolve_peer(
+                                    utils.get_channel_id(from_id.chat_id),
+                                ),
                             ),
                         ],
                     ),
@@ -295,7 +306,7 @@ class Story(Object, Update):
                 stories.fwd_from,
             )
 
-        media_areas = None
+        media_areas: list[types.MediaArea] | None = None
         if stories.media_areas is not None and len(stories.media_areas) > 0:
             media_areas = [
                 await types.MediaArea._parse(client, media_area)
@@ -304,7 +315,7 @@ class Story(Object, Update):
 
         return Story(
             id=stories.id,
-            from_user=from_user,
+            from_user=from_user if isinstance(from_user, types.User) else None,
             sender_chat=sender_chat,
             date=utils.timestamp_to_datetime(stories.date),
             expire_date=utils.timestamp_to_datetime(stories.expire_date),

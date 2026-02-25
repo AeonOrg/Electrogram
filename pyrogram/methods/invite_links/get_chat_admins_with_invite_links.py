@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 
 class GetChatAdminsWithInviteLinks:
@@ -27,13 +27,16 @@ class GetChatAdminsWithInviteLinks:
         """
         r = await self.invoke(
             raw.functions.messages.GetAdminsWithInvites(
-                peer=await self.resolve_peer(chat_id),
+                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
             ),
         )
 
         users = {i.id: i for i in r.users}
 
         return types.List(
-            types.ChatAdminWithInviteLinks._parse(self, admin, users)
-            for admin in r.admins
+            [
+                a
+                for admin in r.admins
+                if (a := types.ChatAdminWithInviteLinks._parse(self, admin, users))
+            ]
         )

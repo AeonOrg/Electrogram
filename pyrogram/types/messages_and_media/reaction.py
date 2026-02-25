@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
 from pyrogram import raw, types
 from pyrogram.types.object import Object
@@ -91,7 +93,7 @@ class ReactionType(Object):
         *,
         type: str | None = None,
         emoji: str | None = None,
-        custom_emoji_id: str | None = None,
+        custom_emoji_id: str | int | None = None,
     ) -> None:
         super().__init__()
         self.type = type
@@ -132,7 +134,7 @@ class ReactionTypeEmoji(ReactionType):
         self,
         client: pyrogram.Client,  # noqa: ARG002
     ) -> raw.base.Reaction:
-        return raw.types.ReactionEmoji(emoticon=self.emoji)
+        return raw.types.ReactionEmoji(emoticon=cast("str", self.emoji))
 
 
 class ReactionTypeCustomEmoji(ReactionType):
@@ -150,7 +152,7 @@ class ReactionTypeCustomEmoji(ReactionType):
         self,
         client: pyrogram.Client,  # noqa: ARG002
     ) -> raw.base.Reaction:
-        return raw.types.ReactionCustomEmoji(document_id=self.custom_emoji_id)
+        return raw.types.ReactionCustomEmoji(document_id=int(self.custom_emoji_id))
 
 
 class ReactionTypePaid(ReactionType):
@@ -196,10 +198,15 @@ class ReactionCount(Object):
     @staticmethod
     def _parse(
         client: pyrogram.Client,
-        update: raw.types.ReactionCount,
+        update: raw.base.ReactionCount,
     ) -> ReactionCount | None:
+        if not isinstance(update, raw.types.ReactionCount):
+            return None
+        reaction_type = ReactionType._parse(client, update.reaction)
+        if reaction_type is None:
+            return None
         return ReactionCount(
-            type=ReactionType._parse(client, update.reaction),
+            type=reaction_type,
             total_count=update.count,
             chosen_order=update.chosen_order,
         )

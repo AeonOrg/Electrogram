@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 from functools import partial
-from typing import TYPE_CHECKING, BinaryIO
+from typing import TYPE_CHECKING, Any, BinaryIO, cast
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -545,7 +545,11 @@ class Message(Object, Update):
         star_gift: types.StarGift | None = None,
         screenshot_taken: types.ScreenshotTaken | None = None,
         invoice: types.Invoice | None = None,
-        story: types.MessageStory | types.Story | None = None,
+        story: types.MessageStory
+        | types.Story
+        | types.StorySkipped
+        | types.StoryDeleted
+        | None = None,
         video: types.Video | None = None,
         alternative_videos: list[types.AlternativeVideo] | None = None,
         voice: types.Voice | None = None,
@@ -598,7 +602,7 @@ class Message(Object, Update):
         | types.ReplyKeyboardRemove
         | types.ForceReply
         | None = None,
-        reactions: list[types.Reaction] | None = None,
+        reactions: types.MessageReactions | None = None,
         chat_join_type: enums.ChatJoinType | None = None,
         raw: raw.base.Message | None = None,
     ) -> None:
@@ -794,8 +798,18 @@ class Message(Object, Update):
                 r = await client.invoke(
                     raw.functions.users.GetUsers(
                         id=[
-                            await client.resolve_peer(from_id),
-                            await client.resolve_peer(peer_id),
+                            cast(
+                                "raw.base.InputUser",
+                                utils.get_input_user(
+                                    await client.resolve_peer(from_id),
+                                ),
+                            ),
+                            cast(
+                                "raw.base.InputUser",
+                                utils.get_input_user(
+                                    await client.resolve_peer(peer_id),
+                                ),
+                            ),
                         ],
                     ),
                 )
@@ -808,49 +822,54 @@ class Message(Object, Update):
             message_thread_id = None
             action = message.action
 
-            new_chat_members = None
-            chat_joined_by_request = None
-            left_chat_member = None
-            new_chat_title = None
-            delete_chat_photo = None
-            migrate_to_chat_id = None
-            migrate_from_chat_id = None
-            group_chat_created = None
-            channel_chat_created = None
-            new_chat_photo = None
-            bot_allowed = None
-            chats_shared = None
-            is_topic_message = None
-            forum_topic_created = None
-            forum_topic_closed = None
-            forum_topic_reopened = None
-            forum_topic_edited = None
-            general_topic_hidden = None
-            general_topic_unhidden = None
-            video_chat_scheduled = None
-            video_chat_started = None
-            video_chat_ended = None
-            video_chat_members_invited = None
-            web_app_data = None
-            gifted_premium = None
-            giveaway_launched = None
-            giveaway_result = None
-            successful_payment = None
-            payment_refunded = None
-            boosts_applied = None
-            chat_theme_updated = None
-            chat_wallpaper_updated = None
-            contact_registered = None
-            gift_code = None
-            user_gift = None
-            star_gift = None
-            screenshot_taken = None
-            chat_join_type = None
+            new_chat_members: list[types.User] | None = None
+            chat_joined_by_request: types.ChatJoinedByRequest | None = None
+            left_chat_member: types.User | None = None
+            new_chat_title: str | None = None
+            delete_chat_photo: bool | None = None
+            migrate_to_chat_id: int | None = None
+            migrate_from_chat_id: int | None = None
+            group_chat_created: bool | None = None
+            channel_chat_created: bool | None = None
+            new_chat_photo: types.Photo | None = None
+            bot_allowed: types.BotAllowed | None = None
+            chats_shared: list[types.RequestedChats] | None = None
+            is_topic_message: bool | None = None
+            forum_topic_created: types.ForumTopicCreated | None = None
+            forum_topic_closed: types.ForumTopicClosed | None = None
+            forum_topic_reopened: types.ForumTopicReopened | None = None
+            forum_topic_edited: types.ForumTopicEdited | None = None
+            general_topic_hidden: types.GeneralTopicHidden | None = None
+            general_topic_unhidden: types.GeneralTopicUnhidden | None = None
+            video_chat_scheduled: types.VideoChatScheduled | None = None
+            video_chat_started: types.VideoChatStarted | None = None
+            video_chat_ended: types.VideoChatEnded | None = None
+            video_chat_members_invited: types.VideoChatMembersInvited | None = None
+            web_app_data: types.WebAppData | None = None
+            gifted_premium: types.GiftedPremium | None = None
+            giveaway_launched: types.GiveawayLaunched | None = None
+            giveaway_result: types.GiveawayResult | None = None
+            successful_payment: types.SuccessfulPayment | None = None
+            payment_refunded: types.PaymentRefunded | None = None
+            boosts_applied: int | None = None
+            chat_theme_updated: types.ChatTheme | None = None
+            chat_wallpaper_updated: types.ChatWallpaper | None = None
+            contact_registered: types.ContactRegistered | None = None
+            gift_code: types.GiftCode | None = None
+            user_gift: types.UserGift | None = None
+            star_gift: types.StarGift | None = None
+            screenshot_taken: types.ScreenshotTaken | None = None
+            chat_join_type: enums.ChatJoinType | None = None
 
-            service_type = enums.MessageServiceType.UNKNOWN
+            service_type: enums.MessageServiceType | None = (
+                enums.MessageServiceType.UNKNOWN
+            )
 
-            from_user = types.User._parse(client, users.get(user_id))
-            sender_chat = (
+            from_user: types.User | None = types.User._parse(
+                client,
+                users.get(user_id),
+            )
+            sender_chat: types.Chat | None = (
                 types.Chat._parse(client, message, users, chats, is_chat=False)
                 if not from_user
                 else None
@@ -860,16 +879,15 @@ class Message(Object, Update):
                 new_chat_members = [
                     u
                     for i in action.users
-                    if (u := types.User._parse(client, users[i])) is not None
+                    if (u := types.User._parse(client, users.get(i))) is not None
                 ]
                 service_type = enums.MessageServiceType.NEW_CHAT_MEMBERS
                 chat_join_type = enums.ChatJoinType.BY_ADD
             elif isinstance(action, raw.types.MessageActionChatJoinedByLink):
                 new_chat_members = [
-                    types.User._parse(
-                        client,
-                        users[utils.get_raw_peer_id(message.from_id)],
-                    ),
+                    u
+                    for i in [utils.get_raw_peer_id(message.from_id)]
+                    if (u := types.User._parse(client, users.get(i))) is not None
                 ]
                 service_type = enums.MessageServiceType.NEW_CHAT_MEMBERS
                 chat_join_type = enums.ChatJoinType.BY_LINK
@@ -909,7 +927,7 @@ class Message(Object, Update):
                 raw.types.MessageActionRequestedPeer
                 | raw.types.MessageActionRequestedPeerSentMe,
             ):
-                chats_shared = await types.RequestedChats._parse(client, action)
+                chats_shared = [await types.RequestedChats._parse(client, action)]
                 service_type = enums.MessageServiceType.ChatShared
             elif isinstance(action, raw.types.MessageActionContactSignUp):
                 service_type = enums.MessageServiceType.CONTACT_REGISTERED
@@ -1024,7 +1042,7 @@ class Message(Object, Update):
                 topic=None,
                 from_user=from_user,
                 service=service_type,
-                new_chat_members=new_chat_members,
+                new_chat_members=cast("list[types.User]", new_chat_members),
                 chat_joined_by_request=chat_joined_by_request,
                 left_chat_member=left_chat_member,
                 new_chat_title=new_chat_title,
@@ -1039,7 +1057,7 @@ class Message(Object, Update):
                 group_chat_created=group_chat_created,
                 bot_allowed=bot_allowed,
                 channel_chat_created=channel_chat_created,
-                chats_shared=chats_shared,
+                chats_shared=cast("list[types.RequestedChats]", chats_shared),
                 is_topic_message=is_topic_message,
                 forum_topic_created=forum_topic_created,
                 forum_topic_closed=forum_topic_closed,
@@ -1229,6 +1247,12 @@ class Message(Object, Update):
                     media_type = enums.MessageMediaType.GIVEAWAY_RESULT
                 elif isinstance(media, raw.types.MessageMediaStory):
                     story = await types.MessageStory._parse(client, media)
+                    if isinstance(story, list):
+                        story = story[0]
+                    story = cast(
+                        "types.MessageStory | types.Story | types.StorySkipped | types.StoryDeleted | None",
+                        story,
+                    )
                     media_type = enums.MessageMediaType.STORY
                 elif isinstance(media, raw.types.MessageMediaDocument):
                     doc = media.document
@@ -1439,7 +1463,9 @@ class Message(Object, Update):
                 media=media_type,
                 edit_hide=message.edit_hide,
                 edit_date=utils.timestamp_to_datetime(message.edit_date),
-                media_group_id=message.grouped_id,
+                media_group_id=str(message.grouped_id)
+                if message.grouped_id
+                else None,
                 invert_media=message.invert_media,
                 photo=photo,
                 paid_media=paid_media,
@@ -1471,7 +1497,10 @@ class Message(Object, Update):
                     users.get(message.via_bot_id),
                 ),
                 outgoing=message.out,
-                reply_markup=reply_markup,
+                reply_markup=cast(
+                    "types.InlineKeyboardMarkup | types.ReplyKeyboardMarkup | types.ReplyKeyboardRemove | types.ForceReply | None",
+                    reply_markup,
+                ),
                 reactions=reactions,
                 offline=getattr(message, "offline", None),
                 video_processing_pending=getattr(
@@ -1578,7 +1607,7 @@ class Message(Object, Update):
                         )
                 rtci = getattr(message.reply_to, "reply_to_peer_id", None)
                 reply_to_chat_id = (
-                    utils.get_channel_id(utils.get_raw_peer_id(rtci))
+                    utils.get_channel_id(cast("int", utils.get_raw_peer_id(rtci)))
                     if rtci
                     else None
                 )
@@ -1613,9 +1642,12 @@ class Message(Object, Update):
                             reply_to_message = client.message_cache[key]
 
                             if not reply_to_message:
-                                reply_to_message = await client.get_messages(
-                                    replies=replies - 1,
-                                    **reply_to_params,
+                                reply_to_message = cast(
+                                    "Message",
+                                    await client.get_messages(
+                                        replies=replies - 1,
+                                        **cast("dict[str, Any]", reply_to_params),
+                                    ),
                                 )
                             if (
                                 reply_to_message
@@ -1628,10 +1660,16 @@ class Message(Object, Update):
                             pass
                     elif parsed_message.reply_to_story_id:
                         try:
-                            reply_to_story = await client.get_stories(
-                                parsed_message.reply_to_story_user_id
-                                or parsed_message.reply_to_story_chat_id,
-                                parsed_message.reply_to_story_id,
+                            reply_to_story = cast(
+                                "types.Story",
+                                await client.get_stories(
+                                    cast(
+                                        "int | str",
+                                        parsed_message.reply_to_story_user_id
+                                        or parsed_message.reply_to_story_chat_id,
+                                    ),
+                                    parsed_message.reply_to_story_id,
+                                ),
                             )
                         except Exception:
                             pass
@@ -1840,7 +1878,10 @@ class Message(Object, Update):
             allow_paid_broadcast=allow_paid_broadcast,
             message_effect_id=message_effect_id,
             invert_media=invert_media,
-            reply_markup=reply_markup,
+            reply_markup=cast(
+                "types.InlineKeyboardMarkup | types.ReplyKeyboardMarkup | types.ReplyKeyboardRemove | types.ForceReply | None",
+                reply_markup,
+            ),
         )
 
     reply = reply_text
@@ -3154,7 +3195,7 @@ class Message(Object, Update):
 
         return await self._client.send_media_group(
             chat_id=chat_id,
-            media=media,
+            media=cast("list", media),
             disable_notification=disable_notification,
             message_thread_id=message_thread_id,
             reply_to_message_id=reply_to_message_id,
@@ -5043,9 +5084,10 @@ class Message(Object, Update):
                 schedule_date=schedule_date,
                 protect_content=protect_content,
                 allow_paid_broadcast=allow_paid_broadcast,
-                reply_markup=self.reply_markup
-                if reply_markup is object
-                else reply_markup,
+                reply_markup=cast(
+                    "Any",
+                    self.reply_markup if reply_markup is object else reply_markup,
+                ),
             )
         if self.media:
             send_media = partial(
@@ -5060,9 +5102,10 @@ class Message(Object, Update):
                 protect_content=protect_content,
                 allow_paid_broadcast=allow_paid_broadcast,
                 invert_media=invert_media,
-                reply_markup=self.reply_markup
-                if reply_markup is object
-                else reply_markup,
+                reply_markup=cast(
+                    "Any",
+                    self.reply_markup if reply_markup is object else reply_markup,
+                ),
             )
 
             if self.photo:
@@ -5110,8 +5153,8 @@ class Message(Object, Update):
                     longitude=self.venue.location.longitude,
                     title=self.venue.title,
                     address=self.venue.address,
-                    foursquare_id=self.venue.foursquare_id,
-                    foursquare_type=self.venue.foursquare_type,
+                    foursquare_id=self.venue.foursquare_id or "",
+                    foursquare_type=self.venue.foursquare_type or "",
                     disable_notification=disable_notification,
                     message_thread_id=message_thread_id,
                     schedule_date=schedule_date,
@@ -5156,9 +5199,12 @@ class Message(Object, Update):
                     schedule_date=schedule_date,
                     protect_content=protect_content,
                     allow_paid_broadcast=allow_paid_broadcast,
-                    reply_markup=self.reply_markup
-                    if reply_markup is object
-                    else reply_markup,
+                    reply_markup=cast(
+                        "Any",
+                        self.reply_markup
+                        if reply_markup is object
+                        else reply_markup,
+                    ),
                 )
             else:
                 raise ValueError("Unknown media type")
@@ -5346,7 +5392,7 @@ class Message(Object, Update):
                 return await self._client.request_callback_answer(
                     chat_id=self.chat.id,
                     message_id=self.id,
-                    callback_data=button.callback_data,
+                    callback_data=cast("bytes", button.callback_data),
                     timeout=timeout,
                 )
             if button.requires_password:
@@ -5356,7 +5402,7 @@ class Message(Object, Update):
                 return await self._client.request_callback_answer(
                     chat_id=self.chat.id,
                     message_id=self.id,
-                    callback_data=button.callback_data,
+                    callback_data=cast("bytes", button.callback_data),
                     password=password,
                     timeout=timeout,
                 )
@@ -5380,8 +5426,20 @@ class Message(Object, Update):
 
                 r = await self._client.invoke(
                     raw.functions.messages.RequestWebView(
-                        peer=await self._client.resolve_peer(self.chat.id),
-                        bot=await self._client.resolve_peer(bot_peer_id),
+                        peer=cast(
+                            "raw.base.InputPeer",
+                            utils.get_input_peer(
+                                await self._client.resolve_peer(self.chat.id),
+                            ),
+                        ),
+                        bot=cast(
+                            "raw.base.InputUser",
+                            utils.get_input_user(
+                                await self._client.resolve_peer(
+                                    cast("int", bot_peer_id)
+                                ),
+                            ),
+                        ),
                         url=web_app.url,
                         platform=self._client.client_platform.value,
                         # TODO

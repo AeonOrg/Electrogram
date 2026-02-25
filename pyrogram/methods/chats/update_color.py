@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
-from pyrogram import enums, raw
+from pyrogram import enums, raw, utils
 
 
 class UpdateColor:
@@ -50,7 +52,9 @@ class UpdateColor:
         else:
             r = await self.invoke(
                 raw.functions.channels.UpdateColor(
-                    channel=peer,
+                    channel=cast(
+                        "raw.base.InputChannel", utils.get_input_channel(peer)
+                    ),
                     color=color.value,
                     background_emoji_id=background_emoji_id,
                 ),

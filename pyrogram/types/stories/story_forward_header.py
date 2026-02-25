@@ -31,7 +31,7 @@ class StoryForwardHeader(Object):
         *,
         user: types.User | None = None,
         sender_name: str | None = None,
-        chat: types.Chat | None = None,
+        chat: types.Chat | types.ChatPreview | None = None,
         story_id: int | None = None,
         is_modified: bool | None = None,
     ) -> None:
@@ -60,7 +60,11 @@ class StoryForwardHeader(Object):
                 user = await self.get_users(fwd_header.from_peer.user_id)
 
         return StoryForwardHeader(
-            user=user,
+            user=user
+            if isinstance(user, types.User)
+            else user[0]
+            if isinstance(user, list)
+            else None,
             sender_name=fwd_header.from_name,
             chat=chat,
             story_id=fwd_header.story_id,

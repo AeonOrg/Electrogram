@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import overload
+
 import pyrogram
 from pyrogram import enums
 
@@ -13,9 +15,23 @@ class Parser:
         self.html = HTML(client)
         self.markdown = Markdown(client)
 
+    @overload
     async def parse(
         self,
         text: str,
+        mode: enums.ParseMode | None = None,
+    ) -> dict[str, str | list[pyrogram.raw.base.MessageEntity] | None]: ...
+
+    @overload
+    async def parse(
+        self,
+        text: None,
+        mode: enums.ParseMode | None = None,
+    ) -> dict[str, str | list[pyrogram.raw.base.MessageEntity] | None]: ...
+
+    async def parse(
+        self,
+        text: str | None,
         mode: enums.ParseMode | None = None,
     ) -> dict[str, str | list[pyrogram.raw.base.MessageEntity] | None]:
         text = str(text or "").strip()

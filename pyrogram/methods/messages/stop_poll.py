@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 
 class StopPoll:
@@ -45,13 +45,13 @@ class StopPoll:
         poll = (await self.get_messages(chat_id, message_id)).poll
 
         rpc = raw.functions.messages.EditMessage(
-            peer=await self.resolve_peer(chat_id),
+            peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
             id=message_id,
             media=raw.types.InputMediaPoll(
                 poll=raw.types.Poll(
                     id=int(poll.id),
                     closed=True,
-                    question="",
+                    question=raw.types.TextWithEntities(text="", entities=[]),
                     answers=[],
                 ),
             ),

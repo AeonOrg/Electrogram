@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
-from typing import TYPE_CHECKING, BinaryIO
+from typing import TYPE_CHECKING, BinaryIO, cast
 
 from anyio import Path as AsyncPath
 
@@ -191,7 +191,7 @@ class SendAudio:
 
                 await app.send_audio("me", "audio.mp3", progress=progress)
         """
-        file = None
+        file: raw.base.InputFile | None = None
 
         reply_to = await utils.get_reply_to(
             client=self,
@@ -208,7 +208,7 @@ class SendAudio:
         try:
             if isinstance(audio, str):
                 if await AsyncPath(audio).is_file():
-                    thumb = await self.save_file(thumb)
+                    thumb_file = await self.save_file(thumb)
                     file = await self.save_file(
                         audio,
                         progress=progress,
@@ -216,8 +216,8 @@ class SendAudio:
                     )
                     media = raw.types.InputMediaUploadedDocument(
                         mime_type=self.guess_mime_type(audio) or "audio/mpeg",
-                        file=file,
-                        thumb=thumb,
+                        file=cast("raw.base.InputFile", file),
+                        thumb=thumb_file,
                         attributes=[
                             raw.types.DocumentAttributeAudio(
                                 duration=duration,
@@ -234,7 +234,7 @@ class SendAudio:
                 else:
                     media = utils.get_input_media_from_file_id(audio, FileType.AUDIO)
             else:
-                thumb = await self.save_file(thumb)
+                thumb_file = await self.save_file(thumb)
                 file = await self.save_file(
                     audio,
                     progress=progress,
@@ -243,8 +243,8 @@ class SendAudio:
                 media = raw.types.InputMediaUploadedDocument(
                     mime_type=self.guess_mime_type(file_name or audio.name)
                     or "audio/mpeg",
-                    file=file,
-                    thumb=thumb,
+                    file=cast("raw.base.InputFile", file),
+                    thumb=thumb_file,
                     attributes=[
                         raw.types.DocumentAttributeAudio(
                             duration=duration,
@@ -260,7 +260,7 @@ class SendAudio:
             while True:
                 try:
                     rpc = raw.functions.messages.SendMedia(
-                        peer=await self.resolve_peer(chat_id),
+                        peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                         media=media,
                         silent=disable_notification or None,
                         reply_to=reply_to,

@@ -18,7 +18,7 @@ from importlib import import_module
 from io import BytesIO, StringIO
 from mimetypes import MimeTypes
 from pathlib import Path
-from typing import TYPE_CHECKING, BinaryIO
+from typing import TYPE_CHECKING, BinaryIO, overload
 
 from anyio import Path as AsyncPath
 
@@ -1258,10 +1258,26 @@ class Client(Methods):
             finally:
                 await session.stop()
 
-    def guess_mime_type(self, filename: str) -> str | None:
+    @overload
+    def guess_mime_type(self, filename: str) -> str | None: ...
+
+    @overload
+    def guess_mime_type(self, filename: None) -> None: ...
+
+    def guess_mime_type(self, filename: str | None) -> str | None:
+        if filename is None:
+            return None
         return self.mimetypes.guess_type(filename)[0]
 
-    def guess_extension(self, mime_type: str) -> str | None:
+    @overload
+    def guess_extension(self, mime_type: str) -> str | None: ...
+
+    @overload
+    def guess_extension(self, mime_type: None) -> None: ...
+
+    def guess_extension(self, mime_type: str | None) -> str | None:
+        if mime_type is None:
+            return None
         return self.mimetypes.guess_extension(mime_type)
 
 

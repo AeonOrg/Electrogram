@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -52,13 +52,19 @@ class DeleteMessages:
                 await app.delete_messages(chat_id, message_id, revoke=False)
         """
         peer = await self.resolve_peer(chat_id)
-        message_ids = (
-            list(message_ids) if not isinstance(message_ids, int) else [message_ids]
-        )
+        if isinstance(message_ids, int):
+            message_ids = [message_ids]
+        else:
+            message_ids = list(message_ids)
 
         if isinstance(peer, raw.types.InputPeerChannel):
             r = await self.invoke(
-                raw.functions.channels.DeleteMessages(channel=peer, id=message_ids),
+                raw.functions.channels.DeleteMessages(
+                    channel=cast(
+                        raw.base.InputChannel, utils.get_input_channel(peer)
+                    ),
+                    id=message_ids,
+                ),
             )
         else:
             r = await self.invoke(

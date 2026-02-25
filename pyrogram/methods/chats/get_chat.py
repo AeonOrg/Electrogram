@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
 from pyrogram import raw, types, utils
 
@@ -58,10 +60,16 @@ class GetChat:
 
         if isinstance(peer, raw.types.InputPeerChannel):
             r = await self.invoke(
-                raw.functions.channels.GetFullChannel(channel=peer),
+                raw.functions.channels.GetFullChannel(
+                    channel=cast(
+                        "raw.base.InputChannel", utils.get_input_channel(peer)
+                    )
+                ),
             )
         elif isinstance(peer, raw.types.InputPeerUser | raw.types.InputPeerSelf):
-            r = await self.invoke(raw.functions.users.GetFullUser(id=peer))
+            r = await self.invoke(
+                raw.functions.users.GetFullUser(id=utils.get_input_user(peer))
+            )
         else:
             r = await self.invoke(
                 raw.functions.messages.GetFullChat(chat_id=peer.chat_id),

@@ -30,6 +30,9 @@ class SendCode:
         phone_number = phone_number.strip(" +")
 
         while True:
+            if not self.api_id or not self.api_hash:
+                raise ValueError("api_id and api_hash are required")
+
             try:
                 r = await self.invoke(
                     raw.functions.auth.SendCode(

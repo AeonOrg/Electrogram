@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 from pyrogram.errors import UserNotParticipant
 
 
@@ -58,8 +60,12 @@ class GetChatMember:
         if isinstance(chat, raw.types.InputPeerChannel):
             r = await self.invoke(
                 raw.functions.channels.GetParticipant(
-                    channel=chat,
-                    participant=user,
+                    channel=cast(
+                        "raw.base.InputChannel", utils.get_input_channel(chat)
+                    ),
+                    participant=cast(
+                        "raw.base.InputPeer", utils.get_input_peer(user)
+                    ),
                 ),
             )
 

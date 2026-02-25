@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 if TYPE_CHECKING:
     from collections.abc import AsyncGenerator
@@ -62,7 +62,7 @@ class GetChatAdminInviteLinks:
         while True:
             r = await self.invoke(
                 raw.functions.messages.GetExportedChatInvites(
-                    peer=await self.resolve_peer(chat_id),
+                    peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                     admin_id=await self.resolve_peer(admin_id),
                     limit=limit,
                     revoked=revoked,

@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 
 class UnbanChatMember:
@@ -36,8 +38,14 @@ class UnbanChatMember:
         """
         await self.invoke(
             raw.functions.channels.EditBanned(
-                channel=await self.resolve_peer(chat_id),
-                participant=await self.resolve_peer(user_id),
+                channel=cast(
+                    "raw.base.InputChannel",
+                    utils.get_input_channel(await self.resolve_peer(chat_id)),
+                ),
+                participant=cast(
+                    "raw.base.InputPeer",
+                    utils.get_input_peer(await self.resolve_peer(user_id)),
+                ),
                 banned_rights=raw.types.ChatBannedRights(until_date=0),
             ),
         )

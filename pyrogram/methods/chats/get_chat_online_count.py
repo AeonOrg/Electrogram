@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 
 class GetChatOnlineCount:
@@ -30,7 +30,7 @@ class GetChatOnlineCount:
         return (
             await self.invoke(
                 raw.functions.messages.GetOnlines(
-                    peer=await self.resolve_peer(chat_id),
+                    peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                 ),
             )
         ).onlines

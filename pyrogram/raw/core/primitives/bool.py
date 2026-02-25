@@ -16,7 +16,7 @@ class BoolFalse(bytes, TLObject):
     def read(cls, *args: Any) -> Any:  # noqa: ARG003
         return cls.value
 
-    def __new__(cls) -> bytes:  # type: ignore
+    def __new__(cls) -> bytes:
         return cls.ID.to_bytes(4, "little")
 
 
@@ -30,5 +30,5 @@ class Bool(bytes, TLObject):
     def read(cls, b: BytesIO, *args: Any) -> Any:  # noqa: ARG003
         return int.from_bytes(b.read(4), "little") == BoolTrue.ID
 
-    def __new__(cls, value: bool) -> bytes:  # type: ignore
+    def __new__(cls, value: bool) -> bytes:
         return BoolTrue() if value else BoolFalse()
