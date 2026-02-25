@@ -77,7 +77,7 @@ class Giveaway(Object):
                     ),
                 )
             except FloodWait as e:
-                await asyncio.sleep(cast(int, e.value))
+                await asyncio.sleep(cast("int", e.value))
             except Exception:
                 private_ids.append(chat_id)
             else:

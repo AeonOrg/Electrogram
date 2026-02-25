@@ -545,7 +545,11 @@ class Message(Object, Update):
         star_gift: types.StarGift | None = None,
         screenshot_taken: types.ScreenshotTaken | None = None,
         invoice: types.Invoice | None = None,
-        story: types.MessageStory | types.Story | types.StorySkipped | types.StoryDeleted | None = None,
+        story: types.MessageStory
+        | types.Story
+        | types.StorySkipped
+        | types.StoryDeleted
+        | None = None,
         video: types.Video | None = None,
         alternative_videos: list[types.AlternativeVideo] | None = None,
         voice: types.Voice | None = None,
@@ -795,16 +799,16 @@ class Message(Object, Update):
                     raw.functions.users.GetUsers(
                         id=[
                             cast(
-                                raw.base.InputUser,
-                                            utils.get_input_user(
-                                                await client.resolve_peer(from_id),
-                                            ),
+                                "raw.base.InputUser",
+                                utils.get_input_user(
+                                    await client.resolve_peer(from_id),
+                                ),
                             ),
                             cast(
-                                raw.base.InputUser,
-                                            utils.get_input_user(
-                                                await client.resolve_peer(peer_id),
-                                            ),
+                                "raw.base.InputUser",
+                                utils.get_input_user(
+                                    await client.resolve_peer(peer_id),
+                                ),
                             ),
                         ],
                     ),
@@ -1038,7 +1042,7 @@ class Message(Object, Update):
                 topic=None,
                 from_user=from_user,
                 service=service_type,
-                new_chat_members=cast(list[types.User], new_chat_members),
+                new_chat_members=cast("list[types.User]", new_chat_members),
                 chat_joined_by_request=chat_joined_by_request,
                 left_chat_member=left_chat_member,
                 new_chat_title=new_chat_title,
@@ -1053,7 +1057,7 @@ class Message(Object, Update):
                 group_chat_created=group_chat_created,
                 bot_allowed=bot_allowed,
                 channel_chat_created=channel_chat_created,
-                chats_shared=cast(list[types.RequestedChats], chats_shared),
+                chats_shared=cast("list[types.RequestedChats]", chats_shared),
                 is_topic_message=is_topic_message,
                 forum_topic_created=forum_topic_created,
                 forum_topic_closed=forum_topic_closed,
@@ -1459,7 +1463,9 @@ class Message(Object, Update):
                 media=media_type,
                 edit_hide=message.edit_hide,
                 edit_date=utils.timestamp_to_datetime(message.edit_date),
-                media_group_id=str(message.grouped_id) if message.grouped_id else None,
+                media_group_id=str(message.grouped_id)
+                if message.grouped_id
+                else None,
                 invert_media=message.invert_media,
                 photo=photo,
                 paid_media=paid_media,
@@ -1491,7 +1497,10 @@ class Message(Object, Update):
                     users.get(message.via_bot_id),
                 ),
                 outgoing=message.out,
-                reply_markup=cast("types.InlineKeyboardMarkup | types.ReplyKeyboardMarkup | types.ReplyKeyboardRemove | types.ForceReply | None", reply_markup),
+                reply_markup=cast(
+                    "types.InlineKeyboardMarkup | types.ReplyKeyboardMarkup | types.ReplyKeyboardRemove | types.ForceReply | None",
+                    reply_markup,
+                ),
                 reactions=reactions,
                 offline=getattr(message, "offline", None),
                 video_processing_pending=getattr(
@@ -1598,7 +1607,7 @@ class Message(Object, Update):
                         )
                 rtci = getattr(message.reply_to, "reply_to_peer_id", None)
                 reply_to_chat_id = (
-                    utils.get_channel_id(cast(int, utils.get_raw_peer_id(rtci)))
+                    utils.get_channel_id(cast("int", utils.get_raw_peer_id(rtci)))
                     if rtci
                     else None
                 )
@@ -1634,10 +1643,10 @@ class Message(Object, Update):
 
                             if not reply_to_message:
                                 reply_to_message = cast(
-                                    Message,
+                                    "Message",
                                     await client.get_messages(
                                         replies=replies - 1,
-                                        **cast(dict[str, Any], reply_to_params),
+                                        **cast("dict[str, Any]", reply_to_params),
                                     ),
                                 )
                             if (
@@ -1652,7 +1661,7 @@ class Message(Object, Update):
                     elif parsed_message.reply_to_story_id:
                         try:
                             reply_to_story = cast(
-                                types.Story,
+                                "types.Story",
                                 await client.get_stories(
                                     cast(
                                         "int | str",
@@ -1869,7 +1878,10 @@ class Message(Object, Update):
             allow_paid_broadcast=allow_paid_broadcast,
             message_effect_id=message_effect_id,
             invert_media=invert_media,
-            reply_markup=cast("types.InlineKeyboardMarkup | types.ReplyKeyboardMarkup | types.ReplyKeyboardRemove | types.ForceReply | None", reply_markup),
+            reply_markup=cast(
+                "types.InlineKeyboardMarkup | types.ReplyKeyboardMarkup | types.ReplyKeyboardRemove | types.ForceReply | None",
+                reply_markup,
+            ),
         )
 
     reply = reply_text
@@ -3183,7 +3195,7 @@ class Message(Object, Update):
 
         return await self._client.send_media_group(
             chat_id=chat_id,
-            media=cast(list, media),
+            media=cast("list", media),
             disable_notification=disable_notification,
             message_thread_id=message_thread_id,
             reply_to_message_id=reply_to_message_id,
@@ -5073,7 +5085,7 @@ class Message(Object, Update):
                 protect_content=protect_content,
                 allow_paid_broadcast=allow_paid_broadcast,
                 reply_markup=cast(
-                    Any,
+                    "Any",
                     self.reply_markup if reply_markup is object else reply_markup,
                 ),
             )
@@ -5091,7 +5103,7 @@ class Message(Object, Update):
                 allow_paid_broadcast=allow_paid_broadcast,
                 invert_media=invert_media,
                 reply_markup=cast(
-                    Any,
+                    "Any",
                     self.reply_markup if reply_markup is object else reply_markup,
                 ),
             )
@@ -5188,8 +5200,10 @@ class Message(Object, Update):
                     protect_content=protect_content,
                     allow_paid_broadcast=allow_paid_broadcast,
                     reply_markup=cast(
-                        Any,
-                        self.reply_markup if reply_markup is object else reply_markup,
+                        "Any",
+                        self.reply_markup
+                        if reply_markup is object
+                        else reply_markup,
                     ),
                 )
             else:
@@ -5378,7 +5392,7 @@ class Message(Object, Update):
                 return await self._client.request_callback_answer(
                     chat_id=self.chat.id,
                     message_id=self.id,
-                    callback_data=cast(bytes, button.callback_data),
+                    callback_data=cast("bytes", button.callback_data),
                     timeout=timeout,
                 )
             if button.requires_password:
@@ -5388,7 +5402,7 @@ class Message(Object, Update):
                 return await self._client.request_callback_answer(
                     chat_id=self.chat.id,
                     message_id=self.id,
-                    callback_data=cast(bytes, button.callback_data),
+                    callback_data=cast("bytes", button.callback_data),
                     password=password,
                     timeout=timeout,
                 )
@@ -5413,15 +5427,17 @@ class Message(Object, Update):
                 r = await self._client.invoke(
                     raw.functions.messages.RequestWebView(
                         peer=cast(
-                            raw.base.InputPeer,
+                            "raw.base.InputPeer",
                             utils.get_input_peer(
                                 await self._client.resolve_peer(self.chat.id),
                             ),
                         ),
                         bot=cast(
-                            raw.base.InputUser,
+                            "raw.base.InputUser",
                             utils.get_input_user(
-                                await self._client.resolve_peer(cast(int, bot_peer_id)),
+                                await self._client.resolve_peer(
+                                    cast("int", bot_peer_id)
+                                ),
                             ),
                         ),
                         url=web_app.url,

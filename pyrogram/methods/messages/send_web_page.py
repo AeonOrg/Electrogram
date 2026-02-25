@@ -192,7 +192,8 @@ class SendWebPage:
                 entities=[
                     e
                     for entity in entities
-                    if (e := types.MessageEntity._parse(None, entity, {})) is not None
+                    if (e := types.MessageEntity._parse(None, entity, {}))
+                    is not None
                 ]
                 if entities
                 else None,

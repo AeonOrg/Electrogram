@@ -180,9 +180,11 @@ class SendMessage:
                         ]))
         """
 
-        parsed_text = await utils.parse_text_entities(self, text, parse_mode, entities)
-        message = cast(str, parsed_text["message"])
-        entities = cast(list, parsed_text["entities"])
+        parsed_text = await utils.parse_text_entities(
+            self, text, parse_mode, entities
+        )
+        message = cast("str", parsed_text["message"])
+        entities = cast("list", parsed_text["entities"])
 
         reply_to = await utils.get_reply_to(
             client=self,
@@ -256,7 +258,8 @@ class SendMessage:
                 entities=[
                     e
                     for entity in entities
-                    if (e := types.MessageEntity._parse(None, entity, {})) is not None
+                    if (e := types.MessageEntity._parse(None, entity, {}))
+                    is not None
                 ]
                 if entities
                 else None,

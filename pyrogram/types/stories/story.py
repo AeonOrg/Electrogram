@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import cast, TYPE_CHECKING, Any, BinaryIO
+from typing import TYPE_CHECKING, Any, BinaryIO, cast
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -228,7 +228,14 @@ class Story(Object, Update):
             chat_id = utils.get_channel_id(peer.channel_id)
             chat = await client.invoke(
                 raw.functions.channels.GetChannels(
-                    id=[cast(raw.base.InputChannel, utils.get_input_channel(await client.resolve_peer(chat_id)))],
+                    id=[
+                        cast(
+                            "raw.base.InputChannel",
+                            utils.get_input_channel(
+                                await client.resolve_peer(chat_id)
+                            ),
+                        )
+                    ],
                 ),
             )
             sender_chat = types.Chat._parse_chat(client, chat.chats[0])

@@ -134,7 +134,7 @@ class ReactionTypeEmoji(ReactionType):
         self,
         client: pyrogram.Client,  # noqa: ARG002
     ) -> raw.base.Reaction:
-        return raw.types.ReactionEmoji(emoticon=cast(str, self.emoji))
+        return raw.types.ReactionEmoji(emoticon=cast("str", self.emoji))
 
 
 class ReactionTypeCustomEmoji(ReactionType):

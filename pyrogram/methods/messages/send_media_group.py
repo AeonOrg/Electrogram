@@ -180,7 +180,10 @@ class SendMediaGroup:
                                     await self.resolve_peer(chat_id),
                                 ),
                                 media=raw.types.InputMediaUploadedPhoto(
-                                    file=cast("raw.base.InputFile", await self.save_file(i.media)),
+                                    file=cast(
+                                        "raw.base.InputFile",
+                                        await self.save_file(i.media),
+                                    ),
                                     spoiler=i.has_spoiler,
                                 ),
                             ),
@@ -229,7 +232,10 @@ class SendMediaGroup:
                                 await self.resolve_peer(chat_id),
                             ),
                             media=raw.types.InputMediaUploadedPhoto(
-                                file=cast("raw.base.InputFile", await self.save_file(i.media)),
+                                file=cast(
+                                    "raw.base.InputFile",
+                                    await self.save_file(i.media),
+                                ),
                                 spoiler=i.has_spoiler,
                             ),
                         ),
@@ -281,7 +287,10 @@ class SendMediaGroup:
                                     await self.resolve_peer(chat_id),
                                 ),
                                 media=raw.types.InputMediaUploadedDocument(
-                                    file=cast("raw.base.InputFile", await self.save_file(i.media)),
+                                    file=cast(
+                                        "raw.base.InputFile",
+                                        await self.save_file(i.media),
+                                    ),
                                     thumb=await self.save_file(i.thumb),
                                     spoiler=i.has_spoiler,
                                     mime_type=self.guess_mime_type(i.media)
@@ -335,7 +344,10 @@ class SendMediaGroup:
                                 await self.resolve_peer(chat_id),
                             ),
                             media=raw.types.InputMediaUploadedDocument(
-                                file=cast("raw.base.InputFile", await self.save_file(i.media)),
+                                file=cast(
+                                    "raw.base.InputFile",
+                                    await self.save_file(i.media),
+                                ),
                                 thumb=await self.save_file(i.thumb),
                                 spoiler=i.has_spoiler,
                                 mime_type=self.guess_mime_type(
@@ -382,7 +394,10 @@ class SendMediaGroup:
                                 media=raw.types.InputMediaUploadedDocument(
                                     mime_type=self.guess_mime_type(i.media)
                                     or "audio/mpeg",
-                                    file=cast("raw.base.InputFile", await self.save_file(i.media)),
+                                    file=cast(
+                                        "raw.base.InputFile",
+                                        await self.save_file(i.media),
+                                    ),
                                     thumb=await self.save_file(i.thumb),
                                     attributes=[
                                         raw.types.DocumentAttributeAudio(
@@ -442,7 +457,10 @@ class SendMediaGroup:
                                     getattr(i.media, "name", "audio.mp3"),
                                 )
                                 or "audio/mpeg",
-                                file=cast("raw.base.InputFile", await self.save_file(i.media)),
+                                file=cast(
+                                    "raw.base.InputFile",
+                                    await self.save_file(i.media),
+                                ),
                                 thumb=await self.save_file(i.thumb),
                                 attributes=[
                                     raw.types.DocumentAttributeAudio(
@@ -481,7 +499,10 @@ class SendMediaGroup:
                                 media=raw.types.InputMediaUploadedDocument(
                                     mime_type=self.guess_mime_type(i.media)
                                     or "application/zip",
-                                    file=cast("raw.base.InputFile", await self.save_file(i.media)),
+                                    file=cast(
+                                        "raw.base.InputFile",
+                                        await self.save_file(i.media),
+                                    ),
                                     thumb=await self.save_file(i.thumb),
                                     attributes=[
                                         raw.types.DocumentAttributeFilename(
@@ -536,7 +557,10 @@ class SendMediaGroup:
                                     getattr(i.media, "name", "file.zip"),
                                 )
                                 or "application/zip",
-                                file=cast("raw.base.InputFile", await self.save_file(i.media)),
+                                file=cast(
+                                    "raw.base.InputFile",
+                                    await self.save_file(i.media),
+                                ),
                                 thumb=await self.save_file(i.thumb),
                                 attributes=[
                                     raw.types.DocumentAttributeFilename(
@@ -568,8 +592,8 @@ class SendMediaGroup:
                 raw.types.InputSingleMedia(
                     media=input_media,
                     random_id=self.rnd_id(),
-                    message=cast(str, parsed_caption["message"]),
-                    entities=cast(list, parsed_caption["entities"]),
+                    message=cast("str", parsed_caption["message"]),
+                    entities=cast("list", parsed_caption["entities"]),
                 ),
             )
 

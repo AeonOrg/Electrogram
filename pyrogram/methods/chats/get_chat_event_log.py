@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import cast, TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import pyrogram
 from pyrogram import raw, types, utils
@@ -67,14 +67,23 @@ class GetChatEventLog:
         while True:
             r: raw.base.channels.AdminLogResults = await self.invoke(
                 raw.functions.channels.GetAdminLog(
-                    channel=cast(raw.base.InputChannel, utils.get_input_channel(await self.resolve_peer(chat_id))),
+                    channel=cast(
+                        "raw.base.InputChannel",
+                        utils.get_input_channel(await self.resolve_peer(chat_id)),
+                    ),
                     q=query,
                     min_id=0,
                     max_id=offset_id,
                     limit=limit,
                     events_filter=filters.write() if filters else None,
                     admins=(
-                        [cast(raw.base.InputUser, utils.get_input_user(await self.resolve_peer(i))) for i in user_ids]
+                        [
+                            cast(
+                                "raw.base.InputUser",
+                                utils.get_input_user(await self.resolve_peer(i)),
+                            )
+                            for i in user_ids
+                        ]
                         if user_ids is not None
                         else None
                     ),

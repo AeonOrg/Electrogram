@@ -1,11 +1,10 @@
 from __future__ import annotations
 
+import logging
 from typing import cast
 
-import logging
-
 import pyrogram
-from pyrogram import utils, raw, types
+from pyrogram import raw, types, utils
 
 log = logging.getLogger(__name__)
 
@@ -45,7 +44,9 @@ class ExportStoryLink:
 
         peer = await self.resolve_peer(chat_id)
 
-        rpc = raw.functions.stories.ExportStoryLink(peer=cast(raw.base.InputPeer, utils.get_input_peer(peer)), id=story_id)
+        rpc = raw.functions.stories.ExportStoryLink(
+            peer=cast("raw.base.InputPeer", utils.get_input_peer(peer)), id=story_id
+        )
 
         r = await self.invoke(rpc, sleep_threshold=-1)
 

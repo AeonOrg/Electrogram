@@ -60,8 +60,12 @@ class GetChatMember:
         if isinstance(chat, raw.types.InputPeerChannel):
             r = await self.invoke(
                 raw.functions.channels.GetParticipant(
-                    channel=cast(raw.base.InputChannel, utils.get_input_channel(chat)),
-                    participant=cast(raw.base.InputPeer, utils.get_input_peer(user)),
+                    channel=cast(
+                        "raw.base.InputChannel", utils.get_input_channel(chat)
+                    ),
+                    participant=cast(
+                        "raw.base.InputPeer", utils.get_input_peer(user)
+                    ),
                 ),
             )
 

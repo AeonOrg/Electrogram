@@ -128,7 +128,9 @@ class AlternativeVideo(Object):
             duration=getattr(video_attributes, "duration", 0),
             file_name=file_name,
             mime_type=video.mime_type if video else "",
-            supports_streaming=getattr(video_attributes, "supports_streaming", False),
+            supports_streaming=getattr(
+                video_attributes, "supports_streaming", False
+            ),
             file_size=video.size if video else 0,
             date=utils.timestamp_to_datetime(video.date) if video else None,
             thumbs=types.Thumbnail._parse(client, video) if video else None,

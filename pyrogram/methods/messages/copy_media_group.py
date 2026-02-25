@@ -110,9 +110,7 @@ class CopyMediaGroup:
                 raise ValueError("Failed to get input media from file id")
             parsed_caption = await self.parser.parse(
                 captions[i]
-                if isinstance(captions, list)
-                and i < len(captions)
-                and captions[i]
+                if isinstance(captions, list) and i < len(captions) and captions[i]
                 else captions
                 if isinstance(captions, str) and i == 0
                 else message.caption
@@ -125,7 +123,7 @@ class CopyMediaGroup:
                 raw.types.InputSingleMedia(
                     media=media,
                     random_id=self.rnd_id(),
-                    message=cast(str, parsed_caption["message"]),
+                    message=cast("str", parsed_caption["message"]),
                     entities=cast(
                         "list[raw.base.MessageEntity]", parsed_caption["entities"]
                     ),

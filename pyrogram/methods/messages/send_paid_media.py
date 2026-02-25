@@ -83,7 +83,9 @@ class SendPaidMedia:
                     if await AsyncPath(i.media).is_file():
                         uploaded_media = await self.invoke(
                             raw.functions.messages.UploadMedia(
-                                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
+                                peer=utils.get_input_peer(
+                                    await self.resolve_peer(chat_id)
+                                ),
                                 media=raw.types.InputMediaUploadedPhoto(
                                     file=await self.save_file(i.media),
                                 ),
@@ -100,7 +102,9 @@ class SendPaidMedia:
                     elif re.match("^https?://", i.media):
                         uploaded_media = await self.invoke(
                             raw.functions.messages.UploadMedia(
-                                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
+                                peer=utils.get_input_peer(
+                                    await self.resolve_peer(chat_id)
+                                ),
                                 media=raw.types.InputMediaPhotoExternal(url=i.media),
                             ),
                         )
@@ -120,7 +124,9 @@ class SendPaidMedia:
                 else:
                     uploaded_media = await self.invoke(
                         raw.functions.messages.UploadMedia(
-                            peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
+                            peer=utils.get_input_peer(
+                                await self.resolve_peer(chat_id)
+                            ),
                             media=raw.types.InputMediaUploadedPhoto(
                                 file=await self.save_file(i.media),
                             ),
@@ -150,7 +156,9 @@ class SendPaidMedia:
                         ]
                         uploaded_media = await self.invoke(
                             raw.functions.messages.UploadMedia(
-                                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
+                                peer=utils.get_input_peer(
+                                    await self.resolve_peer(chat_id)
+                                ),
                                 media=raw.types.InputMediaUploadedDocument(
                                     file=await self.save_file(i.media),
                                     thumb=await self.save_file(i.thumbnail),
@@ -172,7 +180,9 @@ class SendPaidMedia:
                     elif re.match("^https?://", i.media):
                         uploaded_media = await self.invoke(
                             raw.functions.messages.UploadMedia(
-                                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
+                                peer=utils.get_input_peer(
+                                    await self.resolve_peer(chat_id)
+                                ),
                                 media=raw.types.InputMediaDocumentExternal(
                                     url=i.media,
                                 ),
@@ -194,7 +204,9 @@ class SendPaidMedia:
                 else:
                     uploaded_media = await self.invoke(
                         raw.functions.messages.UploadMedia(
-                            peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
+                            peer=utils.get_input_peer(
+                                await self.resolve_peer(chat_id)
+                            ),
                             media=raw.types.InputMediaUploadedDocument(
                                 file=await self.save_file(i.media),
                                 thumb=await self.save_file(i.thumbnail),

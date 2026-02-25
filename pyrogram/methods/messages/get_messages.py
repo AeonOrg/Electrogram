@@ -121,7 +121,7 @@ class GetMessages:
                 if isinstance(peer, raw.types.InputPeerChannel):
                     rpc = raw.functions.channels.GetMessages(
                         channel=cast(
-                            raw.base.InputChannel, utils.get_input_channel(peer)
+                            "raw.base.InputChannel", utils.get_input_channel(peer)
                         ),
                         id=ids,
                     )

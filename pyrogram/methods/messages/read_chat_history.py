@@ -44,7 +44,7 @@ class ReadChatHistory:
 
         if isinstance(peer, raw.types.InputPeerChannel):
             q = raw.functions.channels.ReadHistory(
-                channel=cast(raw.base.InputChannel, utils.get_input_channel(peer)),
+                channel=cast("raw.base.InputChannel", utils.get_input_channel(peer)),
                 max_id=max_id,
             )
         else:

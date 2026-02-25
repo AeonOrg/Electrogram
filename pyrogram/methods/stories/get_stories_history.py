@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 import logging
-from typing import cast, TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import pyrogram
-from pyrogram import utils, raw, types
+from pyrogram import raw, types, utils
 
 if TYPE_CHECKING:
     from collections.abc import AsyncGenerator
@@ -55,7 +55,7 @@ class GetUserStoriesHistory:
             peer = await self.resolve_peer("me")
 
         rpc = raw.functions.stories.GetStoriesArchive(
-            peer=cast(raw.base.InputPeer, utils.get_input_peer(peer)),
+            peer=cast("raw.base.InputPeer", utils.get_input_peer(peer)),
             offset_id=offset_id,
             limit=limit,
         )

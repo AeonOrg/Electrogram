@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import cast
 
 import pyrogram
-from pyrogram import utils, raw
+from pyrogram import raw, utils
 
 
 class SetSlowMode:
@@ -40,7 +40,10 @@ class SetSlowMode:
 
         await self.invoke(
             raw.functions.channels.ToggleSlowMode(
-                channel=cast(raw.base.InputChannel, utils.get_input_channel(await self.resolve_peer(chat_id))),
+                channel=cast(
+                    "raw.base.InputChannel",
+                    utils.get_input_channel(await self.resolve_peer(chat_id)),
+                ),
                 seconds=seconds or 0,
             ),
         )

@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import cast
-
 import pyrogram
 from pyrogram import raw, types, utils
 

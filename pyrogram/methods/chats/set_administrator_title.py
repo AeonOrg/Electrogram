@@ -48,8 +48,13 @@ class SetAdministratorTitle:
         r = (
             await self.invoke(
                 raw.functions.channels.GetParticipant(
-                    channel=cast(raw.base.InputChannel, utils.get_input_channel(peer_chat_id)),
-                    participant=cast(raw.base.InputPeer, utils.get_input_peer(peer_user_id)),
+                    channel=cast(
+                        "raw.base.InputChannel",
+                        utils.get_input_channel(peer_chat_id),
+                    ),
+                    participant=cast(
+                        "raw.base.InputPeer", utils.get_input_peer(peer_user_id)
+                    ),
                 ),
             )
         ).participant
@@ -65,8 +70,12 @@ class SetAdministratorTitle:
 
         await self.invoke(
             raw.functions.channels.EditAdmin(
-                channel=cast(raw.base.InputChannel, utils.get_input_channel(peer_chat_id)),
-                user_id=cast(raw.base.InputUser, utils.get_input_user(peer_user_id)),
+                channel=cast(
+                    "raw.base.InputChannel", utils.get_input_channel(peer_chat_id)
+                ),
+                user_id=cast(
+                    "raw.base.InputUser", utils.get_input_user(peer_user_id)
+                ),
                 admin_rights=admin_rights,
                 rank=title,
             ),

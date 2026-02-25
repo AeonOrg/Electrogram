@@ -42,7 +42,9 @@ class LeaveChat:
         if isinstance(peer, raw.types.InputPeerChannel):
             return await self.invoke(
                 raw.functions.channels.LeaveChannel(
-                    channel=cast(raw.base.InputChannel, utils.get_input_channel(peer)),
+                    channel=cast(
+                        "raw.base.InputChannel", utils.get_input_channel(peer)
+                    ),
                 ),
             )
         if isinstance(peer, raw.types.InputPeerChat):

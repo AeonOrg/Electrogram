@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import cast
 
 import pyrogram
-from pyrogram import utils, raw
+from pyrogram import raw, utils
 
 
 class SetChatUsername:
@@ -44,7 +44,9 @@ class SetChatUsername:
             return bool(
                 await self.invoke(
                     raw.functions.channels.UpdateUsername(
-                        channel=cast(raw.base.InputChannel, utils.get_input_channel(peer)),
+                        channel=cast(
+                            "raw.base.InputChannel", utils.get_input_channel(peer)
+                        ),
                         username=username or "",
                     ),
                 ),

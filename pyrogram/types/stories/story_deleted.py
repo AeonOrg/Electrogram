@@ -50,7 +50,11 @@ class StoryDeleted(Object, Update):
 
         return StoryDeleted(
             id=stories.id,
-            from_user=from_user if isinstance(from_user, types.User) else from_user[0] if isinstance(from_user, list) else None,
+            from_user=from_user
+            if isinstance(from_user, types.User)
+            else from_user[0]
+            if isinstance(from_user, list)
+            else None,
             sender_chat=sender_chat if isinstance(sender_chat, types.Chat) else None,
             client=self,
         )

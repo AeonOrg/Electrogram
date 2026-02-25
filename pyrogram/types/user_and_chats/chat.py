@@ -437,9 +437,7 @@ class Chat(Object):
         )
 
     @staticmethod
-    def _parse_channel_chat(
-        client, channel: raw.base.Chat
-    ) -> Chat:
+    def _parse_channel_chat(client, channel: raw.base.Chat) -> Chat:
         peer_id = utils.get_channel_id(channel.id)
         restriction_reason = getattr(channel, "restriction_reason", [])
         user_name = getattr(channel, "username", None)

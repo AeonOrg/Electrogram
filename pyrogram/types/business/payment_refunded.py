@@ -2,11 +2,12 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from pyrogram import types
 from pyrogram.types.object import Object
 
 if TYPE_CHECKING:
     import pyrogram
-    from pyrogram import raw, types
+    from pyrogram import raw
 
 
 class PaymentRefunded(Object):

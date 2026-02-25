@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import cast
 
 import pyrogram
-from pyrogram import utils, enums, raw
+from pyrogram import enums, raw
 
 
 class UpdateFolder:
@@ -103,15 +103,15 @@ class UpdateFolder:
                     id=folder_id,
                     title=raw.types.TextWithEntities(text=title, entities=[]),
                     pinned_peers=[
-                        cast(raw.base.InputPeer, await self.resolve_peer(user_id))
+                        cast("raw.base.InputPeer", await self.resolve_peer(user_id))
                         for user_id in pinned_chats
                     ],
                     include_peers=[
-                        cast(raw.base.InputPeer, await self.resolve_peer(user_id))
+                        cast("raw.base.InputPeer", await self.resolve_peer(user_id))
                         for user_id in included_chats
                     ],
                     exclude_peers=[
-                        cast(raw.base.InputPeer, await self.resolve_peer(user_id))
+                        cast("raw.base.InputPeer", await self.resolve_peer(user_id))
                         for user_id in excluded_chats
                     ],
                     contacts=contacts,

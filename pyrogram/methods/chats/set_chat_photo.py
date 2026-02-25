@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import cast, BinaryIO
+from typing import BinaryIO, cast
 
 from anyio import Path as AsyncPath
 
@@ -101,7 +101,9 @@ class SetChatPhoto:
         elif isinstance(peer, raw.types.InputPeerChannel):
             await self.invoke(
                 raw.functions.channels.EditPhoto(
-                    channel=cast(raw.base.InputChannel, utils.get_input_channel(peer)),
+                    channel=cast(
+                        "raw.base.InputChannel", utils.get_input_channel(peer)
+                    ),
                     photo=input_photo,
                 ),
             )

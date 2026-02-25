@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import cast
 
 import pyrogram
-from pyrogram import utils, raw, types
+from pyrogram import raw, types, utils
 
 from .input_media_area import InputMediaArea
 
@@ -37,6 +37,9 @@ class InputMediaAreaChannelPost(InputMediaArea):
     async def write(self, client: pyrogram.Client):
         return raw.types.InputMediaAreaChannelPost(
             coordinates=self.coordinates,
-            channel=cast(raw.base.InputChannel, utils.get_input_channel(await client.resolve_peer(self.chat_id))),
+            channel=cast(
+                "raw.base.InputChannel",
+                utils.get_input_channel(await client.resolve_peer(self.chat_id)),
+            ),
             msg_id=self.message_id,
         )

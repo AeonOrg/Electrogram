@@ -28,7 +28,9 @@ class GetSendAsChats:
                 print(chats)
         """
         r = await self.invoke(
-            raw.functions.channels.GetSendAs(peer=utils.get_input_peer(await self.resolve_peer(chat_id))),
+            raw.functions.channels.GetSendAs(
+                peer=utils.get_input_peer(await self.resolve_peer(chat_id))
+            ),
         )
 
         users = {u.id: u for u in r.users}

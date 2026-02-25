@@ -74,7 +74,7 @@ class EditInlineText:
                 reply_markup=await reply_markup.write(self)
                 if reply_markup
                 else None,
-                message=cast(str, parsed["message"]),
+                message=cast("str", parsed["message"]),
                 entities=cast("list[raw.base.MessageEntity]", parsed["entities"]),
                 invert_media=invert_media,
             ),

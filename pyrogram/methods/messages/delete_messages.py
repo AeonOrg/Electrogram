@@ -60,7 +60,10 @@ class DeleteMessages:
         if isinstance(peer, raw.types.InputPeerChannel):
             r = await self.invoke(
                 raw.functions.channels.DeleteMessages(
-                    channel=cast(raw.base.InputChannel, utils.get_input_channel(peer)), id=message_ids
+                    channel=cast(
+                        raw.base.InputChannel, utils.get_input_channel(peer)
+                    ),
+                    id=message_ids,
                 ),
             )
         else:

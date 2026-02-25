@@ -42,7 +42,9 @@ class DeleteChatPhoto:
         elif isinstance(peer, raw.types.InputPeerChannel):
             await self.invoke(
                 raw.functions.channels.EditPhoto(
-                    channel=cast(raw.base.InputChannel, utils.get_input_channel(peer)),
+                    channel=cast(
+                        "raw.base.InputChannel", utils.get_input_channel(peer)
+                    ),
                     photo=raw.types.InputChatPhotoEmpty(),
                 ),
             )
