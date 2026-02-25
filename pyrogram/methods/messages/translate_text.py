@@ -40,7 +40,7 @@ class TranslateText:
         r = await self.invoke(
             raw.functions.messages.TranslateText(
                 to_lang=to_language_code,
-                peer=await self.resolve_peer(chat_id),
+                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                 id=ids,
             ),
         )

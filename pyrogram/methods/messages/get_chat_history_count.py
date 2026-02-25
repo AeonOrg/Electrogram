@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 log = logging.getLogger(__name__)
 
@@ -39,7 +39,7 @@ class GetChatHistoryCount:
 
         r = await self.invoke(
             raw.functions.messages.GetHistory(
-                peer=await self.resolve_peer(chat_id),
+                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                 offset_id=0,
                 offset_date=0,
                 add_offset=0,

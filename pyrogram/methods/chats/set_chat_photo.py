@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import BinaryIO
+from typing import cast, BinaryIO
 
 from anyio import Path as AsyncPath
 
@@ -80,7 +80,10 @@ class SetChatPhoto:
                 input_media = utils.get_input_media_from_file_id(
                     photo, FileType.PHOTO
                 )
-                input_photo = raw.types.InputChatPhoto(id=input_media.id)
+                if isinstance(input_media, raw.types.InputMediaPhoto):
+                    input_photo = raw.types.InputChatPhoto(id=input_media.id)
+                else:
+                    raise ValueError("Invalid photo file id")
         else:
             input_photo = raw.types.InputChatUploadedPhoto(
                 file=await self.save_file(photo),
@@ -97,7 +100,10 @@ class SetChatPhoto:
             )
         elif isinstance(peer, raw.types.InputPeerChannel):
             await self.invoke(
-                raw.functions.channels.EditPhoto(channel=peer, photo=input_photo),
+                raw.functions.channels.EditPhoto(
+                    channel=cast(raw.base.InputChannel, utils.get_input_channel(peer)),
+                    photo=input_photo,
+                ),
             )
         else:
             raise ValueError(f'The chat_id "{chat_id}" belongs to a user')

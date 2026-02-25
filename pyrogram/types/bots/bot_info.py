@@ -22,7 +22,12 @@ class BotInfo(Object):
             Description of the bot;
     """
 
-    def __init__(self, name: str, about: str, description: str) -> None:
+    def __init__(
+        self,
+        name: str | None = None,
+        about: str | None = None,
+        description: str | None = None,
+    ) -> None:
         super().__init__()
 
         self.name = name
@@ -30,7 +35,9 @@ class BotInfo(Object):
         self.description = description
 
     @staticmethod
-    def _parse(bot_info: raw.types.bots.BotInfo) -> BotInfo:
+    def _parse(bot_info: raw.base.bots.BotInfo | None) -> BotInfo | None:
+        if not isinstance(bot_info, raw.types.bots.BotInfo):
+            return None
         return BotInfo(
             name=getattr(bot_info, "name", None),
             about=getattr(bot_info, "about", None),

@@ -180,7 +180,7 @@ class SendMediaGroup:
                                     await self.resolve_peer(chat_id),
                                 ),
                                 media=raw.types.InputMediaUploadedPhoto(
-                                    file=await self.save_file(i.media),
+                                    file=cast("raw.base.InputFile", await self.save_file(i.media)),
                                     spoiler=i.has_spoiler,
                                 ),
                             ),
@@ -229,7 +229,7 @@ class SendMediaGroup:
                                 await self.resolve_peer(chat_id),
                             ),
                             media=raw.types.InputMediaUploadedPhoto(
-                                file=await self.save_file(i.media),
+                                file=cast("raw.base.InputFile", await self.save_file(i.media)),
                                 spoiler=i.has_spoiler,
                             ),
                         ),
@@ -281,7 +281,7 @@ class SendMediaGroup:
                                     await self.resolve_peer(chat_id),
                                 ),
                                 media=raw.types.InputMediaUploadedDocument(
-                                    file=await self.save_file(i.media),
+                                    file=cast("raw.base.InputFile", await self.save_file(i.media)),
                                     thumb=await self.save_file(i.thumb),
                                     spoiler=i.has_spoiler,
                                     mime_type=self.guess_mime_type(i.media)
@@ -335,7 +335,7 @@ class SendMediaGroup:
                                 await self.resolve_peer(chat_id),
                             ),
                             media=raw.types.InputMediaUploadedDocument(
-                                file=await self.save_file(i.media),
+                                file=cast("raw.base.InputFile", await self.save_file(i.media)),
                                 thumb=await self.save_file(i.thumb),
                                 spoiler=i.has_spoiler,
                                 mime_type=self.guess_mime_type(
@@ -382,7 +382,7 @@ class SendMediaGroup:
                                 media=raw.types.InputMediaUploadedDocument(
                                     mime_type=self.guess_mime_type(i.media)
                                     or "audio/mpeg",
-                                    file=await self.save_file(i.media),
+                                    file=cast("raw.base.InputFile", await self.save_file(i.media)),
                                     thumb=await self.save_file(i.thumb),
                                     attributes=[
                                         raw.types.DocumentAttributeAudio(
@@ -442,7 +442,7 @@ class SendMediaGroup:
                                     getattr(i.media, "name", "audio.mp3"),
                                 )
                                 or "audio/mpeg",
-                                file=await self.save_file(i.media),
+                                file=cast("raw.base.InputFile", await self.save_file(i.media)),
                                 thumb=await self.save_file(i.thumb),
                                 attributes=[
                                     raw.types.DocumentAttributeAudio(
@@ -481,7 +481,7 @@ class SendMediaGroup:
                                 media=raw.types.InputMediaUploadedDocument(
                                     mime_type=self.guess_mime_type(i.media)
                                     or "application/zip",
-                                    file=await self.save_file(i.media),
+                                    file=cast("raw.base.InputFile", await self.save_file(i.media)),
                                     thumb=await self.save_file(i.thumb),
                                     attributes=[
                                         raw.types.DocumentAttributeFilename(
@@ -536,7 +536,7 @@ class SendMediaGroup:
                                     getattr(i.media, "name", "file.zip"),
                                 )
                                 or "application/zip",
-                                file=await self.save_file(i.media),
+                                file=cast("raw.base.InputFile", await self.save_file(i.media)),
                                 thumb=await self.save_file(i.thumb),
                                 attributes=[
                                     raw.types.DocumentAttributeFilename(
@@ -563,16 +563,18 @@ class SendMediaGroup:
                     f"{i.__class__.__name__} is not a supported type for send_media_group",
                 )
 
+            parsed_caption = await self.parser.parse(i.caption, i.parse_mode)
             multi_media.append(
                 raw.types.InputSingleMedia(
                     media=input_media,
                     random_id=self.rnd_id(),
-                    **await self.parser.parse(i.caption, i.parse_mode),
+                    message=cast(str, parsed_caption["message"]),
+                    entities=cast(list, parsed_caption["entities"]),
                 ),
             )
 
         rpc = raw.functions.messages.SendMultiMedia(
-            peer=cast("raw.base.InputPeer", await self.resolve_peer(chat_id)),
+            peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
             multi_media=multi_media,
             silent=disable_notification or None,
             reply_to=reply_to,
@@ -584,7 +586,7 @@ class SendMediaGroup:
             background=background,
             clear_draft=clear_draft,
             update_stickersets_order=update_stickersets_order,
-            send_as=await self.resolve_peer(send_as) if send_as else None,
+            send_as=utils.get_input_peer(await self.resolve_peer(send_as)),
             quick_reply_shortcut=await utils.get_input_quick_reply_shortcut(
                 quick_reply_shortcut,
             )
@@ -624,5 +626,5 @@ class SendMediaGroup:
                 users=r.users,
                 chats=r.chats,
             ),
-            business_connection_id=business_connection_id,
+            business_connection_id=business_connection_id or "",
         )

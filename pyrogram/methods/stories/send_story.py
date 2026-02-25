@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import re
-from typing import BinaryIO
+from typing import BinaryIO, cast
 
 from anyio import Path as AsyncPath
 
@@ -17,7 +17,7 @@ class SendStory:
 
     async def _upload_video(
         self: pyrogram.Client,
-        file_name: str,
+        file_name: str | None,
         video: str | BinaryIO,
     ):
         file = await self.save_file(video)
@@ -147,10 +147,10 @@ class SendStory:
             peer = await self.resolve_peer("me")
 
         if privacy:
-            privacy_rules = [types.StoriesPrivacyRules(type=privacy)]
+            privacy_rules = [types.StoriesPrivacyRules(type=privacy).write()]
         else:
             privacy_rules = [
-                types.StoriesPrivacyRules(type=enums.StoriesPrivacyRules.PUBLIC),
+                types.StoriesPrivacyRules(type=enums.StoriesPrivacyRules.PUBLIC).write(),
             ]
 
         if photo:
@@ -184,10 +184,10 @@ class SendStory:
                 elif re.match("^https?://", video):
                     media = raw.types.InputMediaDocumentExternal(url=video)
                 else:
-                    video = await self.download_media(video, in_memory=True)
-                    media = await self._upload_video(file_name, video)
+                    video_dl = await self.download_media(video, in_memory=True)
+                    media = await self._upload_video(file_name, cast(BinaryIO, video_dl))
             else:
-                media = await self._upload_video(file_name, video)
+                media = await self._upload_video(file_name, cast(BinaryIO, video))
         elif forward_from_chat_id is None:
             raise ValueError(
                 "You need to pass one of the following parameter photo/video/forward_from_chat_id!",
@@ -211,10 +211,10 @@ class SendStory:
             privacy_rules.append(raw.types.InputPrivacyValueDisallowChatParticipants(chats=chats))
         """
         if allowed_users and len(allowed_users) > 0:
-            users = [await self.resolve_peer(user_id) for user_id in allowed_users]
+            users = [cast(raw.base.InputUser, utils.get_input_user(await self.resolve_peer(user_id))) for user_id in allowed_users]
             privacy_rules.append(raw.types.InputPrivacyValueAllowUsers(users=users))
         if denied_users and len(denied_users) > 0:
-            users = [await self.resolve_peer(user_id) for user_id in denied_users]
+            users = [cast(raw.base.InputUser, utils.get_input_user(await self.resolve_peer(user_id))) for user_id in denied_users]
             privacy_rules.append(
                 raw.types.InputPrivacyValueDisallowUsers(users=users),
             )
@@ -230,16 +230,16 @@ class SendStory:
 
         r = await self.invoke(
             raw.functions.stories.SendStory(
-                peer=peer,
+                peer=cast(raw.base.InputPeer, utils.get_input_peer(peer)),
                 media=media,
-                privacy_rules=privacy_rules,
+                privacy_rules=cast(list[raw.base.InputPrivacyRule], privacy_rules),
                 random_id=self.rnd_id(),
                 pinned=pinned,
                 noforwards=protect_content,
                 caption=text,
                 entities=entities,
                 period=period,
-                fwd_from_id=forward_from_chat,
+                fwd_from_id=cast(raw.base.InputPeer, forward_from_chat),
                 fwd_from_story=forward_from_story_id
                 if forward_from_chat_id is not None
                 else None,
@@ -247,7 +247,7 @@ class SendStory:
                     forward_from_chat_id is not None and caption is not None,
                 ),
                 media_areas=[
-                    await media_area.write(self) for media_area in media_areas
+                    cast(raw.base.MediaArea, await media_area.write(self)) for media_area in media_areas
                 ]
                 if media_areas is not None
                 else None,

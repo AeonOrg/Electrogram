@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 if TYPE_CHECKING:
     from collections.abc import AsyncGenerator
@@ -49,7 +49,7 @@ class GetChatInviteLinkJoiners:
         while True:
             r = await self.invoke(
                 raw.functions.messages.GetChatInviteImporters(
-                    peer=await self.resolve_peer(chat_id),
+                    peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                     link=invite_link,
                     limit=limit,
                     offset_date=offset_date,

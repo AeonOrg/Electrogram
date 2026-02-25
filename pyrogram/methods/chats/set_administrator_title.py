@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 
 class SetAdministratorTitle:
@@ -46,8 +48,8 @@ class SetAdministratorTitle:
         r = (
             await self.invoke(
                 raw.functions.channels.GetParticipant(
-                    channel=peer_chat_id,
-                    participant=peer_user_id,
+                    channel=cast(raw.base.InputChannel, utils.get_input_channel(peer_chat_id)),
+                    participant=cast(raw.base.InputPeer, utils.get_input_peer(peer_user_id)),
                 ),
             )
         ).participant
@@ -63,8 +65,8 @@ class SetAdministratorTitle:
 
         await self.invoke(
             raw.functions.channels.EditAdmin(
-                channel=peer_chat_id,
-                user_id=peer_user_id,
+                channel=cast(raw.base.InputChannel, utils.get_input_channel(peer_chat_id)),
+                user_id=cast(raw.base.InputUser, utils.get_input_user(peer_user_id)),
                 admin_rights=admin_rights,
                 rank=title,
             ),

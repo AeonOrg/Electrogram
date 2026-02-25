@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 
 class ExportFolderLink:
@@ -44,8 +44,8 @@ class ExportFolderLink:
         r = await self.invoke(
             raw.functions.chatlists.ExportChatlistInvite(
                 chatlist=raw.types.InputChatlistDialogFilter(filter_id=folder_id),
-                title=folder.title,
-                peers=[await self.resolve_peer(i.id) for i in peers],
+                title=folder.title or "",
+                peers=[utils.get_input_peer(await self.resolve_peer(i.id)) for i in peers],
             ),
         )
 

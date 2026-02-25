@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 
 class ArchiveChats:
@@ -37,7 +37,7 @@ class ArchiveChats:
 
         folder_peers = [
             raw.types.InputFolderPeer(
-                peer=await self.resolve_peer(chat),
+                peer=utils.get_input_peer(await self.resolve_peer(chat)),
                 folder_id=1,
             )
             for chat in chat_ids

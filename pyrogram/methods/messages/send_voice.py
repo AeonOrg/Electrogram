@@ -219,7 +219,7 @@ class SendVoice:
             while True:
                 try:
                     rpc = raw.functions.messages.SendMedia(
-                        peer=await self.resolve_peer(chat_id),
+                        peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                         media=media,
                         silent=disable_notification or None,
                         reply_to=reply_to,

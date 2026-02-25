@@ -69,7 +69,7 @@ class DeleteChatHistory:
         else:
             r = await self.invoke(
                 raw.functions.messages.DeleteHistory(
-                    peer=peer,
+                    peer=utils.get_input_peer(peer),
                     max_id=max_id,
                     just_clear=just_clear,
                     revoke=revoke,

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 
 class EditMessageReplyMarkup:
@@ -48,7 +48,7 @@ class EditMessageReplyMarkup:
                         InlineKeyboardButton("New button", callback_data="new_data")]]))
         """
         rpc = raw.functions.messages.EditMessage(
-            peer=await self.resolve_peer(chat_id),
+            peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
             id=message_id,
             reply_markup=await reply_markup.write(self) if reply_markup else None,
         )

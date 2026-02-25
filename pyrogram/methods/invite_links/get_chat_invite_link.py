@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 
 class GetChatInviteLink:
@@ -28,7 +28,7 @@ class GetChatInviteLink:
         """
         r = await self.invoke(
             raw.functions.messages.GetExportedChatInvite(
-                peer=await self.resolve_peer(chat_id),
+                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                 link=invite_link,
             ),
         )

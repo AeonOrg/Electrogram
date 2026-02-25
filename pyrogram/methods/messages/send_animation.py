@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
-from typing import TYPE_CHECKING, BinaryIO
+from typing import TYPE_CHECKING, BinaryIO, cast
 
 from anyio import Path as AsyncPath
 
@@ -233,7 +233,7 @@ class SendAnimation:
 
                 await app.send_animation("me", "animation.gif", progress=progress)
         """
-        file = None
+        file: raw.base.InputFile | None = None
 
         reply_to = await utils.get_reply_to(
             client=self,
@@ -250,7 +250,7 @@ class SendAnimation:
         try:
             if isinstance(animation, str):
                 if await AsyncPath(animation).is_file():
-                    thumb = await self.save_file(thumb)
+                    thumb_file = await self.save_file(thumb)
                     file = await self.save_file(
                         animation,
                         progress=progress,
@@ -258,8 +258,8 @@ class SendAnimation:
                     )
                     media = raw.types.InputMediaUploadedDocument(
                         mime_type=self.guess_mime_type(animation) or "video/mp4",
-                        file=file,
-                        thumb=thumb,
+                        file=cast("raw.base.InputFile", file),
+                        thumb=thumb_file,
                         spoiler=has_spoiler,
                         attributes=[
                             raw.types.DocumentAttributeVideo(
@@ -284,9 +284,10 @@ class SendAnimation:
                         animation,
                         FileType.ANIMATION,
                     )
-                    media.spoiler = has_spoiler
+                    if media:
+                        media.spoiler = has_spoiler
             else:
-                thumb = await self.save_file(thumb)
+                thumb_file = await self.save_file(thumb)
                 file = await self.save_file(
                     animation,
                     progress=progress,
@@ -295,8 +296,8 @@ class SendAnimation:
                 media = raw.types.InputMediaUploadedDocument(
                     mime_type=self.guess_mime_type(file_name or animation.name)
                     or "video/mp4",
-                    file=file,
-                    thumb=thumb,
+                    file=cast("raw.base.InputFile", file),
+                    thumb=thumb_file,
                     spoiler=has_spoiler,
                     attributes=[
                         raw.types.DocumentAttributeVideo(
@@ -315,7 +316,7 @@ class SendAnimation:
             while True:
                 try:
                     rpc = raw.functions.messages.SendMedia(
-                        peer=await self.resolve_peer(chat_id),
+                        peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                         media=media,
                         silent=disable_notification or None,
                         reply_to=reply_to,
@@ -329,9 +330,7 @@ class SendAnimation:
                         clear_draft=clear_draft,
                         update_stickersets_order=update_stickersets_order,
                         schedule_repeat_period=schedule_repeat_period,
-                        send_as=await self.resolve_peer(send_as)
-                        if send_as
-                        else None,
+                        send_as=utils.get_input_peer(await self.resolve_peer(send_as)),
                         quick_reply_shortcut=await utils.get_input_quick_reply_shortcut(
                             quick_reply_shortcut,
                         )
@@ -344,12 +343,8 @@ class SendAnimation:
                         reply_markup=await reply_markup.write(self)
                         if reply_markup
                         else None,
-                        **await utils.parse_text_entities(
-                            self,
-                            caption,
-                            parse_mode,
-                            caption_entities,
-                        ),
+                        message=cast(str, (await utils.parse_text_entities(self, caption, parse_mode, caption_entities))["message"]),
+                        entities=cast(list, (await utils.parse_text_entities(self, caption, parse_mode, caption_entities))["entities"]),
                     )
                     if business_connection_id is not None:
                         r = await self.invoke(

@@ -54,9 +54,12 @@ class GetForumTopicsByID:
 
         peer = await self.resolve_peer(chat_id)
 
-        is_iterable = not isinstance(ids, int)
-        ids = list(ids) if is_iterable else [ids]
-        ids = list(ids)
+        if isinstance(ids, int):
+            is_iterable = False
+            ids = [ids]
+        else:
+            is_iterable = True
+            ids = list(ids)
 
         rpc = raw.functions.channels.GetForumTopicsByID(channel=peer, topics=ids)
 

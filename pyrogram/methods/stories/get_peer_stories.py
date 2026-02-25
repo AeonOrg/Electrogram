@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING
+from typing import cast, TYPE_CHECKING
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import utils, raw, types
 
 if TYPE_CHECKING:
     from collections.abc import AsyncGenerator
@@ -44,7 +44,7 @@ class GetPeerStories:
 
         peer = await self.resolve_peer(chat_id)
 
-        rpc = raw.functions.stories.GetPeerStories(peer=peer)
+        rpc = raw.functions.stories.GetPeerStories(peer=cast(raw.base.InputPeer, utils.get_input_peer(peer)))
 
         r = await self.invoke(rpc, sleep_threshold=-1)
 

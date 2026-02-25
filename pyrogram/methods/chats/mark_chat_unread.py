@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 
 class MarkChatUnread:
@@ -24,7 +24,9 @@ class MarkChatUnread:
 
         return await self.invoke(
             raw.functions.messages.MarkDialogUnread(
-                peer=await self.resolve_peer(chat_id),
+                peer=raw.types.InputDialogPeer(
+                    peer=utils.get_input_peer(await self.resolve_peer(chat_id))
+                ),
                 unread=True,
             ),
         )

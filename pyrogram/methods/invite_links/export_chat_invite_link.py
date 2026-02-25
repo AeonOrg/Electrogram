@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 
 class ExportChatInviteLink:
@@ -48,7 +48,7 @@ class ExportChatInviteLink:
         """
         r = await self.invoke(
             raw.functions.messages.ExportChatInvite(
-                peer=await self.resolve_peer(chat_id),
+                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                 legacy_revoke_permanent=True,
                 subscription_pricing=raw.types.StarsSubscriptionPricing(
                     period=subscription_period,

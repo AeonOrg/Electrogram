@@ -69,7 +69,7 @@ class Voice(Object):
     def _parse(
         client,
         voice: raw.types.Document,
-        attributes: raw.types.DocumentAttributeAudio,
+        voice_attributes: raw.base.DocumentAttribute | None,
     ) -> Voice:
         return Voice(
             file_id=FileId(
@@ -83,10 +83,10 @@ class Voice(Object):
                 file_unique_type=FileUniqueType.DOCUMENT,
                 media_id=voice.id,
             ).encode(),
-            duration=attributes.duration,
+            duration=getattr(voice_attributes, "duration", 0),
             mime_type=voice.mime_type,
             file_size=voice.size,
-            waveform=attributes.waveform,
+            waveform=getattr(voice_attributes, "waveform", None),
             date=utils.timestamp_to_datetime(voice.date),
             client=client,
         )

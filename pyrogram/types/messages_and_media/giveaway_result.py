@@ -76,10 +76,15 @@ class GiveawayResult(Object):
     @staticmethod
     async def _parse(
         client,
-        giveaway_result: raw.types.MessageActionGiveawayResults
-        | raw.types.MessageMediaGiveawayResults,
+        giveaway_result: raw.base.MessageAction | raw.base.MessageMedia | None,
         hide_winners: bool = False,
-    ) -> GiveawayResult:
+    ) -> GiveawayResult | None:
+        if not isinstance(
+            giveaway_result,
+            raw.types.MessageActionGiveawayResults
+            | raw.types.MessageMediaGiveawayResults,
+        ):
+            return None
         chat = None
         giveaway_message = None
         expired_date = None

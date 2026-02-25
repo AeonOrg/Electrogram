@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
-from typing import TYPE_CHECKING, BinaryIO
+from typing import TYPE_CHECKING, BinaryIO, cast
 
 from anyio import Path as AsyncPath
 
@@ -238,7 +238,7 @@ class SendVideo:
 
                 await app.send_video("me", "video.mp4", progress=progress)
         """
-        file = None
+        file: raw.base.InputFile | None = None
 
         reply_to = await utils.get_reply_to(
             client=self,
@@ -255,7 +255,7 @@ class SendVideo:
         try:
             if isinstance(video, str):
                 if await AsyncPath(video).is_file():
-                    thumb = await self.save_file(thumb)
+                    thumb_file = await self.save_file(thumb)
                     file = await self.save_file(
                         video,
                         progress=progress,
@@ -263,10 +263,10 @@ class SendVideo:
                     )
                     media = raw.types.InputMediaUploadedDocument(
                         mime_type=self.guess_mime_type(video) or "video/mp4",
-                        file=file,
+                        file=cast("raw.base.InputFile", file),
                         ttl_seconds=ttl_seconds,
                         spoiler=has_spoiler,
-                        thumb=thumb,
+                        thumb=thumb_file,
                         attributes=[
                             raw.types.DocumentAttributeVideo(
                                 supports_streaming=supports_streaming or None,
@@ -291,9 +291,10 @@ class SendVideo:
                         FileType.VIDEO,
                         ttl_seconds=ttl_seconds,
                     )
-                    media.spoiler = has_spoiler
+                    if media:
+                        media.spoiler = has_spoiler
             else:
-                thumb = await self.save_file(thumb)
+                thumb_file = await self.save_file(thumb)
                 file = await self.save_file(
                     video,
                     progress=progress,
@@ -302,10 +303,10 @@ class SendVideo:
                 media = raw.types.InputMediaUploadedDocument(
                     mime_type=self.guess_mime_type(file_name or video.name)
                     or "video/mp4",
-                    file=file,
+                    file=cast("raw.base.InputFile", file),
                     ttl_seconds=ttl_seconds,
                     spoiler=has_spoiler,
-                    thumb=thumb,
+                    thumb=thumb_file,
                     attributes=[
                         raw.types.DocumentAttributeVideo(
                             supports_streaming=supports_streaming or None,
@@ -322,7 +323,7 @@ class SendVideo:
             while True:
                 try:
                     rpc = raw.functions.messages.SendMedia(
-                        peer=await self.resolve_peer(chat_id),
+                        peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                         media=media,
                         silent=disable_notification or None,
                         reply_to=reply_to,
@@ -336,9 +337,7 @@ class SendVideo:
                         clear_draft=clear_draft,
                         update_stickersets_order=update_stickersets_order,
                         schedule_repeat_period=schedule_repeat_period,
-                        send_as=await self.resolve_peer(send_as)
-                        if send_as
-                        else None,
+                        send_as=utils.get_input_peer(await self.resolve_peer(send_as)),
                         quick_reply_shortcut=await utils.get_input_quick_reply_shortcut(
                             quick_reply_shortcut,
                         )

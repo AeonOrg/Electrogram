@@ -40,8 +40,12 @@ class GetFolders:
                 # Get all folders
                 await app.get_folders()
         """
-        is_iterable = hasattr(folder_ids, "__iter__")
-        ids = set(folder_ids) if is_iterable else {folder_ids}
+        if isinstance(folder_ids, int) or folder_ids is None:
+            is_iterable = False
+            ids = {folder_ids}
+        else:
+            is_iterable = True
+            ids = set(folder_ids)
 
         dialog_filters = await self.invoke(raw.functions.messages.GetDialogFilters())
 

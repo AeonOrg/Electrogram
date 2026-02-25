@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 
 class PinChatMessage:
@@ -48,7 +48,7 @@ class PinChatMessage:
         """
         r = await self.invoke(
             raw.functions.messages.UpdatePinnedMessage(
-                peer=await self.resolve_peer(chat_id),
+                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                 id=message_id,
                 silent=disable_notification or None,
                 pm_oneside=not both_sides or None,

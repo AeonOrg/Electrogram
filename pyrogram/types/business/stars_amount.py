@@ -33,7 +33,7 @@ class StarsAmount(Object):
 
     @staticmethod
     def _parse(
-        stars_amount: raw.types.StarsAmount | raw.types.StarsTonAmount,
+        stars_amount: raw.base.StarsAmount | None,
     ) -> StarsAmount | None:
         if not stars_amount:
             return None

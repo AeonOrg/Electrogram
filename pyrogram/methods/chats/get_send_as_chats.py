@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 
 class GetSendAsChats:
@@ -28,7 +28,7 @@ class GetSendAsChats:
                 print(chats)
         """
         r = await self.invoke(
-            raw.functions.channels.GetSendAs(peer=await self.resolve_peer(chat_id)),
+            raw.functions.channels.GetSendAs(peer=utils.get_input_peer(await self.resolve_peer(chat_id))),
         )
 
         users = {u.id: u for u in r.users}
