@@ -71,14 +71,14 @@ class DraftMessage(Object):
         text: Str | None = None,
         entities: list[types.MessageEntity] | None = None,
         link_preview_options: types.LinkPreviewOptions | None = None,
-        effect_id: str | None = None,
+        effect_id: str | int | None = None,
         video_note: types.VideoNote | None = None,
         voice: types.Voice | None = None,
         show_caption_above_media: bool | None = None,
         media: enums.MessageMediaType | None = None,
         empty: bool | None = None,
         chat: types.Chat | None = None,
-        _raw: raw.types.DraftMessage | None = None,
+        _raw: raw.base.DraftMessage | None = None,
     ) -> None:
         super().__init__()
 

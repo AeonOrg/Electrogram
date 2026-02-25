@@ -23,11 +23,15 @@ class GetCustomEmojiStickers:
              a list, a single sticker is returned, otherwise a list of stickers is returned.
         """
         is_list = isinstance(custom_emoji_ids, list)
-        ids = [custom_emoji_ids] if not is_list else custom_emoji_ids
+        ids_list = (
+            [custom_emoji_ids]
+            if isinstance(custom_emoji_ids, int)
+            else custom_emoji_ids
+        )
 
         result = await self.invoke(
             raw.functions.messages.GetCustomEmojiDocuments(
-                document_id=ids,
+                document_id=ids_list,
             ),
         )
 

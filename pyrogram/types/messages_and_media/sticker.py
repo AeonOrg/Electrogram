@@ -147,10 +147,7 @@ class Sticker(Object):
     async def _parse(
         client,
         sticker: raw.types.Document,
-        document_attributes: dict[
-            type[raw.base.DocumentAttribute],
-            raw.base.DocumentAttribute,
-        ],
+        document_attributes: dict,
     ) -> Sticker:
         sticker_attributes = (
             document_attributes[raw.types.DocumentAttributeSticker]

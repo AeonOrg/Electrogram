@@ -125,12 +125,14 @@ class SendLocation:
         )
 
         rpc = raw.functions.messages.SendMedia(
-            peer=await self.resolve_peer(chat_id),
+            peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
             media=raw.types.InputMediaGeoPoint(
                 geo_point=raw.types.InputGeoPoint(
                     lat=latitude,
                     long=longitude,
-                    accuracy_radius=horizontal_accuracy,
+                    accuracy_radius=int(horizontal_accuracy)
+                    if horizontal_accuracy is not None
+                    else None,
                 ),
             ),
             message="",

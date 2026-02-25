@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING
+from typing import cast, TYPE_CHECKING
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import utils, raw, types
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -58,10 +58,14 @@ class GetStories:
 
         peer = await self.resolve_peer(chat_id)
 
-        is_iterable = not isinstance(story_ids, int)
-        ids = list(story_ids) if is_iterable else [story_ids]
+        if isinstance(story_ids, int):
+            is_iterable = False
+            ids = [story_ids]
+        else:
+            is_iterable = True
+            ids = list(story_ids)
 
-        rpc = raw.functions.stories.GetStoriesByID(peer=peer, id=ids)
+        rpc = raw.functions.stories.GetStoriesByID(peer=cast(raw.base.InputPeer, utils.get_input_peer(peer)), id=ids)
 
         r = await self.invoke(rpc, sleep_threshold=-1)
 

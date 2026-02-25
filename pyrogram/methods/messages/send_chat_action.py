@@ -4,7 +4,7 @@ from json import dumps
 from random import randint
 
 import pyrogram
-from pyrogram import enums, raw
+from pyrogram import enums, raw, utils
 
 
 class SendChatAction:
@@ -109,7 +109,7 @@ class SendChatAction:
         else:
             action = action.value()
         rpc = raw.functions.messages.SetTyping(
-            peer=await self.resolve_peer(chat_id),
+            peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
             action=action,
             top_msg_id=message_thread_id,
         )

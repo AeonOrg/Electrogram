@@ -18,13 +18,13 @@ class StoriesPrivacyRules(Object):
 
     def write(self):
         if self.type == enums.StoriesPrivacyRules.PUBLIC:
-            return raw.types.InputPrivacyValueAllowAll().write()
+            return raw.types.InputPrivacyValueAllowAll()
         if self.type == enums.StoriesPrivacyRules.CLOSE_FRIENDS:
-            return raw.types.InputPrivacyValueAllowCloseFriends().write()
+            return raw.types.InputPrivacyValueAllowCloseFriends()
         if self.type == enums.StoriesPrivacyRules.CONTACTS:
-            return raw.types.InputPrivacyValueAllowContacts().write()
+            return raw.types.InputPrivacyValueAllowContacts()
         if self.type == enums.StoriesPrivacyRules.NO_CONTACTS:
-            return raw.types.InputPrivacyValueDisallowContacts().write()
+            return raw.types.InputPrivacyValueDisallowContacts()
         if self.type == enums.StoriesPrivacyRules.PRIVATE:
-            return raw.types.InputPrivacyValueDisallowAll().write()
+            return raw.types.InputPrivacyValueDisallowAll()
         return None

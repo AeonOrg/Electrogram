@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import pyrogram
 from pyrogram import raw, types, utils
@@ -101,18 +101,30 @@ class GetMessages:
 
             peer = await self.resolve_peer(chat_id)
 
-            is_iterable = not isinstance(ids, int)
-            ids = list(ids) if is_iterable else [ids]
+            if isinstance(ids, int):
+                is_iterable = False
+                ids = [ids]
+            else:
+                is_iterable = True
+                ids = list(ids)
 
             if replies < 0:
                 replies = (1 << 31) - 1
 
             if is_scheduled:
-                rpc = raw.functions.messages.GetScheduledMessages(peer=peer, id=ids)
+                rpc = raw.functions.messages.GetScheduledMessages(
+                    peer=utils.get_input_peer(peer),
+                    id=ids,
+                )
             else:
                 ids = [ids_type(id=i) for i in ids]
                 if isinstance(peer, raw.types.InputPeerChannel):
-                    rpc = raw.functions.channels.GetMessages(channel=peer, id=ids)
+                    rpc = raw.functions.channels.GetMessages(
+                        channel=cast(
+                            raw.base.InputChannel, utils.get_input_channel(peer)
+                        ),
+                        id=ids,
+                    )
                 else:
                     rpc = raw.functions.messages.GetMessages(id=ids)
 
@@ -143,10 +155,12 @@ class GetMessages:
                 )
                 users = {i.id: i for i in r.users}
                 entities = [
-                    types.MessageEntity._parse(self, entity, users)
+                    e
                     for entity in getattr(r, "entities", [])
+                    if (e := types.MessageEntity._parse(self, entity, users))
+                    is not None
                 ]
-                entities = types.List(filter(lambda x: x is not None, entities))
+                entities = types.List(entities)
                 chat = None
                 cat_id = utils.get_raw_peer_id(r.peer)
                 if isinstance(r.peer, raw.types.PeerUser):

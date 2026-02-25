@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import pyrogram
 from pyrogram import raw, types, utils
@@ -106,32 +106,38 @@ class CopyMediaGroup:
                 raise ValueError("Message with this type can't be copied.")
 
             media = utils.get_input_media_from_file_id(file_id=file_id)
+            if media is None:
+                raise ValueError("Failed to get input media from file id")
+            parsed_caption = await self.parser.parse(
+                captions[i]
+                if isinstance(captions, list)
+                and i < len(captions)
+                and captions[i]
+                else captions
+                if isinstance(captions, str) and i == 0
+                else message.caption
+                if message.caption
+                and message.caption != "None"
+                and type(captions) is not str
+                else "",
+            )
             multi_media.append(
                 raw.types.InputSingleMedia(
                     media=media,
                     random_id=self.rnd_id(),
-                    **await self.parser.parse(
-                        captions[i]
-                        if isinstance(captions, list)
-                        and i < len(captions)
-                        and captions[i]
-                        else captions
-                        if isinstance(captions, str) and i == 0
-                        else message.caption
-                        if message.caption
-                        and message.caption != "None"
-                        and type(captions) is not str
-                        else "",
+                    message=cast(str, parsed_caption["message"]),
+                    entities=cast(
+                        "list[raw.base.MessageEntity]", parsed_caption["entities"]
                     ),
                 ),
             )
 
         r = await self.invoke(
             raw.functions.messages.SendMultiMedia(
-                peer=await self.resolve_peer(chat_id),
+                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                 multi_media=multi_media,
                 silent=disable_notification or None,
-                reply_to=reply_to,
+                reply_to=reply_to.write() if reply_to else None,
                 noforwards=protect_content,
                 schedule_date=utils.datetime_to_timestamp(schedule_date),
             ),

@@ -4,6 +4,7 @@ import asyncio
 import io
 import re
 from pathlib import Path
+from typing import cast
 
 from anyio import Path as AsyncPath
 
@@ -84,9 +85,9 @@ class EditInlineMedia:
         if is_uploaded_file:
             filename_attribute = [
                 raw.types.DocumentAttributeFilename(
-                    file_name=media.media.name
+                    file_name=cast(io.BytesIO, media.media).name
                     if is_bytes_io
-                    else Path(media.media).name,
+                    else Path(cast(str, media.media)).name,
                 ),
             ]
         else:
@@ -95,28 +96,28 @@ class EditInlineMedia:
         if isinstance(media, types.InputMediaPhoto):
             if is_uploaded_file:
                 input_media = raw.types.InputMediaUploadedPhoto(
-                    file=await self.save_file(media.media),
+                    file=cast(raw.base.InputFile, await self.save_file(media.media)),
                     spoiler=media.has_spoiler,
                 )
             elif is_external_url:
                 input_media = raw.types.InputMediaPhotoExternal(
-                    url=media.media,
+                    url=cast(str, media.media),
                     spoiler=media.has_spoiler,
                 )
             else:
-                input_media = utils.get_input_media_from_file_id(
-                    media.media,
+                input_media = cast(raw.types.InputMediaPhoto, utils.get_input_media_from_file_id(
+                    cast(str, media.media),
                     FileType.PHOTO,
-                )
+                ))
         elif isinstance(media, types.InputMediaVideo):
             if is_uploaded_file:
                 input_media = raw.types.InputMediaUploadedDocument(
                     mime_type=(
-                        None if is_bytes_io else self.guess_mime_type(media.media)
+                        None if is_bytes_io else self.guess_mime_type(cast(str, media.media))
                     )
                     or "video/mp4",
                     thumb=await self.save_file(media.thumb),
-                    file=await self.save_file(media.media),
+                    file=cast(raw.base.InputFile, await self.save_file(media.media)),
                     spoiler=media.has_spoiler,
                     attributes=[
                         raw.types.DocumentAttributeVideo(
@@ -130,23 +131,23 @@ class EditInlineMedia:
                 )
             elif is_external_url:
                 input_media = raw.types.InputMediaDocumentExternal(
-                    url=media.media,
+                    url=cast(str, media.media),
                     spoiler=media.has_spoiler,
                 )
             else:
                 input_media = utils.get_input_media_from_file_id(
-                    media.media,
+                    cast(str, media.media),
                     FileType.VIDEO,
                 )
         elif isinstance(media, types.InputMediaAudio):
             if is_uploaded_file:
                 input_media = raw.types.InputMediaUploadedDocument(
                     mime_type=(
-                        None if is_bytes_io else self.guess_mime_type(media.media)
+                        None if is_bytes_io else self.guess_mime_type(cast(str, media.media))
                     )
                     or "audio/mpeg",
                     thumb=await self.save_file(media.thumb),
-                    file=await self.save_file(media.media),
+                    file=cast(raw.base.InputFile, await self.save_file(media.media)),
                     attributes=[
                         raw.types.DocumentAttributeAudio(
                             duration=media.duration,
@@ -157,21 +158,21 @@ class EditInlineMedia:
                     ],
                 )
             elif is_external_url:
-                input_media = raw.types.InputMediaDocumentExternal(url=media.media)
+                input_media = raw.types.InputMediaDocumentExternal(url=cast(str, media.media))
             else:
                 input_media = utils.get_input_media_from_file_id(
-                    media.media,
+                    cast(str, media.media),
                     FileType.AUDIO,
                 )
         elif isinstance(media, types.InputMediaAnimation):
             if is_uploaded_file:
                 input_media = raw.types.InputMediaUploadedDocument(
                     mime_type=(
-                        None if is_bytes_io else self.guess_mime_type(media.media)
+                        None if is_bytes_io else self.guess_mime_type(cast(str, media.media))
                     )
                     or "video/mp4",
                     thumb=await self.save_file(media.thumb),
-                    file=await self.save_file(media.media),
+                    file=cast(raw.base.InputFile, await self.save_file(media.media)),
                     spoiler=media.has_spoiler,
                     attributes=[
                         raw.types.DocumentAttributeVideo(
@@ -187,31 +188,31 @@ class EditInlineMedia:
                 )
             elif is_external_url:
                 input_media = raw.types.InputMediaDocumentExternal(
-                    url=media.media,
+                    url=cast(str, media.media),
                     spoiler=media.has_spoiler,
                 )
             else:
                 input_media = utils.get_input_media_from_file_id(
-                    media.media,
+                    cast(str, media.media),
                     FileType.ANIMATION,
                 )
         elif isinstance(media, types.InputMediaDocument):
             if is_uploaded_file:
                 input_media = raw.types.InputMediaUploadedDocument(
                     mime_type=(
-                        None if is_bytes_io else self.guess_mime_type(media.media)
+                        None if is_bytes_io else self.guess_mime_type(cast(str, media.media))
                     )
                     or "application/zip",
                     thumb=await self.save_file(media.thumb),
-                    file=await self.save_file(media.media),
+                    file=cast(raw.base.InputFile, await self.save_file(media.media)),
                     attributes=filename_attribute,
                     force_file=True,
                 )
             elif is_external_url:
-                input_media = raw.types.InputMediaDocumentExternal(url=media.media)
+                input_media = raw.types.InputMediaDocumentExternal(url=cast(str, media.media))
             else:
                 input_media = utils.get_input_media_from_file_id(
-                    media.media,
+                    cast(str, media.media),
                     FileType.DOCUMENT,
                 )
 
@@ -252,6 +253,7 @@ class EditInlineMedia:
 
         for i in range(self.MAX_RETRIES):
             try:
+                parsed_caption = await self.parser.parse(caption, parse_mode)
                 return await session.invoke(
                     raw.functions.messages.EditInlineBotMessage(
                         id=unpacked,
@@ -259,7 +261,8 @@ class EditInlineMedia:
                         reply_markup=await reply_markup.write(self)
                         if reply_markup
                         else None,
-                        **await self.parser.parse(caption, parse_mode),
+                        message=cast(str, parsed_caption["message"]),
+                        entities=cast(list, parsed_caption["entities"]),
                     ),
                     sleep_threshold=self.sleep_threshold,
                 )

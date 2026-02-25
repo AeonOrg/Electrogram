@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 
 class GetDiscussionMessage:
@@ -36,7 +36,7 @@ class GetDiscussionMessage:
         """
         r = await self.invoke(
             raw.functions.messages.GetDiscussionMessage(
-                peer=await self.resolve_peer(chat_id),
+                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                 msg_id=message_id,
             ),
         )

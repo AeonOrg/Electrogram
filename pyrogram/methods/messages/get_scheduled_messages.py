@@ -54,10 +54,16 @@ class GetScheduledMessages:
 
         peer = await self.resolve_peer(chat_id)
 
-        is_iterable = not isinstance(message_ids, int)
-        ids = list(message_ids) if is_iterable else [message_ids]
+        if isinstance(message_ids, int):
+            is_iterable = False
+            ids = [message_ids]
+        else:
+            is_iterable = True
+            ids = list(message_ids)
 
-        rpc = raw.functions.messages.GetScheduledMessages(peer=peer, id=ids)
+        rpc = raw.functions.messages.GetScheduledMessages(
+            peer=utils.get_input_peer(peer), id=ids
+        )
 
         r = await self.invoke(rpc, sleep_threshold=-1)
 

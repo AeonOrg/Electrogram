@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 
 class GetDiscussionRepliesCount:
@@ -30,7 +30,7 @@ class GetDiscussionRepliesCount:
 
         r = await self.invoke(
             raw.functions.messages.GetReplies(
-                peer=await self.resolve_peer(chat_id),
+                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                 msg_id=message_id,
                 offset_id=0,
                 offset_date=0,

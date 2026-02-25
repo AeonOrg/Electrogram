@@ -139,7 +139,7 @@ class SendVenue:
         )
 
         rpc = raw.functions.messages.SendMedia(
-            peer=await self.resolve_peer(chat_id),
+            peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
             media=raw.types.InputMediaVenue(
                 geo_point=raw.types.InputGeoPoint(lat=latitude, long=longitude),
                 title=title,

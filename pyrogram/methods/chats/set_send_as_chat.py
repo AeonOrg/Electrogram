@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 
 class SetSendAsChat:
@@ -35,7 +37,7 @@ class SetSendAsChat:
         """
         return await self.invoke(
             raw.functions.messages.SaveDefaultSendAs(
-                peer=await self.resolve_peer(chat_id),
-                send_as=await self.resolve_peer(send_as_chat_id),
+                peer=cast(raw.base.InputPeer, utils.get_input_peer(await self.resolve_peer(chat_id))),
+                send_as=cast(raw.base.InputPeer, await self.resolve_peer(send_as_chat_id)),
             ),
         )

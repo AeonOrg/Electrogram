@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 log = logging.getLogger(__name__)
 
@@ -46,11 +46,13 @@ class SendPaidReaction:
 
         r = await self.invoke(
             raw.functions.messages.SendPaidReaction(
-                peer=await self.resolve_peer(chat_id),
+                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                 msg_id=message_id,
                 random_id=self.rnd_id(),
-                count=star_count,
-                private=is_anonymous,
+                count=star_count or 1,
+                private=raw.types.PaidReactionPrivacyAnonymous()
+                if is_anonymous
+                else None,
             ),
         )
         users = {i.id: i for i in r.users}

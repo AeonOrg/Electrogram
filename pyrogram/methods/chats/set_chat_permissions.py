@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 
 class SetChatPermissions:
@@ -202,7 +202,7 @@ class SetChatPermissions:
 
         r = await self.invoke(
             raw.functions.messages.EditChatDefaultBannedRights(
-                peer=await self.resolve_peer(chat_id),
+                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                 banned_rights=raw.types.ChatBannedRights(
                     until_date=0,
                     send_messages=send_messages,

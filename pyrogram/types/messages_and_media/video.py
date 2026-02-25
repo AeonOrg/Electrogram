@@ -94,8 +94,8 @@ class Video(Object):
     def _parse(
         client,
         video: raw.types.Document,
-        video_attributes: raw.types.DocumentAttributeVideo,
-        file_name: str,
+        video_attributes: raw.base.DocumentAttribute | None,
+        file_name: str | None,
         ttl_seconds: int | None = None,
     ) -> Video:
         return Video(
@@ -110,12 +110,12 @@ class Video(Object):
                 file_unique_type=FileUniqueType.DOCUMENT,
                 media_id=video.id,
             ).encode(),
-            width=video_attributes.w,
-            height=video_attributes.h,
-            duration=video_attributes.duration,
+            width=getattr(video_attributes, "w", 0),
+            height=getattr(video_attributes, "h", 0),
+            duration=getattr(video_attributes, "duration", 0),
             file_name=file_name,
             mime_type=video.mime_type,
-            supports_streaming=video_attributes.supports_streaming,
+            supports_streaming=getattr(video_attributes, "supports_streaming", None),
             file_size=video.size,
             date=utils.timestamp_to_datetime(video.date),
             ttl_seconds=ttl_seconds,

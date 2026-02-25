@@ -86,8 +86,8 @@ class ForwardMessages:
 
         r = await self.invoke(
             raw.functions.messages.ForwardMessages(
-                to_peer=await self.resolve_peer(chat_id),
-                from_peer=await self.resolve_peer(from_chat_id),
+                to_peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
+                from_peer=utils.get_input_peer(await self.resolve_peer(from_chat_id)),
                 id=ids,
                 top_msg_id=message_thread_id,
                 silent=disable_notification or None,

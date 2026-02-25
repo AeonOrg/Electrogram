@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, BinaryIO
+from typing import TYPE_CHECKING, BinaryIO, cast
 
 from anyio import Path as AsyncPath
 
@@ -170,7 +170,7 @@ class SendVideoNote:
                 # Send self-destructing video note
                 await app.send_voice("me", "video_note.mp4", ttl_seconds=(1 << 31) - 1)
         """
-        file = None
+        file: raw.base.InputFile | None = None
 
         reply_to = await utils.get_reply_to(
             client=self,
@@ -187,7 +187,7 @@ class SendVideoNote:
         try:
             if isinstance(video_note, str):
                 if await AsyncPath(video_note).is_file():
-                    thumb = await self.save_file(thumb)
+                    thumb_file = await self.save_file(thumb)
                     file = await self.save_file(
                         video_note,
                         progress=progress,
@@ -195,8 +195,8 @@ class SendVideoNote:
                     )
                     media = raw.types.InputMediaUploadedDocument(
                         mime_type=self.guess_mime_type(video_note) or "video/mp4",
-                        file=file,
-                        thumb=thumb,
+                        file=cast("raw.base.InputFile", file),
+                        thumb=thumb_file,
                         attributes=[
                             raw.types.DocumentAttributeVideo(
                                 round_message=True,
@@ -213,7 +213,7 @@ class SendVideoNote:
                         FileType.VIDEO_NOTE,
                     )
             else:
-                thumb = await self.save_file(thumb)
+                thumb_file = await self.save_file(thumb)
                 file = await self.save_file(
                     video_note,
                     progress=progress,
@@ -221,8 +221,8 @@ class SendVideoNote:
                 )
                 media = raw.types.InputMediaUploadedDocument(
                     mime_type=self.guess_mime_type(video_note.name) or "video/mp4",
-                    file=file,
-                    thumb=thumb,
+                    file=cast("raw.base.InputFile", file),
+                    thumb=thumb_file,
                     attributes=[
                         raw.types.DocumentAttributeVideo(
                             round_message=True,
@@ -236,7 +236,7 @@ class SendVideoNote:
             while True:
                 try:
                     rpc = raw.functions.messages.SendMedia(
-                        peer=await self.resolve_peer(chat_id),
+                        peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                         media=media,
                         silent=disable_notification or None,
                         reply_to=reply_to,

@@ -37,9 +37,9 @@ class PaymentRefunded(Object):
         *,
         user: types.User,
         currency: str,
-        total_amount: str,
-        telegram_payment_charge_id: str,
-        provider_payment_charge_id: str,
+        total_amount: int,
+        telegram_payment_charge_id: str | None = None,
+        provider_payment_charge_id: str | None = None,
         payload: str | None = None,
     ) -> None:
         self.user = user
@@ -59,8 +59,10 @@ class PaymentRefunded(Object):
         except (UnicodeDecodeError, AttributeError):
             payload = payment_refunded.payload
 
+        user = await client.get_users(payment_refunded.peer.user_id)
+
         return PaymentRefunded(
-            user=await client.get_users(payment_refunded.peer.user_id),
+            user=user if isinstance(user, types.User) else user[0],
             currency=payment_refunded.currency,
             total_amount=payment_refunded.total_amount,
             telegram_payment_charge_id=payment_refunded.charge.id

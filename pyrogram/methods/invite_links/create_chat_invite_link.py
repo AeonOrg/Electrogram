@@ -62,7 +62,7 @@ class CreateChatInviteLink:
         """
         r = await self.invoke(
             raw.functions.messages.ExportChatInvite(
-                peer=await self.resolve_peer(chat_id),
+                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                 expire_date=utils.datetime_to_timestamp(expire_date),
                 usage_limit=member_limit,
                 title=name,

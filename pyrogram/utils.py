@@ -28,11 +28,29 @@ async def ainput(prompt: str = "", *, hide: bool = False):
         return await asyncio.get_event_loop().run_in_executor(executor, func)
 
 
+@overload
 def get_input_media_from_file_id(
     file_id: str,
     expected_file_type: FileType | None = None,
     ttl_seconds: int | None = None,
-) -> raw.types.InputMediaPhoto | raw.types.InputMediaDocument:
+) -> raw.types.InputMediaPhoto | raw.types.InputMediaDocument: ...
+
+
+@overload
+def get_input_media_from_file_id(
+    file_id: None,
+    expected_file_type: FileType | None = None,
+    ttl_seconds: int | None = None,
+) -> None: ...
+
+
+def get_input_media_from_file_id(
+    file_id: str | None,
+    expected_file_type: FileType | None = None,
+    ttl_seconds: int | None = None,
+) -> raw.types.InputMediaPhoto | raw.types.InputMediaDocument | None:
+    if file_id is None:
+        return None
     try:
         decoded = FileId.decode(file_id)
     except Exception:
@@ -158,7 +176,7 @@ def parse_deleted_messages(
     business_connection_id: str | None = None,
 ) -> list[types.Message]:
     messages = update.messages
-    channel_id = getattr(update, "channel_id", None)
+    channel_id: int | None = getattr(update, "channel_id", None)
 
     parsed_messages = [
         types.Message(
@@ -484,6 +502,18 @@ async def get_input_quick_reply_shortcut(
     return raw.types.InputQuickReplyShortcut(shortcut=shortcut)
 
 
+@overload
+def get_input_user(
+    peer: raw.base.InputPeer | raw.base.InputUser | raw.base.InputChannel,
+) -> raw.base.InputUser: ...
+
+
+@overload
+def get_input_user(
+    peer: None,
+) -> None: ...
+
+
 def get_input_user(
     peer: raw.base.InputPeer | raw.base.InputUser | raw.base.InputChannel | None,
 ) -> raw.base.InputUser | None:
@@ -501,6 +531,18 @@ def get_input_user(
     return None
 
 
+@overload
+def get_input_channel(
+    peer: raw.base.InputPeer | raw.base.InputUser | raw.base.InputChannel,
+) -> raw.base.InputChannel | None: ...
+
+
+@overload
+def get_input_channel(
+    peer: None,
+) -> None: ...
+
+
 def get_input_channel(
     peer: raw.base.InputPeer | raw.base.InputUser | raw.base.InputChannel | None,
 ) -> raw.base.InputChannel | None:
@@ -513,6 +555,18 @@ def get_input_channel(
         )
 
     return None
+
+
+@overload
+def get_input_peer(
+    peer: raw.base.InputPeer | raw.base.InputUser | raw.base.InputChannel,
+) -> raw.base.InputPeer: ...
+
+
+@overload
+def get_input_peer(
+    peer: None,
+) -> None: ...
 
 
 def get_input_peer(

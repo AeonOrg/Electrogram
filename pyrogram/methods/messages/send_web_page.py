@@ -146,7 +146,7 @@ class SendWebPage:
             force_small_media=not large_media,
         )
         rpc = raw.functions.messages.SendMedia(
-            peer=await self.resolve_peer(chat_id),
+            peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
             silent=disable_notification or None,
             reply_to=reply_to,
             random_id=self.rnd_id(),
@@ -190,8 +190,9 @@ class SendWebPage:
                 outgoing=r.out,
                 reply_markup=reply_markup,
                 entities=[
-                    types.MessageEntity._parse(None, entity, {})
+                    e
                     for entity in entities
+                    if (e := types.MessageEntity._parse(None, entity, {})) is not None
                 ]
                 if entities
                 else None,

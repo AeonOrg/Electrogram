@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import asyncio
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import pyrogram
 from pyrogram import raw, types, utils
@@ -44,7 +44,7 @@ class Giveaway(Object):
         client: pyrogram.Client | None = None,
         chats: list[types.Chat],
         quantity: int,
-        months: int,
+        months: int | None = None,
         expire_date: datetime,
         new_subscribers: bool,
         allowed_countries: list[str] | None = None,
@@ -77,7 +77,7 @@ class Giveaway(Object):
                     ),
                 )
             except FloodWait as e:
-                await asyncio.sleep(e.value)
+                await asyncio.sleep(cast(int, e.value))
             except Exception:
                 private_ids.append(chat_id)
             else:

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 
 class UnpinChatMessage:
@@ -35,7 +35,7 @@ class UnpinChatMessage:
         """
         await self.invoke(
             raw.functions.messages.UpdatePinnedMessage(
-                peer=await self.resolve_peer(chat_id),
+                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                 id=message_id,
                 unpin=True,
             ),

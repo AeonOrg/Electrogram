@@ -201,7 +201,7 @@ class SendPoll:
         ).values()
 
         rpc = raw.functions.messages.SendMedia(
-            peer=await self.resolve_peer(chat_id),
+            peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
             media=raw.types.InputMediaPoll(
                 poll=raw.types.Poll(
                     id=self.rnd_id(),

@@ -85,8 +85,8 @@ class Animation(Object):
     def _parse(
         client,
         animation: raw.types.Document,
-        video_attributes: raw.types.DocumentAttributeVideo,
-        file_name: str,
+        video_attributes: raw.base.DocumentAttribute | None,
+        file_name: str | None,
     ) -> Animation | None:
         return Animation(
             file_id=FileId(

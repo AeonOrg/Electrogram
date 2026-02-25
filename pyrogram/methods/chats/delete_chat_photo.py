@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 
 class DeleteChatPhoto:
@@ -40,7 +42,7 @@ class DeleteChatPhoto:
         elif isinstance(peer, raw.types.InputPeerChannel):
             await self.invoke(
                 raw.functions.channels.EditPhoto(
-                    channel=peer,
+                    channel=cast(raw.base.InputChannel, utils.get_input_channel(peer)),
                     photo=raw.types.InputChatPhotoEmpty(),
                 ),
             )

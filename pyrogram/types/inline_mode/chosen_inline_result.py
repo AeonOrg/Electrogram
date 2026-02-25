@@ -41,7 +41,7 @@ class ChosenInlineResult(Object, Update):
         *,
         client: pyrogram.Client | None = None,
         result_id: str,
-        from_user: types.User,
+        from_user: types.User | None = None,
         query: str,
         location: types.Location | None = None,
         inline_message_id: str | None = None,

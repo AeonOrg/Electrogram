@@ -66,7 +66,7 @@ class MessageEntity(Object):
         client,
         entity: raw.base.MessageEntity,
         users: dict,
-    ) -> MessageEntity | None:
+    ) -> MessageEntity:
         # Special case for InputMessageEntityMentionName -> MessageEntityType.TEXT_MENTION
         # This happens in case of UpdateShortSentMessage inside send_message() where entities are parsed from the input
         if isinstance(entity, raw.types.InputMessageEntityMentionName):

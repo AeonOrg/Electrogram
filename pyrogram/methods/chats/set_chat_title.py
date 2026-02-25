@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
-from pyrogram import raw
+from pyrogram import utils, raw
 
 
 class SetChatTitle:
@@ -50,7 +52,7 @@ class SetChatTitle:
             )
         elif isinstance(peer, raw.types.InputPeerChannel):
             await self.invoke(
-                raw.functions.channels.EditTitle(channel=peer, title=title),
+                raw.functions.channels.EditTitle(channel=cast(raw.base.InputChannel, utils.get_input_channel(peer)), title=title),
             )
         else:
             raise ValueError(f'The chat_id "{chat_id}" belongs to a user')
