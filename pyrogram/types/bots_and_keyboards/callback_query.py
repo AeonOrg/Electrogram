@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from contextlib import suppress
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -88,7 +88,9 @@ class CallbackQuery(Object, Update):
             message = client.message_cache[(chat_id, message_id)]
 
             if not message:
-                message = await client.get_messages(chat_id, message_id)
+                message = cast(
+                    types.Message, await client.get_messages(chat_id, message_id)
+                )
         elif isinstance(callback_query, raw.types.UpdateInlineBotCallbackQuery):
             inline_message_id = utils.pack_inline_message_id(callback_query.msg_id)
         elif isinstance(callback_query, raw.types.UpdateBusinessBotCallbackQuery):

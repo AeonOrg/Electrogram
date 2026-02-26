@@ -38,7 +38,7 @@ class Game(Object):
         title: str,
         short_name: str,
         description: str,
-        photo: types.Photo,
+        photo: types.Photo | None = None,
         animation: types.Animation | None = None,
     ) -> None:
         super().__init__(client)

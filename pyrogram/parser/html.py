@@ -18,7 +18,7 @@ log = logging.getLogger(__name__)
 class Parser(HTMLParser):
     MENTION_RE = re.compile(r"tg://user\?id=(\d+)")
 
-    def __init__(self, client: pyrogram.Client) -> None:
+    def __init__(self, client: pyrogram.Client | None) -> None:
         super().__init__()
 
         self.client = client
@@ -62,7 +62,7 @@ class Parser(HTMLParser):
                 extra["url"] = url
         elif tag == "emoji":
             entity = raw.types.MessageEntityCustomEmoji
-            custom_emoji_id = int(attrs.get("id"))
+            custom_emoji_id = int(attrs.get("id", 0))
             extra["document_id"] = custom_emoji_id
         else:
             return

@@ -11,7 +11,7 @@ if typing.TYPE_CHECKING:
 
 class Object:
     def __init__(self, client: pyrogram.Client | None = None) -> None:
-        self._client: pyrogram.Client = client
+        self._client: pyrogram.Client | None = client
 
     def bind(self, client: pyrogram.Client) -> None:
         """Bind a Client instance to this and to all nested Pyrogram objects.

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import pyrogram
 from pyrogram import raw, types, utils
@@ -66,12 +66,16 @@ class MessageReactionCountUpdated(Object, Update):
         if chat is None:
             return None
 
+        reactions = [
+            types.ReactionCount._parse(client, rt) for rt in update.reactions
+        ]
+
         return MessageReactionCountUpdated(
             client=client,
             chat=chat,
             message_id=update.msg_id,
             date=utils.timestamp_to_datetime(update.date),
-            reactions=[
-                types.ReactionCount._parse(client, rt) for rt in update.reactions
-            ],
+            reactions=cast(
+                "list[types.ReactionCount]", [r for r in reactions if r is not None]
+            ),
         )

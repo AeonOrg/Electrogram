@@ -6,7 +6,7 @@ import time
 from hashlib import sha1
 from io import BytesIO
 from os import urandom
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import pyrogram
 from pyrogram import raw
@@ -18,6 +18,7 @@ from .internals import MsgId
 
 if TYPE_CHECKING:
     from pyrogram.connection import Connection
+    from pyrogram.connection.transport import Proxy
 
 log = logging.getLogger(__name__)
 
@@ -48,9 +49,12 @@ class Auth:
     async def invoke(self, data: TLObject):
         packed_data = self.pack(data)
         await self.connection.send(packed_data)
-        response = BytesIO(await self.connection.recv())
+        response = await self.connection.recv()
 
-        return self.unpack(response)
+        if response is None:
+            raise ConnectionError("Disconnected while receiving")
+
+        return self.unpack(BytesIO(response))
 
     async def create(self):
         """
@@ -65,7 +69,7 @@ class Auth:
                 test_mode=self.test_mode,
                 ipv6=self.ipv6,
                 alt_port=self.alt_port,
-                proxy=self.proxy,
+                proxy=cast("Proxy", self.proxy),
                 media=False,
                 protocol_factory=self.protocol_factory,
             )

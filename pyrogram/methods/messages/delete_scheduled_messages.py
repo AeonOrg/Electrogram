@@ -51,7 +51,7 @@ class DeleteScheduledMessages:
 
         await self.invoke(
             raw.functions.messages.DeleteScheduledMessages(
-                peer=peer,  # type: ignore
+                peer=peer,
                 id=ids,
             ),
         )

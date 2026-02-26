@@ -35,7 +35,7 @@ class MediaAreaChannelPost(MediaArea):
     async def _parse(
         self: pyrogram.Client,
         media_area: raw.base.MediaArea,
-    ) -> MediaAreaChannelPost:
+    ) -> MediaAreaChannelPost | None:
         assert isinstance(media_area, raw.types.MediaAreaChannelPost)
         channel_id = utils.get_channel_id(media_area.channel_id)
         chat = types.Chat._parse_chat(
@@ -48,6 +48,9 @@ class MediaAreaChannelPost(MediaArea):
                 )
             ).chats[0],
         )
+        if not chat:
+            return None
+
         return MediaAreaChannelPost(
             coordinates=types.MediaAreaCoordinates._parse(media_area.coordinates),
             chat=chat,

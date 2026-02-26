@@ -108,7 +108,7 @@ class Story(Object, Update):
         sender_chat: types.Chat | None = None,
         date: datetime,
         expire_date: datetime,
-        media: enums.MessageMediaType,
+        media: enums.MessageMediaType | None = None,
         has_protected_content: bool | None = None,
         animation: types.Animation | None = None,
         photo: types.Photo | None = None,
@@ -183,6 +183,7 @@ class Story(Object, Update):
         forward_from = None
         allowed_users: list[int] | None = None
         denied_users: list[int] | None = None
+        media_type = None
         if stories.media:
             if isinstance(stories.media, raw.types.MessageMediaPhoto):
                 photo = types.Photo._parse(
@@ -858,6 +859,7 @@ class Story(Object, Update):
             | types.InputMediaVideo
             | types.InputMediaAudio
             | types.InputMediaDocument
+            | types.InputMediaAnimation
         ],
         disable_notification: bool | None = None,
         reply_to_story_id: int | None = None,

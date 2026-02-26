@@ -19,20 +19,20 @@ class Parser:
     async def parse(
         self,
         text: str,
-        mode: enums.ParseMode | None = None,
+        mode: enums.ParseMode | str | None = None,
     ) -> dict[str, str | list[pyrogram.raw.base.MessageEntity] | None]: ...
 
     @overload
     async def parse(
         self,
         text: None,
-        mode: enums.ParseMode | None = None,
+        mode: enums.ParseMode | str | None = None,
     ) -> dict[str, str | list[pyrogram.raw.base.MessageEntity] | None]: ...
 
     async def parse(
         self,
         text: str | None,
-        mode: enums.ParseMode | None = None,
+        mode: enums.ParseMode | str | None = None,
     ) -> dict[str, str | list[pyrogram.raw.base.MessageEntity] | None]:
         text = str(text or "").strip()
 

@@ -46,9 +46,14 @@ class Venue(Object):
         self.foursquare_type = foursquare_type
 
     @staticmethod
-    def _parse(client, venue: raw.types.MessageMediaVenue):
+    def _parse(client, venue: raw.types.MessageMediaVenue) -> Venue | None:
+        location = types.Location._parse(client, venue.geo)
+
+        if not location:
+            return None
+
         return Venue(
-            location=types.Location._parse(client, venue.geo),
+            location=location,
             title=venue.title,
             address=venue.address,
             foursquare_id=venue.venue_id or None,

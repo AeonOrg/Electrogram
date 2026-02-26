@@ -9,7 +9,7 @@ import os
 from hashlib import sha1
 from io import BytesIO
 from time import time
-from typing import ClassVar
+from typing import TYPE_CHECKING, ClassVar, cast
 
 import pyrogram
 from pyrogram import raw
@@ -29,6 +29,9 @@ from pyrogram.raw.all import layer
 from pyrogram.raw.core import FutureSalts, MsgContainer, TLObject
 
 from .internals import MsgFactory, MsgId
+
+if TYPE_CHECKING:
+    from pyrogram.connection.transport import Proxy
 
 log = logging.getLogger(__name__)
 
@@ -102,7 +105,7 @@ class Session:
                 dc_id=self.dc_id,
                 test_mode=self.test_mode,
                 ipv6=self.client.ipv6,
-                proxy=self.client.proxy,
+                proxy=cast("Proxy", self.client.proxy),
                 alt_port=self.client.alt_port,
                 media=self.is_media,
                 protocol_factory=self.client.protocol_factory,
