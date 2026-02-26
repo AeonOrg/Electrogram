@@ -27,8 +27,9 @@ class UpdatePersonalChat:
                 # Update your personal chat
                 await app.update_personal_chat(chat_id=-1001234567890)
         """
-        chat = await self.resolve_peer(chat_id)
         r = await self.invoke(
-            raw.functions.account.UpdatePersonalChannel(channel=chat),
+            raw.functions.account.UpdatePersonalChannel(
+                channel=await self.resolve_channel(chat_id)
+            ),
         )
         return bool(r)

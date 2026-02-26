@@ -45,7 +45,7 @@ class ExportStoryLink:
         peer = await self.resolve_peer(chat_id)
 
         rpc = raw.functions.stories.ExportStoryLink(
-            peer=cast("raw.base.InputPeer", utils.get_input_peer(peer)), id=story_id
+            peer=utils.get_input_peer(peer), id=story_id
         )
 
         r = await self.invoke(rpc, sleep_threshold=-1)

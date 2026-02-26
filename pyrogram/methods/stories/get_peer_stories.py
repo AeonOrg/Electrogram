@@ -45,7 +45,7 @@ class GetPeerStories:
         peer = await self.resolve_peer(chat_id)
 
         rpc = raw.functions.stories.GetPeerStories(
-            peer=cast("raw.base.InputPeer", utils.get_input_peer(peer))
+            peer=utils.get_input_peer(peer)
         )
 
         r = await self.invoke(rpc, sleep_threshold=-1)

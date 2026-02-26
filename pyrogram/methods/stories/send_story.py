@@ -216,19 +216,13 @@ class SendStory:
         """
         if allowed_users and len(allowed_users) > 0:
             users = [
-                cast(
-                    "raw.base.InputUser",
-                    utils.get_input_user(await self.resolve_peer(user_id)),
-                )
+                    utils.get_input_user(await self.resolve_peer(user_id))
                 for user_id in allowed_users
             ]
             privacy_rules.append(raw.types.InputPrivacyValueAllowUsers(users=users))
         if denied_users and len(denied_users) > 0:
             users = [
-                cast(
-                    "raw.base.InputUser",
-                    utils.get_input_user(await self.resolve_peer(user_id)),
-                )
+                    utils.get_input_user(await self.resolve_peer(user_id))
                 for user_id in denied_users
             ]
             privacy_rules.append(
@@ -246,7 +240,7 @@ class SendStory:
 
         r = await self.invoke(
             raw.functions.stories.SendStory(
-                peer=cast("raw.base.InputPeer", utils.get_input_peer(peer)),
+                peer=utils.get_input_peer(peer),
                 media=media,
                 privacy_rules=cast("list[raw.base.InputPrivacyRule]", privacy_rules),
                 random_id=self.rnd_id(),

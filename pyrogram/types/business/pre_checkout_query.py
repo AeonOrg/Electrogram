@@ -46,7 +46,7 @@ class PreCheckoutQuery(Object, Update):
         *,
         client: pyrogram.Client | None = None,
         id: str,
-        from_user: types.User,
+        from_user: types.User | None = None,
         currency: str,
         total_amount: int,
         payload: str,

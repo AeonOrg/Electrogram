@@ -107,9 +107,13 @@ class MessageReactionUpdated(Object, Update):
             chat=chat,
             actor_chat=actor_chat,
             old_reaction=[
-                types.ReactionType._parse(client, rt) for rt in update.old_reactions
+                r for r in [
+                    types.ReactionType._parse(client, rt) for rt in update.old_reactions
+                ] if r is not None
             ],
             new_reaction=[
-                types.ReactionType._parse(client, rt) for rt in update.new_reactions
+                r for r in [
+                    types.ReactionType._parse(client, rt) for rt in update.new_reactions
+                ] if r is not None
             ],
         )

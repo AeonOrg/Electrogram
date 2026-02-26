@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
 from pyrogram import raw, types
 
@@ -31,5 +33,5 @@ class ImportContacts:
                     InputPhoneContact("+1-789-012-3456", "Baz")])
         """
         return await self.invoke(
-            raw.functions.contacts.ImportContacts(contacts=contacts),
+            raw.functions.contacts.ImportContacts(contacts=cast("list[raw.base.InputContact]", contacts)),
         )

@@ -72,7 +72,7 @@ class CreateStickerSet:
 
         r = await self.invoke(
             raw.functions.stickers.CreateStickerSet(
-                user_id=await self.resolve_peer(user_id),
+                user_id=await self.resolve_user(user_id),
                 title=title,
                 short_name=short_name,
                 stickers=[

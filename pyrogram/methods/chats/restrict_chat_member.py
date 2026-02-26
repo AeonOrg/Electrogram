@@ -224,10 +224,7 @@ class RestrictChatMember:
                     "raw.base.InputChannel",
                     utils.get_input_channel(await self.resolve_peer(chat_id)),
                 ),
-                participant=cast(
-                    "raw.base.InputPeer",
-                    utils.get_input_peer(await self.resolve_peer(user_id)),
-                ),
+                participant=utils.get_input_peer(await self.resolve_peer(user_id)),
                 banned_rights=raw.types.ChatBannedRights(
                     until_date=utils.datetime_to_timestamp(until_date) or 0,
                     send_messages=send_messages,

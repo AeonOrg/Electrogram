@@ -28,4 +28,4 @@ class WebPageEmpty(Object):
 
     @staticmethod
     def _parse(webpage: raw.types.WebPageEmpty) -> WebPageEmpty:
-        return WebPageEmpty(id=str(webpage.id), url=webpage.url)
+        return WebPageEmpty(id=str(webpage.id), url=webpage.url or "")

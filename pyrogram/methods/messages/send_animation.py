@@ -258,7 +258,7 @@ class SendAnimation:
                     )
                     media = raw.types.InputMediaUploadedDocument(
                         mime_type=self.guess_mime_type(animation) or "video/mp4",
-                        file=cast("raw.base.InputFile", file),
+                        file=file,
                         thumb=thumb_file,
                         spoiler=has_spoiler,
                         attributes=[
@@ -296,7 +296,7 @@ class SendAnimation:
                 media = raw.types.InputMediaUploadedDocument(
                     mime_type=self.guess_mime_type(file_name or animation.name)
                     or "video/mp4",
-                    file=cast("raw.base.InputFile", file),
+                    file=file,
                     thumb=thumb_file,
                     spoiler=has_spoiler,
                     attributes=[
@@ -374,7 +374,7 @@ class SendAnimation:
                 except FilePartMissing as e:
                     await self.save_file(
                         animation,
-                        file_id=file.id,
+                        file_id=getattr(file, "id", None),
                         file_part=e.value,
                     )
                 else:

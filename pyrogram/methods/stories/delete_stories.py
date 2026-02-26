@@ -54,7 +54,7 @@ class DeleteStories:
         try:
             await self.invoke(
                 raw.functions.stories.DeleteStories(
-                    peer=cast("raw.base.InputPeer", utils.get_input_peer(peer)),
+                    peer=utils.get_input_peer(peer),
                     id=ids,
                 )
             )

@@ -124,7 +124,7 @@ class Invoice(Object):
     ) -> Invoice:
         return Invoice(
             currency=invoice.currency,
-            is_test=invoice.test,
+            is_test=bool(getattr(invoice, "test", False)),
             title=getattr(invoice, "title", None),
             description=getattr(invoice, "description", None),
             total_amount=getattr(invoice, "total_amount", None),

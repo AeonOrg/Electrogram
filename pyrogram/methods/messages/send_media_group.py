@@ -15,6 +15,8 @@ from pyrogram.file_id import FileType
 if TYPE_CHECKING:
     from datetime import datetime
 
+    from pyrogram.parser import Parser
+
 log = logging.getLogger(__name__)
 
 
@@ -180,10 +182,7 @@ class SendMediaGroup:
                                     await self.resolve_peer(chat_id),
                                 ),
                                 media=raw.types.InputMediaUploadedPhoto(
-                                    file=cast(
-                                        "raw.base.InputFile",
-                                        await self.save_file(i.media),
-                                    ),
+                                    file=await self.save_file(i.media),
                                     spoiler=i.has_spoiler,
                                 ),
                             ),
@@ -232,10 +231,7 @@ class SendMediaGroup:
                                 await self.resolve_peer(chat_id),
                             ),
                             media=raw.types.InputMediaUploadedPhoto(
-                                file=cast(
-                                    "raw.base.InputFile",
-                                    await self.save_file(i.media),
-                                ),
+                                file=await self.save_file(i.media),
                                 spoiler=i.has_spoiler,
                             ),
                         ),
@@ -287,10 +283,7 @@ class SendMediaGroup:
                                     await self.resolve_peer(chat_id),
                                 ),
                                 media=raw.types.InputMediaUploadedDocument(
-                                    file=cast(
-                                        "raw.base.InputFile",
-                                        await self.save_file(i.media),
-                                    ),
+                                    file=await self.save_file(i.media),
                                     thumb=await self.save_file(i.thumb),
                                     spoiler=i.has_spoiler,
                                     mime_type=self.guess_mime_type(i.media)
@@ -344,10 +337,7 @@ class SendMediaGroup:
                                 await self.resolve_peer(chat_id),
                             ),
                             media=raw.types.InputMediaUploadedDocument(
-                                file=cast(
-                                    "raw.base.InputFile",
-                                    await self.save_file(i.media),
-                                ),
+                                file=await self.save_file(i.media),
                                 thumb=await self.save_file(i.thumb),
                                 spoiler=i.has_spoiler,
                                 mime_type=self.guess_mime_type(
@@ -394,10 +384,7 @@ class SendMediaGroup:
                                 media=raw.types.InputMediaUploadedDocument(
                                     mime_type=self.guess_mime_type(i.media)
                                     or "audio/mpeg",
-                                    file=cast(
-                                        "raw.base.InputFile",
-                                        await self.save_file(i.media),
-                                    ),
+                                    file=await self.save_file(i.media),
                                     thumb=await self.save_file(i.thumb),
                                     attributes=[
                                         raw.types.DocumentAttributeAudio(
@@ -457,10 +444,7 @@ class SendMediaGroup:
                                     getattr(i.media, "name", "audio.mp3"),
                                 )
                                 or "audio/mpeg",
-                                file=cast(
-                                    "raw.base.InputFile",
-                                    await self.save_file(i.media),
-                                ),
+                                file=await self.save_file(i.media),
                                 thumb=await self.save_file(i.thumb),
                                 attributes=[
                                     raw.types.DocumentAttributeAudio(
@@ -499,10 +483,7 @@ class SendMediaGroup:
                                 media=raw.types.InputMediaUploadedDocument(
                                     mime_type=self.guess_mime_type(i.media)
                                     or "application/zip",
-                                    file=cast(
-                                        "raw.base.InputFile",
-                                        await self.save_file(i.media),
-                                    ),
+                                    file=await self.save_file(i.media),
                                     thumb=await self.save_file(i.thumb),
                                     attributes=[
                                         raw.types.DocumentAttributeFilename(
@@ -557,10 +538,7 @@ class SendMediaGroup:
                                     getattr(i.media, "name", "file.zip"),
                                 )
                                 or "application/zip",
-                                file=cast(
-                                    "raw.base.InputFile",
-                                    await self.save_file(i.media),
-                                ),
+                                file=await self.save_file(i.media),
                                 thumb=await self.save_file(i.thumb),
                                 attributes=[
                                     raw.types.DocumentAttributeFilename(
@@ -587,7 +565,7 @@ class SendMediaGroup:
                     f"{i.__class__.__name__} is not a supported type for send_media_group",
                 )
 
-            parsed_caption = await self.parser.parse(i.caption, i.parse_mode)
+            parsed_caption = await cast("Parser", self.parser).parse(i.caption, i.parse_mode)
             multi_media.append(
                 raw.types.InputSingleMedia(
                     media=input_media,

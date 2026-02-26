@@ -108,7 +108,7 @@ class Story(Object, Update):
         sender_chat: types.Chat | None = None,
         date: datetime,
         expire_date: datetime,
-        media: enums.MessageMediaType,
+        media: enums.MessageMediaType | None = None,
         has_protected_content: bool | None = None,
         animation: types.Animation | None = None,
         photo: types.Photo | None = None,
@@ -228,14 +228,7 @@ class Story(Object, Update):
             chat_id = utils.get_channel_id(peer.channel_id)
             chat = await client.invoke(
                 raw.functions.channels.GetChannels(
-                    id=[
-                        cast(
-                            "raw.base.InputChannel",
-                            utils.get_input_channel(
-                                await client.resolve_peer(chat_id)
-                            ),
-                        )
-                    ],
+                    id=[await client.resolve_channel(chat_id)],
                 ),
             )
             sender_chat = types.Chat._parse_chat(client, chat.chats[0])
@@ -252,10 +245,8 @@ class Story(Object, Update):
                 chat = await client.invoke(
                     raw.functions.channels.GetChannels(
                         id=[
-                            utils.get_input_channel(
-                                await client.resolve_peer(
-                                    utils.get_channel_id(from_id.channel_id),
-                                ),
+                            await client.resolve_channel(
+                                utils.get_channel_id(from_id.channel_id),
                             ),
                         ],
                     ),
@@ -265,10 +256,8 @@ class Story(Object, Update):
                 chat = await client.invoke(
                     raw.functions.channels.GetChannels(
                         id=[
-                            utils.get_input_channel(
-                                await client.resolve_peer(
-                                    utils.get_channel_id(from_id.chat_id),
-                                ),
+                            await client.resolve_channel(
+                                utils.get_channel_id(from_id.chat_id),
                             ),
                         ],
                     ),
@@ -338,7 +327,7 @@ class Story(Object, Update):
             allowed_users=allowed_users,
             denied_users=denied_users,
             media_areas=media_areas,
-            raw=stories,
+            raw=cast(raw.types.StoryItem, stories),
             client=client,
         )
 
@@ -858,6 +847,7 @@ class Story(Object, Update):
             | types.InputMediaVideo
             | types.InputMediaAudio
             | types.InputMediaDocument
+            | types.InputMediaAnimation
         ],
         disable_notification: bool | None = None,
         reply_to_story_id: int | None = None,
@@ -1567,9 +1557,9 @@ class Story(Object, Update):
         privacy: enums.StoriesPrivacyRules | None = None,
         allowed_users: list[int] | None = None,
         denied_users: list[int] | None = None,
-        animation: str | None = None,
-        photo: str | None = None,
-        video: str | None = None,
+        animation: str | BinaryIO | None = None,
+        photo: str | BinaryIO | None = None,
+        video: str | BinaryIO | None = None,
         caption: str | None = None,
         parse_mode: enums.ParseMode | None = None,
         caption_entities: list[types.MessageEntity] | None = None,

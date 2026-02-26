@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
 from pyrogram import raw, types, utils
 from pyrogram.types.object import Object
@@ -52,15 +54,17 @@ class MessageStory(Object):
             chat_id = utils.get_channel_id(message_story.peer.channel_id)
             chat = await client.invoke(
                 raw.functions.channels.GetChannels(
-                    id=[await client.resolve_peer(chat_id)],
+                    id=[await client.resolve_channel(chat_id)],
                 ),
             )
             sender_chat = types.Chat._parse_chat(client, chat.chats[0])
         else:
             user_id = message_story.peer.user_id
-            from_user = await client.get_users(user_id)
+            from_user = cast(pyrogram.types.User, await client.get_users(user_id))
         if not client.me.is_bot:
-            return await client.get_stories(user_id or chat_id, message_story.id)
+            peer = user_id or chat_id
+            if peer:
+                return await client.get_stories(peer, message_story.id)
         return MessageStory(
             from_user=from_user,
             sender_chat=sender_chat,

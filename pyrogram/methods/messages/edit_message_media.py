@@ -147,10 +147,7 @@ class EditMessageMedia:
                                 else None
                             )
                             or "video/mp4",
-                            thumb=cast(
-                                "raw.base.InputFile",
-                                await self.save_file(media.thumb),
-                            )
+                            thumb=await self.save_file(media.thumb)
                             if media.thumb
                             else None,
                             spoiler=media.has_spoiler,
@@ -211,10 +208,7 @@ class EditMessageMedia:
                                 else None
                             )
                             or "audio/mpeg",
-                            thumb=cast(
-                                "raw.base.InputFile",
-                                await self.save_file(media.thumb),
-                            )
+                            thumb=await self.save_file(media.thumb)
                             if media.thumb
                             else None,
                             file=await self.save_file(media.media),
@@ -268,10 +262,7 @@ class EditMessageMedia:
                                 else None
                             )
                             or "video/mp4",
-                            thumb=cast(
-                                "raw.base.InputFile",
-                                await self.save_file(media.thumb),
-                            )
+                            thumb=await self.save_file(media.thumb)
                             if media.thumb
                             else None,
                             spoiler=media.has_spoiler,
@@ -332,10 +323,7 @@ class EditMessageMedia:
                                 else None
                             )
                             or "application/zip",
-                            thumb=cast(
-                                "raw.base.InputFile",
-                                await self.save_file(media.thumb),
-                            )
+                            thumb=await self.save_file(media.thumb)
                             if media.thumb
                             else None,
                             file=await self.save_file(media.media),

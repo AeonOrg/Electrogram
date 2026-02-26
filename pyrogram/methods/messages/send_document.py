@@ -204,7 +204,7 @@ class SendDocument:
                     media = raw.types.InputMediaUploadedDocument(
                         mime_type=self.guess_mime_type(document)
                         or "application/zip",
-                        file=cast("raw.base.InputFile", file),
+                        file=file,
                         force_file=force_document or None,
                         thumb=thumb_file,
                         attributes=[
@@ -230,7 +230,7 @@ class SendDocument:
                 media = raw.types.InputMediaUploadedDocument(
                     mime_type=self.guess_mime_type(file_name or document.name)
                     or "application/zip",
-                    file=cast("raw.base.InputFile", file),
+                    file=file,
                     thumb=thumb_file,
                     attributes=[
                         raw.types.DocumentAttributeFilename(
@@ -273,7 +273,7 @@ class SendDocument:
                 except FilePartMissing as e:
                     await self.save_file(
                         document,
-                        file_id=file.id,
+                        file_id=getattr(file, "id", None),
                         file_part=e.value,
                     )
                 else:

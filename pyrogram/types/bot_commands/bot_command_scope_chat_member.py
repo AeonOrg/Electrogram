@@ -26,6 +26,6 @@ class BotCommandScopeChatMember(BotCommandScope):
 
     async def write(self, client: pyrogram.Client) -> raw.base.BotCommandScope:
         return raw.types.BotCommandScopePeerUser(
-            peer=await client.resolve_peer(self.chat_id),
-            user_id=await client.resolve_peer(self.user_id),
+            peer=await client.resolve_input_peer(self.chat_id),
+            user_id=await client.resolve_user(self.user_id),
         )

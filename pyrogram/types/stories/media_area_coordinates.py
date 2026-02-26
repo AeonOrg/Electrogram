@@ -40,22 +40,23 @@ class MediaAreaCoordinates(Object):
         self.height = height
         self.rotation = rotation
 
+    @staticmethod
     def _parse(
-        self: raw.types.MediaAreaCoordinates,
+        coordinates: raw.types.MediaAreaCoordinates,
     ) -> MediaAreaCoordinates:
         return MediaAreaCoordinates(
-            x=self.x,
-            y=self.y,
-            width=self.w,
-            height=self.h,
-            rotation=self.rotation,
+            x=coordinates.x,
+            y=coordinates.y,
+            width=coordinates.w,
+            height=coordinates.h,
+            rotation=coordinates.rotation,
         )
 
-    def write(self):
+    def write(self) -> raw.base.MediaAreaCoordinates:
         return raw.types.MediaAreaCoordinates(
             x=self.x or 51.596797943115,  # value from official android apps
             y=self.y or 51.580257415771,  # value from official android apps
             w=self.width or 69.867012023926,  # value from official android apps
             h=self.height or 75.783416748047,  # value from official android apps
             rotation=self.rotation or 0.0,  # value from official android apps
-        ).write()
+        )

@@ -29,6 +29,6 @@ class InputReplyToStory(Object):
 
     def write(self):
         return raw.types.InputReplyToStory(
-            peer=self.peer,
-            story_id=self.story_id,
+            peer=self.peer or raw.types.InputPeerEmpty(),
+            story_id=self.story_id or 0,
         ).write()

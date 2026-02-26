@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import pyrogram
 from pyrogram import raw, utils
@@ -60,7 +60,7 @@ class BotBusinessConnection(Object):
     ) -> BotBusinessConnection:
         return BotBusinessConnection(
             bot_connection_id=bot_connection.connection_id,
-            user=await client.get_users(bot_connection.user_id),
+            user=cast(pyrogram.types.User, await client.get_users(bot_connection.user_id)),
             dc_id=bot_connection.dc_id,
             date=utils.timestamp_to_datetime(bot_connection.date),
             can_reply=bot_connection.can_reply,

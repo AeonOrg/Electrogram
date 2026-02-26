@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 import re
-from typing import overload
+from typing import cast, overload
 
 import pyrogram
 from pyrogram import raw, utils
@@ -110,3 +110,21 @@ class ResolvePeer:
                 return await self.storage.get_peer_by_id(peer_id)
             except KeyError:
                 raise PeerIdInvalid from None
+
+    async def resolve_user(
+        self: pyrogram.Client,
+        peer_id: int | str,
+    ) -> raw.base.InputUser:
+        return cast(raw.base.InputUser, utils.get_input_user(await self.resolve_peer(peer_id)))
+
+    async def resolve_channel(
+        self: pyrogram.Client,
+        peer_id: int | str,
+    ) -> raw.base.InputChannel:
+        return cast(raw.base.InputChannel, utils.get_input_channel(await self.resolve_peer(peer_id)))
+
+    async def resolve_input_peer(
+        self: pyrogram.Client,
+        peer_id: int | str,
+    ) -> raw.base.InputPeer:
+        return cast(raw.base.InputPeer, utils.get_input_peer(await self.resolve_peer(peer_id)))

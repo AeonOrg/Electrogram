@@ -52,9 +52,7 @@ class SetAdministratorTitle:
                         "raw.base.InputChannel",
                         utils.get_input_channel(peer_chat_id),
                     ),
-                    participant=cast(
-                        "raw.base.InputPeer", utils.get_input_peer(peer_user_id)
-                    ),
+                    participant=utils.get_input_peer(peer_user_id),
                 ),
             )
         ).participant
@@ -73,9 +71,7 @@ class SetAdministratorTitle:
                 channel=cast(
                     "raw.base.InputChannel", utils.get_input_channel(peer_chat_id)
                 ),
-                user_id=cast(
-                    "raw.base.InputUser", utils.get_input_user(peer_user_id)
-                ),
+                user_id=utils.get_input_user(peer_user_id),
                 admin_rights=admin_rights,
                 rank=title,
             ),

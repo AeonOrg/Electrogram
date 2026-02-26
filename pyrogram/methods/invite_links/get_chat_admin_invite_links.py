@@ -62,8 +62,8 @@ class GetChatAdminInviteLinks:
         while True:
             r = await self.invoke(
                 raw.functions.messages.GetExportedChatInvites(
-                    peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
-                    admin_id=await self.resolve_peer(admin_id),
+                    peer=await self.resolve_input_peer(chat_id),
+                    admin_id=await self.resolve_user(admin_id),
                     limit=limit,
                     revoked=revoked,
                     offset_date=offset_date,

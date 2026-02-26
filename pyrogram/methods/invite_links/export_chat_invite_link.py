@@ -46,14 +46,18 @@ class ExportChatInviteLink:
                 # Generate a new primary link
                 link = await app.export_chat_invite_link(chat_id)
         """
+        subscription_pricing = None
+        if subscription_period is not None and subscription_price is not None:
+            subscription_pricing = raw.types.StarsSubscriptionPricing(
+                period=subscription_period,
+                amount=subscription_price,
+            )
+
         r = await self.invoke(
             raw.functions.messages.ExportChatInvite(
                 peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                 legacy_revoke_permanent=True,
-                subscription_pricing=raw.types.StarsSubscriptionPricing(
-                    period=subscription_period,
-                    amount=subscription_price,
-                ),
+                subscription_pricing=subscription_pricing,
             ),
         )
 

@@ -216,7 +216,7 @@ class SendAudio:
                     )
                     media = raw.types.InputMediaUploadedDocument(
                         mime_type=self.guess_mime_type(audio) or "audio/mpeg",
-                        file=cast("raw.base.InputFile", file),
+                        file=file,
                         thumb=thumb_file,
                         attributes=[
                             raw.types.DocumentAttributeAudio(
@@ -243,7 +243,7 @@ class SendAudio:
                 media = raw.types.InputMediaUploadedDocument(
                     mime_type=self.guess_mime_type(file_name or audio.name)
                     or "audio/mpeg",
-                    file=cast("raw.base.InputFile", file),
+                    file=file,
                     thumb=thumb_file,
                     attributes=[
                         raw.types.DocumentAttributeAudio(
@@ -289,7 +289,11 @@ class SendAudio:
                     else:
                         r = await self.invoke(rpc)
                 except FilePartMissing as e:
-                    await self.save_file(audio, file_id=file.id, file_part=e.value)
+                    await self.save_file(
+                        audio,
+                        file_id=getattr(file, "id", None),
+                        file_part=e.value,
+                    )
                 else:
                     for i in r.updates:
                         if isinstance(

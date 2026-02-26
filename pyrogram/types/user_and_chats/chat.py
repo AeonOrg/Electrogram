@@ -575,7 +575,7 @@ class Chat(Object):
                 personal_chat = await client.invoke(
                     raw.functions.channels.GetChannels(
                         id=[
-                            await client.resolve_peer(
+                            await client.resolve_channel(
                                 utils.get_channel_id(personal_chat_id),
                             ),
                         ],

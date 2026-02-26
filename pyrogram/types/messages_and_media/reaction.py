@@ -58,7 +58,7 @@ class Reaction(Object):
         if isinstance(reaction, raw.types.ReactionCustomEmoji):
             return Reaction(
                 client=client,
-                type=ReactionTypeCustomEmoji(custom_emoji_id=reaction.document_id),
+                type=ReactionTypeCustomEmoji(custom_emoji_id=str(reaction.document_id)),
             )
 
         if isinstance(reaction, raw.types.ReactionPaid):
@@ -110,7 +110,7 @@ class ReactionType(Object):
         if isinstance(update, raw.types.ReactionEmoji):
             return ReactionTypeEmoji(emoji=update.emoticon)
         if isinstance(update, raw.types.ReactionCustomEmoji):
-            return ReactionTypeCustomEmoji(custom_emoji_id=update.document_id)
+            return ReactionTypeCustomEmoji(custom_emoji_id=str(update.document_id))
         if isinstance(update, raw.types.ReactionPaid):
             return ReactionTypePaid()
         return None
@@ -152,7 +152,7 @@ class ReactionTypeCustomEmoji(ReactionType):
         self,
         client: pyrogram.Client,  # noqa: ARG002
     ) -> raw.base.Reaction:
-        return raw.types.ReactionCustomEmoji(document_id=int(self.custom_emoji_id))
+        return raw.types.ReactionCustomEmoji(document_id=int(self.custom_emoji_id or 0))
 
 
 class ReactionTypePaid(ReactionType):
@@ -188,7 +188,7 @@ class ReactionCount(Object):
         *,
         type: ReactionType,
         total_count: int,
-        chosen_order: int,
+        chosen_order: int | None = None,
     ) -> None:
         super().__init__()
         self.type = type

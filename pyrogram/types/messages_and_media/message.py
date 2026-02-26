@@ -798,18 +798,8 @@ class Message(Object, Update):
                 r = await client.invoke(
                     raw.functions.users.GetUsers(
                         id=[
-                            cast(
-                                "raw.base.InputUser",
-                                utils.get_input_user(
-                                    await client.resolve_peer(from_id),
-                                ),
-                            ),
-                            cast(
-                                "raw.base.InputUser",
-                                utils.get_input_user(
-                                    await client.resolve_peer(peer_id),
-                                ),
-                            ),
+                            await client.resolve_user(cast("int", from_id)),
+                            await client.resolve_user(cast("int", peer_id)),
                         ],
                     ),
                 )
@@ -5426,20 +5416,8 @@ class Message(Object, Update):
 
                 r = await self._client.invoke(
                     raw.functions.messages.RequestWebView(
-                        peer=cast(
-                            "raw.base.InputPeer",
-                            utils.get_input_peer(
-                                await self._client.resolve_peer(self.chat.id),
-                            ),
-                        ),
-                        bot=cast(
-                            "raw.base.InputUser",
-                            utils.get_input_user(
-                                await self._client.resolve_peer(
-                                    cast("int", bot_peer_id)
-                                ),
-                            ),
-                        ),
+                        peer=await self._client.resolve_input_peer(self.chat.id),
+                        bot=await self._client.resolve_user(cast("int", bot_peer_id)),
                         url=web_app.url,
                         platform=self._client.client_platform.value,
                         # TODO

@@ -59,7 +59,7 @@ class InputReplyToMessage(Object):
             else:
                 reply_to_msg_id = self.reply_to_message_id
             return raw.types.InputReplyToMessage(
-                reply_to_msg_id=reply_to_msg_id,
+                reply_to_msg_id=reply_to_msg_id or 0,
                 top_msg_id=top_msg_id,
                 reply_to_peer_id=self.reply_to_chat,
                 quote_text=self.quote_text,

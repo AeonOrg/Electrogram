@@ -47,7 +47,9 @@ class GetChatPhotos:
 
         if isinstance(peer_id, raw.types.InputPeerChannel):
             r = await self.invoke(
-                raw.functions.channels.GetFullChannel(channel=peer_id),
+                raw.functions.channels.GetFullChannel(
+                    channel=await self.resolve_channel(chat_id)
+                ),
             )
 
             current = types.Photo._parse(self, r.full_chat.chat_photo) or []
@@ -113,7 +115,7 @@ class GetChatPhotos:
             while True:
                 r = await self.invoke(
                     raw.functions.photos.GetUserPhotos(
-                        user_id=peer_id,
+                        user_id=await self.resolve_user(chat_id),
                         offset=offset,
                         max_id=0,
                         limit=limit,

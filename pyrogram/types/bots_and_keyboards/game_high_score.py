@@ -23,7 +23,7 @@ class GameHighScore(Object):
         self,
         *,
         client: pyrogram.Client | None = None,
-        user: types.User,
+        user: types.User | None = None,
         score: int,
         position: int | None = None,
     ) -> None:

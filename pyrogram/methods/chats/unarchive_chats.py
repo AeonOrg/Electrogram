@@ -39,10 +39,7 @@ class UnarchiveChats:
 
         folder_peers = [
             raw.types.InputFolderPeer(
-                peer=cast(
-                    "raw.base.InputPeer",
-                    utils.get_input_peer(await self.resolve_peer(chat)),
-                ),
+                peer=utils.get_input_peer(await self.resolve_peer(chat)),
                 folder_id=0,
             )
             for chat in chat_ids

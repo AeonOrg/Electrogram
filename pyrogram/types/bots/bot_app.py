@@ -34,7 +34,7 @@ class BotApp(Object):
         short_name: str,
         title: str,
         description: str,
-        photo: types.Photo,
+        photo: types.Photo | None = None,
         document: types.Document | None = None,
     ) -> None:
         super().__init__()

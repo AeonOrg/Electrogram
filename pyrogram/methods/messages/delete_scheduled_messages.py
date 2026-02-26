@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -51,7 +51,7 @@ class DeleteScheduledMessages:
 
         await self.invoke(
             raw.functions.messages.DeleteScheduledMessages(
-                peer=peer,  # type: ignore
+                peer=utils.get_input_peer(peer),
                 id=ids,
             ),
         )

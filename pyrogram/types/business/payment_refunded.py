@@ -55,10 +55,12 @@ class PaymentRefunded(Object):
         client: pyrogram.Client,
         payment_refunded: raw.types.MessageActionPaymentRefunded,
     ) -> PaymentRefunded:
-        try:
-            payload = payment_refunded.payload.decode()
-        except (UnicodeDecodeError, AttributeError):
-            payload = payment_refunded.payload
+        payload = None
+        if payment_refunded.payload:
+            try:
+                payload = payment_refunded.payload.decode()
+            except (UnicodeDecodeError, AttributeError):
+                payload = str(payment_refunded.payload)
 
         user = await client.get_users(payment_refunded.peer.user_id)
 

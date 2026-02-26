@@ -49,7 +49,7 @@ class AddContact:
         """
         r = await self.invoke(
             raw.functions.contacts.AddContact(
-                id=await self.resolve_peer(user_id),
+                id=await self.resolve_user(user_id),
                 first_name=first_name,
                 last_name=last_name,
                 phone=phone_number,

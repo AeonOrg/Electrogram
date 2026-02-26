@@ -4,9 +4,12 @@ import asyncio
 import io
 import re
 from pathlib import Path
-from typing import cast
+from typing import TYPE_CHECKING, cast
 
 from anyio import Path as AsyncPath
+
+if TYPE_CHECKING:
+    from pyrogram.parser import Parser
 
 import pyrogram
 from pyrogram import raw, types, utils
@@ -96,9 +99,7 @@ class EditInlineMedia:
         if isinstance(media, types.InputMediaPhoto):
             if is_uploaded_file:
                 input_media = raw.types.InputMediaUploadedPhoto(
-                    file=cast(
-                        "raw.base.InputFile", await self.save_file(media.media)
-                    ),
+                    file=await self.save_file(media.media),
                     spoiler=media.has_spoiler,
                 )
             elif is_external_url:
@@ -124,9 +125,7 @@ class EditInlineMedia:
                     )
                     or "video/mp4",
                     thumb=await self.save_file(media.thumb),
-                    file=cast(
-                        "raw.base.InputFile", await self.save_file(media.media)
-                    ),
+                    file=await self.save_file(media.media),
                     spoiler=media.has_spoiler,
                     attributes=[
                         raw.types.DocumentAttributeVideo(
@@ -158,9 +157,7 @@ class EditInlineMedia:
                     )
                     or "audio/mpeg",
                     thumb=await self.save_file(media.thumb),
-                    file=cast(
-                        "raw.base.InputFile", await self.save_file(media.media)
-                    ),
+                    file=await self.save_file(media.media),
                     attributes=[
                         raw.types.DocumentAttributeAudio(
                             duration=media.duration,
@@ -189,9 +186,7 @@ class EditInlineMedia:
                     )
                     or "video/mp4",
                     thumb=await self.save_file(media.thumb),
-                    file=cast(
-                        "raw.base.InputFile", await self.save_file(media.media)
-                    ),
+                    file=await self.save_file(media.media),
                     spoiler=media.has_spoiler,
                     attributes=[
                         raw.types.DocumentAttributeVideo(
@@ -225,9 +220,7 @@ class EditInlineMedia:
                     )
                     or "application/zip",
                     thumb=await self.save_file(media.thumb),
-                    file=cast(
-                        "raw.base.InputFile", await self.save_file(media.media)
-                    ),
+                    file=await self.save_file(media.media),
                     attributes=filename_attribute,
                     force_file=True,
                 )
@@ -278,7 +271,7 @@ class EditInlineMedia:
 
         for i in range(self.MAX_RETRIES):
             try:
-                parsed_caption = await self.parser.parse(caption, parse_mode)
+                parsed_caption = await cast("Parser", self.parser).parse(caption, parse_mode)
                 return await session.invoke(
                     raw.functions.messages.EditInlineBotMessage(
                         id=unpacked,

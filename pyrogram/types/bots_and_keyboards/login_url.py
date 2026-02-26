@@ -45,7 +45,7 @@ class LoginUrl(Object):
         url: str,
         forward_text: str | None = None,
         bot_username: str | None = None,
-        request_write_access: str | None = None,
+        request_write_access: bool | None = None,
         button_id: int | None = None,
     ) -> None:
         super().__init__()
@@ -63,8 +63,8 @@ class LoginUrl(Object):
     def write(
         self,
         text: str,
-        bot: raw.types.InputUser,
-        style: raw.types.KeyboardButtonStyle | None = None,
+        bot: raw.base.InputUser,
+        style: raw.base.KeyboardButtonStyle | None = None,
     ):
         return raw.types.InputKeyboardButtonUrlAuth(
             text=text,

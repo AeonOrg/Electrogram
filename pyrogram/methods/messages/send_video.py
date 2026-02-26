@@ -263,7 +263,7 @@ class SendVideo:
                     )
                     media = raw.types.InputMediaUploadedDocument(
                         mime_type=self.guess_mime_type(video) or "video/mp4",
-                        file=cast("raw.base.InputFile", file),
+                        file=file,
                         ttl_seconds=ttl_seconds,
                         spoiler=has_spoiler,
                         thumb=thumb_file,
@@ -303,7 +303,7 @@ class SendVideo:
                 media = raw.types.InputMediaUploadedDocument(
                     mime_type=self.guess_mime_type(file_name or video.name)
                     or "video/mp4",
-                    file=cast("raw.base.InputFile", file),
+                    file=file,
                     ttl_seconds=ttl_seconds,
                     spoiler=has_spoiler,
                     thumb=thumb_file,
@@ -369,7 +369,11 @@ class SendVideo:
                     else:
                         r = await self.invoke(rpc)
                 except FilePartMissing as e:
-                    await self.save_file(video, file_id=file.id, file_part=e.value)
+                    await self.save_file(
+                        video,
+                        file_id=getattr(file, "id", None),
+                        file_part=e.value,
+                    )
                 else:
                     for i in r.updates:
                         if isinstance(

@@ -32,8 +32,8 @@ class ApproveChatJoinRequest:
         """
         await self.invoke(
             raw.functions.messages.HideChatJoinRequest(
-                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
-                user_id=await self.resolve_peer(user_id),
+                peer=await self.resolve_input_peer(chat_id),
+                user_id=await self.resolve_user(user_id),
                 approved=True,
             ),
         )

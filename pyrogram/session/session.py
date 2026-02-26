@@ -9,7 +9,7 @@ import os
 from hashlib import sha1
 from io import BytesIO
 from time import time
-from typing import ClassVar
+from typing import Any, ClassVar, cast
 
 import pyrogram
 from pyrogram import raw
@@ -102,7 +102,7 @@ class Session:
                 dc_id=self.dc_id,
                 test_mode=self.test_mode,
                 ipv6=self.client.ipv6,
-                proxy=self.client.proxy,
+                proxy=cast(Any, self.client.proxy),
                 alt_port=self.client.alt_port,
                 media=self.is_media,
                 protocol_factory=self.client.protocol_factory,

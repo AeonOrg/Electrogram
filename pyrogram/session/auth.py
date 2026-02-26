@@ -6,7 +6,7 @@ import time
 from hashlib import sha1
 from io import BytesIO
 from os import urandom
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, cast
 
 import pyrogram
 from pyrogram import raw
@@ -47,8 +47,16 @@ class Auth:
 
     async def invoke(self, data: TLObject):
         packed_data = self.pack(data)
+
+        assert self.connection is not None, "Connection is not initialized"
+
         await self.connection.send(packed_data)
-        response = BytesIO(await self.connection.recv())
+        r = await self.connection.recv()
+
+        if r is None:
+            raise ConnectionError("Connection closed")
+
+        response = BytesIO(r)
 
         return self.unpack(response)
 
@@ -65,7 +73,7 @@ class Auth:
                 test_mode=self.test_mode,
                 ipv6=self.ipv6,
                 alt_port=self.alt_port,
-                proxy=self.proxy,
+                proxy=cast(Any, self.proxy),
                 media=False,
                 protocol_factory=self.protocol_factory,
             )

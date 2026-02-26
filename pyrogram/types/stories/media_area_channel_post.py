@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
 from pyrogram import raw, types, utils
 
@@ -23,7 +25,7 @@ class MediaAreaChannelPost(MediaArea):
     def __init__(
         self,
         coordinates: types.MediaAreaCoordinates,
-        chat: types.Chat,
+        chat: types.Chat | None,
         message_id: int,
     ) -> None:
         super().__init__(coordinates=coordinates)
@@ -43,13 +45,15 @@ class MediaAreaChannelPost(MediaArea):
             (
                 await self.invoke(
                     raw.functions.channels.GetChannels(
-                        id=[await self.resolve_peer(channel_id)],
+                        id=[await self.resolve_channel(channel_id)],
                     ),
                 )
             ).chats[0],
         )
         return MediaAreaChannelPost(
-            coordinates=types.MediaAreaCoordinates._parse(media_area.coordinates),
+            coordinates=types.MediaAreaCoordinates._parse(
+                cast("raw.types.MediaAreaCoordinates", media_area.coordinates)
+            ),
             chat=chat,
             message_id=media_area.msg_id,
         )

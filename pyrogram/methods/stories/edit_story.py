@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import re
-from typing import cast
+from typing import BinaryIO, cast
 
 from anyio import Path as AsyncPath
 
@@ -24,9 +24,9 @@ class EditStory:
         denied_users: list[int] | None = None,
         # allowed_chats: list[int] = None,
         # denied_chats: list[int] = None,
-        animation: str | None = None,
-        photo: str | None = None,
-        video: str | None = None,
+        animation: str | BinaryIO | None = None,
+        photo: str | BinaryIO | None = None,
+        video: str | BinaryIO | None = None,
         caption: str | None = None,
         parse_mode: enums.ParseMode | None = None,
         caption_entities: list[types.MessageEntity] | None = None,
@@ -118,7 +118,7 @@ class EditStory:
                     file = await self.save_file(animation)
                     media = raw.types.InputMediaUploadedDocument(
                         mime_type=self.guess_mime_type(animation) or "video/mp4",
-                        file=cast("raw.base.InputFile", file),
+                        file=file,
                         attributes=[
                             raw.types.DocumentAttributeVideo(
                                 supports_streaming=True,
@@ -139,8 +139,8 @@ class EditStory:
             else:
                 file = await self.save_file(animation)
                 media = raw.types.InputMediaUploadedDocument(
-                    mime_type=self.guess_mime_type(animation) or "video/mp4",
-                    file=cast("raw.base.InputFile", file),
+                    mime_type=self.guess_mime_type(getattr(animation, "name", None)) or "video/mp4",
+                    file=file,
                     attributes=[
                         raw.types.DocumentAttributeVideo(
                             supports_streaming=True,
@@ -156,7 +156,7 @@ class EditStory:
                 if await AsyncPath(photo).is_file():
                     file = await self.save_file(photo)
                     media = raw.types.InputMediaUploadedPhoto(
-                        file=cast("raw.base.InputFile", file)
+                        file=file
                     )
                 elif re.match("^https?://", photo):
                     media = raw.types.InputMediaPhotoExternal(url=photo)
@@ -165,7 +165,7 @@ class EditStory:
             else:
                 file = await self.save_file(photo)
                 media = raw.types.InputMediaUploadedPhoto(
-                    file=cast("raw.base.InputFile", file)
+                    file=file
                 )
         elif video:
             if isinstance(video, str):
@@ -173,7 +173,7 @@ class EditStory:
                     file = await self.save_file(video)
                     media = raw.types.InputMediaUploadedDocument(
                         mime_type=self.guess_mime_type(video) or "video/mp4",
-                        file=cast("raw.base.InputFile", file),
+                        file=file,
                         attributes=[
                             raw.types.DocumentAttributeVideo(
                                 supports_streaming=True,
@@ -190,8 +190,8 @@ class EditStory:
             else:
                 file = await self.save_file(video)
                 media = raw.types.InputMediaUploadedDocument(
-                    mime_type=self.guess_mime_type(video) or "video/mp4",
-                    file=cast("raw.base.InputFile", file),
+                    mime_type=self.guess_mime_type(getattr(video, "name", None)) or "video/mp4",
+                    file=file,
                     attributes=[
                         raw.types.DocumentAttributeVideo(
                             supports_streaming=True,
@@ -225,19 +225,13 @@ class EditStory:
         """
         if allowed_users and len(allowed_users) > 0:
             users = [
-                cast(
-                    "raw.base.InputUser",
-                    utils.get_input_user(await self.resolve_peer(user_id)),
-                )
+                    utils.get_input_user(await self.resolve_peer(user_id))
                 for user_id in allowed_users
             ]
             privacy_rules.append(raw.types.InputPrivacyValueAllowUsers(users=users))
         if denied_users and len(denied_users) > 0:
             users = [
-                cast(
-                    "raw.base.InputUser",
-                    utils.get_input_user(await self.resolve_peer(user_id)),
-                )
+                    utils.get_input_user(await self.resolve_peer(user_id))
                 for user_id in denied_users
             ]
             privacy_rules.append(
@@ -247,7 +241,7 @@ class EditStory:
         r = await self.invoke(
             raw.functions.stories.EditStory(
                 id=story_id,
-                peer=cast("raw.base.InputPeer", utils.get_input_peer(peer)),
+                peer=utils.get_input_peer(peer),
                 media=media,
                 privacy_rules=cast("list[raw.base.InputPrivacyRule]", privacy_rules),
                 caption=text,

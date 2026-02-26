@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
-from pyrogram import raw, types
+from pyrogram import raw, types, utils
 
 
 class GetCommonChats:
@@ -38,7 +40,7 @@ class GetCommonChats:
         if isinstance(peer, raw.types.InputPeerUser):
             r = await self.invoke(
                 raw.functions.messages.GetCommonChats(
-                    user_id=peer,
+                    user_id=await self.resolve_user(user_id),
                     max_id=0,
                     limit=100,
                 ),

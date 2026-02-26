@@ -50,7 +50,7 @@ class PaymentForm(Object):
         *,
         client: pyrogram.Client | None = None,
         id: int,
-        bot: types.User,
+        bot: types.User | None = None,
         title: str,
         description: str,
         invoice: types.Invoice,

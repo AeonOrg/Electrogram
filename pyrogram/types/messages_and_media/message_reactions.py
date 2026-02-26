@@ -40,11 +40,15 @@ class MessageReactions(Object):
         return MessageReactions(
             client=client,
             reactions=[
-                types.Reaction._parse_count(client, reaction)
-                for reaction in message_reactions.results
+                r for r in [
+                    types.Reaction._parse_count(client, reaction)
+                    for reaction in message_reactions.results
+                ] if r is not None
             ],
             top_reactors=[
-                types.MessageReactor._parse(client, reactor, users)
-                for reactor in message_reactions.top_reactors
+                r for r in [
+                    types.MessageReactor._parse(client, reactor, users)
+                    for reactor in message_reactions.top_reactors
+                ] if r is not None
             ],
         )

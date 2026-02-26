@@ -35,10 +35,7 @@ class DeleteUserHistory:
                     "raw.base.InputChannel",
                     utils.get_input_channel(await self.resolve_peer(chat_id)),
                 ),
-                participant=cast(
-                    "raw.base.InputPeer",
-                    utils.get_input_peer(await self.resolve_peer(user_id)),
-                ),
+                participant=utils.get_input_peer(await self.resolve_peer(user_id)),
             ),
         )
 

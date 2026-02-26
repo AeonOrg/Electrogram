@@ -78,10 +78,7 @@ class GetChatEventLog:
                     events_filter=filters.write() if filters else None,
                     admins=(
                         [
-                            cast(
-                                "raw.base.InputUser",
-                                utils.get_input_user(await self.resolve_peer(i)),
-                            )
+                            utils.get_input_user(await self.resolve_peer(i))
                             for i in user_ids
                         ]
                         if user_ids is not None

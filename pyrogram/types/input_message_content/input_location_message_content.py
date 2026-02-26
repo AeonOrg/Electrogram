@@ -57,7 +57,9 @@ class InputLocationMessageContent(InputMessageContent):
             geo_point=raw.types.InputGeoPoint(
                 lat=self.latitude,
                 long=self.longitude,
-                accuracy_radius=self.horizontal_accuracy,
+                accuracy_radius=int(self.horizontal_accuracy)
+                if self.horizontal_accuracy is not None
+                else None,
             ),
             heading=self.heading,
             period=self.live_period,

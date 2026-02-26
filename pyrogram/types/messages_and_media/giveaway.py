@@ -73,7 +73,7 @@ class Giveaway(Object):
             try:
                 chat = await client.invoke(
                     raw.functions.channels.GetChannels(
-                        id=[await client.resolve_peer(chat_id)],
+                        id=[await client.resolve_channel(chat_id)],
                     ),
                 )
             except FloodWait as e:
@@ -88,9 +88,9 @@ class Giveaway(Object):
             quantity=giveaway.quantity,
             months=giveaway.months,
             expire_date=utils.timestamp_to_datetime(giveaway.until_date),
-            new_subscribers=giveaway.only_new_subscribers,
+            new_subscribers=bool(giveaway.only_new_subscribers),
             allowed_countries=giveaway.countries_iso2
-            if len(giveaway.countries_iso2) > 0
+            if giveaway.countries_iso2 and len(giveaway.countries_iso2) > 0
             else None,
             private_channel_ids=private_ids if len(private_ids) > 0 else None,
             client=client,

@@ -72,6 +72,8 @@ class MessageReactionCountUpdated(Object, Update):
             message_id=update.msg_id,
             date=utils.timestamp_to_datetime(update.date),
             reactions=[
-                types.ReactionCount._parse(client, rt) for rt in update.reactions
+                r for r in [
+                    types.ReactionCount._parse(client, rt) for rt in update.reactions
+                ] if r is not None
             ],
         )

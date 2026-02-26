@@ -46,8 +46,11 @@ class WebPagePreview(Object):
     ):
         if isinstance(web_page_preview.webpage, raw.types.WebPage):
             webpage = types.WebPage._parse(client, web_page_preview.webpage)
-        else:
+        elif isinstance(web_page_preview.webpage, raw.types.WebPageEmpty):
             webpage = types.WebPageEmpty._parse(web_page_preview.webpage)
+        else:
+            return None
+
         return WebPagePreview(
             webpage=webpage,
             force_large_media=web_page_preview.force_large_media,

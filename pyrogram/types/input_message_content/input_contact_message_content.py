@@ -46,7 +46,7 @@ class InputContactMessageContent(InputMessageContent):
         return raw.types.InputBotInlineMessageMediaContact(
             phone_number=self.phone_number,
             first_name=self.first_name,
-            last_name=self.last_name,
-            vcard=self.vcard,
+            last_name=self.last_name or "",
+            vcard=self.vcard or "",
             reply_markup=await reply_markup.write(client) if reply_markup else None,
         )

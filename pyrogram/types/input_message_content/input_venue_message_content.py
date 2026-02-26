@@ -65,7 +65,7 @@ class InputVenueMessageContent(InputMessageContent):
             title=self.title,
             address=self.address,
             provider="",  # TODO
-            venue_id=self.foursquare_id,
-            venue_type=self.foursquare_type,
+            venue_id=self.foursquare_id or "",
+            venue_type=self.foursquare_type or "",
             reply_markup=await reply_markup.write(client) if reply_markup else None,
         )

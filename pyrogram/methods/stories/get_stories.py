@@ -66,7 +66,7 @@ class GetStories:
             ids = list(story_ids)
 
         rpc = raw.functions.stories.GetStoriesByID(
-            peer=cast("raw.base.InputPeer", utils.get_input_peer(peer)), id=ids
+            peer=utils.get_input_peer(peer), id=ids
         )
 
         r = await self.invoke(rpc, sleep_threshold=-1)

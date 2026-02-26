@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
 from pyrogram import raw, utils
 from pyrogram.file_id import FileType
@@ -41,5 +43,5 @@ class DeleteProfilePhotos:
         ]
 
         return bool(
-            await self.invoke(raw.functions.photos.DeletePhotos(id=input_photos)),
+            await self.invoke(raw.functions.photos.DeletePhotos(id=cast("list[raw.base.InputPhoto]", input_photos))),
         )

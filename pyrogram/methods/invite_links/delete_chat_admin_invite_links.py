@@ -32,7 +32,7 @@ class DeleteChatAdminInviteLinks:
 
         return await self.invoke(
             raw.functions.messages.DeleteRevokedExportedChatInvites(
-                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
-                admin_id=await self.resolve_peer(admin_id),
+                peer=await self.resolve_input_peer(chat_id),
+                admin_id=await self.resolve_user(admin_id),
             ),
         )

@@ -42,10 +42,10 @@ class FactCheck(Object):
             return None
 
         return FactCheck(
-            need_check=fact_check.need_check,
+            need_check=bool(fact_check.need_check),
             country=fact_check.country,
             text=types.TextWithEntities(
-                text=fact_check.text.text,
+                text=getattr(fact_check.text, "text", ""),
                 entities=types.List(
                     [
                         types.MessageEntity._parse(client, entity, {})

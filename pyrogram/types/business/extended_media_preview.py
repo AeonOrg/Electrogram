@@ -26,7 +26,7 @@ class ExtendedMediaPreview(Object):
         *,
         width: int | None = None,
         height: int | None = None,
-        thumb: types.Thumbnail | None = None,
+        thumb: types.Thumbnail | types.StrippedThumbnail | None = None,
         video_duration: int | None = None,
     ) -> None:
         super().__init__()
@@ -42,7 +42,7 @@ class ExtendedMediaPreview(Object):
         media: raw.types.MessageExtendedMediaPreview,
     ) -> ExtendedMediaPreview:
         thumb = None
-        if media.thumb:
+        if isinstance(media.thumb, raw.types.PhotoStrippedSize):
             thumb = types.StrippedThumbnail._parse(client, media.thumb)
 
         return ExtendedMediaPreview(

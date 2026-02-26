@@ -230,6 +230,10 @@ class Gift(Object):
     ) -> Gift | None:
         if isinstance(star_gift, raw.types.StarGift):
             doc = star_gift.sticker
+
+            if not isinstance(doc, raw.types.Document):
+                return None
+
             attributes = {type(i): i for i in doc.attributes}
 
             return Gift(

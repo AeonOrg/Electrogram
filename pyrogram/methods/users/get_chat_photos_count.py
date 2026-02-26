@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
-from pyrogram import raw
+from pyrogram import raw, utils
 
 
 class GetChatPhotosCount:
@@ -43,7 +45,7 @@ class GetChatPhotosCount:
             return r[0].count
         r = await self.invoke(
             raw.functions.photos.GetUserPhotos(
-                user_id=peer_id,
+                user_id=await self.resolve_user(chat_id),
                 offset=0,
                 max_id=0,
                 limit=1,

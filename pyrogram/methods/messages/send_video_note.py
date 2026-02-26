@@ -195,7 +195,7 @@ class SendVideoNote:
                     )
                     media = raw.types.InputMediaUploadedDocument(
                         mime_type=self.guess_mime_type(video_note) or "video/mp4",
-                        file=cast("raw.base.InputFile", file),
+                        file=file,
                         thumb=thumb_file,
                         attributes=[
                             raw.types.DocumentAttributeVideo(
@@ -221,7 +221,7 @@ class SendVideoNote:
                 )
                 media = raw.types.InputMediaUploadedDocument(
                     mime_type=self.guess_mime_type(video_note.name) or "video/mp4",
-                    file=cast("raw.base.InputFile", file),
+                    file=file,
                     thumb=thumb_file,
                     attributes=[
                         raw.types.DocumentAttributeVideo(
@@ -262,7 +262,7 @@ class SendVideoNote:
                 except FilePartMissing as e:
                     await self.save_file(
                         video_note,
-                        file_id=file.id,
+                        file_id=getattr(file, "id", None),
                         file_part=e.value,
                     )
                 else:

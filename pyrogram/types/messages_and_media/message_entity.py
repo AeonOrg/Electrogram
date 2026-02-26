@@ -95,7 +95,7 @@ class MessageEntity(Object):
             args.pop(arg)
 
         if self.user:
-            args["user_id"] = await self._client.resolve_peer(self.user.id)
+            args["user_id"] = await self._client.resolve_user(self.user.id)
 
         if not self.url:
             args.pop("url")

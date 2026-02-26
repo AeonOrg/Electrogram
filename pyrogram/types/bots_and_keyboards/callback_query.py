@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from contextlib import suppress
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -111,7 +111,7 @@ class CallbackQuery(Object, Update):
         return CallbackQuery(
             id=str(callback_query.query_id),
             from_user=types.User._parse(client, users[callback_query.user_id]),
-            message=message,
+            message=cast(types.Message, message),
             inline_message_id=inline_message_id,
             chat_instance=str(callback_query.chat_instance),
             data=data,

@@ -93,7 +93,7 @@ class GiveawayResult(Object):
             chat_id = utils.get_channel_id(giveaway_result.channel_id)
             chat = await client.invoke(
                 raw.functions.channels.GetChannels(
-                    id=[await client.resolve_peer(chat_id)],
+                    id=[await client.resolve_channel(chat_id)],
                 ),
             )
             chat = types.Chat._parse_chat(client, chat.chats[0])

@@ -31,7 +31,7 @@ class Venue(Object):
         self,
         *,
         client: pyrogram.Client | None = None,
-        location: types.Location,
+        location: types.Location | None = None,
         title: str,
         address: str,
         foursquare_id: str | None = None,

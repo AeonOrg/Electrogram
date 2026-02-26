@@ -55,7 +55,7 @@ class GetUserStoriesHistory:
             peer = await self.resolve_peer("me")
 
         rpc = raw.functions.stories.GetStoriesArchive(
-            peer=cast("raw.base.InputPeer", utils.get_input_peer(peer)),
+            peer=utils.get_input_peer(peer),
             offset_id=offset_id,
             limit=limit,
         )

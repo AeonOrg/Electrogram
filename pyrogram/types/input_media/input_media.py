@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING, BinaryIO
 from pyrogram.types.object import Object
 
 if TYPE_CHECKING:
+    from pyrogram import enums
     from pyrogram.types.messages_and_media import MessageEntity
 
 
@@ -24,7 +25,7 @@ class InputMedia(Object):
         self,
         media: str | BinaryIO,
         caption: str = "",
-        parse_mode: str | None = None,
+        parse_mode: enums.ParseMode | str | None = None,
         caption_entities: list[MessageEntity] | None = None,
     ) -> None:
         super().__init__()

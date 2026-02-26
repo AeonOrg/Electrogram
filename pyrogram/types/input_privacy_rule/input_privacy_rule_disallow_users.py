@@ -34,6 +34,6 @@ class InputPrivacyRuleDisallowUsers(InputPrivacyRule):
             if not isinstance(self.chat_ids, int | str)
             else [self.chat_ids]
         )
-        users = await asyncio.gather(*[client.resolve_peer(i) for i in users])
+        users = await asyncio.gather(*[client.resolve_user(i) for i in users])
 
         return raw.types.InputPrivacyValueDisallowUsers(users=users)

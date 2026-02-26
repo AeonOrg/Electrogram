@@ -37,10 +37,7 @@ class SetSendAsChat:
         """
         return await self.invoke(
             raw.functions.messages.SaveDefaultSendAs(
-                peer=cast(
-                    "raw.base.InputPeer",
-                    utils.get_input_peer(await self.resolve_peer(chat_id)),
-                ),
+                peer=utils.get_input_peer(await self.resolve_peer(chat_id)),
                 send_as=cast(
                     "raw.base.InputPeer", await self.resolve_peer(send_as_chat_id)
                 ),
