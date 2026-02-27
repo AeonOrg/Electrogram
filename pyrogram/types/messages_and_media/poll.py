@@ -63,6 +63,9 @@ class Poll(Object, Update):
         close_date (:py:obj:`~datetime.datetime`, *optional*):
             Point in time when the poll will be automatically closed.
 
+        min (``bool``, *optional*):
+            True, if the poll is min poll.
+
         recent_voters (List of :obj:`~pyrogram.types.User`, *optional*):
             List of user whos recently vote.
     """
@@ -86,6 +89,7 @@ class Poll(Object, Update):
         explanation_entities: list[types.MessageEntity] | None = None,
         open_period: int | None = None,
         close_date: datetime | None = None,
+        min: bool | None = None,
         recent_voters: list[types.User] | None = None,
     ) -> None:
         super().__init__(client)
@@ -105,6 +109,7 @@ class Poll(Object, Update):
         self.explanation_entities = explanation_entities
         self.open_period = open_period
         self.close_date = close_date
+        self.min = min
         self.recent_voters = recent_voters
 
         self.chat: types.Chat | None = None
@@ -200,6 +205,7 @@ class Poll(Object, Update):
             else None,
             open_period=poll.close_period,
             close_date=utils.timestamp_to_datetime(poll.close_date),
+            min=poll_results.min,
             recent_voters=[
                 await client.get_users(utils.get_raw_peer_id(user))
                 for user in poll_results.recent_voters
@@ -254,6 +260,7 @@ class Poll(Object, Update):
             is_closed=False,
             chosen_option_id=chosen_option_id,
             correct_option_id=correct_option_id,
+            min=poll_results.min,
             recent_voters=cast(
                 "list[types.User]",
                 [

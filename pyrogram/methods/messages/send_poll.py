@@ -29,6 +29,7 @@ class SendPoll:
         disable_notification: bool | None = None,
         protect_content: bool | None = None,
         allow_paid_broadcast: bool | None = None,
+        allow_paid_stars: int | None = None,
         message_thread_id: int | None = None,
         business_connection_id: str | None = None,
         reply_to_message_id: int | None = None,
@@ -37,7 +38,14 @@ class SendPoll:
         quote_entities: list[types.MessageEntity] | None = None,
         parse_mode: enums.ParseMode | None = None,
         schedule_date: datetime | None = None,
+        schedule_repeat_period: int | None = None,
         message_effect_id: int | None = None,
+        quick_reply_shortcut: str | int | None = None,
+        send_as: int | str | None = None,
+        background: bool | None = None,
+        clear_draft: bool | None = None,
+        update_stickersets_order: bool | None = None,
+        suggested_post: types.SuggestedPost | None = None,
         reply_markup: types.InlineKeyboardMarkup
         | None
         | types.ReplyKeyboardMarkup
@@ -114,6 +122,9 @@ class SendPoll:
             allow_paid_broadcast (``bool``, *optional*):
                 Pass True to allow the message to ignore regular broadcast limits for a small fee; for bots only
 
+            allow_paid_stars (``int``, *optional*):
+                Amount of stars to pay for the message; for bots only.
+
             message_thread_id (``int``, *optional*):
                 Unique identifier for the target message thread (topic) of the forum.
                 for forum supergroups only.
@@ -146,8 +157,29 @@ class SendPoll:
             schedule_date (:py:obj:`~datetime.datetime`, *optional*):
                 Date when the message will be automatically sent.
 
+            schedule_repeat_period (``int``, *optional*):
+                Repeat period of the scheduled message.
+
             message_effect_id (``int`` ``64-bit``, *optional*):
                 Unique identifier of the message effect to be added to the message; for private chats only.
+
+            quick_reply_shortcut (``str`` | ``int``, *optional*):
+                Quick reply shortcut identifier or name.
+
+            send_as (``int`` | ``str``, *optional*):
+                Unique identifier (int) or username (str) of the chat to send the message as.
+
+            background (``bool``, *optional*):
+                Pass True to send the message in the background.
+
+            clear_draft (``bool``, *optional*):
+                Pass True to clear the draft.
+
+            update_stickersets_order (``bool``, *optional*):
+                Pass True to update the stickersets order.
+
+            suggested_post (:obj:`~pyrogram.types.SuggestedPost`, *optional*):
+                Suggested post information.
 
             reply_markup (:obj:`~pyrogram.types.InlineKeyboardMarkup` | :obj:`~pyrogram.types.ReplyKeyboardMarkup` | :obj:`~pyrogram.types.ReplyKeyboardRemove` | :obj:`~pyrogram.types.ForceReply`, *optional*):
                 Additional interface options. An object for an inline keyboard, custom reply keyboard,
@@ -236,6 +268,20 @@ class SendPoll:
             schedule_date=utils.datetime_to_timestamp(schedule_date),
             noforwards=protect_content,
             allow_paid_floodskip=allow_paid_broadcast,
+            background=background,
+            clear_draft=clear_draft,
+            update_stickersets_order=update_stickersets_order,
+            schedule_repeat_period=schedule_repeat_period,
+            send_as=utils.get_input_peer(await self.resolve_peer(send_as))
+            if send_as
+            else None,
+            quick_reply_shortcut=await utils.get_input_quick_reply_shortcut(
+                quick_reply_shortcut,
+            )
+            if quick_reply_shortcut
+            else None,
+            allow_paid_stars=allow_paid_stars,
+            suggested_post=await suggested_post.write() if suggested_post else None,
             reply_markup=await reply_markup.write(self) if reply_markup else None,
             effect=message_effect_id,
         )
