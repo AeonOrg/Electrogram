@@ -10,7 +10,7 @@ from typing import Any
 {warning}
 
 
-class {name}({base}):  # type: ignore
+class {name}({base}):
     """{docstring}
     """
 
