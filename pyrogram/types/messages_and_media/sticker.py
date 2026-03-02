@@ -81,7 +81,7 @@ class Sticker(Object):
         height: int | None = None,
         is_animated: bool | None = None,
         is_video: bool | None = None,
-        needs_repainting: bool = False,
+        needs_repainting: bool | None = None,
         file_name: str | None = None,
         mime_type: str | None = None,
         file_size: int | None = None,

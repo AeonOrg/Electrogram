@@ -17,7 +17,7 @@ class ExportedStoryLink(Object):
             The link of the story.
     """
 
-    def __init__(self, *, link: str) -> None:
+    def __init__(self, *, link: str | None = None) -> None:
         super().__init__()
 
         self.link = link

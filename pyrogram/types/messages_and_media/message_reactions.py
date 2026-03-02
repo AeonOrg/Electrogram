@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import cast
+
 import pyrogram
 from pyrogram import raw, types
 from pyrogram.types.object import Object
@@ -37,14 +39,22 @@ class MessageReactions(Object):
         if not message_reactions:
             return None
 
+        reactions = [
+            types.Reaction._parse_count(client, reaction)
+            for reaction in message_reactions.results
+        ]
+        top_reactors = [
+            types.MessageReactor._parse(client, reactor, users)
+            for reactor in message_reactions.top_reactors
+        ]
+
         return MessageReactions(
             client=client,
-            reactions=[
-                types.Reaction._parse_count(client, reaction)
-                for reaction in message_reactions.results
-            ],
-            top_reactors=[
-                types.MessageReactor._parse(client, reactor, users)
-                for reactor in message_reactions.top_reactors
-            ],
+            reactions=cast(
+                "list[types.Reaction]", [r for r in reactions if r is not None]
+            ),
+            top_reactors=cast(
+                "list[types.MessageReactor]",
+                [r for r in top_reactors if r is not None],
+            ),
         )

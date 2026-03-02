@@ -1,7 +1,12 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import pyrogram
-from pyrogram import raw, types, utils
+from pyrogram import enums, raw, types, utils
+
+if TYPE_CHECKING:
+    from datetime import datetime
 
 
 class SendGame:
@@ -13,9 +18,23 @@ class SendGame:
         message_thread_id: int | None = None,
         business_connection_id: str | None = None,
         reply_to_message_id: int | None = None,
+        reply_to_story_id: int | None = None,
+        reply_to_chat_id: int | str | None = None,
+        quote_text: str | None = None,
+        quote_entities: list[types.MessageEntity] | None = None,
+        parse_mode: enums.ParseMode | None = None,
+        schedule_date: datetime | None = None,
+        schedule_repeat_period: int | None = None,
         protect_content: bool | None = None,
         allow_paid_broadcast: bool | None = None,
+        allow_paid_stars: int | None = None,
         message_effect_id: int | None = None,
+        quick_reply_shortcut: str | int | None = None,
+        send_as: int | str | None = None,
+        background: bool | None = None,
+        clear_draft: bool | None = None,
+        update_stickersets_order: bool | None = None,
+        suggested_post: types.SuggestedPost | None = None,
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
@@ -60,6 +79,49 @@ class SendGame:
             message_effect_id (``int`` ``64-bit``, *optional*):
                 Unique identifier of the message effect to be added to the message; for private chats only.
 
+            reply_to_story_id (``int``, *optional*):
+                If the message is a reply, ID of the target story.
+
+            reply_to_chat_id (``int`` | ``str``, *optional*):
+                Unique identifier for the origin chat.
+                for reply to message from another chat.
+                You can also use chat public link in form of *t.me/<username>* (str).
+
+            quote_text (``str``, *optional*):
+                Text to quote.
+                for reply_to_message only.
+
+            quote_entities (List of :obj:`~pyrogram.types.MessageEntity`, *optional*):
+                List of special entities that appear in quote_text, which can be specified instead of *parse_mode*.
+                for reply_to_message only.
+
+            schedule_date (:py:obj:`~datetime.datetime`, *optional*):
+                Date when the message will be automatically sent.
+
+            schedule_repeat_period (``int``, *optional*):
+                Repeat period of the scheduled message.
+
+            allow_paid_stars (``int``, *optional*):
+                Amount of stars to pay for the message; for bots only.
+
+            quick_reply_shortcut (``str`` | ``int``, *optional*):
+                Quick reply shortcut identifier or name.
+
+            send_as (``int`` | ``str``, *optional*):
+                Unique identifier (int) or username (str) of the chat to send the message as.
+
+            background (``bool``, *optional*):
+                Pass True to send the message in the background.
+
+            clear_draft (``bool``, *optional*):
+                Pass True to clear the draft.
+
+            update_stickersets_order (``bool``, *optional*):
+                Pass True to update the stickersets order.
+
+            suggested_post (:obj:`~pyrogram.types.SuggestedPost`, *optional*):
+                Suggested post information.
+
             reply_markup (:obj:`~pyrogram.types.InlineKeyboardMarkup`, *optional*):
                 An object for an inline keyboard. If empty, one ‘Play game_title’ button will be shown automatically.
                 If not empty, the first button must launch the game.
@@ -76,7 +138,11 @@ class SendGame:
             client=self,
             chat_id=chat_id,
             reply_to_message_id=reply_to_message_id,
+            reply_to_story_id=reply_to_story_id,
             message_thread_id=message_thread_id,
+            reply_to_chat_id=reply_to_chat_id,
+            quote_text=quote_text,
+            quote_entities=quote_entities,
         )
 
         peer = utils.get_input_peer(await self.resolve_peer(chat_id))
@@ -96,9 +162,24 @@ class SendGame:
             silent=disable_notification or None,
             reply_to=reply_to,
             random_id=self.rnd_id(),
+            schedule_date=utils.datetime_to_timestamp(schedule_date),
             noforwards=protect_content,
             allow_paid_floodskip=allow_paid_broadcast,
             effect=message_effect_id,
+            background=background,
+            clear_draft=clear_draft,
+            update_stickersets_order=update_stickersets_order,
+            schedule_repeat_period=schedule_repeat_period,
+            send_as=utils.get_input_peer(await self.resolve_peer(send_as))
+            if send_as
+            else None,
+            quick_reply_shortcut=await utils.get_input_quick_reply_shortcut(
+                quick_reply_shortcut,
+            )
+            if quick_reply_shortcut
+            else None,
+            allow_paid_stars=allow_paid_stars,
+            suggested_post=await suggested_post.write() if suggested_post else None,
             reply_markup=await reply_markup.write(self) if reply_markup else None,
         )
         if business_connection_id is not None:

@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import re
-from typing import cast
+from typing import BinaryIO, cast
 
 from anyio import Path as AsyncPath
 
@@ -24,9 +24,9 @@ class EditStory:
         denied_users: list[int] | None = None,
         # allowed_chats: list[int] = None,
         # denied_chats: list[int] = None,
-        animation: str | None = None,
-        photo: str | None = None,
-        video: str | None = None,
+        animation: str | BinaryIO | None = None,
+        photo: str | BinaryIO | None = None,
+        video: str | BinaryIO | None = None,
         caption: str | None = None,
         parse_mode: enums.ParseMode | None = None,
         caption_entities: list[types.MessageEntity] | None = None,
@@ -139,7 +139,8 @@ class EditStory:
             else:
                 file = await self.save_file(animation)
                 media = raw.types.InputMediaUploadedDocument(
-                    mime_type=self.guess_mime_type(animation) or "video/mp4",
+                    mime_type=self.guess_mime_type(getattr(animation, "name", None))
+                    or "video/mp4",
                     file=cast("raw.base.InputFile", file),
                     attributes=[
                         raw.types.DocumentAttributeVideo(
@@ -190,7 +191,8 @@ class EditStory:
             else:
                 file = await self.save_file(video)
                 media = raw.types.InputMediaUploadedDocument(
-                    mime_type=self.guess_mime_type(video) or "video/mp4",
+                    mime_type=self.guess_mime_type(getattr(video, "name", None))
+                    or "video/mp4",
                     file=cast("raw.base.InputFile", file),
                     attributes=[
                         raw.types.DocumentAttributeVideo(

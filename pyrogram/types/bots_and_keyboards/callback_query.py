@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from contextlib import suppress
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import pyrogram
 from pyrogram import enums, raw, types, utils
@@ -43,6 +43,12 @@ class CallbackQuery(Object, Update):
         game_short_name (``str``, *optional*):
             Short name of a Game to be returned, serves as the unique identifier for the game.
 
+        business_connection_id (``str``, *optional*):
+            The business connection identifier.
+
+        reply_to_message (:obj:`~pyrogram.types.Message`, *optional*):
+            For business callback queries, the message that this message replies to.
+
         matches (List of regex Matches, *optional*):
             A list containing all `Match Objects <https://docs.python.org/3/library/re.html#match-objects>`_ that match
             the data of this callback query. Only applicable when using :obj:`Filters.regex <pyrogram.Filters.regex>`.
@@ -59,6 +65,8 @@ class CallbackQuery(Object, Update):
         inline_message_id: str | None = None,
         data: str | bytes | None = None,
         game_short_name: str | None = None,
+        business_connection_id: str | None = None,
+        reply_to_message: types.Message | None = None,
         matches: list[Match] | None = None,
     ) -> None:
         super().__init__(client)
@@ -70,6 +78,8 @@ class CallbackQuery(Object, Update):
         self.inline_message_id = inline_message_id
         self.data = data
         self.game_short_name = game_short_name
+        self.business_connection_id = business_connection_id
+        self.reply_to_message = reply_to_message
         self.matches = matches
 
     @staticmethod
@@ -80,6 +90,7 @@ class CallbackQuery(Object, Update):
     ) -> CallbackQuery:
         message = None
         inline_message_id = None
+        reply_to_message = None
 
         if isinstance(callback_query, raw.types.UpdateBotCallbackQuery):
             chat_id = utils.get_peer_id(callback_query.peer)
@@ -88,7 +99,9 @@ class CallbackQuery(Object, Update):
             message = client.message_cache[(chat_id, message_id)]
 
             if not message:
-                message = await client.get_messages(chat_id, message_id)
+                message = cast(
+                    "types.Message", await client.get_messages(chat_id, message_id)
+                )
         elif isinstance(callback_query, raw.types.UpdateInlineBotCallbackQuery):
             inline_message_id = utils.pack_inline_message_id(callback_query.msg_id)
         elif isinstance(callback_query, raw.types.UpdateBusinessBotCallbackQuery):
@@ -101,6 +114,17 @@ class CallbackQuery(Object, Update):
                 replies=0,
                 business_connection_id=callback_query.connection_id,
             )
+
+            if callback_query.reply_to_message:
+                reply_to_message = await types.Message._parse(
+                    client,
+                    callback_query.reply_to_message,
+                    users,
+                    {},
+                    is_scheduled=False,
+                    replies=0,
+                    business_connection_id=callback_query.connection_id,
+                )
         # Try to decode callback query data into string. If that fails, fallback to bytes instead of decoding by
         # ignoring/replacing errors, this way, button clicks will still work.
         data = getattr(callback_query, "data", None)
@@ -116,6 +140,10 @@ class CallbackQuery(Object, Update):
             chat_instance=str(callback_query.chat_instance),
             data=data,
             game_short_name=getattr(callback_query, "game_short_name", None),
+            business_connection_id=getattr(callback_query, "connection_id", None),
+            reply_to_message=reply_to_message
+            if isinstance(callback_query, raw.types.UpdateBusinessBotCallbackQuery)
+            else None,
             client=client,
         )
 

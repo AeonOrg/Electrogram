@@ -78,8 +78,12 @@
       "params": {}
     },
     "AuctionBidLevel": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "amount": "",
+        "date": "",
+        "pos": ""
+      }
     },
     "Authorization": {
       "desc": "Logged-in session",
@@ -748,13 +752,6 @@
         "prev_stickerset": "Previous stickerset"
       }
     },
-    "ChannelAdminLogEventActionChangeTheme": {
-      "desc": "The chat theme was changed",
-      "params": {
-        "new_value": "New theme emoji",
-        "prev_value": "Previous theme emoji"
-      }
-    },
     "ChannelAdminLogEventActionChangeTitle": {
       "desc": "Channel/supergroup title was changed",
       "params": {
@@ -1041,6 +1038,7 @@
         "flags": "Flags, see TL conditional fields",
         "id": "Channel ID",
         "megagroup": "Is this a supergroup",
+        "monoforum": "",
         "title": "Title",
         "until_date": "The ban is valid until the specified date"
       }
@@ -1762,6 +1760,7 @@
       "params": {
         "disallow_limited_stargifts": "Disallow the reception of limited-supply gifts (those with the starGift.limited flag set).",
         "disallow_premium_gifts": "Disallow the reception of gifted Telegram Premium subscriptions \u00bb.",
+        "disallow_stargifts_from_channels": "",
         "disallow_unique_stargifts": "Disallow the reception of collectible gifts \u00bb.",
         "disallow_unlimited_stargifts": "Disallow the reception of gifts with an unlimited supply (those with the starGift.limited flag not set).",
         "flags": "Flags, see TL conditional fields"
@@ -2170,11 +2169,13 @@
         "id": "Topic ID",
         "my": "Whether the topic was created by the current user",
         "notify_settings": "Notification settings",
+        "peer": "",
         "pinned": "Whether the topic is pinned",
         "read_inbox_max_id": "Position up to which all incoming messages are read.",
         "read_outbox_max_id": "Position up to which all outgoing messages are read.",
         "short": "Whether this constructor is a reduced version of the full topic information. If set, only the my, closed, id, date, title, icon_color, icon_emoji_id and from_id parameters will contain valid information. Reduced info is usually only returned in topic-related admin log events \u00bb and in the messages.channelMessages constructor: if needed, full information can be fetched using channels.getForumTopicsByID.",
         "title": "Topic title",
+        "title_missing": "",
         "top_message": "ID of the last message that was sent to this topic",
         "unread_count": "Number of unread messages",
         "unread_mentions_count": "Number of unread mentions",
@@ -2250,21 +2251,26 @@
       "params": {
         "access_hash": "Group call access hash",
         "can_change_join_muted": "Whether the current user can change the value of the join_muted flag using phone.toggleGroupCallSettings",
+        "can_change_messages_enabled": "",
         "can_start_video": "Whether you can start streaming video into the call",
         "conference": "Whether this is an E2E conference call.",
         "creator": "Whether we're created this group call.",
+        "default_send_as": "",
         "flags": "Flags, see TL conditional fields",
         "id": "Group call ID",
         "invite_link": "Invitation link for the conference.",
         "join_date_asc": "Specifies the ordering to use when locally sorting by date and displaying in the UI group call participants.",
         "join_muted": "Whether the user should be muted upon joining the call",
         "listeners_hidden": "Whether the listeners list is hidden and cannot be fetched using phone.getGroupParticipants. The phone.groupParticipants.count and groupCall.participants_count counters will still include listeners.",
+        "messages_enabled": "",
+        "min": "",
         "participants_count": "Participant count",
         "record_start_date": "When was the recording started",
         "record_video_active": "Whether the group call is currently being recorded",
         "rtmp_stream": "Whether RTMP streams are allowed",
         "schedule_date": "When is the call scheduled to start",
         "schedule_start_subscribed": "Whether we subscribed to the scheduled call",
+        "send_paid_messages_stars": "",
         "stream_dc_id": "DC ID to be used for livestream chunks",
         "title": "Group call title",
         "unmuted_video_count": "Number of people currently streaming video into the call",
@@ -2281,12 +2287,26 @@
       }
     },
     "GroupCallDonor": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "flags": "Flags, see TL conditional fields",
+        "my": "",
+        "peer_id": "",
+        "stars": "",
+        "top": ""
+      }
     },
     "GroupCallMessage": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "date": "",
+        "flags": "Flags, see TL conditional fields",
+        "from_admin": "",
+        "from_id": "",
+        "id": "",
+        "message": "",
+        "paid_message_stars": ""
+      }
     },
     "GroupCallParticipant": {
       "desc": "Info about a group call participant",
@@ -2301,6 +2321,7 @@
         "min": "If not set, the volume and muted_by_you fields can be safely used to overwrite locally cached information; otherwise, volume will contain valid information only if volume_by_admin is set both in the cache and in the received constructor.",
         "muted": "Whether the participant is muted",
         "muted_by_you": "Whether this participant was muted by the current user",
+        "paid_stars_total": "",
         "peer": "Peer information",
         "presentation": "Info about the screen sharing stream the participant is currently broadcasting",
         "raise_hand_rating": "Specifies the UI visualization order of peers with raised hands: peers with a higher rating should be showed first in the list.",
@@ -2918,8 +2939,10 @@
       }
     },
     "InputInvoicePremiumAuthCode": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "purpose": ""
+      }
     },
     "InputInvoicePremiumGiftCode": {
       "desc": "Used if the user wishes to start a channel/supergroup giveaway or send some giftcodes to members of a channel/supergroup, in exchange for boosts.",
@@ -2955,12 +2978,22 @@
       }
     },
     "InputInvoiceStarGiftAuctionBid": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "bid_amount": "",
+        "flags": "Flags, see TL conditional fields",
+        "gift_id": "",
+        "hide_name": "",
+        "message": "",
+        "peer": "",
+        "update_bid": ""
+      }
     },
     "InputInvoiceStarGiftDropOriginalDetails": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "stargift": ""
+      }
     },
     "InputInvoiceStarGiftPrepaidUpgrade": {
       "desc": "Separately prepay for the upgrade of a gift \u00bb.",
@@ -3008,6 +3041,7 @@
         "name_requested": "Set this flag to request the peer's name.",
         "peer_type": "Filtering criteria to use for the peer selection list shown to the user. The list should display all existing peers of the specified type, and should also offer an option for the user to create and immediately use one or more (up to max_quantity) peers of the specified type, if needed.",
         "photo_requested": "Set this flag to request the peer's photo (if any).",
+        "style": "",
         "text": "Button text",
         "username_requested": "Set this flag to request the peer's @username (if any)."
       }
@@ -3019,6 +3053,7 @@
         "flags": "Flags, see TL conditional fields",
         "fwd_text": "New text of the button in forwarded messages.",
         "request_write_access": "Set this flag to request the permission for your bot to send messages to the user.",
+        "style": "",
         "text": "Button text",
         "url": "An HTTP URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in Receiving authorization data.NOTE: You must always check the hash of the received data to verify the authentication and the integrity of the data as described in Checking authorization."
       }
@@ -3026,6 +3061,8 @@
     "InputKeyboardButtonUserProfile": {
       "desc": "Button that links directly to a user profile",
       "params": {
+        "flags": "Flags, see TL conditional fields",
+        "style": "",
         "text": "Button text",
         "user_id": "User ID"
       }
@@ -3164,8 +3201,12 @@
       }
     },
     "InputMediaStakeDice": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "client_seed": "",
+        "game_hash": "",
+        "ton_amount": ""
+      }
     },
     "InputMediaStory": {
       "desc": "Forwarded story",
@@ -3302,10 +3343,6 @@
       "desc": "Filter for messages containing photos or videos.",
       "params": {}
     },
-    "InputMessagesFilterPhotoVideoDocuments": {
-      "desc": "",
-      "params": {}
-    },
     "InputMessagesFilterPhotos": {
       "desc": "Filter for messages containing photos.",
       "params": {}
@@ -3360,20 +3397,34 @@
       "params": {}
     },
     "InputPasskeyCredentialFirebasePNV": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "pnv_token": ""
+      }
     },
     "InputPasskeyCredentialPublicKey": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "id": "",
+        "raw_id": "",
+        "response": ""
+      }
     },
     "InputPasskeyResponseLogin": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "authenticator_data": "",
+        "client_data": "",
+        "signature": "",
+        "user_handle": ""
+      }
     },
     "InputPasskeyResponseRegister": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "attestation_data": "",
+        "client_data": ""
+      }
     },
     "InputPaymentCredentials": {
       "desc": "Payment credentials",
@@ -3424,8 +3475,10 @@
       }
     },
     "InputPeerColorCollectible": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "collectible_id": ""
+      }
     },
     "InputPeerEmpty": {
       "desc": "An empty constructor, no user or chat is defined.",
@@ -3484,7 +3537,9 @@
       "params": {
         "client_id": "An arbitrary 64-bit integer: it should be set, for example, to an incremental number when using contacts.importContacts, in order to retry importing only the contacts that weren't imported successfully, according to the client_ids returned in contacts.importedContacts.retry_contacts.",
         "first_name": "Contact's first name",
+        "flags": "Flags, see TL conditional fields",
         "last_name": "Contact's last name",
+        "note": "",
         "phone": "Phone number"
       }
     },
@@ -3561,7 +3616,7 @@
       "params": {}
     },
     "InputPrivacyKeySavedMusic": {
-      "desc": "",
+      "desc": "{schema}",
       "params": {}
     },
     "InputPrivacyKeyStarGiftsAutoSave": {
@@ -3779,12 +3834,16 @@
       }
     },
     "InputStarGiftAuction": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "gift_id": ""
+      }
     },
     "InputStarGiftAuctionSlug": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "slug": ""
+      }
     },
     "InputStarsTransaction": {
       "desc": "Used to fetch info about a Telegram Star transaction \u00bb.",
@@ -4143,12 +4202,16 @@
     "KeyboardButton": {
       "desc": "Bot keyboard button",
       "params": {
+        "flags": "Flags, see TL conditional fields",
+        "style": "",
         "text": "Button text"
       }
     },
     "KeyboardButtonBuy": {
       "desc": "Button to buy a product",
       "params": {
+        "flags": "Flags, see TL conditional fields",
+        "style": "",
         "text": "Button text"
       }
     },
@@ -4158,6 +4221,7 @@
         "data": "Callback data",
         "flags": "Flags, see TL conditional fields",
         "requires_password": "Whether the user should verify his identity by entering his 2FA SRP parameters to the messages.getBotCallbackAnswer method. NOTE: telegram and the bot WILL NOT have access to the plaintext password, thanks to SRP. This button is mainly used by the official @botfather bot, for verifying the user's identity before transferring ownership of a bot to another user.",
+        "style": "",
         "text": "Button text"
       }
     },
@@ -4165,18 +4229,24 @@
       "desc": "Clipboard button: when clicked, the attached text must be copied to the clipboard.",
       "params": {
         "copy_text": "The text that will be copied to the clipboard",
+        "flags": "Flags, see TL conditional fields",
+        "style": "",
         "text": "Title of the button"
       }
     },
     "KeyboardButtonGame": {
       "desc": "Button to start a game",
       "params": {
+        "flags": "Flags, see TL conditional fields",
+        "style": "",
         "text": "Button text"
       }
     },
     "KeyboardButtonRequestGeoLocation": {
       "desc": "Button to request a user's geolocation",
       "params": {
+        "flags": "Flags, see TL conditional fields",
+        "style": "",
         "text": "Button text"
       }
     },
@@ -4184,14 +4254,18 @@
       "desc": "Prompts the user to select and share one or more peers with the bot using messages.sendBotRequestedPeer",
       "params": {
         "button_id": "Button ID, to be passed to messages.sendBotRequestedPeer.",
+        "flags": "Flags, see TL conditional fields",
         "max_quantity": "Maximum number of peers that can be chosen.",
         "peer_type": "Filtering criteria to use for the peer selection list shown to the user. The list should display all existing peers of the specified type, and should also offer an option for the user to create and immediately use one or more (up to max_quantity) peers of the specified type, if needed.",
+        "style": "",
         "text": "Button text"
       }
     },
     "KeyboardButtonRequestPhone": {
       "desc": "Button to request a user's phone number",
       "params": {
+        "flags": "Flags, see TL conditional fields",
+        "style": "",
         "text": "Button text"
       }
     },
@@ -4200,6 +4274,7 @@
       "params": {
         "flags": "Flags, see TL conditional fields",
         "quiz": "If set, only quiz polls can be sent",
+        "style": "",
         "text": "Button text"
       }
     },
@@ -4212,13 +4287,21 @@
     "KeyboardButtonSimpleWebView": {
       "desc": "Button to open a bot mini app using messages.requestSimpleWebView, without sending user information to the web app.",
       "params": {
+        "flags": "Flags, see TL conditional fields",
+        "style": "",
         "text": "Button text",
         "url": "Web app URL"
       }
     },
     "KeyboardButtonStyle": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "bg_danger": "",
+        "bg_primary": "",
+        "bg_success": "",
+        "flags": "Flags, see TL conditional fields",
+        "icon": ""
+      }
     },
     "KeyboardButtonSwitchInline": {
       "desc": "Button to force a user to switch to inline mode: pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field.",
@@ -4227,12 +4310,15 @@
         "peer_types": "Filter to use when selecting chats.",
         "query": "The inline query to use",
         "same_peer": "If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field.",
+        "style": "",
         "text": "Button label"
       }
     },
     "KeyboardButtonUrl": {
       "desc": "URL button",
       "params": {
+        "flags": "Flags, see TL conditional fields",
+        "style": "",
         "text": "Button label",
         "url": "URL"
       }
@@ -4243,6 +4329,7 @@
         "button_id": "ID of the button to pass to messages.requestUrlAuth",
         "flags": "Flags, see TL conditional fields",
         "fwd_text": "New text of the button in forwarded messages.",
+        "style": "",
         "text": "Button label",
         "url": "An HTTP URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in Receiving authorization data.NOTE: Services must always check the hash of the received data to verify the authentication and the integrity of the data as described in Checking authorization."
       }
@@ -4250,6 +4337,8 @@
     "KeyboardButtonUserProfile": {
       "desc": "Button that links directly to a user profile",
       "params": {
+        "flags": "Flags, see TL conditional fields",
+        "style": "",
         "text": "Button text",
         "user_id": "User ID"
       }
@@ -4257,6 +4346,8 @@
     "KeyboardButtonWebView": {
       "desc": "Button to open a bot mini app using messages.requestWebView, sending over user information after user confirmation.",
       "params": {
+        "flags": "Flags, see TL conditional fields",
+        "style": "",
         "text": "Button text",
         "url": "Web app url"
       }
@@ -4445,8 +4536,10 @@
         "report_delivery_until_date": "Used for Telegram Gateway verification messages: if set and the current unixtime is bigger than the specified unixtime, invoke messages.reportMessagesDelivery passing the ID and the peer of this message as soon as it is received by the client (optionally batching requests for the same peer).",
         "restriction_reason": "Contains the reason why access to this message must be restricted.",
         "saved_peer_id": "Messages from a saved messages dialog \u00bb will have peer=inputPeerSelf and the saved_peer_id flag set to the ID of the saved dialog.Messages from a monoforum \u00bb will have peer=ID of the monoforum and the saved_peer_id flag set to the ID of a topic.",
+        "schedule_repeat_period": "",
         "silent": "Whether this is a silent message (no notification triggered)",
         "suggested_post": "Used to suggest a post to a channel, see here \u00bb for more info on the full flow.",
+        "summary_from_language": "",
         "ttl_period": "Time To Live of the message, once message.date+message.ttl_period === time(), the message will be deleted on the server, and must be deleted locally as well.",
         "via_bot_id": "ID of the inline bot that generated the message",
         "via_business_bot_id": "Whether the message was sent by the business bot specified in via_bot_id on behalf of the user.",
@@ -4471,8 +4564,10 @@
       }
     },
     "MessageActionChangeCreator": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "new_creator_id": ""
+      }
     },
     "MessageActionChannelCreate": {
       "desc": "The channel was created",
@@ -4554,10 +4649,6 @@
       "desc": "A contact just signed up to telegram",
       "params": {}
     },
-    "MessageActionCreatedBroadcastList": {
-      "desc": "",
-      "params": {}
-    },
     "MessageActionCustomAction": {
       "desc": "Custom action (most likely not supported by the current layer, an upgrade might be needed)",
       "params": {
@@ -4591,9 +4682,9 @@
         "crypto_amount": "If crypto_currency is set, contains the paid amount, in the smallest units of the cryptocurrency.",
         "crypto_currency": "If set, the gift was made using the specified cryptocurrency.",
         "currency": "Three-letter ISO 4217 currency code",
+        "days": "",
         "flags": "Flags, see TL conditional fields",
         "message": "Message attached with the gift",
-        "months": "Duration in months of the gifted Telegram Premium subscription.",
         "slug": "Slug of the Telegram Premium giftcode link",
         "unclaimed": "If set, the link was not redeemed yet.",
         "via_giveaway": "If set, this gift code was received from a giveaway \u00bb started by a channel/supergroup we're subscribed to."
@@ -4606,9 +4697,9 @@
         "crypto_amount": "If the gift was bought using a cryptocurrency, price of the gift in the smallest units of a cryptocurrency.",
         "crypto_currency": "If the gift was bought using a cryptocurrency, the cryptocurrency name.",
         "currency": "Three-letter ISO 4217 currency code",
+        "days": "",
         "flags": "Flags, see TL conditional fields",
-        "message": "Message attached with the gift",
-        "months": "Duration of the gifted Telegram Premium subscription."
+        "message": "Message attached with the gift"
       }
     },
     "MessageActionGiftStars": {
@@ -4676,13 +4767,11 @@
         "users": "The invited users"
       }
     },
-    "MessageActionLoginUnknownLocation": {
-      "desc": "",
-      "params": {}
-    },
     "MessageActionNewCreatorPending": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "new_creator_id": ""
+      }
     },
     "MessageActionPaidMessagesPrice": {
       "desc": "The price of paid messages \u00bb in this chat was changed.",
@@ -4746,10 +4835,6 @@
         "reason": "If the call has ended, the reason why it ended",
         "video": "Is this a video call?"
       }
-    },
-    "MessageActionPhoneNumberRequest": {
-      "desc": "",
-      "params": {}
     },
     "MessageActionPinMessage": {
       "desc": "A message was pinned",
@@ -4823,6 +4908,7 @@
     "MessageActionStarGift": {
       "desc": "You received a gift, see here \u00bb for more info.",
       "params": {
+        "auction_acquired": "",
         "can_upgrade": "If set, this gift can be upgraded to a collectible gift; can only be set for the receiver of a gift.",
         "convert_stars": "The receiver of this gift may convert it to this many Telegram Stars, instead of displaying it on their profile page.convert_stars will be equal to stars only if the gift was bought using recently bought Telegram Stars, otherwise it will be less than stars.",
         "converted": "Whether this gift was converted to Telegram Stars and cannot be displayed on the profile anymore.",
@@ -4830,6 +4916,7 @@
         "from_id": "Sender of the gift (unset for anonymous gifts).",
         "gift": "Info about the gift",
         "gift_msg_id": "For separate upgrades, the identifier of the message with the gift whose upgrade was prepaid (only valid for the receiver of the service message).",
+        "gift_num": "",
         "message": "Additional message from the sender of the gift",
         "name_hidden": "If set, the name of the sender of the gift will be hidden if the destination user decides to display the gift on their profile",
         "peer": "Receiver of the gift.",
@@ -4838,6 +4925,7 @@
         "refunded": "This gift is not available anymore because a request to refund the payment related to this gift was made, and the money was returned.",
         "saved": "Whether this gift was added to the destination user's profile (may be toggled using payments.saveStarGift and fetched using payments.getSavedStarGifts)",
         "saved_id": "For channel gifts, ID to use in inputSavedStarGiftChat constructors.",
+        "to_id": "",
         "upgrade_msg_id": "If set, this gift was upgraded to a collectible gift, and the corresponding messageActionStarGiftUnique is available at the specified message ID.",
         "upgrade_separate": "This service message is the notification of a separate pre-payment for the upgrade of a gift we own.",
         "upgrade_stars": "The number of Telegram Stars the user can pay to convert the gift into a collectible gift \u00bb.",
@@ -4845,21 +4933,38 @@
       }
     },
     "MessageActionStarGiftPurchaseOffer": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "accepted": "",
+        "declined": "",
+        "expires_at": "",
+        "flags": "Flags, see TL conditional fields",
+        "gift": "",
+        "price": ""
+      }
     },
     "MessageActionStarGiftPurchaseOfferDeclined": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "expired": "",
+        "flags": "Flags, see TL conditional fields",
+        "gift": "",
+        "price": ""
+      }
     },
     "MessageActionStarGiftUnique": {
       "desc": "A gift \u00bb was upgraded to a collectible gift \u00bb.",
       "params": {
+        "assigned": "",
+        "can_craft_at": "",
         "can_export_at": "If set, indicates that the current gift can't be exported to the TON blockchain \u00bb yet: the owner will be able to export it at the specified unixtime.",
         "can_resell_at": "If set, indicates that the current gift can't be resold \u00bb yet: the owner will be able to put it up for sale at the specified unixtime.",
         "can_transfer_at": "If set, indicates that the current gift can't be transferred \u00bb yet: the owner will be able to transfer it at the specified unixtime.",
+        "craft": "",
+        "drop_original_details_stars": "",
         "flags": "Flags, see TL conditional fields",
         "from_id": "Sender of the gift (unset for anonymous gifts).",
+        "from_offer": "",
         "gift": "The collectible gift.",
         "peer": "Receiver of the gift.",
         "prepaid_upgrade": "The sender has pre-paid for the upgrade of this gift to a collectible gift.",
@@ -4873,8 +4978,10 @@
       }
     },
     "MessageActionSuggestBirthday": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "birthday": ""
+      }
     },
     "MessageActionSuggestProfilePhoto": {
       "desc": "A new profile picture was suggested using photos.uploadContactProfilePhoto.",
@@ -4906,10 +5013,6 @@
         "price": "The price."
       }
     },
-    "MessageActionTTLChange": {
-      "desc": "",
-      "params": {}
-    },
     "MessageActionTodoAppendTasks": {
       "desc": "Items were appended to the todo list \u00bb.",
       "params": {
@@ -4929,7 +5032,8 @@
         "flags": "Flags, see TL conditional fields",
         "icon_color": "If no custom emoji icon is specified, specifies the color of the fallback topic icon (RGB), one of 0x6FB9F0, 0xFFD67E, 0xCB86DB, 0x8EEE98, 0xFF93B2, or 0xFB6F5F.",
         "icon_emoji_id": "ID of the custom emoji used as topic icon.",
-        "title": "Topic name."
+        "title": "Topic name.",
+        "title_missing": ""
       }
     },
     "MessageActionTopicEdit": {
@@ -4941,14 +5045,6 @@
         "icon_emoji_id": "ID of the new custom emoji used as topic icon, or if it was removed.",
         "title": "New topic title."
       }
-    },
-    "MessageActionUserJoined": {
-      "desc": "",
-      "params": {}
-    },
-    "MessageActionUserUpdatedPhoto": {
-      "desc": "",
-      "params": {}
     },
     "MessageActionWebViewDataSent": {
       "desc": "Data from an opened reply keyboard bot mini app was relayed to the bot that owns it (user side service message).",
@@ -5166,6 +5262,8 @@
       "desc": "Dice-based animated sticker",
       "params": {
         "emoticon": "The emoji, for now ,  and  are supported",
+        "flags": "Flags, see TL conditional fields",
+        "game_outcome": "",
         "value": "Dice value"
       }
     },
@@ -5317,8 +5415,12 @@
       }
     },
     "MessageMediaVideoStream": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "call": "",
+        "flags": "Flags, see TL conditional fields",
+        "rtmp_stream": ""
+      }
     },
     "MessageMediaWebPage": {
       "desc": "Preview of webpage",
@@ -5873,8 +5975,15 @@
       }
     },
     "Passkey": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "date": "",
+        "flags": "Flags, see TL conditional fields",
+        "id": "",
+        "last_usage_date": "",
+        "name": "",
+        "software_emoji_id": ""
+      }
     },
     "PasswordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow": {
       "desc": "This key derivation algorithm defines that SRP 2FA login must be used",
@@ -5948,8 +6057,17 @@
       }
     },
     "PeerColorCollectible": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "accent_color": "",
+        "background_emoji_id": "",
+        "collectible_id": "",
+        "colors": "",
+        "dark_accent_color": "",
+        "dark_colors": "",
+        "flags": "Flags, see TL conditional fields",
+        "gift_emoji_id": ""
+      }
     },
     "PeerLocated": {
       "desc": "Peer geolocated nearby",
@@ -6331,10 +6449,6 @@
         "users": "Number of users which will be able to activate the gift codes."
       }
     },
-    "PremiumGiftOption": {
-      "desc": "Telegram Premium gift option",
-      "params": {}
-    },
     "PremiumSubscriptionOption": {
       "desc": "Describes a Telegram Premium subscription option",
       "params": {
@@ -6409,7 +6523,7 @@
       "params": {}
     },
     "PrivacyKeySavedMusic": {
-      "desc": "",
+      "desc": "{schema}",
       "params": {}
     },
     "PrivacyKeyStarGiftsAutoSave": {
@@ -6630,8 +6744,12 @@
       }
     },
     "RecentStory": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "flags": "Flags, see TL conditional fields",
+        "live": "",
+        "max_id": ""
+      }
     },
     "ReplyInlineMarkup": {
       "desc": "Bot or inline keyboard",
@@ -6798,6 +6916,7 @@
     "SavedStarGift": {
       "desc": "Represents a gift owned by a peer.",
       "params": {
+        "can_craft_at": "",
         "can_export_at": "If set, indicates that the current gift can't be exported to the TON blockchain \u00bb yet: the owner will be able to export it at the specified unixtime.",
         "can_resell_at": "If set, indicates that the current gift can't be resold \u00bb yet: the owner will be able to put it up for sale at the specified unixtime.",
         "can_transfer_at": "If set, indicates that the current gift can't be transferred \u00bb yet: the owner will be able to transfer it at the specified unixtime.",
@@ -6805,9 +6924,11 @@
         "collection_id": "IDs of the collections \u00bb that this gift is a part of.",
         "convert_stars": "For non-collectible gifts, the receiver of this gift may convert it to this many Telegram Stars, instead of displaying it on their profile page.",
         "date": "Reception date of the gift.",
+        "drop_original_details_stars": "",
         "flags": "Flags, see TL conditional fields",
         "from_id": "Sender of the gift (unset for anonymous gifts).",
         "gift": "The collectible gift.",
+        "gift_num": "",
         "message": "Message attached to the gift.",
         "msg_id": "For gifts received by users, ID to use in inputSavedStarGiftUser constructors.",
         "name_hidden": "If set, the gift sender in from_id and the message are set only for the receiver of the gift.",
@@ -7141,8 +7262,11 @@
       "params": {}
     },
     "SendMessageTextDraftAction": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "random_id": "",
+        "text": ""
+      }
     },
     "SendMessageTypingAction": {
       "desc": "User is typing.",
@@ -7239,18 +7363,24 @@
     "StarGift": {
       "desc": "Represents a star gift, see here \u00bb for more info.",
       "params": {
+        "auction": "",
+        "auction_slug": "",
+        "auction_start_date": "",
         "availability_remains": "For limited-supply gifts: the remaining number of gifts that may be bought.",
         "availability_resale": "The total number of (upgraded to collectibles) gifts of this type currently on resale",
         "availability_total": "For limited-supply gifts: the total number of gifts that was available in the initial supply.",
+        "background": "",
         "birthday": "Whether this is a birthday-themed gift",
         "convert_stars": "The receiver of this gift may convert it to this many Telegram Stars, instead of displaying it on their profile page.convert_stars will be equal to stars only if the gift was bought using recently bought Telegram Stars, otherwise it will be less than stars.",
         "first_sale_date": "For sold out gifts only: when was the gift first bought.",
         "flags": "Flags, see TL conditional fields",
+        "gifts_per_round": "",
         "id": "Identifier of the gift",
         "last_sale_date": "For sold out gifts only: when was the gift last bought.",
         "limited": "Whether this is a limited-supply gift.",
         "limited_per_user": "If set, the maximum number of gifts of this type that can be owned by a single user is limited and specified in per_user_total, and the remaining slots for the current user in per_user_remains.",
         "locked_until_date": "If set, the specified gift possibly cannot be sent until the specified date, see here \u00bb for the full flow.",
+        "peer_color_available": "",
         "per_user_remains": "Remaining number of gifts of this type that can be owned by the current user.",
         "per_user_total": "Maximum number of gifts of this type that can be owned by any user.",
         "released_by": "This gift was released by the specified peer.",
@@ -7260,12 +7390,17 @@
         "stars": "Price of the gift in Telegram Stars.",
         "sticker": "Sticker that represents the gift.",
         "title": "Title of the gift",
-        "upgrade_stars": "The number of Telegram Stars the user can pay to convert the gift into a collectible gift \u00bb."
+        "upgrade_stars": "The number of Telegram Stars the user can pay to convert the gift into a collectible gift \u00bb.",
+        "upgrade_variants": ""
       }
     },
     "StarGiftActiveAuctionState": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "gift": "",
+        "state": "",
+        "user_state": ""
+      }
     },
     "StarGiftAttributeBackdrop": {
       "desc": "The backdrop of a collectible gift \u00bb.",
@@ -7275,7 +7410,7 @@
         "edge_color": "Color of the edges of the backdrop in RGB24 format.",
         "name": "Name of the backdrop",
         "pattern_color": "Color of the starGiftAttributePattern applied on the backdrop in RGB24 format.",
-        "rarity_permille": "The number of upgraded gifts that receive this backdrop for each 1000 gifts upgraded.",
+        "rarity": "",
         "text_color": "Color of the text on the backdrop in RGB24 format."
       }
     },
@@ -7307,9 +7442,11 @@
     "StarGiftAttributeModel": {
       "desc": "The model of a collectible gift \u00bb.",
       "params": {
+        "crafted": "",
         "document": "The sticker representing the upgraded gift",
+        "flags": "Flags, see TL conditional fields",
         "name": "Name of the model",
-        "rarity_permille": "The number of upgraded gifts that receive this backdrop for each 1000 gifts upgraded."
+        "rarity": ""
       }
     },
     "StarGiftAttributeOriginalDetails": {
@@ -7327,60 +7464,113 @@
       "params": {
         "document": "The symbol",
         "name": "Name of the symbol",
-        "rarity_permille": "The number of upgraded gifts that receive this backdrop for each 1000 gifts upgraded."
+        "rarity": ""
       }
     },
     "StarGiftAttributeRarity": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "permille": ""
+      }
     },
     "StarGiftAttributeRarityEpic": {
-      "desc": "",
+      "desc": "{schema}",
       "params": {}
     },
     "StarGiftAttributeRarityLegendary": {
-      "desc": "",
+      "desc": "{schema}",
       "params": {}
     },
     "StarGiftAttributeRarityRare": {
-      "desc": "",
+      "desc": "{schema}",
       "params": {}
     },
     "StarGiftAttributeRarityUncommon": {
-      "desc": "",
+      "desc": "{schema}",
       "params": {}
     },
     "StarGiftAuctionAcquiredGift": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "bid_amount": "",
+        "date": "",
+        "flags": "Flags, see TL conditional fields",
+        "gift_num": "",
+        "message": "",
+        "name_hidden": "",
+        "peer": "",
+        "pos": "",
+        "round": ""
+      }
     },
     "StarGiftAuctionRound": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "duration": "",
+        "num": ""
+      }
     },
     "StarGiftAuctionRoundExtendable": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "duration": "",
+        "extend_top": "",
+        "extend_window": "",
+        "num": ""
+      }
     },
     "StarGiftAuctionState": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "bid_levels": "",
+        "current_round": "",
+        "end_date": "",
+        "gifts_left": "",
+        "last_gift_num": "",
+        "min_bid_amount": "",
+        "next_round_at": "",
+        "rounds": "",
+        "start_date": "",
+        "top_bidders": "",
+        "total_rounds": "",
+        "version": ""
+      }
     },
     "StarGiftAuctionStateFinished": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "average_price": "",
+        "end_date": "",
+        "flags": "Flags, see TL conditional fields",
+        "fragment_listed_count": "",
+        "fragment_listed_url": "",
+        "listed_count": "",
+        "start_date": ""
+      }
     },
     "StarGiftAuctionStateNotModified": {
-      "desc": "",
+      "desc": "{schema}",
       "params": {}
     },
     "StarGiftAuctionUserState": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "acquired_count": "",
+        "bid_amount": "",
+        "bid_date": "",
+        "bid_peer": "",
+        "flags": "Flags, see TL conditional fields",
+        "min_bid_amount": "",
+        "returned": ""
+      }
     },
     "StarGiftBackground": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "center_color": "",
+        "edge_color": "",
+        "text_color": ""
+      }
     },
     "StarGiftCollection": {
       "desc": "Represents a star gift collection \u00bb.",
@@ -7399,14 +7589,20 @@
         "attributes": "Collectible attributes",
         "availability_issued": "Total number of gifts of the same type that were upgraded to a collectible gift.",
         "availability_total": "Total number of gifts of the same type that can be upgraded or were already upgraded to a collectible gift.",
+        "burned": "",
+        "craft_chance_permille": "",
+        "crafted": "",
         "flags": "Flags, see TL conditional fields",
         "gift_address": "For NFTs on the TON blockchain, contains the address of the NFT (append it to the ton_blockchain_explorer_url client configuration value \u00bb to obtain a link with information about the address).",
         "gift_id": "Unique ID of the gift.",
+        "host_id": "",
         "id": "Identifier of the collectible gift.",
         "num": "Unique identifier of this collectible gift among all (already upgraded) collectible gifts of the same type.",
+        "offer_min_stars": "",
         "owner_address": "For NFTs on the TON blockchain, contains the address of the owner (append it to the ton_blockchain_explorer_url client configuration value \u00bb to obtain a link with information about the address).",
         "owner_id": "The owner of the gift.",
         "owner_name": "The name of the owner if neither owner_id nor owner_address are set.",
+        "peer_color": "",
         "released_by": "This gift was released by the specified peer.",
         "require_premium": "This gift can only be bought by users with a Premium subscription.",
         "resale_ton_only": "Whether the gift can be bought only using Toncoins.",
@@ -7416,12 +7612,16 @@
         "theme_peer": "The current chat where the associated chat theme is installed, if any (gift-based themes can only be installed in one chat at a time).",
         "title": "Collectible title.",
         "value_amount": "Price of the gift.",
-        "value_currency": "Currency for the gift's price."
+        "value_currency": "Currency for the gift's price.",
+        "value_usd_amount": ""
       }
     },
     "StarGiftUpgradePrice": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "date": "",
+        "upgrade_stars": ""
+      }
     },
     "StarRefProgram": {
       "desc": "Indo about an affiliate program offered by a bot",
@@ -7556,15 +7756,19 @@
         "giveaway_post_id": "ID of the message containing the messageMediaGiveaway, for incoming star giveaway prizes.",
         "id": "Transaction ID.",
         "msg_id": "For paid media transactions \u00bb, message ID of the paid media posted to peer.peer (can point to a deleted message; either way, extended_media will always contain the bought media).",
+        "offer": "",
         "paid_messages": "This transaction is related to the reception or transmission of a paid message \u00bb.",
         "peer": "Source of the incoming transaction, or its recipient for outgoing transactions.",
         "pending": "The transaction is currently pending.",
+        "phonegroup_message": "",
         "photo": "For transactions with bots, photo of the bought product.",
         "posts_search": "Represents payment for a paid global post search \u00bb.",
         "premium_gift_months": "This transaction indicates the payment for a gifted Telegram Premium subscription \u00bb.",
         "reaction": "This transaction is a paid reaction \u00bb.",
         "refund": "Whether this transaction is a refund.",
         "stargift": "This transaction indicates a purchase or a sale (conversion back to Stars) of a gift \u00bb.",
+        "stargift_auction_bid": "",
+        "stargift_drop_original_details": "",
         "stargift_prepaid_upgrade": "Represents payment for a separate prepaid upgrade of a gift.",
         "stargift_resale": "This transaction is related to the resale of a collectible gift \u00bb.",
         "stargift_upgrade": "This transaction pays for the upgrade of a gift to a collectible gift \u00bb.",
@@ -7818,7 +8022,8 @@
         "date": "When was the story posted.",
         "expire_date": "When does the story expire.",
         "flags": "Flags, see TL conditional fields",
-        "id": "Story ID"
+        "id": "Story ID",
+        "live": ""
       }
     },
     "StoryReaction": {
@@ -8290,10 +8495,6 @@
         "user_id": "The user ID"
       }
     },
-    "UpdateBotSubscriptionExpire": {
-      "desc": "",
-      "params": {}
-    },
     "UpdateBotWebhookJSON": {
       "desc": "A new incoming event; for bots only",
       "params": {
@@ -8502,8 +8703,11 @@
       }
     },
     "UpdateDeleteGroupCallMessages": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "call": "",
+        "messages": ""
+      }
     },
     "UpdateDeleteMessages": {
       "desc": "Messages were deleted.",
@@ -8598,8 +8802,10 @@
       }
     },
     "UpdateEmojiGameInfo": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "info": ""
+      }
     },
     "UpdateEncryptedChatTyping": {
       "desc": "Interlocutor is typing a message in an encrypted chat. Update period is 6 second. If upon this time there is no repeated update, it shall be considered that the interlocutor stopped typing.",
@@ -8645,8 +8851,9 @@
       "desc": "A new groupcall was started",
       "params": {
         "call": "Info about the group call or livestream",
-        "chat_id": "The channel/supergroup where this group call or livestream takes place",
-        "flags": "Flags, see TL conditional fields"
+        "flags": "Flags, see TL conditional fields",
+        "live_story": "",
+        "peer": ""
       }
     },
     "UpdateGroupCallChainBlocks": {
@@ -8667,12 +8874,19 @@
       }
     },
     "UpdateGroupCallEncryptedMessage": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "call": "",
+        "encrypted_message": "",
+        "from_id": ""
+      }
     },
     "UpdateGroupCallMessage": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "call": "",
+        "message": ""
+      }
     },
     "UpdateGroupCallParticipants": {
       "desc": "The participant list of a certain group call has changed",
@@ -8925,12 +9139,21 @@
       }
     },
     "UpdatePinnedForumTopic": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "flags": "Flags, see TL conditional fields",
+        "peer": "",
+        "pinned": "",
+        "topic_id": ""
+      }
     },
     "UpdatePinnedForumTopics": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "flags": "Flags, see TL conditional fields",
+        "order": "",
+        "peer": ""
+      }
     },
     "UpdatePinnedMessages": {
       "desc": "Some messages were pinned in a chat",
@@ -9027,7 +9250,8 @@
         "peer": "Peer",
         "pts": "Event count after generation",
         "pts_count": "Number of events that were generated",
-        "still_unread_count": "Number of messages that are still unread"
+        "still_unread_count": "Number of messages that are still unread",
+        "top_msg_id": ""
       }
     },
     "UpdateReadHistoryOutbox": {
@@ -9202,15 +9426,21 @@
       }
     },
     "UpdateStarGiftAuctionState": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "gift_id": "",
+        "state": ""
+      }
     },
     "UpdateStarGiftAuctionUserState": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "gift_id": "",
+        "user_state": ""
+      }
     },
     "UpdateStarGiftCraftFail": {
-      "desc": "",
+      "desc": "{schema}",
       "params": {}
     },
     "UpdateStarsBalance": {
@@ -9269,10 +9499,6 @@
         "theme": "Theme"
       }
     },
-    "UpdateTranscribeAudio": {
-      "desc": "",
-      "params": {}
-    },
     "UpdateTranscribedAudio": {
       "desc": "A pending voice message transcription \u00bb initiated with messages.transcribeAudio was updated.",
       "params": {
@@ -9324,6 +9550,8 @@
       "desc": "The user is preparing a message; typing, recording, uploading, etc. This update is valid for 6 seconds. If no further updates of this kind are received after 6 seconds, it should be considered that the user stopped doing whatever they were doing",
       "params": {
         "action": "Action type",
+        "flags": "Flags, see TL conditional fields",
+        "top_msg_id": "",
         "user_id": "User id"
       }
     },
@@ -9369,6 +9597,7 @@
     "UrlAuthResultAccepted": {
       "desc": "Details about an accepted authorization request, for more info click here \u00bb",
       "params": {
+        "flags": "Flags, see TL conditional fields",
         "url": "The URL name of the website on which the user has logged in."
       }
     },
@@ -9380,8 +9609,13 @@
       "desc": "Details about the authorization request, for more info click here \u00bb",
       "params": {
         "bot": "Username of a bot, which will be used for user authorization. If not specified, the current bot's username will be assumed. The url's domain must be the same as the domain linked with the bot. See Linking your domain to the bot for more details.",
+        "browser": "",
         "domain": "The domain name of the website on which the user will log in.",
         "flags": "Flags, see TL conditional fields",
+        "ip": "",
+        "platform": "",
+        "region": "",
+        "request_phone_number": "",
         "request_write_access": "Whether the bot would like to send messages to the user"
       }
     },
@@ -9397,6 +9631,8 @@
         "bot_business": "Whether this bot can be connected to a user as specified here \u00bb.",
         "bot_can_edit": "Whether we can edit the profile picture, name, about text and description of this bot because we own it. When updating the local peer database, do not apply changes to this field if the min flag is set. Changes to this flag (if min is not set) should invalidate the local userFull cache for this user ID.",
         "bot_chat_history": "Can the bot see all messages in groups?",
+        "bot_forum_can_manage_topics": "",
+        "bot_forum_view": "",
         "bot_has_main_app": "If set, this bot has configured a Main Mini App \u00bb.",
         "bot_info_version": "Version of the bot_info field in userFull, incremented every time it changes. Changes to this flag should invalidate the local userFull cache for this user ID, see here \u00bb for more info.",
         "bot_inline_geo": "Whether the bot can request our geolocation in inline mode",
@@ -9473,6 +9709,7 @@
         "has_scheduled": "Whether scheduled messages are available",
         "id": "User ID",
         "main_tab": "The main tab for the user's profile, see here \u00bb for more info.",
+        "note": "",
         "notify_settings": "Notification settings",
         "personal_channel_id": "ID of the associated personal channel \u00bb, that should be shown in the profile page.",
         "personal_channel_message": "ID of the latest message of the associated personal channel \u00bb, that should be previewed in the profile page.",
@@ -9520,10 +9757,6 @@
     },
     "UserStatusEmpty": {
       "desc": "User status has not been set yet.",
-      "params": {}
-    },
-    "UserStatusHidden": {
-      "desc": "",
       "params": {}
     },
     "UserStatusLastMonth": {
@@ -9688,14 +9921,17 @@
         "photo": "Image representing the content",
         "site_name": "Short name of the site (e.g., Google Docs, App Store)",
         "title": "Title of the content",
-        "type": "Type of the web page. One of the following: - app- article- document- gif- photo- profile- telegram_album- telegram_background- telegram_bot- telegram_botapp- telegram_call- telegram_channel- telegram_channel_boost- telegram_channel_direct- telegram_channel_request- telegram_chat- telegram_chat_request- telegram_chatlist- telegram_collection- telegram_community- telegram_giftcode- telegram_group_boost- telegram_livestream- telegram_megagroup- telegram_megagroup_request- telegram_message- telegram_nft- telegram_stickerset- telegram_story- telegram_story_album- telegram_theme- telegram_user- telegram_videochat- telegram_voicechat- video",
+        "type": "Type of the web page. One of the following: - app- article- document- gif- photo- profile- telegram_album- telegram_auction- telegram_background- telegram_bot- telegram_botapp- telegram_call- telegram_channel- telegram_channel_boost- telegram_channel_direct- telegram_channel_request- telegram_chat- telegram_chat_request- telegram_chatlist- telegram_collection- telegram_community- telegram_giftcode- telegram_group_boost- telegram_livestream- telegram_megagroup- telegram_megagroup_request- telegram_message- telegram_nft- telegram_stickerset- telegram_story- telegram_story_album- telegram_theme- telegram_user- telegram_videochat- telegram_voicechat- video",
         "url": "URL of previewed webpage",
         "video_cover_photo": "Represents a custom video cover."
       }
     },
     "WebPageAttributeStarGiftAuction": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "end_date": "",
+        "gift": ""
+      }
     },
     "WebPageAttributeStarGiftCollection": {
       "desc": "Contains info about a gift collection \u00bb for a webPage preview of a gift collection \u00bb (the webPage will have a type of telegram_collection).",
@@ -9758,10 +9994,6 @@
         "id": "ID of preview",
         "url": "URL of the webpage"
       }
-    },
-    "WebPageUrlPending": {
-      "desc": "",
-      "params": {}
     },
     "WebViewMessageSent": {
       "desc": "Info about a sent inline webview message",
@@ -9886,12 +10118,16 @@
       }
     },
     "account.PasskeyRegistrationOptions": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "options": ""
+      }
     },
     "account.Passkeys": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "passkeys": ""
+      }
     },
     "account.Password": {
       "desc": "Configuration for two-factor authorization",
@@ -10119,8 +10355,10 @@
       }
     },
     "auth.PasskeyLoginOptions": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "options": ""
+      }
     },
     "auth.PasswordRecovery": {
       "desc": "Recovery info of a 2FA password, only for accounts with a recovery email configured.",
@@ -10141,6 +10379,8 @@
     "auth.SentCodePaymentRequired": {
       "desc": "Official apps may receive this constructor, indicating that due to the high cost of SMS verification codes for the user's country/provider, the user must purchase a Telegram Premium subscription in order to proceed with the login/signup.",
       "params": {
+        "amount": "",
+        "currency": "",
         "phone_code_hash": "Phone code hash, to be stored and later re-used with auth.signIn",
         "store_product": "Store identifier of the Telegram Premium subscription.",
         "support_email_address": "An email address that can be contacted for more information about this request.",
@@ -10913,15 +11153,26 @@
       }
     },
     "messages.EmojiGameDiceInfo": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "current_streak": "",
+        "flags": "Flags, see TL conditional fields",
+        "game_hash": "",
+        "params": "",
+        "plays_left": "",
+        "prev_stake": ""
+      }
     },
     "messages.EmojiGameOutcome": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "seed": "",
+        "stake_ton_amount": "",
+        "ton_amount": ""
+      }
     },
     "messages.EmojiGameUnavailable": {
-      "desc": "",
+      "desc": "{schema}",
       "params": {}
     },
     "messages.EmojiGroups": {
@@ -11071,10 +11322,6 @@
         "flags": "Flags, see TL conditional fields"
       }
     },
-    "messages.MessageEmpty": {
-      "desc": "Empty constructor. Can be used, for example, in case when an action did not require to create a service message.",
-      "params": {}
-    },
     "messages.MessageReactionsList": {
       "desc": "List of peers that reacted to a specific message",
       "params": {
@@ -11099,6 +11346,7 @@
       "params": {
         "chats": "List of chats mentioned in dialogs",
         "messages": "List of messages",
+        "topics": "",
         "users": "List of users mentioned in messages and chats"
       }
     },
@@ -11119,6 +11367,7 @@
         "next_rate": "Rate to use in the offset_rate parameter in the next call to messages.searchGlobal",
         "offset_id_offset": "Indicates the absolute position of messages[0] within the total result set with count count. This is useful, for example, if the result was fetched using offset_id, and we need to display a progress/total counter (like photo 134 of 200, for all media in a chat, we could simply use photo ${offset_id_offset} of ${count}).",
         "search_flood": "For global post searches \u00bb, the remaining amount of free searches, here query_is_free is related to the current call only, not to the next paginated call, and all subsequent pagination calls will always be free.",
+        "topics": "",
         "users": "List of users mentioned in messages and chats"
       }
     },
@@ -11379,10 +11628,6 @@
         "users": "Users mentioned within the media object."
       }
     },
-    "messages.WebViewResult": {
-      "desc": "",
-      "params": {}
-    },
     "payments.BankCardData": {
       "desc": "Credit card info, provided by the card's bank(s)",
       "params": {
@@ -11405,10 +11650,10 @@
       "params": {
         "chats": "Mentioned chats",
         "date": "Creation date of the gift code.",
+        "days": "",
         "flags": "Flags, see TL conditional fields",
         "from_id": "The peer that created the gift code.",
         "giveaway_msg_id": "Message ID of the giveaway in the channel specified in from_id.",
-        "months": "Duration in months of the gifted Telegram Premium subscription.",
         "to_id": "The destination user of the gift.",
         "used_date": "When was the giftcode imported, if it was imported.",
         "users": "Mentioned users",
@@ -11580,20 +11825,35 @@
       }
     },
     "payments.StarGiftActiveAuctions": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "auctions": "",
+        "chats": "",
+        "users": ""
+      }
     },
     "payments.StarGiftActiveAuctionsNotModified": {
-      "desc": "",
+      "desc": "{schema}",
       "params": {}
     },
     "payments.StarGiftAuctionAcquiredGifts": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "chats": "",
+        "gifts": "",
+        "users": ""
+      }
     },
     "payments.StarGiftAuctionState": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "chats": "",
+        "gift": "",
+        "state": "",
+        "timeout": "",
+        "user_state": "",
+        "users": ""
+      }
     },
     "payments.StarGiftCollections": {
       "desc": "Represents a list of star gift collections \u00bb.",
@@ -11606,12 +11866,16 @@
       "params": {}
     },
     "payments.StarGiftUpgradeAttributes": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "attributes": ""
+      }
     },
     "payments.StarGiftUpgradePreview": {
       "desc": "A preview of the possible attributes (chosen randomly) a gift \u00bb can receive after upgrading it to a collectible gift \u00bb, see here \u00bb for more info.",
       "params": {
+        "next_prices": "",
+        "prices": "",
         "sample_attributes": "Possible gift attributes"
       }
     },
@@ -11733,8 +11997,13 @@
       }
     },
     "phone.GroupCallStars": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "chats": "",
+        "top_donors": "",
+        "total_stars": "",
+        "users": ""
+      }
     },
     "phone.GroupCallStreamChannels": {
       "desc": "Info about RTMP streams in a group call or livestream",
@@ -12408,8 +12677,10 @@
       }
     },
     "account.DeletePasskey": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "id": ""
+      }
     },
     "account.DeleteSecureValue": {
       "desc": "Delete stored Telegram Passport documents, for more info see the passport docs \u00bb",
@@ -12569,7 +12840,7 @@
       }
     },
     "account.GetPasskeys": {
-      "desc": "",
+      "desc": "{schema}",
       "params": {}
     },
     "account.GetPassword": {
@@ -12662,7 +12933,7 @@
       "params": {}
     },
     "account.InitPasskeyRegistration": {
-      "desc": "",
+      "desc": "{schema}",
       "params": {}
     },
     "account.InitTakeoutSession": {
@@ -12714,8 +12985,10 @@
       }
     },
     "account.RegisterPasskey": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "credential": ""
+      }
     },
     "account.ReorderUsernames": {
       "desc": "Reorder usernames associated with the currently logged-in user.",
@@ -12998,7 +13271,6 @@
     "account.UpdateColor": {
       "desc": "Update the accent color and background custom emoji \u00bb of the current account.",
       "params": {
-        "background_emoji_id": "Custom emoji ID used in the accent color pattern.",
         "color": "ID of the accent color palette \u00bb to use (not RGB24, see here \u00bb for more info).",
         "flags": "Flags, see TL conditional fields",
         "for_profile": "Whether to change the accent color emoji pattern of the profile page; otherwise, the accent color and emoji pattern of messages will be changed."
@@ -13145,8 +13417,12 @@
       }
     },
     "auth.CheckPaidAuth": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "form_id": "",
+        "phone_code_hash": "",
+        "phone_number": ""
+      }
     },
     "auth.CheckPassword": {
       "desc": "Try logging to an account protected by a 2FA password.",
@@ -13181,8 +13457,13 @@
       }
     },
     "auth.FinishPasskeyLogin": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "credential": "",
+        "flags": "Flags, see TL conditional fields",
+        "from_auth_key_id": "",
+        "from_dc_id": ""
+      }
     },
     "auth.ImportAuthorization": {
       "desc": "Logs in a user using a key transmitted from his native data-center.",
@@ -13215,8 +13496,11 @@
       }
     },
     "auth.InitPasskeyLogin": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "api_hash": "",
+        "api_id": ""
+      }
     },
     "auth.LogOut": {
       "desc": "Logs out the user.",
@@ -13691,8 +13975,10 @@
       }
     },
     "channels.GetFutureCreatorAfterLeave": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "channel": ""
+      }
     },
     "channels.GetGroupsForDiscussion": {
       "desc": "Get all groups that can be used as discussion groups.",
@@ -13743,6 +14029,7 @@
       "desc": "Obtains a list of peers that can be used to send messages in a specific group",
       "params": {
         "flags": "Flags, see TL conditional fields",
+        "for_live_stories": "",
         "for_paid_reactions": "If set, fetches the list of peers that can be used to send paid reactions to messages of a specific peer.",
         "peer": "The group where we intend to send messages"
       }
@@ -14061,6 +14348,7 @@
         "flags": "Flags, see TL conditional fields",
         "id": "Telegram ID of the other user",
         "last_name": "Last name",
+        "note": "",
         "phone": "User's phone number, may be omitted to simply add the user to the contact list, without a phone number."
       }
     },
@@ -14170,10 +14458,6 @@
         "phone_calls": "Most frequently called users"
       }
     },
-    "contacts.ImportCard": {
-      "desc": "Returns general information on a user using his previously exported card as input.The app may use it to open a conversation without knowing the user's phone number.",
-      "params": {}
-    },
     "contacts.ImportContactToken": {
       "desc": "Obtain user info from a temporary profile link.",
       "params": {
@@ -14242,13 +14526,10 @@
       }
     },
     "contacts.UpdateContactNote": {
-      "desc": "",
-      "params": {}
-    },
-    "folders.DeleteFolder": {
-      "desc": "Delete a peer folder",
+      "desc": "{schema}",
       "params": {
-        "folder_id": "Peer folder ID, for more info click here"
+        "id": "",
+        "note": ""
       }
     },
     "folders.EditPeerFolders": {
@@ -14451,6 +14732,7 @@
         "flags": "Flags, see TL conditional fields",
         "msg_id": "Message ID of the message with the login button",
         "peer": "The location of the message",
+        "share_phone_number": "",
         "url": "URL used for link URL authorization, click here for more info \u00bb",
         "write_allowed": "Set this flag to allow the bot to send messages to you (if requested)"
       }
@@ -14519,10 +14801,6 @@
         "random_id": "The ad's unique ID."
       }
     },
-    "messages.CraftStarGift": {
-      "desc": "",
-      "params": {}
-    },
     "messages.CreateChat": {
       "desc": "Creates a new chat.",
       "params": {
@@ -14533,8 +14811,17 @@
       }
     },
     "messages.CreateForumTopic": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "flags": "Flags, see TL conditional fields",
+        "icon_color": "",
+        "icon_emoji_id": "",
+        "peer": "",
+        "random_id": "",
+        "send_as": "",
+        "title": "",
+        "title_missing": ""
+      }
     },
     "messages.DeleteChat": {
       "desc": "Delete a chat",
@@ -14631,8 +14918,11 @@
       }
     },
     "messages.DeleteTopicHistory": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "peer": "",
+        "top_msg_id": ""
+      }
     },
     "messages.DiscardEncryption": {
       "desc": "Cancels a request for creation and/or delete info on secret chat.",
@@ -14700,8 +14990,16 @@
       }
     },
     "messages.EditForumTopic": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "closed": "",
+        "flags": "Flags, see TL conditional fields",
+        "hidden": "",
+        "icon_emoji_id": "",
+        "peer": "",
+        "title": "",
+        "topic_id": ""
+      }
     },
     "messages.EditInlineBotMessage": {
       "desc": "Edit an inline bot message",
@@ -14729,7 +15027,8 @@
         "peer": "Where was the message sent",
         "quick_reply_shortcut_id": "If specified, edits a quick reply shortcut message, instead \u00bb.",
         "reply_markup": "Reply markup for inline keyboards",
-        "schedule_date": "Scheduled message date for scheduled messages"
+        "schedule_date": "Scheduled message date for scheduled messages",
+        "schedule_repeat_period": ""
       }
     },
     "messages.EditQuickReplyShortcut": {
@@ -14759,14 +15058,6 @@
         "unfave": "Whether to add or remove a sticker from favorites"
       }
     },
-    "messages.ForwardMessage": {
-      "desc": "Forwards single messages.",
-      "params": {
-        "id": "Forwarded message ID",
-        "peer": "User or chat where a message will be forwarded",
-        "random_id": "Unique client message ID required to prevent message resending"
-      }
-    },
     "messages.ForwardMessages": {
       "desc": "Forwards messages by their IDs.",
       "params": {
@@ -14775,6 +15066,7 @@
         "background": "Whether to send the message in background",
         "drop_author": "Whether to forward messages without quoting the original author",
         "drop_media_captions": "Whether to strip captions from media",
+        "effect": "",
         "flags": "Flags, see TL conditional fields",
         "from_peer": "Source of messages",
         "id": "IDs of messages",
@@ -14783,6 +15075,7 @@
         "random_id": "Random ID to prevent resending of messages",
         "reply_to": "Can only contain an inputReplyToMonoForum, to forward messages to a monoforum topic (mutually exclusive with top_msg_id).",
         "schedule_date": "Scheduled message date for scheduled messages",
+        "schedule_repeat_period": "",
         "send_as": "Forward the messages as the specified peer",
         "silent": "Whether to send messages silently (no notification will be triggered on the destination clients)",
         "suggested_post": "Used to suggest a post to a channel, see here \u00bb for more info on the full flow.",
@@ -14797,10 +15090,6 @@
       "params": {
         "peer": "Chat"
       }
-    },
-    "messages.GetAllChats": {
-      "desc": "Get all chats, channels and supergroups",
-      "params": {}
     },
     "messages.GetAllDrafts": {
       "desc": "Return all message drafts.\nReturns all the latest updateDraftMessage updates related to all chats with drafts.",
@@ -14898,10 +15187,6 @@
         "user_id": "User ID"
       }
     },
-    "messages.GetCraftStarGifts": {
-      "desc": "",
-      "params": {}
-    },
     "messages.GetCustomEmojiDocuments": {
       "desc": "Fetch custom emoji stickers \u00bb.",
       "params": {
@@ -14965,7 +15250,7 @@
       }
     },
     "messages.GetEmojiGameInfo": {
-      "desc": "",
+      "desc": "{schema}",
       "params": {}
     },
     "messages.GetEmojiGroups": {
@@ -15075,12 +15360,23 @@
       }
     },
     "messages.GetForumTopics": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "flags": "Flags, see TL conditional fields",
+        "limit": "Maximum number of results to return, see pagination",
+        "offset_date": "Offsets for pagination, for more info click here",
+        "offset_id": "Offsets for pagination, for more info click here",
+        "offset_topic": "",
+        "peer": "",
+        "q": ""
+      }
     },
     "messages.GetForumTopicsByID": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "peer": "",
+        "topics": ""
+      }
     },
     "messages.GetFullChat": {
       "desc": "Get full info about a basic group.",
@@ -15418,15 +15714,6 @@
         "peer": "The currently open channel/bot."
       }
     },
-    "messages.GetStatsURL": {
-      "desc": "Returns URL with the chat statistics. Currently this method can be used only for channels",
-      "params": {
-        "dark": "Pass true if a URL with the dark theme must be returned",
-        "flags": "Flags, see TL conditional fields",
-        "params": "Parameters from tg://statsrefresh?params=****** link",
-        "peer": "Chat identifier"
-      }
-    },
     "messages.GetStickerSet": {
       "desc": "Get info about a stickerset",
       "params": {
@@ -15493,10 +15780,6 @@
         "flags": "Flags, see TL conditional fields",
         "message": "Message from which to extract the preview"
       }
-    },
-    "messages.GetWebViewResult": {
-      "desc": "",
-      "params": {}
     },
     "messages.HideAllChatJoinRequests": {
       "desc": "Dismiss or approve all join requests related to a specific chat or channel.",
@@ -15660,8 +15943,13 @@
       }
     },
     "messages.ReorderPinnedForumTopics": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "flags": "Flags, see TL conditional fields",
+        "force": "",
+        "order": "",
+        "peer": ""
+      }
     },
     "messages.ReorderPinnedSavedDialogs": {
       "desc": "Reorder pinned saved message dialogs \u00bb.",
@@ -16018,6 +16306,7 @@
         "reply_markup": "Reply markup for bot keyboards",
         "reply_to": "If set, indicates that the message should be sent in reply to the specified message or story.",
         "schedule_date": "Scheduled message date for scheduled messages",
+        "schedule_repeat_period": "",
         "send_as": "Send this message as the specified peer",
         "silent": "Send message silently (no notification should be triggered)",
         "suggested_post": "Used to suggest a post to a channel, see here \u00bb for more info on the full flow.",
@@ -16044,6 +16333,7 @@
         "reply_markup": "Reply markup for sending bot buttons",
         "reply_to": "If set, indicates that the message should be sent in reply to the specified message or story. Also used to quote other messages.",
         "schedule_date": "Scheduled message date for scheduled messages",
+        "schedule_repeat_period": "",
         "send_as": "Send this message as the specified peer",
         "silent": "Send this message silently (no notifications for the receivers)",
         "suggested_post": "Used to suggest a post to a channel, see here \u00bb for more info on the full flow.",
@@ -16271,10 +16561,6 @@
         "top_msg_id": "Topic ID"
       }
     },
-    "messages.SetWebViewResult": {
-      "desc": "",
-      "params": {}
-    },
     "messages.StartBot": {
       "desc": "Start a conversation with a bot using a deep linking parameter",
       "params": {
@@ -16292,8 +16578,13 @@
       }
     },
     "messages.SummarizeText": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "flags": "Flags, see TL conditional fields",
+        "id": "",
+        "peer": "",
+        "to_lang": ""
+      }
     },
     "messages.ToggleBotInAttachMenu": {
       "desc": "Enable or disable web bot attachment menu \u00bb",
@@ -16426,8 +16717,12 @@
       }
     },
     "messages.UpdatePinnedForumTopic": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "peer": "",
+        "pinned": "",
+        "topic_id": ""
+      }
     },
     "messages.UpdatePinnedMessage": {
       "desc": "Pin a message",
@@ -16556,6 +16851,12 @@
         "stargift": "The gift to convert."
       }
     },
+    "payments.CraftStarGift": {
+      "desc": "{schema}",
+      "params": {
+        "stargift": ""
+      }
+    },
     "payments.CreateStarGiftCollection": {
       "desc": "Create a star gift collection \u00bb.",
       "params": {
@@ -16616,6 +16917,14 @@
         "peer": "The affiliated peer"
       }
     },
+    "payments.GetCraftStarGifts": {
+      "desc": "{schema}",
+      "params": {
+        "gift_id": "",
+        "limit": "Maximum number of results to return, see pagination",
+        "offset": ""
+      }
+    },
     "payments.GetGiveawayInfo": {
       "desc": "Obtain information about a Telegram Premium giveaway \u00bb.",
       "params": {
@@ -16651,6 +16960,7 @@
         "attributes": "Optionally filter gifts with the specified attributes. If no attributes of a specific type are specified, all attributes of that type are allowed.",
         "attributes_hash": "If a previous call to the method was made and payments.resaleStarGifts.attributes_hash was set, pass it here to avoid returning any results if they haven't changed. Otherwise, set this flag and pass 0 to return payments.resaleStarGifts.attributes_hash and payments.resaleStarGifts.attributes, these two fields will not be set if this flag is not set.",
         "flags": "Flags, see TL conditional fields",
+        "for_craft": "",
         "gift_id": "Mandatory identifier of the base gift from which the collectible gift was upgraded.",
         "limit": "Maximum number of results to return, see pagination",
         "offset": "Offset for pagination. If not equal to an empty string, payments.resaleStarGifts.counters will not be set to avoid returning the counters every time a new page is fetched.",
@@ -16672,6 +16982,7 @@
       "desc": "Fetch the full list of gifts owned by a peer.",
       "params": {
         "collection_id": "Only returns gifts within the specified collection \u00bb.",
+        "exclude_hosted": "",
         "exclude_saved": "Exclude gifts pinned on the profile.",
         "exclude_unique": "Exclude collectible gifts \u00bb.",
         "exclude_unlimited": "Exclude gifts that do not have the starGift.limited flag set.",
@@ -16682,20 +16993,28 @@
         "limit": "Maximum number of results to return, see pagination",
         "offset": "Offset for pagination.",
         "peer": "Fetch only gifts owned by the specified peer, such as: a user, with peer=inputPeerUser; a channel, with peer=inputPeerChannel; a connected business user (when executing the method as a bot, over the business connection), with peer=inputPeerUser.",
+        "peer_color_available": "",
         "sort_by_value": "If set, sorts the gifts by price instead of reception date."
       }
     },
     "payments.GetStarGiftActiveAuctions": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "hash": ""
+      }
     },
     "payments.GetStarGiftAuctionAcquiredGifts": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "gift_id": ""
+      }
     },
     "payments.GetStarGiftAuctionState": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "auction": "",
+        "version": ""
+      }
     },
     "payments.GetStarGiftCollections": {
       "desc": "Fetches all star gift collections \u00bb of a peer.",
@@ -16705,8 +17024,10 @@
       }
     },
     "payments.GetStarGiftUpgradeAttributes": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "gift_id": ""
+      }
     },
     "payments.GetStarGiftUpgradePreview": {
       "desc": "Obtain a preview of the possible attributes (chosen randomly) a gift \u00bb can receive after upgrading it to a collectible gift \u00bb, see here \u00bb for more info.",
@@ -16852,17 +17173,13 @@
         "peer": "The owned peer."
       }
     },
-    "payments.RequestRecurringPayment": {
+    "payments.ResolveStarGiftOffer": {
       "desc": "{schema}",
       "params": {
-        "invoice_media": "",
-        "recurring_init_charge": "",
-        "user_id": ""
+        "decline": "",
+        "flags": "Flags, see TL conditional fields",
+        "offer_msg_id": ""
       }
-    },
-    "payments.ResolveStarGiftOffer": {
-      "desc": "",
-      "params": {}
     },
     "payments.SaveStarGift": {
       "desc": "Display or remove a received gift \u00bb from our profile.",
@@ -16885,8 +17202,16 @@
       }
     },
     "payments.SendStarGiftOffer": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "allow_paid_stars": "",
+        "duration": "",
+        "flags": "Flags, see TL conditional fields",
+        "peer": "",
+        "price": "",
+        "random_id": "",
+        "slug": ""
+      }
     },
     "payments.SendStarsForm": {
       "desc": "Make a payment using Telegram Stars, see here \u00bb for more info.",
@@ -17019,12 +17344,22 @@
       }
     },
     "phone.DeleteGroupCallMessages": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "call": "",
+        "flags": "Flags, see TL conditional fields",
+        "messages": "",
+        "report_spam": ""
+      }
     },
     "phone.DeleteGroupCallParticipantMessages": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "call": "",
+        "flags": "Flags, see TL conditional fields",
+        "participant": "",
+        "report_spam": ""
+      }
     },
     "phone.DiscardCall": {
       "desc": "Refuse or end running call",
@@ -17099,8 +17434,10 @@
       }
     },
     "phone.GetGroupCallStars": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "call": ""
+      }
     },
     "phone.GetGroupCallStreamChannels": {
       "desc": "Get info about RTMP streams in a group call or livestream.\nThis method should be invoked to the same group/channel-related DC used for downloading livestream chunks.\nAs usual, the media DC is preferred, if available.",
@@ -17111,6 +17448,8 @@
     "phone.GetGroupCallStreamRtmpUrl": {
       "desc": "Get RTMP URL and stream key for RTMP livestreams. Can be used even before creating the actual RTMP livestream with phone.createGroupCall (the rtmp_stream flag must be set).",
       "params": {
+        "flags": "Flags, see TL conditional fields",
+        "live_story": "",
         "peer": "Peer to livestream into",
         "revoke": "Whether to revoke the previous stream key or simply return the existing one"
       }
@@ -17214,8 +17553,11 @@
       }
     },
     "phone.SaveDefaultSendAs": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "call": "",
+        "send_as": ""
+      }
     },
     "phone.SendConferenceCallBroadcast": {
       "desc": "Broadcast a blockchain block to all members of a conference call, see here \u00bb for more info.",
@@ -17225,12 +17567,22 @@
       }
     },
     "phone.SendGroupCallEncryptedMessage": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "call": "",
+        "encrypted_message": ""
+      }
     },
     "phone.SendGroupCallMessage": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "allow_paid_stars": "",
+        "call": "",
+        "flags": "Flags, see TL conditional fields",
+        "message": "",
+        "random_id": "",
+        "send_as": ""
+      }
     },
     "phone.SendSignalingData": {
       "desc": "Send VoIP signaling data",
@@ -17272,7 +17624,9 @@
         "call": "Group call",
         "flags": "Flags, see TL conditional fields",
         "join_muted": "Whether all users will that join this group call are muted by default upon joining the group call",
-        "reset_invite_hash": "Invalidate existing invite links"
+        "messages_enabled": "",
+        "reset_invite_hash": "Invalidate existing invite links",
+        "send_paid_messages_stars": ""
       }
     },
     "phone.ToggleGroupCallStartSubscription": {
@@ -17778,8 +18132,20 @@
       }
     },
     "stories.StartLive": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "caption": "",
+        "entities": "Message entities for styled text",
+        "flags": "Flags, see TL conditional fields",
+        "messages_enabled": "",
+        "noforwards": "",
+        "peer": "",
+        "pinned": "",
+        "privacy_rules": "",
+        "random_id": "",
+        "rtmp_stream": "",
+        "send_paid_messages_stars": ""
+      }
     },
     "stories.ToggleAllStoriesHidden": {
       "desc": "Hide the active stories of a specific peer, preventing them from being displayed on the action bar on the homescreen.",
@@ -17955,8 +18321,11 @@
       }
     },
     "users.SuggestBirthday": {
-      "desc": "",
-      "params": {}
+      "desc": "{schema}",
+      "params": {
+        "birthday": "",
+        "id": ""
+      }
     }
   },
   "type": {
@@ -18719,9 +19088,6 @@
     "PremiumGiftCodeOption": {
       "desc": "Giveaway option."
     },
-    "PremiumGiftOption": {
-      "desc": "Telegram Premium gift option"
-    },
     "PremiumSubscriptionOption": {
       "desc": "Telegram Premium subscription option"
     },
@@ -19433,9 +19799,6 @@
     "messages.MessageEditData": {
       "desc": "Message edit data for media"
     },
-    "messages.MessageEmpty": {
-      "desc": ""
-    },
     "messages.MessageReactionsList": {
       "desc": "List of peers that reacted to a specific message"
     },
@@ -19513,9 +19876,6 @@
     },
     "messages.WebPagePreview": {
       "desc": "Represents a webpage preview."
-    },
-    "messages.WebViewResult": {
-      "desc": ""
     },
     "payments.BankCardData": {
       "desc": "Credit card info, provided by the card's bank(s)"

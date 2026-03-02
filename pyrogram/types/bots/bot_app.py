@@ -34,7 +34,7 @@ class BotApp(Object):
         short_name: str,
         title: str,
         description: str,
-        photo: types.Photo,
+        photo: types.Photo | None = None,
         document: types.Document | None = None,
     ) -> None:
         super().__init__()
@@ -47,7 +47,7 @@ class BotApp(Object):
         self.document = document
 
     @staticmethod
-    def _parse(client: pyrogram.Client, bot_app: raw.types.BotApp) -> BotApp:
+    def _parse(client: pyrogram.Client, bot_app: raw.types.BotApp) -> BotApp | None:
         document = None
         if isinstance(bot_app.document, raw.types.Document):
             attributes = {type(i): i for i in bot_app.document.attributes}

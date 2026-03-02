@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import pyrogram
 from pyrogram import raw, types, utils
@@ -99,6 +99,13 @@ class MessageReactionUpdated(Object, Update):
                     chats[raw_actor_peer_id],
                 )
 
+        old_reaction = [
+            types.ReactionType._parse(client, rt) for rt in update.old_reactions
+        ]
+        new_reaction = [
+            types.ReactionType._parse(client, rt) for rt in update.new_reactions
+        ]
+
         return MessageReactionUpdated(
             client=client,
             id=update.msg_id,
@@ -106,10 +113,12 @@ class MessageReactionUpdated(Object, Update):
             date=utils.timestamp_to_datetime(update.date),
             chat=chat,
             actor_chat=actor_chat,
-            old_reaction=[
-                types.ReactionType._parse(client, rt) for rt in update.old_reactions
-            ],
-            new_reaction=[
-                types.ReactionType._parse(client, rt) for rt in update.new_reactions
-            ],
+            old_reaction=cast(
+                "list[types.ReactionType]",
+                [r for r in old_reaction if r is not None],
+            ),
+            new_reaction=cast(
+                "list[types.ReactionType]",
+                [r for r in new_reaction if r is not None],
+            ),
         )

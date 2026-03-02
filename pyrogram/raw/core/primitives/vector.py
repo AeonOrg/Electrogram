@@ -36,7 +36,7 @@ class Vector(bytes, TLObject):
         t = args[0] if args else None
         count = Int.read(b)
         left = len(b.read())
-        size = (left / count) if count else 0
+        size = (left // count) if count else 0
         b.seek(-left, 1)
 
         return List(

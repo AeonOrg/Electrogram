@@ -152,7 +152,9 @@ class ReactionTypeCustomEmoji(ReactionType):
         self,
         client: pyrogram.Client,  # noqa: ARG002
     ) -> raw.base.Reaction:
-        return raw.types.ReactionCustomEmoji(document_id=int(self.custom_emoji_id))
+        return raw.types.ReactionCustomEmoji(
+            document_id=int(self.custom_emoji_id) if self.custom_emoji_id else 0
+        )
 
 
 class ReactionTypePaid(ReactionType):

@@ -29,7 +29,7 @@ class ShippingQuery(Object, Update):
         *,
         client: pyrogram.Client | None = None,
         id: str,
-        from_user: types.User,
+        from_user: types.User | None = None,
         invoice_payload: str,
         shipping_address: types.ShippingAddress | None = None,
     ) -> None:
