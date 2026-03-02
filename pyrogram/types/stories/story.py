@@ -91,6 +91,18 @@ class Story(Object, Update):
         media_areas (List of :obj:`~pyrogram.types.MediaArea`, *optional*):
             List of :obj:`~pyrogram.types.MediaArea` object in story.
 
+        out (``bool``, *optional*):
+           True, if the story is outgoing.
+
+        min (``bool``, *optional*):
+           True, if the story is min story.
+
+        sent_reaction (:obj:`~pyrogram.types.Reaction`, *optional*):
+            Reaction sent by the current user.
+
+        albums (List of ``int``, *optional*):
+            List of album identifiers.
+
         link (``str``, *property*):
             Generate a link to this story, only for Telegram Premium chats having usernames. Can be None if the story cannot have a link.
 
@@ -127,6 +139,10 @@ class Story(Object, Update):
         allowed_users: list[int] | None = None,
         denied_users: list[int] | None = None,
         media_areas: list[types.MediaArea] | None = None,
+        out: bool | None = None,
+        min: bool | None = None,
+        sent_reaction: types.Reaction | None = None,
+        albums: list[int] | None = None,
         raw: raw.types.StoryItem | None = None,
     ) -> None:
         super().__init__(client)
@@ -156,6 +172,10 @@ class Story(Object, Update):
         self.allowed_users = allowed_users
         self.denied_users = denied_users
         self.media_areas = media_areas
+        self.out = out
+        self.min = min
+        self.sent_reaction = sent_reaction
+        self.albums = albums
         self.raw = raw
 
     @staticmethod
@@ -333,12 +353,16 @@ class Story(Object, Update):
             selected_contacts=stories.selected_contacts,
             caption=stories.caption,
             caption_entities=entities or None,
-            views=types.StoryViews._parse(stories.views),
+            views=types.StoryViews._parse(client, stories.views),
             privacy=privacy,
             forward_from=forward_from,
             allowed_users=allowed_users,
             denied_users=denied_users,
             media_areas=media_areas,
+            out=stories.out,
+            min=stories.min,
+            sent_reaction=types.Reaction._parse(client, stories.sent_reaction),
+            albums=stories.albums,
             raw=stories,
             client=client,
         )

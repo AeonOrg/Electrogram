@@ -4876,9 +4876,19 @@ class Message(Object, Update):
         message_thread_id: int | None = None,
         disable_notification: bool | None = None,
         schedule_date: datetime | None = None,
+        schedule_repeat_period: int | None = None,
         protect_content: bool | None = None,
         allow_paid_broadcast: bool | None = None,
+        allow_paid_stars: int | None = None,
         drop_author: bool | None = None,
+        drop_media_captions: bool | None = None,
+        background: bool | None = None,
+        with_my_score: bool | None = None,
+        message_effect_id: int | None = None,
+        video_timestamp: int | None = None,
+        quick_reply_shortcut: str | int | None = None,
+        send_as: int | str | None = None,
+        suggested_post: types.SuggestedPost | None = None,
     ) -> types.Message | list[types.Message]:
         """Bound method *forward* of :obj:`~pyrogram.types.Message`.
 
@@ -4920,8 +4930,38 @@ class Message(Object, Update):
             allow_paid_broadcast (``bool``, *optional*):
                 Pass True to allow the message to ignore regular broadcast limits for a small fee; for bots
 
+            allow_paid_stars (``int``, *optional*):
+                Amount of stars to pay for the message; for bots only.
+
             drop_author (``bool``, *optional*):
                 Forwards messages without quoting the original author
+
+            drop_media_captions (``bool``, *optional*):
+                Forwards messages without media captions.
+
+            background (``bool``, *optional*):
+                Pass True to send the message in the background.
+
+            with_my_score (``bool``, *optional*):
+                Forwards games with the user's score.
+
+            message_effect_id (``int`` ``64-bit``, *optional*):
+                Unique identifier of the message effect to be added to the message; for private chats only.
+
+            video_timestamp (``int``, *optional*):
+                Timestamp for the video.
+
+            quick_reply_shortcut (``str`` | ``int``, *optional*):
+                Quick reply shortcut identifier or name.
+
+            send_as (``int`` | ``str``, *optional*):
+                Unique identifier (int) or username (str) of the chat to send the message as.
+
+            suggested_post (:obj:`~pyrogram.types.SuggestedPost`, *optional*):
+                Suggested post information.
+
+            schedule_repeat_period (``int``, *optional*):
+                Repeat period of the scheduled message.
 
         Returns:
             On success, the forwarded Message is returned.
@@ -4936,9 +4976,19 @@ class Message(Object, Update):
             message_thread_id=message_thread_id,
             disable_notification=disable_notification,
             schedule_date=schedule_date,
+            schedule_repeat_period=schedule_repeat_period,
             protect_content=protect_content,
             allow_paid_broadcast=allow_paid_broadcast,
+            allow_paid_stars=allow_paid_stars,
             drop_author=drop_author,
+            drop_media_captions=drop_media_captions,
+            background=background,
+            with_my_score=with_my_score,
+            message_effect_id=message_effect_id,
+            video_timestamp=video_timestamp,
+            quick_reply_shortcut=quick_reply_shortcut,
+            send_as=send_as,
+            suggested_post=suggested_post,
         )
 
     async def copy(
@@ -4955,9 +5005,18 @@ class Message(Object, Update):
         reply_to_message_id: int | None = None,
         reply_to_chat_id: int | None = None,
         schedule_date: datetime | None = None,
+        schedule_repeat_period: int | None = None,
         protect_content: bool | None = None,
         allow_paid_broadcast: bool | None = None,
+        allow_paid_stars: int | None = None,
+        message_effect_id: int | None = None,
         invert_media: bool | None = None,
+        quick_reply_shortcut: str | int | None = None,
+        send_as: int | str | None = None,
+        background: bool | None = None,
+        clear_draft: bool | None = None,
+        update_stickersets_order: bool | None = None,
+        suggested_post: types.SuggestedPost | None = None,
         reply_markup: types.InlineKeyboardMarkup
         | types.ReplyKeyboardMarkup
         | types.ReplyKeyboardRemove
@@ -5030,11 +5089,38 @@ class Message(Object, Update):
             schedule_date (:py:obj:`~datetime.datetime`, *optional*):
                 Date when the message will be automatically sent.
 
+            schedule_repeat_period (``int``, *optional*):
+                Repeat period of the scheduled message.
+
             protect_content (``bool``, *optional*):
                 Protects the contents of the sent message from forwarding and saving.
 
             allow_paid_broadcast (``bool``, *optional*):
                 Pass True to allow the message to ignore regular broadcast limits for a small fee; for bots
+
+            allow_paid_stars (``int``, *optional*):
+                Amount of stars to pay for the message; for bots only.
+
+            message_effect_id (``int`` ``64-bit``, *optional*):
+                Unique identifier of the message effect to be added to the message; for private chats only.
+
+            quick_reply_shortcut (``str`` | ``int``, *optional*):
+                Quick reply shortcut identifier or name.
+
+            send_as (``int`` | ``str``, *optional*):
+                Unique identifier (int) or username (str) of the chat to send the message as.
+
+            background (``bool``, *optional*):
+                Pass True to send the message in the background.
+
+            clear_draft (``bool``, *optional*):
+                Pass True to clear the draft.
+
+            update_stickersets_order (``bool``, *optional*):
+                Pass True to update the stickersets order.
+
+            suggested_post (:obj:`~pyrogram.types.SuggestedPost`, *optional*):
+                Suggested post information.
 
             invert_media (``bool``, *optional*):
                 Inverts the position of the media and caption.
@@ -5082,8 +5168,17 @@ class Message(Object, Update):
                 quote_text=quote_text,
                 quote_entities=quote_entities,
                 schedule_date=schedule_date,
+                schedule_repeat_period=schedule_repeat_period,
                 protect_content=protect_content,
                 allow_paid_broadcast=allow_paid_broadcast,
+                allow_paid_stars=allow_paid_stars,
+                message_effect_id=message_effect_id,
+                quick_reply_shortcut=quick_reply_shortcut,
+                send_as=send_as,
+                background=background,
+                clear_draft=clear_draft,
+                update_stickersets_order=update_stickersets_order,
+                suggested_post=suggested_post,
                 reply_markup=cast(
                     "Any",
                     self.reply_markup if reply_markup is object else reply_markup,
@@ -5098,10 +5193,19 @@ class Message(Object, Update):
                 reply_to_message_id=reply_to_message_id,
                 reply_to_chat_id=reply_to_chat_id,
                 schedule_date=schedule_date,
+                schedule_repeat_period=schedule_repeat_period,
                 has_spoiler=has_spoiler,
                 protect_content=protect_content,
                 allow_paid_broadcast=allow_paid_broadcast,
+                allow_paid_stars=allow_paid_stars,
+                message_effect_id=message_effect_id,
                 invert_media=invert_media,
+                quick_reply_shortcut=quick_reply_shortcut,
+                send_as=send_as,
+                background=background,
+                clear_draft=clear_draft,
+                update_stickersets_order=update_stickersets_order,
+                suggested_post=suggested_post,
                 reply_markup=cast(
                     "Any",
                     self.reply_markup if reply_markup is object else reply_markup,
@@ -5134,7 +5238,17 @@ class Message(Object, Update):
                     disable_notification=disable_notification,
                     message_thread_id=message_thread_id,
                     schedule_date=schedule_date,
+                    schedule_repeat_period=schedule_repeat_period,
                     allow_paid_broadcast=allow_paid_broadcast,
+                    allow_paid_stars=allow_paid_stars,
+                    message_effect_id=message_effect_id,
+                    quick_reply_shortcut=quick_reply_shortcut,
+                    send_as=send_as,
+                    background=background,
+                    clear_draft=clear_draft,
+                    update_stickersets_order=update_stickersets_order,
+                    invert_media=invert_media,
+                    suggested_post=suggested_post,
                 )
             elif self.location:
                 return await self._client.send_location(
@@ -5144,7 +5258,16 @@ class Message(Object, Update):
                     disable_notification=disable_notification,
                     message_thread_id=message_thread_id,
                     schedule_date=schedule_date,
+                    schedule_repeat_period=schedule_repeat_period,
                     allow_paid_broadcast=allow_paid_broadcast,
+                    allow_paid_stars=allow_paid_stars,
+                    message_effect_id=message_effect_id,
+                    quick_reply_shortcut=quick_reply_shortcut,
+                    send_as=send_as,
+                    background=background,
+                    clear_draft=clear_draft,
+                    update_stickersets_order=update_stickersets_order,
+                    suggested_post=suggested_post,
                 )
             elif self.venue:
                 return await self._client.send_venue(
@@ -5158,7 +5281,16 @@ class Message(Object, Update):
                     disable_notification=disable_notification,
                     message_thread_id=message_thread_id,
                     schedule_date=schedule_date,
+                    schedule_repeat_period=schedule_repeat_period,
                     allow_paid_broadcast=allow_paid_broadcast,
+                    allow_paid_stars=allow_paid_stars,
+                    message_effect_id=message_effect_id,
+                    quick_reply_shortcut=quick_reply_shortcut,
+                    send_as=send_as,
+                    background=background,
+                    clear_draft=clear_draft,
+                    update_stickersets_order=update_stickersets_order,
+                    suggested_post=suggested_post,
                 )
             elif self.poll:
                 return await self._client.send_poll(
@@ -5171,7 +5303,16 @@ class Message(Object, Update):
                     disable_notification=disable_notification,
                     message_thread_id=message_thread_id,
                     schedule_date=schedule_date,
+                    schedule_repeat_period=schedule_repeat_period,
                     allow_paid_broadcast=allow_paid_broadcast,
+                    allow_paid_stars=allow_paid_stars,
+                    message_effect_id=message_effect_id,
+                    quick_reply_shortcut=quick_reply_shortcut,
+                    send_as=send_as,
+                    background=background,
+                    clear_draft=clear_draft,
+                    update_stickersets_order=update_stickersets_order,
+                    suggested_post=suggested_post,
                 )
             elif self.game:
                 return await self._client.send_game(
@@ -5179,7 +5320,17 @@ class Message(Object, Update):
                     game_short_name=self.game.short_name,
                     disable_notification=disable_notification,
                     message_thread_id=message_thread_id,
+                    schedule_date=schedule_date,
+                    schedule_repeat_period=schedule_repeat_period,
                     allow_paid_broadcast=allow_paid_broadcast,
+                    allow_paid_stars=allow_paid_stars,
+                    message_effect_id=message_effect_id,
+                    quick_reply_shortcut=quick_reply_shortcut,
+                    send_as=send_as,
+                    background=background,
+                    clear_draft=clear_draft,
+                    update_stickersets_order=update_stickersets_order,
+                    suggested_post=suggested_post,
                 )
             elif self.web_page_preview:
                 return await self._client.send_web_page(
@@ -5214,6 +5365,13 @@ class Message(Object, Update):
                     file_id=file_id,
                     message_thread_id=message_thread_id,
                     allow_paid_broadcast=allow_paid_broadcast,
+                    allow_paid_stars=allow_paid_stars,
+                    quick_reply_shortcut=quick_reply_shortcut,
+                    send_as=send_as,
+                    background=background,
+                    clear_draft=clear_draft,
+                    update_stickersets_order=update_stickersets_order,
+                    suggested_post=suggested_post,
                 )
             if caption is None:
                 caption = self.caption or ""
@@ -5227,6 +5385,13 @@ class Message(Object, Update):
                 has_spoiler=has_spoiler,
                 message_thread_id=message_thread_id,
                 allow_paid_broadcast=allow_paid_broadcast,
+                allow_paid_stars=allow_paid_stars,
+                quick_reply_shortcut=quick_reply_shortcut,
+                send_as=send_as,
+                background=background,
+                clear_draft=clear_draft,
+                update_stickersets_order=update_stickersets_order,
+                suggested_post=suggested_post,
             )
         raise ValueError("Can't copy this message")
 
