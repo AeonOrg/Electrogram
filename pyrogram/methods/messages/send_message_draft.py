@@ -68,7 +68,7 @@ class SendMessageDraft:
                 random_id=draft_id,
                 text=raw.types.TextWithEntities(
                     text=cast("str", parsed_text["message"]),
-                    entities=cast("list", parsed_text["entities"]),
+                    entities=parsed_text.get("entities") or [],,
                 ),
             ),
             top_msg_id=message_thread_id,
