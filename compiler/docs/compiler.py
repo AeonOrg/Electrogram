@@ -4,6 +4,7 @@ import ast
 import re
 import shutil
 from pathlib import Path
+
 from tl_generator import TLDocGenerator
 
 # Paths
@@ -124,7 +125,9 @@ def generate_raw(source_path, base, tl_gen: TLDocGenerator) -> None:
                             ),
                             tl_signature=tl_gen.get_tl_signature(full_name),
                             parameter_tree=tl_gen.generate_tree(full_name),
-                            example_code=tl_gen.generate_example(full_name, minimal=(base == TYPES_BASE)),
+                            example_code=tl_gen.generate_example(
+                                full_name, minimal=(base == TYPES_BASE)
+                            ),
                         ),
                     )
 
@@ -507,7 +510,7 @@ def start() -> None:
     tl_paths = [
         Path(HOME, "../api/source/auth_key.tl"),
         Path(HOME, "../api/source/sys_msgs.tl"),
-        Path(HOME, "../api/source/main_api.tl")
+        Path(HOME, "../api/source/main_api.tl"),
     ]
     tl_gen = TLDocGenerator(tl_paths)
 
