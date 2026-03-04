@@ -43,6 +43,7 @@ from .send_document import SendDocument
 from .send_location import SendLocation
 from .send_media_group import SendMediaGroup
 from .send_message import SendMessage
+from .send_message_draft import SendMessageDraft
 from .send_paid_media import SendPaidMedia
 from .send_paid_reaction import SendPaidReaction
 from .send_photo import SendPhoto
@@ -81,6 +82,7 @@ class Messages(
     SendLocation,
     SendMediaGroup,
     SendMessage,
+    SendMessageDraft,
     SendPhoto,
     SendSticker,
     SendVenue,

@@ -40,8 +40,10 @@ jobs:
             FORCE_UPDATE="--force-update"
           fi
 
+          set +e
           python dev_tools/check_api_schema_updates.py $FORCE_UPDATE
           EXIT_CODE=$?
+          set -e
 
           if [ $EXIT_CODE -eq 0 ]; then
             echo "updates_detected=true" >> $GITHUB_OUTPUT

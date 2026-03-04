@@ -5,6 +5,8 @@ import re
 import shutil
 from pathlib import Path
 
+from tl_generator import TLDocGenerator
+
 # Paths
 page_template = ""
 toctree = ""
@@ -72,7 +74,7 @@ def snake(s: str):
     return re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", s).lower()
 
 
-def generate_raw(source_path, base) -> None:
+def generate_raw(source_path, base, tl_gen: TLDocGenerator) -> None:
     all_entities = {}
 
     def build(path, level=0) -> None:
@@ -120,6 +122,11 @@ def generate_raw(source_path, base) -> None:
                             title_markup="=" * len(full_name),
                             full_class_path="pyrogram.raw.{}".format(
                                 ".".join(full_path.split("/")[:-1]) + "." + name,
+                            ),
+                            tl_signature=tl_gen.get_tl_signature(full_name),
+                            parameter_tree=tl_gen.generate_tree(full_name),
+                            example_code=tl_gen.generate_example(
+                                full_name, minimal=(base == TYPES_BASE)
                             ),
                         ),
                     )
@@ -500,9 +507,16 @@ def start() -> None:
     with Path(HOME, "template/toctree.txt").open(encoding="utf-8") as f:
         toctree = f.read()
 
-    generate_raw(TYPES_PATH, TYPES_BASE)
-    generate_raw(FUNCTIONS_PATH, FUNCTIONS_BASE)
-    generate_raw(BASE_PATH, BASE_BASE)
+    tl_paths = [
+        Path(HOME, "../api/source/auth_key.tl"),
+        Path(HOME, "../api/source/sys_msgs.tl"),
+        Path(HOME, "../api/source/main_api.tl"),
+    ]
+    tl_gen = TLDocGenerator(tl_paths)
+
+    generate_raw(TYPES_PATH, TYPES_BASE, tl_gen)
+    generate_raw(FUNCTIONS_PATH, FUNCTIONS_BASE, tl_gen)
+    generate_raw(BASE_PATH, BASE_BASE, tl_gen)
     pyrogram_api()
 
 
