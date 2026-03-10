@@ -29,9 +29,9 @@ path = "pyrogram/__init__.py"
 [tool.hatch.build.hooks.custom]
 
 [project.urls]
-homepage = "https://github.com/5hojib/electrogram"
+homepage = "https://github.com/AeonOrg/Electrogram"
 community = "https://t.me/ProjectAeon"
-repository = "https://github.com/5hojib/electrogram"
+repository = "https://github.com/AeonOrg/Electrogram"
 
 [build-system]
 requires = ["hatchling"]
