@@ -1,0 +1,7 @@
+-r requirements.in
+hatch
+pytest
+pytest-asyncio
+pytest-cov
+twine
+docutils==0.21.2

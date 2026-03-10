@@ -34,6 +34,13 @@ jobs:
           uv run -m pip install pytest pytest-asyncio
           uv lock --upgrade
 
+      - name: Compile requirements
+        run: |
+          uv pip compile requirements.in -o requirements.txt
+          uv pip compile requirements-dev.in -o requirements-dev.txt
+          uv pip compile requirements-docs.in -o requirements-docs.txt
+          git add requirements.txt requirements-dev.txt requirements-docs.txt
+
       - name: Run ruff to lint and format code
         run: |
           uv tool run ruff check . --exit-zero
