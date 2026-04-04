@@ -9,8 +9,8 @@ Welcome to Electrogram
                 Modern MTProto API Framework for Python
             </p>
             <div style="margin-top: 12px; display: flex; gap: 8px;">
-                <a href="https://github.com/5hojib/Electrogram" style="padding: 4px 14px; background: var(--md-primary-fg-color); color: white; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-decoration: none;">GitHub</a>
-                <a href="https://github.com/5hojib/Electrogram/issues" style="padding: 4px 14px; background: #f5f5f5; color: #333; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-decoration: none;">Issues</a>
+                <a href="https://github.com/AeonOrg/Electrogram" style="padding: 4px 14px; background: var(--md-primary-fg-color); color: white; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-decoration: none;">GitHub</a>
+                <a href="https://github.com/AeonOrg/Electrogram/issues" style="padding: 4px 14px; background: #f5f5f5; color: #333; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-decoration: none;">Issues</a>
             </div>
         </div>
     </div>

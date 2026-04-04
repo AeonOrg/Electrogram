@@ -32,4 +32,4 @@ If no error shows up you are good to go.
     >>> pyrogram.__version__
     'x.y.z'
 
-.. _`Github repo`: http://github.com/5hojib/Electrogram
+.. _`Github repo`: http://github.com/AeonOrg/Electrogram

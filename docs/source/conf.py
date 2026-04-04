@@ -66,7 +66,7 @@ html_theme_options = {
         "edit": "material/file-edit-outline",
     },
     "site_url": "https://electrogram-docs.vercel.app/",
-    "repo_url": "https://github.com/5hojib/Electrogram/",
+    "repo_url": "https://github.com/AeonOrg/Electrogram/",
     "repo_name": "Electrogram",
     "globaltoc_collapse": True,
     "font": {
