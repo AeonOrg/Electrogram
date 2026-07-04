@@ -2,17 +2,17 @@ from __future__ import annotations
 
 import logging
 
-import tgcrypto
+import warpcrypto as crypto
 
 log = logging.getLogger(__name__)
 
 
 def ige256_encrypt(data: bytes, key: bytes, iv: bytes) -> bytes:
-    return tgcrypto.ige256_encrypt(data, key, iv)
+    return crypto.ige256_encrypt(data, key, iv)
 
 
 def ige256_decrypt(data: bytes, key: bytes, iv: bytes) -> bytes:
-    return tgcrypto.ige256_decrypt(data, key, iv)
+    return crypto.ige256_decrypt(data, key, iv)
 
 
 def ctr256_encrypt(
@@ -21,7 +21,7 @@ def ctr256_encrypt(
     iv: bytearray,
     state: bytearray | None = None,
 ) -> bytes:
-    return tgcrypto.ctr256_encrypt(data, key, iv, state or bytearray(1))
+    return crypto.ctr256_encrypt(data, key, iv, state or bytearray(1))
 
 
 def ctr256_decrypt(
@@ -30,7 +30,7 @@ def ctr256_decrypt(
     iv: bytearray,
     state: bytearray | None = None,
 ) -> bytes:
-    return tgcrypto.ctr256_decrypt(data, key, iv, state or bytearray(1))
+    return crypto.ctr256_decrypt(data, key, iv, state or bytearray(1))
 
 
 def xor(a: bytes, b: bytes) -> bytes:
