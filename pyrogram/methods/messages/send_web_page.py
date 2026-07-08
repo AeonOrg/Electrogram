@@ -30,6 +30,7 @@ class SendWebPage:
         schedule_date: datetime | None = None,
         protect_content: bool | None = None,
         allow_paid_broadcast: bool | None = None,
+        allow_paid_stars: int | None = None,
         message_effect_id: int | None = None,
         reply_markup: types.InlineKeyboardMarkup
         | None
@@ -105,6 +106,9 @@ class SendWebPage:
                 Protects the contents of the sent message from forwarding and saving.
 
             allow_paid_broadcast (``bool``, *optional*):
+
+            allow_paid_stars (``int``, *optional*):
+                Pass the amount of stars to pay for the message; for bots only
                 Pass True to allow the message to ignore regular broadcast limits for a small fee; for bots
 
             message_effect_id (``int`` ``64-bit``, *optional*):
@@ -158,6 +162,7 @@ class SendWebPage:
             entities=entities,
             noforwards=protect_content,
             allow_paid_floodskip=allow_paid_broadcast,
+            allow_paid_stars=allow_paid_stars,
             effect=message_effect_id,
         )
         if business_connection_id is not None:

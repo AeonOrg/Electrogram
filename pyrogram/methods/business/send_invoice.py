@@ -26,6 +26,7 @@ class SendInvoice:
         message_thread_id: int | None = None,
         quote_text: str | None = None,
         allow_paid_broadcast: bool | None = None,
+        allow_paid_stars: int | None = None,
         quote_entities: list[types.MessageEntity] | None = None,
         reply_markup: types.InlineKeyboardMarkup | None = None,
     ):
@@ -90,6 +91,9 @@ class SendInvoice:
                 for reply_to_message only.
 
             allow_paid_broadcast (``bool``, *optional*):
+
+            allow_paid_stars (``int``, *optional*):
+                Pass the amount of stars to pay for the message; for bots only
                 Pass True to allow the message to ignore regular broadcast limits for a small fee; for bots only
 
             quote_entities (List of :obj:`~pyrogram.types.MessageEntity`, *optional*):
@@ -211,6 +215,7 @@ class SendInvoice:
                     extended_media=cast("Any", extended_media),
                 ),
                 allow_paid_floodskip=allow_paid_broadcast,
+                allow_paid_stars=allow_paid_stars,
                 random_id=self.rnd_id(),
                 reply_to=reply_to,
                 message="",
