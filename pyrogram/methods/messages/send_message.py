@@ -112,7 +112,7 @@ class SendMessage:
                 Pass True to allow the message to ignore regular broadcast limits for a small fee; for bots only
 
             allow_paid_stars (``int``, *optional*):
-                Amount of stars to pay for the message; for bots only.
+                For paid messages, specifies the amount of Telegram Stars the user has agreed to pay in order to send the message.
 
             invert_media (``bool``, *optional*):
                 Move web page preview to above the message.

@@ -123,7 +123,7 @@ class SendVideoNote:
             allow_paid_broadcast (``bool``, *optional*):
 
             allow_paid_stars (``int``, *optional*):
-                Pass the amount of stars to pay for the message; for bots only
+                For paid messages, specifies the amount of Telegram Stars the user has agreed to pay in order to send the message.
                 Pass True to allow the message to ignore regular broadcast limits for a small fee; for bots only
 
             ttl_seconds (``int``, *optional*):
@@ -267,7 +267,7 @@ class SendVideoNote:
                 except FilePartMissing as e:
                     await self.save_file(
                         video_note,
-                        file_id=file.id,
+                        file_id=getattr(file, "id", None),
                         file_part=e.value,
                     )
                 else:

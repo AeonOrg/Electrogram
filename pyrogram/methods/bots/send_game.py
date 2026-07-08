@@ -102,7 +102,7 @@ class SendGame:
                 Repeat period of the scheduled message.
 
             allow_paid_stars (``int``, *optional*):
-                Amount of stars to pay for the message; for bots only.
+                For paid messages, specifies the amount of Telegram Stars the user has agreed to pay in order to send the message.
 
             quick_reply_shortcut (``str`` | ``int``, *optional*):
                 Quick reply shortcut identifier or name.
